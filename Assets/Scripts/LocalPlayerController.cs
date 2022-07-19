@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
+using RiptideNetworking;
+using RiptideNetworking.Utils;
 
 public class LocalPlayerController : MonoBehaviour
 {
@@ -22,8 +24,14 @@ public class LocalPlayerController : MonoBehaviour
 
     public Camera miniMapCam;
 
+    NetworkManager nm;
+
+    ushort id;
+
     private void Awake()
     {
+        nm = NetworkManager.instance;
+        id = nm.Client.Id;
         Application.targetFrameRate = 600;
         controls = new Controls();
         rb = GetComponent<Rigidbody>();
@@ -36,16 +44,26 @@ public class LocalPlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (!nm.gameIsStarted)
+            return;
         rb.AddForce(new Vector3(desMoveDir.x, 0, desMoveDir.y) * currentMovementSpeed, ForceMode.VelocityChange);
 
         RaycastHit hit;
         Physics.Raycast(transform.position, new Vector3(lookDir.x, 0, lookDir.y), out hit, Mathf.Infinity, lm);
 
         cursor.position = cam.WorldToScreenPoint(hit.point);
+
+        Message playerPosRot = Message.Create(MessageSendMode.unreliable, NetworkManager.MessageIds.playerPos, shouldAutoRelay: true);
+        playerPosRot.AddUShort(id);
+        playerPosRot.AddVector3(transform.position);
+        playerPosRot.AddQuaternion(pivot.rotation);
+        nm.Client.Send(playerPosRot);
     }
 
     private void Update()
     {
+        if (!nm.gameIsStarted)
+            return;
         miniMapCam.transform.position = new Vector3(transform.position.x, 200, transform.position.z);
         miniMapCam.transform.rotation = Quaternion.Euler(new Vector3(90, 0, 0));
     }

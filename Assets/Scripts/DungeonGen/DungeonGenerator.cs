@@ -1,9 +1,30 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using RiptideNetworking;
+using RiptideNetworking.Utils;
 
 public class DungeonGenerator : MonoBehaviour
 {
+    public static DungeonGenerator instance;
+
+    public List<Room> generatedRooms = new List<Room>();
+
+    [System.Serializable]
+    public class Room
+    {
+        public int room;
+        public Vector3 roomPos;
+
+        public RoomBehaviour roomObj;
+
+        public Room(int room, Vector3 roomPos, RoomBehaviour roomObj)
+        {
+            this.room = room;
+            this.roomPos = roomPos;
+            this.roomObj = roomObj;
+        }
+    }
 
     public class Cell
     {
@@ -41,12 +62,83 @@ public class DungeonGenerator : MonoBehaviour
 
     List<Cell> board;
 
+    public int totalRooms;
+    public int currentRoomCount;
+
+    public bool sentMapData = false;
+
+    private void Awake()
+    {
+        instance = this;
+    }
+
     // Start is called before the first frame update
-    void Start()
+    public void StartGenerating()
     {
         //cam.transform.position = new Vector3((size.x * offset.x / 2) - size.x, 100, -((size.y * offset.y) / 2) + size.y);
         //cam.orthographicSize = offset.x * size.x / 2;
         MazeGenerator();
+    }
+
+    [MessageHandler((ushort)NetworkManager.MessageIds.mapHeader)]
+    static void HandleMapHeader(Message msg)
+    {
+        if (instance == null)
+            instance = GameObject.Find("Generator").GetComponent<DungeonGenerator>();
+        instance.totalRooms = msg.GetInt();
+    }
+
+    [MessageHandler((ushort)NetworkManager.MessageIds.mapData)]
+    static void HandleMapData(Message msg)
+    {
+        if (instance == null)
+            instance = GameObject.Find("Generator").GetComponent<DungeonGenerator>();
+        instance.currentRoomCount++;
+
+        var newRoom = Instantiate(instance.rooms[msg.GetInt()].room, msg.GetVector3(), Quaternion.identity, instance.transform).GetComponent<RoomBehaviour>();
+        newRoom.UpdateRoom(msg.GetBools());
+
+        if (instance.currentRoomCount == instance.totalRooms)
+        {
+            Message doneGenerating = Message.Create(MessageSendMode.reliable, NetworkManager.MessageIds.mapDone, shouldAutoRelay: true);
+            doneGenerating.AddUShort(NetworkManager.instance.Client.Id);
+            NetworkManager.instance.MapIsReady(NetworkManager.instance.Client.Id);
+            NetworkManager.instance.Client.Send(doneGenerating);
+        }
+    }
+
+    private void FixedUpdate()
+    {
+        if (!sentMapData)
+        {
+            foreach (var room in generatedRooms)
+            {
+                if (room.roomObj.doneBreakingHoles)
+                {
+                    NetworkManager inst = NetworkManager.instance;
+
+                    Message mapHeader = Message.Create(MessageSendMode.reliable, NetworkManager.MessageIds.mapHeader, shouldAutoRelay: true);
+                    mapHeader.AddInt(generatedRooms.Count);
+                    inst.Client.Send(mapHeader);
+
+                    foreach (var genRoom in generatedRooms)
+                    {
+                        Message mapData = Message.Create(MessageSendMode.reliable, NetworkManager.MessageIds.mapData, shouldAutoRelay: true);
+                        mapData.AddInt(genRoom.room);
+                        mapData.AddVector3(genRoom.roomPos);
+                        mapData.AddBools(genRoom.roomObj.currStatus);
+                        inst.Client.Send(mapData);
+                    }
+
+                    Message doneGenerating = Message.Create(MessageSendMode.reliable, NetworkManager.MessageIds.mapDone, shouldAutoRelay: true);
+                    doneGenerating.AddUShort(NetworkManager.instance.Client.Id);
+                    NetworkManager.instance.MapIsReady(NetworkManager.instance.Client.Id);
+                    NetworkManager.instance.Client.Send(doneGenerating);
+                }
+            }
+
+            sentMapData = true;
+        }
     }
 
     void GenerateDungeon()
@@ -93,10 +185,10 @@ public class DungeonGenerator : MonoBehaviour
                     newRoom.UpdateRoom(currentCell.status);
                     newRoom.name += " " + i + "-" + j;
 
+                    generatedRooms.Add(new Room(randomRoom, new Vector3(i * offset.x, 0, -j * offset.y), newRoom));
                 }
             }
         }
-
     }
 
     void MazeGenerator()

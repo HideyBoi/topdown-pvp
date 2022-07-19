@@ -9,6 +9,9 @@ public class MainMenuUIManager : MonoBehaviour
     public GameObject joinPanel;
     public GameObject hostPanel;
 
+    public GameObject lobbyMenu;
+    public GameObject currentLobbyMenu;
+
     public string playerName;
 
     public TMP_InputField usernameInput;
@@ -29,7 +32,11 @@ public class MainMenuUIManager : MonoBehaviour
 
     public void OnJoinStart()
     {
+        if (usernameInput.text == "")
+            return;
+        NetworkManager.instance.mainMenuUIManager = this;
         NetworkManager.instance.JoinGame(ipInput.text, ushort.Parse(portInput.text));
+        currentLobbyMenu = Instantiate(lobbyMenu);
     }
 
     public void OnHostButtonClick()
@@ -40,7 +47,11 @@ public class MainMenuUIManager : MonoBehaviour
 
     public void OnHostStart()
     {
+        if (usernameInput.text == "")
+            return;
+        NetworkManager.instance.mainMenuUIManager = this;
         NetworkManager.instance.HostGame(ushort.Parse(hostPortInput.text), ushort.Parse(maxPlayerInput.text));
+        currentLobbyMenu = Instantiate(lobbyMenu);
     }
 
     public void OnCloseMenus()
@@ -61,5 +72,20 @@ public class MainMenuUIManager : MonoBehaviour
         {
             usernameInput.text = PlayerPrefs.GetString("PLAYER_LOCAL_USERNAME");
         }
+
+        if (NetworkManager.instance != null)
+        {
+            if (NetworkManager.instance.Client.IsConnected)
+            {
+                currentLobbyMenu = Instantiate(lobbyMenu);
+            }
+        }
+    }
+
+    public void Disconnected()
+    {
+        Destroy(currentLobbyMenu);
+        hostPanel.SetActive(false);
+        joinPanel.SetActive(false);
     }
 }

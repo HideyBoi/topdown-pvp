@@ -4,20 +4,42 @@ using UnityEngine;
 
 public class WallCollision : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        Collider[] colliders = Physics.OverlapSphere(transform.position, .01f);
+    public RoomBehaviour room;
+    public int id;
 
-        foreach (Collider collider in colliders)
+    // Start is called before the first frame update
+    public void BreakHoles()
+    {
+        if (Random.Range(0, 100) < 25)
         {
-            if(collider.tag == "Wall")
+            Collider[] colliders = Physics.OverlapSphere(transform.position, .01f);
+
+            List<GameObject> walls = new List<GameObject>();
+
+            foreach (Collider collider in colliders)
             {
-                Destroy(gameObject);
-                return;
+                if (collider.tag == "Wall")
+                {
+                    walls.Add(collider.gameObject);
+                }
+            }
+
+            if (walls.Count == 2)
+            {
+                room.currStatus[id] = true;
+                room.UpdateRoom(room.currStatus);
+
+                foreach (GameObject wall in walls)
+                {
+                    wall.SetActive(false);
+                }            
             }
         }
+    }
 
-        GetComponent<Collider>().enabled = true;
+    private void OnDisable()
+    {
+        room.currStatus[id] = true;
+        room.UpdateRoom(room.currStatus);
     }
 }
