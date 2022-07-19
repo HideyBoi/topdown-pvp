@@ -26,20 +26,18 @@ public class WallCollision : MonoBehaviour
 
             if (walls.Count == 2)
             {
-                room.currStatus[id] = true;
-                room.UpdateRoom(room.currStatus);
-
                 foreach (GameObject wall in walls)
                 {
-                    wall.SetActive(false);
+                    wall.transform.parent.gameObject.GetComponent<WallCollision>().UpdateFloorForBrokenWall();
                 }            
             }
         }
     }
 
-    private void OnDisable()
+    public void UpdateFloorForBrokenWall()
     {
         room.currStatus[id] = true;
         room.UpdateRoom(room.currStatus);
+        gameObject.SetActive(false);
     }
 }
