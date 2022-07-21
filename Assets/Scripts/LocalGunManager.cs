@@ -60,7 +60,7 @@ public class LocalGunManager : MonoBehaviour
                 {
                     hit.collider.tag = "NonInteractable";
                     Chest chest = hit.collider.GetComponent<Chest>();
-                    chest.Open();
+                    chest.Open(false);
 
                     interactCooldown = 0.78f;
                 }

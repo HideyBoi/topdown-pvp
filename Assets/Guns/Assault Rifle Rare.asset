@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gunName: Assault Rifle
   gunImage: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  id: 3
   gunMesh: {fileID: 272717651244581583, guid: 4adbbdc07be0c6a46953997a68269c84, type: 3}
   gunMaterial: {fileID: 2100000, guid: 7c27e841b223bfd4cbca2d588a4459ba, type: 2}
   idleAnimationName: idle
@@ -24,6 +25,7 @@ MonoBehaviour:
   reloadSound: {fileID: 8300000, guid: efc0750820d312047a7223a067e0193d, type: 3}
   rarity: 1
   ammoType: 1
+  automatic: 0
   damage: 11
   maxAmmoCount: 35
   timeBetweenShots: 0.4

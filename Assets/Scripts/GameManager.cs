@@ -17,11 +17,17 @@ public class GameManager : MonoBehaviour
 
     public List<RemotePlayer> remotePlayers = new List<RemotePlayer>();
     public GameObject remotePlayerPrefab;
+    public GameObject groundItem;
 
     bool generationStarted = false;
 
     private void Awake()
     {
+        for (int i = 0; i < possibleWeapons.Length; i++)
+        {
+            possibleWeapons[i].id = i;
+        }
+
         instance = this;
 
         networkManager = NetworkManager.instance;
@@ -153,5 +159,48 @@ public class GameManager : MonoBehaviour
             return true;
         }
         else { return false; }
+    }
+
+    [MessageHandler((ushort)NetworkManager.MessageIds.openChest)]
+    static void ChestOpened(Message msg)
+    {
+        Vector3 id = msg.GetVector3();
+
+        foreach (var Chest in GameManager.instance.spawnedChests)
+        {
+            if (Chest.chestId == id)
+            {
+                Chest.Open(true);
+            }
+        }
+    }
+
+    [MessageHandler((ushort)NetworkManager.MessageIds.spawnItem)]
+    static void SpawnItem(Message msg)
+    {
+        int id = msg.GetInt();
+        GameObject item = Instantiate(instance.groundItem, msg.GetVector3(), Quaternion.identity);
+        item.GetComponent<GroundItem>().networkSpawned = true;
+        item.GetComponent<GroundItem>().id = id;
+
+        InventoryItem inv = new InventoryItem();
+        inv.weapon = instance.possibleWeapons[msg.GetInt()];
+        inv.ammoCount = inv.weapon.maxAmmoCount;
+
+        item.GetComponent<GroundItem>().UpdateItem(inv);
+    }
+
+    [MessageHandler((ushort)NetworkManager.MessageIds.pickUpItem)]
+    static void PickUpItem(Message msg)
+    {
+        int deltedItemId = msg.GetInt();
+
+        foreach (var item in instance.spawnedItems)
+        {
+            if (item.id == deltedItemId)
+            {
+                item.Pickup(true);
+            }
+        }
     }
 }

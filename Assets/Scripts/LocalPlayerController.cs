@@ -32,7 +32,6 @@ public class LocalPlayerController : MonoBehaviour
     {
         nm = NetworkManager.instance;
         id = nm.Client.Id;
-        Application.targetFrameRate = 600;
         controls = new Controls();
         rb = GetComponent<Rigidbody>();
 

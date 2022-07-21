@@ -50,7 +50,10 @@ public class NetworkManager : MonoBehaviour
         mapHeader,
         mapData,
         mapDone,
-        playerPos
+        playerPos,
+        openChest,
+        spawnItem,
+        pickUpItem
     }
 
     private void Start()
@@ -69,7 +72,21 @@ public class NetworkManager : MonoBehaviour
         //Client.ConnectionFailed += FailedToConnect;
         Client.ClientConnected += PlayerJoined;
         Client.ClientDisconnected += PlayerLeft;
-        //Client.Disconnected += DidDisconnect;
+        Client.Disconnected += Disconnected;
+    }
+
+    public void Disconnected(object sender, EventArgs e)
+    {
+        readyPlayers = new List<ushort>();
+        mapReadyPlayers = new List<ushort>();
+
+        connectedPlayers = new List<MultiplayerPlayer>();
+
+        gameIsStarted = false;
+        stillInLobby = true;
+        isDoneLoading = false;
+
+        LoadingScreen.instance.LoadLevel("MainMenu");
     }
 
     public void HostGame(ushort port, ushort maxPlayers)
@@ -91,6 +108,17 @@ public class NetworkManager : MonoBehaviour
         }
 
         Client.Disconnect();
+
+        readyPlayers = new List<ushort>();
+        mapReadyPlayers = new List<ushort>();
+
+        connectedPlayers = new List<MultiplayerPlayer>();
+
+        gameIsStarted = false;
+        stillInLobby = true;
+        isDoneLoading = false;
+
+        LoadingScreen.instance.LoadLevel("MainMenu");
     }
 
     private void FixedUpdate()

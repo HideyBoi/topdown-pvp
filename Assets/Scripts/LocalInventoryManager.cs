@@ -168,7 +168,7 @@ public class LocalInventoryManager : MonoBehaviour
         }
         
 
-        groundItem.Pickup();
+        groundItem.Pickup(false);
     }
 
     public void DropWeapon(int index)

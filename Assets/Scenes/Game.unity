@@ -221,6 +221,8 @@ MonoBehaviour:
   remotePlayers: []
   remotePlayerPrefab: {fileID: 1625184520517699732, guid: f2636b98da27b2e4986b732f842b0b41,
     type: 3}
+  groundItem: {fileID: 4491493733864199258, guid: 871cb2366c1ec1341a1b94ffda881e89,
+    type: 3}
   possibleWeapons:
   - {fileID: 11400000, guid: 736175ee30b67e449a20955b99b4f00c, type: 2}
   - {fileID: 11400000, guid: b578df79dbab6d044ac373d4339d5e54, type: 2}

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
 using TMPro;
+using RiptideNetworking;
+using RiptideNetworking.Utils;
 
 public class GroundItem : MonoBehaviour
 {
@@ -11,7 +13,7 @@ public class GroundItem : MonoBehaviour
     float speed = 120;
     public Transform pivot;
 
-    public Vector3 id;
+    public int id;
 
     public InventoryItem currentItem;
     public int currentItemId;
@@ -27,9 +29,10 @@ public class GroundItem : MonoBehaviour
     public TMP_Text nameTex;
     public TMP_Text ammoTex;
 
+    public bool networkSpawned = false;
+
     private void Awake()
-    {
-        id = transform.position;
+    {    
         GameManager.instance.AddItem(this);
     }
 
@@ -60,12 +63,39 @@ public class GroundItem : MonoBehaviour
                 sheildRenderer.material = legendary;
                 break;
         }
+
+        if (!networkSpawned)
+        {
+            id = (int)Random.Range(0, 696969696969);
+
+            Message msg = Message.Create(MessageSendMode.reliable, NetworkManager.MessageIds.spawnItem, shouldAutoRelay: true);
+            msg.AddInt(id);
+            msg.AddVector3(transform.position);
+            msg.AddInt(currentItem.weapon.id);
+            NetworkManager.instance.Client.Send(msg);
+        }
     }
 
-    public void Pickup()
+    public void Pickup(bool isFromNetwork)
     {
-        Instantiate(sfx, transform.position, Quaternion.identity).GetComponent<SoundEffect>().PlaySound(currentItem.weapon.pickupSound);
+        Debug.Log(currentItem);
+        Debug.Log("Weapon " + currentItem.weapon);
+        Debug.Log("Weapon pickup sound " + currentItem.weapon.pickupSound);
+        Debug.Log("SFX prefab " + sfx);
+
+        Vector3 pos = transform.position;
+        GameObject sfxOBJ = Instantiate(sfx, pos, Quaternion.identity);
+        SoundEffect effect = sfxOBJ.GetComponent<SoundEffect>();
+        effect.PlaySound(currentItem.weapon.pickupSound);
         Destroy(GetComponent<BoxCollider>());
+
+        if (!isFromNetwork)
+        {
+            Message msg = Message.Create(MessageSendMode.reliable, NetworkManager.MessageIds.pickUpItem, shouldAutoRelay: true);
+            msg.AddInt(id);
+            NetworkManager.instance.Client.Send(msg);
+        }
+
         GetComponent<Animator>().Play("Destroy");
     }
 

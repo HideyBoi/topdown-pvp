@@ -15,6 +15,7 @@ public class Weapon : ScriptableObject
     [Header("Inventory")]
     public string gunName;
     public Sprite gunImage;
+    public int id;
     [Header("Gun Visual")]
     public Mesh gunMesh;
     public Material gunMaterial;
