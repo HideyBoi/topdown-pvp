@@ -4,15 +4,15 @@ using UnityEngine;
 
 public class ToolTip : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public Animator tooltip;
+
+    private void Awake()
     {
-        
+        tooltip.transform.rotation = Quaternion.identity;
     }
 
-    // Update is called once per frame
-    void Update()
+    public void IsAimedAt(bool yes)
     {
-        
+        tooltip.SetBool("AimedAt", yes);
     }
 }

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
+using TMPro;
 
 public class GroundItem : MonoBehaviour
 {
@@ -23,6 +24,9 @@ public class GroundItem : MonoBehaviour
     public Material rare;
     public Material legendary;
 
+    public TMP_Text nameTex;
+    public TMP_Text ammoTex;
+
     private void Awake()
     {
         id = transform.position;
@@ -37,7 +41,9 @@ public class GroundItem : MonoBehaviour
     public void UpdateItem(InventoryItem item)
     {
         currentItem.weapon = item.weapon;
+        nameTex.text = item.weapon.gunName;
         currentItem.ammoCount = item.ammoCount;
+        ammoTex.text = item.ammoCount + " bullets";
 
         gunFilter.mesh = item.weapon.gunMesh;
         gunRenderer.material = item.weapon.gunMaterial;

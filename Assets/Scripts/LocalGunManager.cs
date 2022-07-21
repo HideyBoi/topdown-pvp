@@ -32,6 +32,9 @@ public class LocalGunManager : MonoBehaviour
         pressingInteract = press;
     }
 
+    public ToolTip lastTip;
+    public ToolTip currentTip;
+
     private void FixedUpdate()
     {
         if (!NetworkManager.instance.gameIsStarted)
@@ -39,7 +42,7 @@ public class LocalGunManager : MonoBehaviour
 
         RaycastHit hit;
 
-        Physics.Raycast(transform.position, new Vector3(playerController.lookDir.x, 0, playerController.lookDir.y), out hit, 2f, lm);
+        Physics.Raycast(transform.position, new Vector3(playerController.lookDir.x, 0, playerController.lookDir.y), out hit, 3.5f, lm);
 
         interactCooldown -= Time.fixedDeltaTime;
 
@@ -74,8 +77,49 @@ public class LocalGunManager : MonoBehaviour
                 interactCooldown = 0.7f;
                 inventoryManager.PickupWeapon(hit.collider.GetComponent<GroundItem>());
             }
+
+            ToolTip tip = hit.collider.GetComponent<ToolTip>();
+
+            if (tip != null && (hit.collider.CompareTag("Interactable") || hit.collider.CompareTag("Item")))
+            {
+                if (lastTip == null)
+                {
+                    currentTip = tip;
+                    lastTip = tip;
+                    tip.IsAimedAt(true);
+                }
+                else {
+                    if (currentTip.GetInstanceID() != lastTip.GetInstanceID())
+                    {
+                        lastTip.IsAimedAt(false);
+                        lastTip = null;
+                    } else
+                    {
+                        lastTip = currentTip;
+                        currentTip.IsAimedAt(true);
+                    }
+                }
+            }  else
+            {
+                if (lastTip != null)
+                {
+                    lastTip.IsAimedAt(false);
+                    lastTip = null;
+                }
+            }
+            
+        } else
+        {
+            interactUiAnimation.SetBool("interacting", false);
+
+            if (lastTip != null)
+            {
+
+                lastTip.IsAimedAt(false);
+                lastTip = null;
+            }
         }
-    }
+    } 
 
     private void OnEnable()
     {

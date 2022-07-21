@@ -31,6 +31,6 @@ public class Chest : MonoBehaviour
         inv.weapon = loot.weapon;
         inv.ammoCount = loot.weapon.maxAmmoCount;
 
-        Instantiate(groundItem, weaponSpawnPos.position, weaponSpawnPos.rotation).GetComponent<GroundItem>().UpdateItem(inv);
+        Instantiate(groundItem, weaponSpawnPos.position, Quaternion.identity).GetComponent<GroundItem>().UpdateItem(inv);
     }
 }
