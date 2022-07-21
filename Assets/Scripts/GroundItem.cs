@@ -78,13 +78,8 @@ public class GroundItem : MonoBehaviour
 
     public void Pickup(bool isFromNetwork)
     {
-        Debug.Log(currentItem);
-        Debug.Log("Weapon " + currentItem.weapon);
-        Debug.Log("Weapon pickup sound " + currentItem.weapon.pickupSound);
-        Debug.Log("SFX prefab " + sfx);
 
-        Vector3 pos = transform.position;
-        GameObject sfxOBJ = Instantiate(sfx, pos, Quaternion.identity);
+        GameObject sfxOBJ = Instantiate(sfx, transform.position, Quaternion.identity);
         SoundEffect effect = sfxOBJ.GetComponent<SoundEffect>();
         effect.PlaySound(currentItem.weapon.pickupSound);
         Destroy(GetComponent<BoxCollider>());

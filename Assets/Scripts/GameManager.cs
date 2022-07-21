@@ -195,12 +195,16 @@ public class GameManager : MonoBehaviour
     {
         int deltedItemId = msg.GetInt();
 
+        GroundItem itemGround = null;
+
         foreach (var item in instance.spawnedItems)
         {
             if (item.id == deltedItemId)
             {
-                item.Pickup(true);
+                itemGround = item;
             }
         }
+
+        itemGround.Pickup(true);
     }
 }
