@@ -11,7 +11,7 @@ public class LocalPlayerController : MonoBehaviour
     private Controls controls;
 
     Vector2 desMoveDir;
-    Vector2 lookDir;
+    public Vector2 lookDir;
     Rigidbody rb;
     public Transform pivot;
 

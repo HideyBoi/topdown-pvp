@@ -6,7 +6,7 @@ using RiptideNetworking.Utils;
 
 public class GameManager : MonoBehaviour
 {
-    static GameManager instance;
+    public static GameManager instance;
 
     public DungeonGenerator generator;
     NetworkManager networkManager;
@@ -85,5 +85,73 @@ public class GameManager : MonoBehaviour
                 player.transform.rotation = msg.GetQuaternion();
             }
         }
+    }
+
+
+    [Header("Loot")]
+
+    public Weapon[] possibleWeapons;
+
+    public List<Chest> spawnedChests;
+    public List<GroundItem> spawnedItems;
+
+    public Weapon[] genericWeapons;
+
+    public Weapon[] rareWeapons;
+    public int rareChance;
+    public Weapon[] legendaryWeapons;
+    public int legendaryChance;
+
+    [System.Serializable]
+    public class Loot
+    {
+        public Weapon weapon;
+        //ammmo
+        //heals
+    }
+
+    public void AddChest(Chest chest)
+    {
+        spawnedChests.Add(chest);
+    }
+
+    public void AddItem(GroundItem item)
+    {
+        spawnedItems.Add(item);
+    }
+
+    public Loot GenerateLoot()
+    {
+        Loot loot = new Loot();
+
+        if (Chance(rareChance))
+        {
+            Debug.Log("Rare");
+            loot.weapon = rareWeapons[Random.Range(0, rareWeapons.Length)];
+        }
+        else if (Chance(legendaryChance))
+        {
+            Debug.Log("Legendary");
+            loot.weapon = legendaryWeapons[Random.Range(0, legendaryWeapons.Length)];
+        }
+        else
+        {
+            Debug.Log("Generic");
+            loot.weapon = genericWeapons[Random.Range(0, genericWeapons.Length)];
+        }
+
+        //health
+        //correct and aux ammo
+
+        return loot;
+    }
+
+    bool Chance(int chance)
+    {
+        if (Random.Range(0, 100) < chance)
+        {
+            return true;
+        }
+        else { return false; }
     }
 }

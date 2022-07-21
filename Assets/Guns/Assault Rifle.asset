@@ -22,7 +22,9 @@ MonoBehaviour:
   shootSound: {fileID: 8300000, guid: d9f6e3de32d469b458c549dd13199050, type: 3}
   pickupSound: {fileID: 8300000, guid: cc4995917dd52784eb73d371dc69940b, type: 3}
   reloadSound: {fileID: 8300000, guid: efc0750820d312047a7223a067e0193d, type: 3}
+  rarity: 0
   ammoType: 1
+  damage: 10
   maxAmmoCount: 35
   timeBetweenShots: 0.4
   reloadTime: 1.2

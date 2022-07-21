@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 public class LocalInventoryManager : MonoBehaviour
 {
@@ -12,9 +13,16 @@ public class LocalInventoryManager : MonoBehaviour
 
     bool canSwitch = true;
 
-    public TMP_Text ammoCount;
-    public TMP_Text totalAmmoCount;
-    public TMP_Text gunName;
+    public TMP_Text[] ammoCount;
+    public TMP_Text[] totalAmmoCount;
+    public TMP_Text[] gunName;
+    public Image[] gunImageRender;
+    public MeshRenderer gunMeshRenderer;
+    public MeshFilter gunMeshFilter;
+    public GameObject[] genericMarker;
+    public GameObject[] rareMarker;
+    public GameObject[] legendaryMarker;
+    public CanvasGroup[] slots;
 
     public enum AmmoType
     {
@@ -26,16 +34,17 @@ public class LocalInventoryManager : MonoBehaviour
     public int heavyAmmoCount;
     public int shellsAmmoCount;
 
-    public MeshRenderer gunMeshRenderer;
-    public MeshFilter gunMeshFilter;
+    public Sprite fist;
 
     public GameObject soundEffect;
+    public GameObject groundItem;
 
     private void Awake()
     {
         controls = new Controls();
 
         controls.Player.Scroll.performed += ctx => Scroll(ctx.ReadValue<float>());
+        UpdateWeaponVisual();
     }
 
     void Scroll(float amount)
@@ -54,36 +63,121 @@ public class LocalInventoryManager : MonoBehaviour
                 currentIndex = inventoryItem.Length - 1;
             }
 
-            UpdateWeaponVisual();
+            if (inventoryItem[currentIndex].weapon != null)
+            {
+                SoundEffect sfx = Instantiate(soundEffect, transform.position, Quaternion.identity).GetComponent<SoundEffect>();
+                sfx.PlaySound(inventoryItem[currentIndex].weapon.pickupSound);
+            }
         }
+    }
+
+    private void FixedUpdate()
+    {
+        UpdateWeaponVisual();
     }
 
     void UpdateWeaponVisual()
     {
-        if (inventoryItem[currentIndex] != null)
+        UpdateSlot(0);
+        UpdateSlot(1);
+        UpdateSlot(2);
+
+        if (inventoryItem[currentIndex].weapon != null)
         {
-            ammoCount.text = inventoryItem[currentIndex].ammoCount.ToString();
-            gunName.text = inventoryItem[currentIndex].weapon.gunName;
             gunMeshFilter.mesh = inventoryItem[currentIndex].weapon.gunMesh;
             gunMeshRenderer.material = inventoryItem[currentIndex].weapon.gunMaterial;
-            switch (inventoryItem[currentIndex].weapon.ammoType)
+        }
+
+        slots[0].alpha = 0.7f;
+        slots[1].alpha = 0.7f;
+        slots[2].alpha = 0.7f;
+
+        slots[currentIndex].alpha = 1f;
+    }
+
+    void UpdateSlot(int pos)
+    {
+        if (inventoryItem[pos].weapon != null)
+        {
+            ammoCount[pos].text = inventoryItem[pos].ammoCount.ToString();
+            gunName[pos].text = inventoryItem[pos].weapon.gunName;
+            gunImageRender[pos].sprite = inventoryItem[pos].weapon.gunImage;
+            switch (inventoryItem[pos].weapon.ammoType)
             {
                 case AmmoType.Light:
-                    totalAmmoCount.text = (lightAmmoCount + inventoryItem[currentIndex].ammoCount).ToString();
+                    totalAmmoCount[pos].text = (lightAmmoCount + inventoryItem[pos].ammoCount).ToString();
                     break;
                 case AmmoType.Medium:
-                    totalAmmoCount.text = (mediumAmmoCount + inventoryItem[currentIndex].ammoCount).ToString();
+                    totalAmmoCount[pos].text = (mediumAmmoCount + inventoryItem[pos].ammoCount).ToString();
                     break;
                 case AmmoType.Heavy:
-                    totalAmmoCount.text = (heavyAmmoCount + inventoryItem[currentIndex].ammoCount).ToString();
+                    totalAmmoCount[pos].text = (heavyAmmoCount + inventoryItem[pos].ammoCount).ToString();
                     break;
                 case AmmoType.Shells:
-                    totalAmmoCount.text = (shellsAmmoCount + inventoryItem[currentIndex].ammoCount).ToString();
+                    totalAmmoCount[pos].text = (shellsAmmoCount + inventoryItem[currentIndex].ammoCount).ToString();
                     break;
             }
 
-            SoundEffect sfx = Instantiate(soundEffect, transform.position, Quaternion.identity).GetComponent<SoundEffect>();
-            sfx.PlaySound(inventoryItem[currentIndex].weapon.pickupSound);
+            genericMarker[pos].SetActive(false);
+            rareMarker[pos].SetActive(false);
+            legendaryMarker[pos].SetActive(false);
+
+            switch (inventoryItem[pos].weapon.rarity)
+            {
+                case Weapon.Rarity.generic:
+                    genericMarker[pos].SetActive(true);
+                    break;
+                case Weapon.Rarity.rare:
+                    rareMarker[pos].SetActive(true);
+                    break;
+                case Weapon.Rarity.legendary:
+                    legendaryMarker[pos].SetActive(true);
+                    break;
+            }
+        }
+        else
+        {
+            ammoCount[pos].text = "--";
+            gunName[pos].text = "Fist";
+            gunMeshFilter.mesh = null;
+            gunMeshRenderer.material = null;
+            gunImageRender[pos].sprite = fist;
+            totalAmmoCount[pos].text = "--";
+        }
+    }
+
+    public void PickupWeapon(GroundItem groundItem)
+    {
+        InventoryItem pickedUpItem = groundItem.currentItem;
+
+        bool foundSpot = false;
+
+        for (int i = 0; i < inventoryItem.Length; i++)
+        {
+            if (inventoryItem[i].weapon == null && !foundSpot)
+            {
+                inventoryItem[i] = pickedUpItem;
+                foundSpot = true;
+            }
+        }
+        if (!foundSpot)
+        {
+            Instantiate(groundItem, transform.position, Quaternion.identity).GetComponent<GroundItem>().UpdateItem(inventoryItem[currentIndex]);
+
+            inventoryItem[currentIndex] = pickedUpItem;
+        }
+        
+
+        groundItem.Pickup();
+    }
+
+    public void DropWeapon(int index)
+    {
+        if (inventoryItem[index].weapon != null)
+        {
+            Instantiate(groundItem, transform.position, Quaternion.identity).GetComponent<GroundItem>().UpdateItem(inventoryItem[index]);
+
+            inventoryItem[index].weapon = null;
         }
     }
 

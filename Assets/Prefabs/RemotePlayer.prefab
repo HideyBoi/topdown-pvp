@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1625184518621700226}
   - component: {fileID: 1625184518621704061}
   - component: {fileID: 1625184518621704060}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: Pointer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -92,7 +92,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1625184518820680196}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: Pivot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -127,7 +127,7 @@ GameObject:
   - component: {fileID: 1625184519614232706}
   - component: {fileID: 1625184519614171005}
   - component: {fileID: 1625184519614171004}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: Pointer (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -212,7 +212,7 @@ GameObject:
   - component: {fileID: 1625184520517699735}
   - component: {fileID: 1625184520517699734}
   - component: {fileID: 731291302811194640}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: RemotePlayer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -310,4 +310,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12b8fdda9eed51e4cb89b3eee1066b2d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _id: 0
   pivot: {fileID: 1625184518820680196}
