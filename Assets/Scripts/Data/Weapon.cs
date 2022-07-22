@@ -19,8 +19,6 @@ public class Weapon : ScriptableObject
     [Header("Gun Visual")]
     public Mesh gunMesh;
     public Material gunMaterial;
-    public string idleAnimationName;
-    public string attackAnimationName;
     public Vector3 muzzleLocation;
     public AudioClip shootSound;
     public AudioClip pickupSound;
@@ -33,5 +31,7 @@ public class Weapon : ScriptableObject
     public int maxAmmoCount;
     public float timeBetweenShots;
     public float reloadTime;
+    public int shotCount;
+    public float spread;
 }
 

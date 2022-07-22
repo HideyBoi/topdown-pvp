@@ -25,6 +25,7 @@ public class Chest : MonoBehaviour
 
     public void Open(bool isFromNetwork)
     {
+        gameObject.tag = "NonInteractable";
         GetComponent<Animator>().Play("Open");
         Instantiate(sfx, transform.position, Quaternion.identity).GetComponent<SoundEffect>().PlaySound(chestOpenSound);
         if (!isFromNetwork)

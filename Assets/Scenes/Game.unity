@@ -210,7 +210,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 685446771}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 51ef1367ccfb3fd428de438abf4bfec6, type: 3}
+  m_Script: {fileID: 11500000, guid: 7437e5c66a4fd554aacfd2ef5fb534e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   generator: {fileID: 402053662}
@@ -224,25 +224,25 @@ MonoBehaviour:
   groundItem: {fileID: 4491493733864199258, guid: 871cb2366c1ec1341a1b94ffda881e89,
     type: 3}
   possibleWeapons:
+  - {fileID: 11400000, guid: 9cfb42c50d7fac142a3722a23ca9074e, type: 2}
+  - {fileID: 11400000, guid: c1feb8e7f03c3df4fbfd7bc670503c49, type: 2}
   - {fileID: 11400000, guid: 736175ee30b67e449a20955b99b4f00c, type: 2}
+  - {fileID: 11400000, guid: 2c5c2add7a2f2f74ebaffa4a8cd76e74, type: 2}
   - {fileID: 11400000, guid: b578df79dbab6d044ac373d4339d5e54, type: 2}
   - {fileID: 11400000, guid: 8008595968631a943b1ff823423eda91, type: 2}
-  - {fileID: 11400000, guid: c1feb8e7f03c3df4fbfd7bc670503c49, type: 2}
-  - {fileID: 11400000, guid: 9cfb42c50d7fac142a3722a23ca9074e, type: 2}
-  - {fileID: 11400000, guid: 2c5c2add7a2f2f74ebaffa4a8cd76e74, type: 2}
   spawnedChests: []
   spawnedItems: []
   genericWeapons:
-  - {fileID: 11400000, guid: b578df79dbab6d044ac373d4339d5e54, type: 2}
   - {fileID: 11400000, guid: 736175ee30b67e449a20955b99b4f00c, type: 2}
+  - {fileID: 11400000, guid: b578df79dbab6d044ac373d4339d5e54, type: 2}
   rareWeapons:
-  - {fileID: 11400000, guid: 2c5c2add7a2f2f74ebaffa4a8cd76e74, type: 2}
   - {fileID: 11400000, guid: 8008595968631a943b1ff823423eda91, type: 2}
+  - {fileID: 11400000, guid: 2c5c2add7a2f2f74ebaffa4a8cd76e74, type: 2}
   - {fileID: 11400000, guid: c1feb8e7f03c3df4fbfd7bc670503c49, type: 2}
-  rareChance: 35
+  rareChance: 31
   legendaryWeapons:
   - {fileID: 11400000, guid: 9cfb42c50d7fac142a3722a23ca9074e, type: 2}
-  legendaryChance: 18
+  legendaryChance: 16
 --- !u!4 &685446773
 Transform:
   m_ObjectHideFlags: 0

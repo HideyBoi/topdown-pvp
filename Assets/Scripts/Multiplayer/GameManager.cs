@@ -207,4 +207,18 @@ public class GameManager : MonoBehaviour
 
         itemGround.Pickup(true);
     }
+
+    [MessageHandler((ushort)NetworkManager.MessageIds.playerHoldItem)]
+    static void PlayerHoldItem(Message msg)
+    {
+        ushort id = msg.GetUShort();
+
+        foreach (var player in instance.remotePlayers)
+        {
+            if (player._id == id)
+            {
+                player.invManager.UpdateItem(msg.GetInt());
+            }
+        }
+    }
 }

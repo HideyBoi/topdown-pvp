@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="64"
+   height="16"
+   viewBox="0 0 64 16"
+   version="1.1"
+   id="svg5"
+   inkscape:version="1.2 (dc2aedaf03, 2022-05-15)"
+   sodipodi:docname="hbg-logo-text.svg"
+   inkscape:export-filename="hbg-logo.png"
+   inkscape:export-xdpi="3140.311"
+   inkscape:export-ydpi="3140.311"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview7"
+     pagecolor="#505050"
+     bordercolor="#eeeeee"
+     borderopacity="1"
+     inkscape:showpageshadow="0"
+     inkscape:pageopacity="0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#505050"
+     inkscape:document-units="px"
+     showgrid="false"
+     inkscape:zoom="16"
+     inkscape:cx="25.9375"
+     inkscape:cy="1.3125"
+     inkscape:window-width="1920"
+     inkscape:window-height="1017"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs2">
+    <inkscape:path-effect
+       effect="bspline"
+       id="path-effect21510"
+       is_visible="true"
+       lpeversion="1"
+       weight="33.333333"
+       steps="2"
+       helper_size="0"
+       apply_no_weight="true"
+       apply_with_weight="true"
+       only_selected="false" />
+    <inkscape:path-effect
+       effect="bspline"
+       id="path-effect21450"
+       is_visible="true"
+       lpeversion="1"
+       weight="33.333333"
+       steps="2"
+       helper_size="0"
+       apply_no_weight="true"
+       apply_with_weight="true"
+       only_selected="false" />
+    <inkscape:path-effect
+       effect="bspline"
+       id="path-effect21444"
+       is_visible="true"
+       lpeversion="1"
+       weight="33.333333"
+       steps="2"
+       helper_size="0"
+       apply_no_weight="true"
+       apply_with_weight="true"
+       only_selected="false" />
+    <inkscape:path-effect
+       effect="bspline"
+       id="path-effect21231"
+       is_visible="true"
+       lpeversion="1"
+       weight="33.333333"
+       steps="2"
+       helper_size="0"
+       apply_no_weight="true"
+       apply_with_weight="true"
+       only_selected="false" />
+    <inkscape:path-effect
+       effect="bspline"
+       id="path-effect21227"
+       is_visible="true"
+       lpeversion="1"
+       weight="33.333333"
+       steps="2"
+       helper_size="0"
+       apply_no_weight="true"
+       apply_with_weight="true"
+       only_selected="false" />
+    <linearGradient
+       id="linearGradient5277"
+       inkscape:swatch="solid">
+      <stop
+         style="stop-color:#a7a700;stop-opacity:0;"
+         offset="0"
+         id="stop5275" />
+    </linearGradient>
+    <inkscape:path-effect
+       effect="bspline"
+       id="path-effect743"
+       is_visible="true"
+       lpeversion="1"
+       weight="33.333333"
+       steps="2"
+       helper_size="0"
+       apply_no_weight="true"
+       apply_with_weight="true"
+       only_selected="false" />
+  </defs>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <path
+       id="rect955"
+       style="fill:#ffffff;fill-opacity:1;stroke:#ffffff;stroke-width:0.3;stroke-linejoin:round;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       d="m 2.46875,0.50976562 c -1.090055,0 -1.96679688,0.87869498 -1.96679688,1.96874998 V 13.537109 c 0,1.090055 0.87674188,1.96875 1.96679688,1.96875 h 11.064453 c 1.090055,0 1.96875,-0.878695 1.96875,-1.96875 V 2.4785156 c 0,-1.090055 -0.878695,-1.96874998 -1.96875,-1.96874998 z M 8.0507812,2.5410156 A 1.6,1.6000004 0 0 1 9.6503906,4.140625 1.6,1.6000004 0 0 1 8.9101562,5.4765625 c 0.2940265,0.00679 0.5661818,0.022219 0.7929688,0.056641 0.448697,0.068103 0.721264,0.2113381 1.169922,0.890625 0.448656,0.6792869 1.071603,1.8925288 1.695312,3.1074219 L 11.263672,10.388672 9.6445312,6.6855469 c 0.06497,1.1499255 0.1315116,2.3019454 0.3984378,3.5097651 0.266926,1.207821 0.734442,2.472133 1.203125,3.738282 l -2.2031252,0.0059 C 8.919083,12.905592 8.7954666,11.872366 8.6210938,11.332031 8.4467209,10.791697 8.252809,10.751954 8,10.751953 c -0.252809,-1e-6 -0.4621547,0.04325 -0.6289062,0.582031 -0.1667516,0.538785 -0.2901768,1.571608 -0.4140626,2.605469 l -2.203125,-0.0059 C 5.2225895,12.667445 5.6901047,11.403133 5.9570312,10.195312 6.2239577,8.9874922 6.2904991,7.8354724 6.3554688,6.6855469 L 4.7363281,10.388672 3.4316406,9.53125 C 4.0553497,8.3163569 4.678297,7.1031148 5.1269531,6.4238281 5.5756093,5.7445415 5.8487774,5.6012918 6.2988281,5.5332031 6.5502714,5.495162 6.857259,5.4802455 7.1875,5.4746094 A 1.6,1.6000004 0 0 1 6.4492188,4.140625 1.6,1.6000004 0 0 1 8.0507812,2.5410156 Z" />
+    <text
+       xml:space="preserve"
+       style="font-weight:bold;font-size:10.6667px;font-family:Bahnschrift;-inkscape-font-specification:'Bahnschrift Bold';white-space:pre;inline-size:2.375;display:inline;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.3;stroke-linejoin:round;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       x="15.75"
+       y="3.5625"
+       id="text22585" />
+    <text
+       xml:space="preserve"
+       style="font-weight:bold;font-size:10.6667px;font-family:Bahnschrift;-inkscape-font-specification:'Bahnschrift Bold';fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.3;stroke-linejoin:round;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       x="15.451903"
+       y="8.8232231"
+       id="text22693"><tspan
+         sodipodi:role="line"
+         id="tspan22691"
+         x="15.451903"
+         y="8.8232231"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:Alef;-inkscape-font-specification:'Alef Bold'">HideyBoi</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:5.33333px;font-family:Alef;-inkscape-font-specification:'Alef Bold';letter-spacing:0.01px;white-space:pre;inline-size:22.6181;display:inline;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.3;stroke-linejoin:round;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       x="24.875"
+       y="14.6875"
+       id="text22747"
+       transform="translate(4.875,0.1875)"><tspan
+         x="24.875"
+         y="14.6875"
+         id="tspan22789">Games</tspan></text>
+  </g>
+</svg>

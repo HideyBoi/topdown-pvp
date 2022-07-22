@@ -191,7 +191,7 @@ GameObject:
   - component: {fileID: 3585622162370183927}
   - component: {fileID: 3763275406980744118}
   - component: {fileID: 7859876152699985759}
-  - component: {fileID: 7061889007216295917}
+  - component: {fileID: 1455947840338574531}
   m_Layer: 0
   m_Name: Chest
   m_TagString: Interactable
@@ -327,7 +327,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.14, y: 0.7, z: 1.3}
   m_Center: {x: 0, y: 0, z: 0.54}
---- !u!114 &7061889007216295917
+--- !u!114 &1455947840338574531
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -336,7 +336,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 5135371824075197131}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a4ae896f1ae61f74dbedfbd474d44283, type: 3}
+  m_Script: {fileID: 11500000, guid: 9c13810c439d13f48ad5548423762767, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   tooltip: {fileID: 2099569137265658126}

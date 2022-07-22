@@ -53,7 +53,9 @@ public class NetworkManager : MonoBehaviour
         playerPos,
         openChest,
         spawnItem,
-        pickUpItem
+        pickUpItem,
+        playerHoldItem,
+        playerGunRot
     }
 
     private void Start()
