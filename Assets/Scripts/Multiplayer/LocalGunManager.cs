@@ -10,6 +10,7 @@ public class LocalGunManager : MonoBehaviour
     private LocalPlayerController playerController;
     private LocalInventoryManager im;
     public LayerMask lm;
+    public LayerMask gunLm;
     public Animator interactUiAnimation;
     public Slider interactProgressbar;
 
@@ -142,7 +143,7 @@ public class LocalGunManager : MonoBehaviour
         if (im.inventoryItem[im.currentIndex].weapon != null)
         {
             RaycastHit lookDir;
-            Physics.Raycast(transform.position, new Vector3(playerController.lookDir.x, 0, playerController.lookDir.y), out lookDir, Mathf.Infinity, lm);
+            Physics.Raycast(transform.position, new Vector3(playerController.lookDir.x, 0, playerController.lookDir.y), out lookDir, Mathf.Infinity, gunLm);
             gunPivot.LookAt(lookDir.point);
 
             if (shootCooldown < 0)
@@ -160,7 +161,7 @@ public class LocalGunManager : MonoBehaviour
                 {
                     im.inventoryItem[im.currentIndex].ammoCount--;
                     Instantiate(soundEffect, transform.position, Quaternion.identity).GetComponent<SoundEffect>().PlaySound(im.inventoryItem[im.currentIndex].weapon.shootSound);
-                    Instantiate(muzzleFlash, gunPivot.position + gunPivot.transform.TransformDirection(im.inventoryItem[im.currentIndex].weapon.muzzleLocation), gunPivot.rotation);
+                    Instantiate(muzzleFlash, gunPivot.position + gunPivot.transform.TransformDirection(im.inventoryItem[im.currentIndex].weapon.muzzleLocation), gunPivot.rotation, gunPivot);
                     shootCooldown = im.inventoryItem[im.currentIndex].weapon.timeBetweenShots;
 
                     if (!im.inventoryItem[im.currentIndex].weapon.automatic)
@@ -177,7 +178,7 @@ public class LocalGunManager : MonoBehaviour
                         dir.x += Random.Range(-im.inventoryItem[im.currentIndex].weapon.spread, im.inventoryItem[im.currentIndex].weapon.spread);
                         dir = pivot.TransformDirection(dir);
 
-                        Physics.Raycast(transform.position, dir, out shoot, Mathf.Infinity, lm);
+                        Physics.Raycast(transform.position, dir, out shoot, Mathf.Infinity, gunLm);
 
                         if (shoot.collider != null)
                         {

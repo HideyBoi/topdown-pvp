@@ -19,7 +19,6 @@ public class LocalInventoryManager : MonoBehaviour
     public TMP_Text[] ammoCount;
     public TMP_Text[] totalAmmoCount;
     public TMP_Text[] gunName;
-    public Image[] gunImageRender;
     public MeshRenderer gunMeshRenderer;
     public MeshFilter gunMeshFilter;
     public GameObject[] genericMarker;
@@ -37,8 +36,6 @@ public class LocalInventoryManager : MonoBehaviour
     public int heavyAmmoCount;
     public int shellsAmmoCount;
 
-    public Sprite fist;
-
     public GameObject soundEffect;
     public GameObject groundItem;
 
@@ -53,6 +50,7 @@ public class LocalInventoryManager : MonoBehaviour
 
         controls.Player.Scroll.performed += ctx => Scroll(ctx.ReadValue<float>());
         controls.Player.Reload.performed += _ => Reload();
+        controls.Player.Drop.performed += _ => DropWeapon(currentIndex);
         UpdateWeaponVisual();
     }
 
@@ -207,7 +205,6 @@ public class LocalInventoryManager : MonoBehaviour
         {
             ammoCount[pos].text = inventoryItem[pos].ammoCount.ToString();
             gunName[pos].text = inventoryItem[pos].weapon.gunName;
-            gunImageRender[pos].sprite = inventoryItem[pos].weapon.gunImage;
             switch (inventoryItem[pos].weapon.ammoType)
             {
                 case AmmoType.Light:
@@ -243,11 +240,13 @@ public class LocalInventoryManager : MonoBehaviour
         }
         else
         {
+            genericMarker[pos].SetActive(false);
+            rareMarker[pos].SetActive(false);
+            legendaryMarker[pos].SetActive(false);
             ammoCount[pos].text = "--";
             gunName[pos].text = "Fist";
             gunMeshFilter.mesh = null;
             gunMeshRenderer.material = null;
-            gunImageRender[pos].sprite = fist;
             totalAmmoCount[pos].text = "--";
         }
     }

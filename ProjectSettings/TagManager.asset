@@ -8,6 +8,7 @@ TagManager:
   - Interactable
   - NonInteractable
   - Item
+  - RemotePlayer
   layers:
   - Default
   - TransparentFX

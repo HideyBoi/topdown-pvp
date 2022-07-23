@@ -48,7 +48,7 @@ GameObject:
   - component: {fileID: 974717709019665829}
   m_Layer: 7
   m_Name: RemotePlayer
-  m_TagString: RemotePlayer
+  m_TagString: Undefined
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
