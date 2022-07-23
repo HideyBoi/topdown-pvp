@@ -9760,3 +9760,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _particleSystem: {fileID: 503261244163821304}
+  particleId: 1
+  networkSpawned: 0

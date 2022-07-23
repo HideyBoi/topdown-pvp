@@ -223,6 +223,9 @@ MonoBehaviour:
     type: 3}
   groundItem: {fileID: 4491493733864199258, guid: 871cb2366c1ec1341a1b94ffda881e89,
     type: 3}
+  particleObjects:
+  - {fileID: 3124112141188442420, guid: 8bb6cee50d81f8342a4a952984b87c4f, type: 3}
+  - {fileID: 503261244163821301, guid: 82968f14cd878794fa71f386769df172, type: 3}
   possibleWeapons:
   - {fileID: 11400000, guid: 9cfb42c50d7fac142a3722a23ca9074e, type: 2}
   - {fileID: 11400000, guid: c1feb8e7f03c3df4fbfd7bc670503c49, type: 2}

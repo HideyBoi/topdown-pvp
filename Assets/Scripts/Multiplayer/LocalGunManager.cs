@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using RiptideNetworking;
+using RiptideNetworking.Utils;
 
 public class LocalGunManager : MonoBehaviour
 {
@@ -145,6 +147,11 @@ public class LocalGunManager : MonoBehaviour
             RaycastHit lookDir;
             Physics.Raycast(transform.position, new Vector3(playerController.lookDir.x, 0, playerController.lookDir.y), out lookDir, Mathf.Infinity, gunLm);
             gunPivot.LookAt(lookDir.point);
+
+            Message gunRot = Message.Create(MessageSendMode.unreliable, NetworkManager.MessageIds.playerGunRot, shouldAutoRelay: true);
+            gunRot.AddUShort(playerController.id);
+            gunRot.AddQuaternion(gunPivot.rotation);
+            NetworkManager.instance.Client.Send(gunRot);
 
             if (shootCooldown < 0)
             {

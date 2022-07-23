@@ -19,6 +19,8 @@ public class GameManager : MonoBehaviour
     public GameObject remotePlayerPrefab;
     public GameObject groundItem;
 
+    public GameObject[] particleObjects;
+
     bool generationStarted = false;
 
     private void Awake()
@@ -220,5 +222,26 @@ public class GameManager : MonoBehaviour
                 player.invManager.UpdateItem(msg.GetInt());
             }
         }
+    }
+
+    [MessageHandler((ushort)NetworkManager.MessageIds.playerGunRot)]
+    static void PlayerGunRot(Message msg)
+    {
+        ushort id = msg.GetUShort();
+
+        foreach (var player in instance.remotePlayers)
+        {
+            if (player._id == id)
+            {
+                player.invManager.UpdateGunRot(msg.GetQuaternion());
+            }
+        }
+    }
+
+    [MessageHandler((ushort)NetworkManager.MessageIds.particleEffect)]
+    static void SpawnParticle(Message msg)
+    {
+        GameObject particle = Instantiate(instance.particleObjects[msg.GetInt()], msg.GetVector3(), msg.GetQuaternion());
+        particle.GetComponent<Vfx>().networkSpawned = true;
     }
 }

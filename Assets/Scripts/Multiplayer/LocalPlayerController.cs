@@ -26,7 +26,7 @@ public class LocalPlayerController : MonoBehaviour
 
     NetworkManager nm;
 
-    ushort id;
+    public ushort id;
 
     private void Awake()
     {

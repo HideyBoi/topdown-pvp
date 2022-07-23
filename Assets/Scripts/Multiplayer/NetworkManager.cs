@@ -44,18 +44,22 @@ public class NetworkManager : MonoBehaviour
 
     public enum MessageIds : ushort
     {
-        playerInfo = 1,
-        startGame,
-        playerReady,
-        mapHeader,
-        mapData,
-        mapDone,
-        playerPos,
-        openChest,
-        spawnItem,
-        pickUpItem,
-        playerHoldItem,
-        playerGunRot
+        playerInfo = 1, //contains data about player (cosmetics, name)
+        startGame, //tells the players to start loading the game world
+        playerReady, //player has finished loading game world
+        mapHeader, //contains basic information about the generated map, ie total room count
+        mapData, //contains room information, ie type of room, which halls are open
+        mapDone, //map generation has finished
+        playerPos, //player position and rotation updates
+        openChest, //tell other players that a chest has been opened
+        spawnItem, //tells other players that an item has spawned
+        pickUpItem, //tells other players that an item has been picked up
+        playerHoldItem, //tells other players what item local player is holding
+        playerGunRot,//tells other players what direction the gun is facing
+        particleEffect, //tells other players to spawn a particle effect
+        soundEffect, //tells other players to spawn a sound effect
+        playerSoundEffect, //sound effects that should travel with a player (ie, a reloading sound effect should follow the player)
+        muzzleFlash, //special muzzle flash particle information (what player spawned it and gun sound effect)
     }
 
     private void Start()

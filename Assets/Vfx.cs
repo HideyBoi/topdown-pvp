@@ -1,10 +1,26 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using RiptideNetworking;
+using RiptideNetworking.Utils;
 
 public class Vfx : MonoBehaviour
 {
     [SerializeField] private ParticleSystem _particleSystem;
+    [SerializeField] private int particleId;
+    public bool networkSpawned = false;
+
+    private void Start()
+    {
+        if (!networkSpawned && particleId != 1)
+        {
+            Message msg = Message.Create(MessageSendMode.reliable, NetworkManager.MessageIds.particleEffect, shouldAutoRelay: true);
+            msg.AddInt(particleId);
+            msg.AddVector3(transform.position);
+            msg.AddQuaternion(transform.rotation);
+            NetworkManager.instance.Client.Send(msg);
+        }
+    }
 
     private void FixedUpdate()
     {
