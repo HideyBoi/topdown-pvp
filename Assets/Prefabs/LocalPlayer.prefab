@@ -460,6 +460,7 @@ GameObject:
   - component: {fileID: 171931357370713825}
   - component: {fileID: 171931357370713827}
   - component: {fileID: 171931357370713828}
+  - component: {fileID: 8522245527550304611}
   m_Layer: 6
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -592,6 +593,14 @@ MonoBehaviour:
   m_CameraActivatedEvent:
     m_PersistentCalls:
       m_Calls: []
+--- !u!81 &8522245527550304611
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 171931357370713839}
+  m_Enabled: 1
 --- !u!1 &171931358746057920
 GameObject:
   m_ObjectHideFlags: 0
@@ -608,7 +617,6 @@ GameObject:
   - component: {fileID: 171931358746057923}
   - component: {fileID: 171931358746057922}
   - component: {fileID: 171931358746057926}
-  - component: {fileID: 4027290118504460493}
   m_Layer: 6
   m_Name: LocalPlayer
   m_TagString: Untagged
@@ -656,6 +664,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 129
   miniMapCam: {fileID: 171931357097129346}
+  id: 0
 --- !u!114 &1973023435968461026
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -828,14 +837,6 @@ Rigidbody:
   m_Interpolate: 1
   m_Constraints: 116
   m_CollisionDetection: 1
---- !u!81 &4027290118504460493
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 171931358746057920}
-  m_Enabled: 1
 --- !u!1 &171931358881204716
 GameObject:
   m_ObjectHideFlags: 0

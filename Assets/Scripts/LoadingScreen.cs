@@ -2,12 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using TMPro;
+
 
 public class LoadingScreen : MonoBehaviour
 {
 
     public static LoadingScreen instance;
     public Animator animator;
+
+    public TMP_Text text;
+
+    public bool waitingForGeneration = false;
 
     private void Awake()
     {
@@ -23,6 +29,7 @@ public class LoadingScreen : MonoBehaviour
 
     public void LoadLevel(string sceneName)
     {
+        text.text = "Loading...";
         animator.Play("fadeToBlack");
         StartCoroutine("LoadAScene", sceneName);
     }
@@ -33,9 +40,28 @@ public class LoadingScreen : MonoBehaviour
         SceneManager.LoadSceneAsync(name);
     }
 
-    public void SceneWasLoaded(Scene scene, LoadSceneMode mode)
+    private void FixedUpdate()
     {
-        animator.Play("fadeFromBlack");
+        if (waitingForGeneration)
+        {
+            text.text = "Generating map...";
+            if (NetworkManager.instance.gameIsStarted)
+            {
+                animator.Play("fadeFromBlack");
+                waitingForGeneration = false;
+            }
+        }
     }
 
+    public void SceneWasLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if (scene.name == "Game")
+        {
+            waitingForGeneration = true;
+        }
+        else
+        {
+            animator.Play("fadeFromBlack");
+        }
+    }
 }

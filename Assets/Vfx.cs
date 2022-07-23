@@ -12,7 +12,7 @@ public class Vfx : MonoBehaviour
 
     private void Start()
     {
-        if (!networkSpawned && particleId != 1)
+        if (!networkSpawned && particleId != -1)
         {
             Message msg = Message.Create(MessageSendMode.reliable, NetworkManager.MessageIds.particleEffect, shouldAutoRelay: true);
             msg.AddInt(particleId);

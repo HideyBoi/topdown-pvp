@@ -305,6 +305,11 @@ public class LocalInventoryManager : MonoBehaviour
 
                     currentReloadSound = Instantiate(soundEffect, transform.position, Quaternion.identity);
                     currentReloadSound.GetComponent<SoundEffect>().PlaySound(inventoryItem[currentIndex].weapon.reloadSound);
+
+                    Message msg = Message.Create(MessageSendMode.reliable, NetworkManager.MessageIds.playerReloadSound, shouldAutoRelay: true);
+                    msg.AddUShort(NetworkManager.instance.Client.Id);
+                    msg.AddInt(inventoryItem[currentIndex].weapon.id);
+                    NetworkManager.instance.Client.Send(msg);
                 }
                 break;
             case AmmoType.Medium:
@@ -315,6 +320,11 @@ public class LocalInventoryManager : MonoBehaviour
 
                     currentReloadSound = Instantiate(soundEffect, transform.position, Quaternion.identity);
                     currentReloadSound.GetComponent<SoundEffect>().PlaySound(inventoryItem[currentIndex].weapon.reloadSound);
+
+                    Message msg = Message.Create(MessageSendMode.reliable, NetworkManager.MessageIds.playerReloadSound, shouldAutoRelay: true);
+                    msg.AddUShort(NetworkManager.instance.Client.Id);
+                    msg.AddInt(inventoryItem[currentIndex].weapon.id);
+                    NetworkManager.instance.Client.Send(msg);
                 }
                 break;
             case AmmoType.Heavy:
@@ -325,6 +335,11 @@ public class LocalInventoryManager : MonoBehaviour
 
                     currentReloadSound = Instantiate(soundEffect, transform.position, Quaternion.identity);
                     currentReloadSound.GetComponent<SoundEffect>().PlaySound(inventoryItem[currentIndex].weapon.reloadSound);
+
+                    Message msg = Message.Create(MessageSendMode.reliable, NetworkManager.MessageIds.playerReloadSound, shouldAutoRelay: true);
+                    msg.AddUShort(NetworkManager.instance.Client.Id);
+                    msg.AddInt(inventoryItem[currentIndex].weapon.id);
+                    NetworkManager.instance.Client.Send(msg);
                 }
                 break;
             case AmmoType.Shells:
@@ -335,6 +350,11 @@ public class LocalInventoryManager : MonoBehaviour
 
                     currentReloadSound = Instantiate(soundEffect, transform.position, Quaternion.identity);
                     currentReloadSound.GetComponent<SoundEffect>().PlaySound(inventoryItem[currentIndex].weapon.reloadSound);
+
+                    Message msg = Message.Create(MessageSendMode.reliable, NetworkManager.MessageIds.playerReloadSound, shouldAutoRelay: true);
+                    msg.AddUShort(NetworkManager.instance.Client.Id);
+                    msg.AddInt(inventoryItem[currentIndex].weapon.id);
+                    NetworkManager.instance.Client.Send(msg);
                 }
                 break;
         }

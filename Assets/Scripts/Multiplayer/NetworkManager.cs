@@ -57,9 +57,8 @@ public class NetworkManager : MonoBehaviour
         playerHoldItem, //tells other players what item local player is holding
         playerGunRot,//tells other players what direction the gun is facing
         particleEffect, //tells other players to spawn a particle effect
-        soundEffect, //tells other players to spawn a sound effect
-        playerSoundEffect, //sound effects that should travel with a player (ie, a reloading sound effect should follow the player)
-        muzzleFlash, //special muzzle flash particle information (what player spawned it and gun sound effect)
+        playerReloadSound, //sound effects that should travel with a player (ie, a reloading sound effect should follow the player)
+        playerShot, //contains data about what gun was shot and where
     }
 
     private void Start()

@@ -20,6 +20,9 @@ public class GameManager : MonoBehaviour
     public GameObject groundItem;
 
     public GameObject[] particleObjects;
+    public GameObject muzzleFlash;
+
+    public GameObject soundEffect;
 
     bool generationStarted = false;
 
@@ -243,5 +246,34 @@ public class GameManager : MonoBehaviour
     {
         GameObject particle = Instantiate(instance.particleObjects[msg.GetInt()], msg.GetVector3(), msg.GetQuaternion());
         particle.GetComponent<Vfx>().networkSpawned = true;
+    }
+
+    [MessageHandler((ushort)NetworkManager.MessageIds.playerShot)]
+    static void MuzzleFlash(Message msg)
+    {
+        ushort id = msg.GetUShort();
+
+        foreach (var player in instance.remotePlayers)
+        {
+            if (player._id == id)
+            {
+                Instantiate(instance.soundEffect, player.transform).GetComponent<SoundEffect>().PlaySound(instance.possibleWeapons[msg.GetInt()].shootSound);
+                Instantiate(instance.muzzleFlash, msg.GetVector3(), msg.GetQuaternion(), player.pivot);
+            }
+        }
+    }
+
+    [MessageHandler((ushort)NetworkManager.MessageIds.playerReloadSound)]
+    static void PlayerReload(Message msg)
+    {
+        ushort id = msg.GetUShort();
+
+        foreach (var player in instance.remotePlayers)
+        {
+            if (player._id == id)
+            {
+                Instantiate(instance.soundEffect, player.transform).GetComponent<SoundEffect>().PlaySound(instance.possibleWeapons[msg.GetInt()].reloadSound);
+            }
+        }
     }
 }

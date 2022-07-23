@@ -13,7 +13,6 @@ MonoBehaviour:
   m_Name: Assault Rifle Rare
   m_EditorClassIdentifier: 
   gunName: Assault Rifle
-  gunImage: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
   id: 1
   gunMesh: {fileID: 272717651244581583, guid: 4adbbdc07be0c6a46953997a68269c84, type: 3}
   gunMaterial: {fileID: 2100000, guid: 7c27e841b223bfd4cbca2d588a4459ba, type: 2}
@@ -26,7 +25,7 @@ MonoBehaviour:
   automatic: 1
   damage: 11
   maxAmmoCount: 32
-  timeBetweenShots: 0.1
+  timeBetweenShots: 0.065
   reloadTime: 1.2
   shotCount: 0
   spread: 0.3

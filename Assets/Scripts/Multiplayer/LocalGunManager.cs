@@ -171,6 +171,13 @@ public class LocalGunManager : MonoBehaviour
                     Instantiate(muzzleFlash, gunPivot.position + gunPivot.transform.TransformDirection(im.inventoryItem[im.currentIndex].weapon.muzzleLocation), gunPivot.rotation, gunPivot);
                     shootCooldown = im.inventoryItem[im.currentIndex].weapon.timeBetweenShots;
 
+                    Message muzzleFlashMsg = Message.Create(MessageSendMode.reliable, NetworkManager.MessageIds.playerShot, shouldAutoRelay: true);
+                    muzzleFlashMsg.AddUShort(playerController.id);
+                    muzzleFlashMsg.AddInt(im.inventoryItem[im.currentIndex].weapon.id);
+                    muzzleFlashMsg.AddVector3(gunPivot.position + gunPivot.transform.TransformDirection(im.inventoryItem[im.currentIndex].weapon.muzzleLocation));
+                    muzzleFlashMsg.AddQuaternion(gunPivot.rotation);
+                    NetworkManager.instance.Client.Send(muzzleFlashMsg);
+
                     if (!im.inventoryItem[im.currentIndex].weapon.automatic)
                     {
                         wantsToShoot = false;
