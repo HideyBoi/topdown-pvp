@@ -46,9 +46,10 @@ GameObject:
   - component: {fileID: 1625184520517699734}
   - component: {fileID: 731291302811194640}
   - component: {fileID: 974717709019665829}
+  - component: {fileID: 2511984471038183554}
   m_Layer: 7
   m_Name: RemotePlayer
-  m_TagString: Undefined
+  m_TagString: RemotePlayer
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -147,6 +148,7 @@ MonoBehaviour:
   _id: 0
   pivot: {fileID: 1625184518820680196}
   invManager: {fileID: 974717709019665829}
+  healthManager: {fileID: 0}
 --- !u!114 &974717709019665829
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -164,6 +166,23 @@ MonoBehaviour:
   soundEffect: {fileID: 4491493733864199258, guid: 871cb2366c1ec1341a1b94ffda881e89,
     type: 3}
   gunPivot: {fileID: 7882332431855857025}
+--- !u!114 &2511984471038183554
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1625184520517699732}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2e12d7fc895eb0458d0ce9289bd630a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  deathEffect: {fileID: 0}
+  thisId: 0
+  animator: {fileID: 0}
+  isDead: 0
+  isLocalPlayer: 0
 --- !u!1 &2989654674347335035
 GameObject:
   m_ObjectHideFlags: 0

@@ -14,6 +14,7 @@ public class Chest : MonoBehaviour
     GameManager gm;
 
     public Transform weaponSpawnPos;
+    public Transform healSpawnPos;
 
     private void Awake()
     {
@@ -43,6 +44,12 @@ public class Chest : MonoBehaviour
             GameObject item = Instantiate(groundItem, weaponSpawnPos.position, Quaternion.identity);
             item.GetComponent<GroundItem>().UpdateItem(inv);
             item.GetComponent<GroundItem>().networkSpawned = false;
+
+            if (loot.health != null)
+            {
+                GameObject heal = Instantiate(loot.health, healSpawnPos.position, Quaternion.identity);
+                heal.GetComponent<Healable>().networkSpawned = false;
+            }
         }  
     }
 }

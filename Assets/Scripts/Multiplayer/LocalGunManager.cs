@@ -100,9 +100,15 @@ public class LocalGunManager : MonoBehaviour
                 im.PickupWeapon(hit.collider.GetComponent<GroundItem>());
             }
 
+            if (hit.collider.CompareTag("Heal") && interactCooldown < 0 && pressingInteract)
+            {
+                interactCooldown = 0.4f;
+                im.PickupHeal(hit.collider.GetComponent<Healable>());
+            }
+
             ToolTip tip = hit.collider.GetComponent<ToolTip>();
 
-            if (tip != null && (hit.collider.CompareTag("Interactable") || hit.collider.CompareTag("Item")))
+            if (tip != null && (hit.collider.CompareTag("Interactable") || hit.collider.CompareTag("Item") || hit.collider.CompareTag("Heal")))
             {
                 if (lastTip == null)
                 {
@@ -200,7 +206,8 @@ public class LocalGunManager : MonoBehaviour
 
                             if (shoot.collider.CompareTag("RemotePlayer"))
                             {
-                                Damage(im.inventoryItem[im.currentIndex].weapon.damage);
+                                HealthManager hm = shoot.collider.GetComponent<HealthManager>();
+                                Damage(im.inventoryItem[im.currentIndex].weapon.damage, im.inventoryItem[im.currentIndex].weapon.id, hm);
                             }
                         }
                     }
@@ -214,9 +221,9 @@ public class LocalGunManager : MonoBehaviour
         }
     }
 
-    void Damage(int damage)
+    void Damage(int damage, int gunId, HealthManager hm)
     {
-        Debug.Log("Damage " + damage);
+        hm.Damage(damage, playerController.id, gunId, false);
     }
 
     private void OnEnable()
@@ -226,6 +233,7 @@ public class LocalGunManager : MonoBehaviour
 
     private void OnDisable()
     {
-        controls.Disable();
+        if (controls != null)
+            controls.Disable();
     }
 }

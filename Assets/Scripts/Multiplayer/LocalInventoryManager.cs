@@ -43,6 +43,19 @@ public class LocalInventoryManager : MonoBehaviour
     public float reloadCooldown;
     public GameObject currentReloadSound;
 
+    public int syringeCount = 0;
+    public TMP_Text syringeCountText;
+    public Slider syringeSlider;
+    public float currentSyringeTime = 0f;
+    public float syringeTime = 3.5f;
+    bool wantsToUseSyringe = false;
+    public int medkitCount = 0;
+    public TMP_Text medkitCountText;
+    public Slider medkitSlider;
+    public float currentMedkitTime = 0f;
+    public float medkitTime = 8f;
+    bool wantsToUseMedkit = false;
+
     private void Awake()
     {
         controls = new Controls();
@@ -51,7 +64,38 @@ public class LocalInventoryManager : MonoBehaviour
         controls.Player.Scroll.performed += ctx => Scroll(ctx.ReadValue<float>());
         controls.Player.Reload.performed += _ => Reload();
         controls.Player.Drop.performed += _ => DropWeapon(currentIndex);
+        controls.Player.UseMedkit.performed += _ => UseMedkit(true);
+        controls.Player.UseMedkit.canceled += _ => UseMedkit(false);
+        controls.Player.UseSyringe.performed += _ => UseSyringe(true);
+        controls.Player.UseSyringe.performed += _ => UseSyringe(false);
+
         UpdateWeaponVisual();
+    }
+
+    void UseMedkit(bool pressed)
+    {
+        if (medkitCount > 0)
+        {
+            wantsToUseMedkit = pressed;
+            wantsToUseSyringe = false;
+        } else
+        {
+            wantsToUseMedkit = false;
+            wantsToUseSyringe = false;
+        }  
+    }
+
+    void UseSyringe(bool pressed)
+    {
+        if (syringeCount > 0)
+        {
+            wantsToUseSyringe = pressed;
+            wantsToUseMedkit = false;
+        } else
+        {
+            wantsToUseSyringe = false;
+            wantsToUseMedkit = false;
+        }      
     }
 
     void Scroll(float amount)
@@ -102,6 +146,31 @@ public class LocalInventoryManager : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (!NetworkManager.instance.gameIsStarted)
+            return;
+
+        if (wantsToUseMedkit)
+        {
+            currentMedkitTime += Time.fixedDeltaTime;
+            if (currentMedkitTime > medkitTime)
+            {
+                currentMedkitTime = 0f;
+                wantsToUseMedkit = false;
+                GetComponent<HealthManager>().Heal(150);
+            }
+        }
+
+        if (wantsToUseSyringe)
+        {
+            currentSyringeTime += Time.fixedDeltaTime;
+            if (currentSyringeTime > syringeTime)
+            {
+                currentSyringeTime = 0;
+                wantsToUseSyringe = false;
+                GetComponent<HealthManager>().Heal(30);
+            }
+        }
+
         UpdateWeaponVisual();
 
         reloadCooldown -= Time.fixedDeltaTime;
@@ -197,6 +266,11 @@ public class LocalInventoryManager : MonoBehaviour
         slots[2].alpha = 0.7f;
 
         slots[currentIndex].alpha = 1f;
+
+        medkitCountText.text = medkitCount.ToString();
+        medkitSlider.value = currentMedkitTime;
+        syringeCountText.text = syringeCount.ToString();
+        syringeSlider.value = currentSyringeTime;
     }
 
     void UpdateSlot(int pos)
@@ -276,6 +350,19 @@ public class LocalInventoryManager : MonoBehaviour
         groundItem.Pickup(false);
 
         PlayerHoldChanged();
+    }
+
+    public void PickupHeal(Healable heal)
+    {
+        if (heal.type == Healable.HealType.Medkit)
+        {
+            medkitCount++;
+        } else
+        {
+            syringeCount++;
+        }
+
+        heal.Pickup(false);
     }
 
     public void DropWeapon(int index)
@@ -367,6 +454,7 @@ public class LocalInventoryManager : MonoBehaviour
 
     private void OnDisable()
     {
-        controls.Disable();
+        if (controls != null)
+            controls.Disable();
     }
 }

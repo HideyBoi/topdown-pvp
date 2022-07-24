@@ -218,6 +218,7 @@ MonoBehaviour:
   localPlayer: {fileID: 0}
   playerPrefab: {fileID: 171931358746057920, guid: f5453dde027510b48b5050df6bb24c10,
     type: 3}
+  localPlayerObject: {fileID: 0}
   remotePlayers: []
   remotePlayerPrefab: {fileID: 1625184520517699732, guid: f2636b98da27b2e4986b732f842b0b41,
     type: 3}
@@ -238,6 +239,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 8008595968631a943b1ff823423eda91, type: 2}
   spawnedChests: []
   spawnedItems: []
+  spawnedHealables: []
   genericWeapons:
   - {fileID: 11400000, guid: 736175ee30b67e449a20955b99b4f00c, type: 2}
   - {fileID: 11400000, guid: b578df79dbab6d044ac373d4339d5e54, type: 2}
@@ -249,6 +251,10 @@ MonoBehaviour:
   legendaryWeapons:
   - {fileID: 11400000, guid: 9cfb42c50d7fac142a3722a23ca9074e, type: 2}
   legendaryChance: 16
+  syringe: {fileID: 391935329170582414, guid: bac15720f8e4922489357fcb3e2fefb6, type: 3}
+  syringeChance: 50
+  medkit: {fileID: 8573082192986105258, guid: 47b1df7ab81aba945ab9c47ca51bbf5d, type: 3}
+  medkitChance: 25
 --- !u!4 &685446773
 Transform:
   m_ObjectHideFlags: 0

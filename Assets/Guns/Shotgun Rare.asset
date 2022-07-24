@@ -13,7 +13,6 @@ MonoBehaviour:
   m_Name: Shotgun Rare
   m_EditorClassIdentifier: 
   gunName: Shotgun
-  gunImage: {fileID: 10901, guid: 0000000000000000f000000000000000, type: 0}
   id: 5
   gunMesh: {fileID: 3814378201483603881, guid: 4adbbdc07be0c6a46953997a68269c84, type: 3}
   gunMaterial: {fileID: 2100000, guid: 6b98da722a7efe049b9908818d880e00, type: 2}
@@ -24,9 +23,9 @@ MonoBehaviour:
   rarity: 1
   ammoType: 0
   automatic: 0
-  damage: 0
+  damage: 3
   maxAmmoCount: 4
   timeBetweenShots: 1.5
   reloadTime: 2.8
   shotCount: 20
-  spread: 3
+  spread: 1.8

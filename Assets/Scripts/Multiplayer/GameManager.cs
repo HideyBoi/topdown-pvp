@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour
 
     public GameObject localPlayer;
     public GameObject playerPrefab;
+    public GameObject localPlayerObject;
 
     public List<RemotePlayer> remotePlayers = new List<RemotePlayer>();
     public GameObject remotePlayerPrefab;
@@ -40,7 +41,9 @@ public class GameManager : MonoBehaviour
 
         localPlayerId = networkManager.Client.Id;
 
-        Instantiate(playerPrefab);
+        localPlayerObject = Instantiate(playerPrefab);
+        localPlayerObject.GetComponent<HealthManager>().isLocalPlayer = true;
+        localPlayerObject.GetComponent<HealthManager>().thisId = networkManager.Client.Id;
 
         foreach (var player in networkManager.connectedPlayers)
         {
@@ -48,7 +51,12 @@ public class GameManager : MonoBehaviour
             {
                 GameObject remPlayer = Instantiate(remotePlayerPrefab);
                 remPlayer.GetComponent<RemotePlayer>()._id = player.id;
+                remPlayer.GetComponent<HealthManager>().thisId = player.id;
                 remotePlayers.Add(remPlayer.GetComponent<RemotePlayer>());
+                player.playerObject = remPlayer;
+            } else
+            {
+                player.playerObject = localPlayerObject;
             }
         }
 
@@ -98,6 +106,27 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    [MessageHandler((ushort)NetworkManager.MessageIds.playerDamage)]
+    static void DamagePlayer(Message msg)
+    {
+        ushort id = msg.GetUShort();
+        int damage = msg.GetInt();
+        ushort fromId = msg.GetUShort();
+        int gunId = msg.GetInt();
+
+        if (id == NetworkManager.instance.Client.Id)
+        {
+            instance.localPlayerObject.GetComponent<HealthManager>().Damage(damage, fromId, gunId, true);
+        }
+
+        foreach (var player in instance.remotePlayers)
+        {
+            if (id == player._id)
+            {
+                player.healthManager.Damage(damage, fromId, gunId, true);
+            }
+        }
+    }
 
     [Header("Loot")]
 
@@ -105,6 +134,7 @@ public class GameManager : MonoBehaviour
 
     public List<Chest> spawnedChests;
     public List<GroundItem> spawnedItems;
+    public List<Healable> spawnedHealables;
 
     public Weapon[] genericWeapons;
 
@@ -112,13 +142,17 @@ public class GameManager : MonoBehaviour
     public int rareChance;
     public Weapon[] legendaryWeapons;
     public int legendaryChance;
+    public GameObject syringe;
+    public int syringeChance;
+    public GameObject medkit;
+    public int medkitChance;
 
     [System.Serializable]
     public class Loot
     {
         public Weapon weapon;
         //ammmo
-        //heals
+        public GameObject health = null;
     }
 
     public void AddChest(Chest chest)
@@ -129,6 +163,11 @@ public class GameManager : MonoBehaviour
     public void AddItem(GroundItem item)
     {
         spawnedItems.Add(item);
+    }
+
+    public void AddHealItem(Healable item)
+    {
+        spawnedHealables.Add(item);
     }
 
     public Loot GenerateLoot()
@@ -151,7 +190,16 @@ public class GameManager : MonoBehaviour
             loot.weapon = genericWeapons[Random.Range(0, genericWeapons.Length)];
         }
 
-        //health
+        if (Chance(syringeChance))
+        {
+            loot.health = syringe;
+        }
+
+        if (Chance(medkitChance))
+        {
+            loot.health = medkit;
+        }
+
         //correct and aux ammo
 
         return loot;
@@ -203,6 +251,40 @@ public class GameManager : MonoBehaviour
         GroundItem itemGround = null;
 
         foreach (var item in instance.spawnedItems)
+        {
+            if (item.id == deltedItemId)
+            {
+                itemGround = item;
+            }
+        }
+
+        itemGround.Pickup(true);
+    }
+
+    [MessageHandler((ushort)NetworkManager.MessageIds.spawnHeal)]
+    static void SpawnHeal(Message msg)
+    {
+        int id = msg.GetInt();
+        Vector3 pos = msg.GetVector3();
+        if (msg.GetInt() == 0)
+        {
+            GameObject obj = Instantiate(instance.syringe, pos, Quaternion.identity);
+            obj.GetComponent<Healable>().networkSpawned = true;
+        } else
+        {
+            GameObject obj = Instantiate(instance.medkit, pos, Quaternion.identity);
+            obj.GetComponent<Healable>().networkSpawned = true;
+        }
+    }
+
+    [MessageHandler((ushort)NetworkManager.MessageIds.pickUpHeal)]
+    static void PickUpHeal(Message msg)
+    {
+        int deltedItemId = msg.GetInt();
+
+        Healable itemGround = null;
+
+        foreach (var item in instance.spawnedHealables)
         {
             if (item.id == deltedItemId)
             {

@@ -98,6 +98,24 @@ public partial class @Controls : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""UseMedkit"",
+                    ""type"": ""Button"",
+                    ""id"": ""5dafd6aa-7ec1-4458-9518-22cb8da6b98c"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""UseSyringe"",
+                    ""type"": ""Button"",
+                    ""id"": ""848adb47-d9df-4728-ab0d-40c1ec9287c2"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -107,7 +125,7 @@ public partial class @Controls : IInputActionCollection2, IDisposable
                     ""path"": ""<Gamepad>/leftStick"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""GAMEPAD"",
                     ""action"": ""Move"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -129,7 +147,7 @@ public partial class @Controls : IInputActionCollection2, IDisposable
                     ""path"": ""<Keyboard>/w"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""KBM"",
                     ""action"": ""Move"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
@@ -140,7 +158,7 @@ public partial class @Controls : IInputActionCollection2, IDisposable
                     ""path"": ""<Keyboard>/s"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""KBM"",
                     ""action"": ""Move"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
@@ -151,7 +169,7 @@ public partial class @Controls : IInputActionCollection2, IDisposable
                     ""path"": ""<Keyboard>/a"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""KBM"",
                     ""action"": ""Move"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
@@ -162,7 +180,7 @@ public partial class @Controls : IInputActionCollection2, IDisposable
                     ""path"": ""<Keyboard>/d"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""KBM"",
                     ""action"": ""Move"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
@@ -173,7 +191,7 @@ public partial class @Controls : IInputActionCollection2, IDisposable
                     ""path"": ""<Gamepad>/rightStick"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""GAMEPAD"",
                     ""action"": ""PointGamepad"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -184,7 +202,7 @@ public partial class @Controls : IInputActionCollection2, IDisposable
                     ""path"": ""<Mouse>/position"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""KBM"",
                     ""action"": ""PointMouse"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -195,7 +213,7 @@ public partial class @Controls : IInputActionCollection2, IDisposable
                     ""path"": ""<Mouse>/scroll/y"",
                     ""interactions"": """",
                     ""processors"": ""Clamp(min=-1,max=1)"",
-                    ""groups"": """",
+                    ""groups"": ""KBM"",
                     ""action"": ""Scroll"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -217,7 +235,7 @@ public partial class @Controls : IInputActionCollection2, IDisposable
                     ""path"": ""<Gamepad>/leftShoulder"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""GAMEPAD"",
                     ""action"": ""Scroll"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
@@ -228,7 +246,7 @@ public partial class @Controls : IInputActionCollection2, IDisposable
                     ""path"": ""<Gamepad>/rightShoulder"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""GAMEPAD"",
                     ""action"": ""Scroll"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
@@ -239,7 +257,7 @@ public partial class @Controls : IInputActionCollection2, IDisposable
                     ""path"": ""<Mouse>/leftButton"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""KBM"",
                     ""action"": ""Shoot"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -250,7 +268,7 @@ public partial class @Controls : IInputActionCollection2, IDisposable
                     ""path"": ""<Gamepad>/rightShoulder"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""GAMEPAD"",
                     ""action"": ""Shoot"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -261,7 +279,7 @@ public partial class @Controls : IInputActionCollection2, IDisposable
                     ""path"": ""<Keyboard>/e"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""KBM"",
                     ""action"": ""Interact"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -272,7 +290,7 @@ public partial class @Controls : IInputActionCollection2, IDisposable
                     ""path"": ""<Gamepad>/leftTrigger"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""GAMEPAD"",
                     ""action"": ""Interact"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -283,7 +301,7 @@ public partial class @Controls : IInputActionCollection2, IDisposable
                     ""path"": ""<Keyboard>/r"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""KBM"",
                     ""action"": ""Reload"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -294,7 +312,7 @@ public partial class @Controls : IInputActionCollection2, IDisposable
                     ""path"": ""<Gamepad>/leftShoulder"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""GAMEPAD"",
                     ""action"": ""Reload"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -305,7 +323,7 @@ public partial class @Controls : IInputActionCollection2, IDisposable
                     ""path"": ""<Keyboard>/g"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""KBM"",
                     ""action"": ""Drop"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -316,15 +334,87 @@ public partial class @Controls : IInputActionCollection2, IDisposable
                     ""path"": ""<Gamepad>/dpad/down"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""GAMEPAD"",
                     ""action"": ""Drop"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""555d386b-25ce-440b-b863-12e43912e378"",
+                    ""path"": ""<Keyboard>/g"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KBM"",
+                    ""action"": ""UseMedkit"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d94463aa-8c7d-47c1-93e9-470813f7c489"",
+                    ""path"": ""<Gamepad>/dpad/up"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""GAMEPAD"",
+                    ""action"": ""UseMedkit"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""90ba9637-22cb-442d-a8d0-8d7f0962dead"",
+                    ""path"": ""<Keyboard>/t"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KBM"",
+                    ""action"": ""UseSyringe"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d4c94fef-47b7-4d92-b59a-57ae8fef2acd"",
+                    ""path"": ""<Gamepad>/dpad/right"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""GAMEPAD"",
+                    ""action"": ""UseSyringe"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
             ]
         }
     ],
-    ""controlSchemes"": []
+    ""controlSchemes"": [
+        {
+            ""name"": ""KBM"",
+            ""bindingGroup"": ""KBM"",
+            ""devices"": [
+                {
+                    ""devicePath"": ""<Keyboard>"",
+                    ""isOptional"": false,
+                    ""isOR"": false
+                },
+                {
+                    ""devicePath"": ""<Mouse>"",
+                    ""isOptional"": false,
+                    ""isOR"": false
+                }
+            ]
+        },
+        {
+            ""name"": ""GAMEPAD"",
+            ""bindingGroup"": ""GAMEPAD"",
+            ""devices"": [
+                {
+                    ""devicePath"": ""<Gamepad>"",
+                    ""isOptional"": false,
+                    ""isOR"": false
+                }
+            ]
+        }
+    ]
 }");
         // Player
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
@@ -336,6 +426,8 @@ public partial class @Controls : IInputActionCollection2, IDisposable
         m_Player_Interact = m_Player.FindAction("Interact", throwIfNotFound: true);
         m_Player_Reload = m_Player.FindAction("Reload", throwIfNotFound: true);
         m_Player_Drop = m_Player.FindAction("Drop", throwIfNotFound: true);
+        m_Player_UseMedkit = m_Player.FindAction("UseMedkit", throwIfNotFound: true);
+        m_Player_UseSyringe = m_Player.FindAction("UseSyringe", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -403,6 +495,8 @@ public partial class @Controls : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Interact;
     private readonly InputAction m_Player_Reload;
     private readonly InputAction m_Player_Drop;
+    private readonly InputAction m_Player_UseMedkit;
+    private readonly InputAction m_Player_UseSyringe;
     public struct PlayerActions
     {
         private @Controls m_Wrapper;
@@ -415,6 +509,8 @@ public partial class @Controls : IInputActionCollection2, IDisposable
         public InputAction @Interact => m_Wrapper.m_Player_Interact;
         public InputAction @Reload => m_Wrapper.m_Player_Reload;
         public InputAction @Drop => m_Wrapper.m_Player_Drop;
+        public InputAction @UseMedkit => m_Wrapper.m_Player_UseMedkit;
+        public InputAction @UseSyringe => m_Wrapper.m_Player_UseSyringe;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -448,6 +544,12 @@ public partial class @Controls : IInputActionCollection2, IDisposable
                 @Drop.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDrop;
                 @Drop.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDrop;
                 @Drop.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDrop;
+                @UseMedkit.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnUseMedkit;
+                @UseMedkit.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnUseMedkit;
+                @UseMedkit.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnUseMedkit;
+                @UseSyringe.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnUseSyringe;
+                @UseSyringe.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnUseSyringe;
+                @UseSyringe.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnUseSyringe;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -476,10 +578,34 @@ public partial class @Controls : IInputActionCollection2, IDisposable
                 @Drop.started += instance.OnDrop;
                 @Drop.performed += instance.OnDrop;
                 @Drop.canceled += instance.OnDrop;
+                @UseMedkit.started += instance.OnUseMedkit;
+                @UseMedkit.performed += instance.OnUseMedkit;
+                @UseMedkit.canceled += instance.OnUseMedkit;
+                @UseSyringe.started += instance.OnUseSyringe;
+                @UseSyringe.performed += instance.OnUseSyringe;
+                @UseSyringe.canceled += instance.OnUseSyringe;
             }
         }
     }
     public PlayerActions @Player => new PlayerActions(this);
+    private int m_KBMSchemeIndex = -1;
+    public InputControlScheme KBMScheme
+    {
+        get
+        {
+            if (m_KBMSchemeIndex == -1) m_KBMSchemeIndex = asset.FindControlSchemeIndex("KBM");
+            return asset.controlSchemes[m_KBMSchemeIndex];
+        }
+    }
+    private int m_GAMEPADSchemeIndex = -1;
+    public InputControlScheme GAMEPADScheme
+    {
+        get
+        {
+            if (m_GAMEPADSchemeIndex == -1) m_GAMEPADSchemeIndex = asset.FindControlSchemeIndex("GAMEPAD");
+            return asset.controlSchemes[m_GAMEPADSchemeIndex];
+        }
+    }
     public interface IPlayerActions
     {
         void OnMove(InputAction.CallbackContext context);
@@ -490,5 +616,7 @@ public partial class @Controls : IInputActionCollection2, IDisposable
         void OnInteract(InputAction.CallbackContext context);
         void OnReload(InputAction.CallbackContext context);
         void OnDrop(InputAction.CallbackContext context);
+        void OnUseMedkit(InputAction.CallbackContext context);
+        void OnUseSyringe(InputAction.CallbackContext context);
     }
 }

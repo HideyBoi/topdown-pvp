@@ -34,7 +34,7 @@ Transform:
   - {fileID: 6931801863491483587}
   - {fileID: 6328954572900486911}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &4058095044372112934
 Animator:
@@ -170,7 +170,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: 
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 3230aa5b45b09bc4bbde7e8a09791d50, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: 5999cc413d636c04faafbc6c03b6891f, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -342,7 +342,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: Chest
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 3230aa5b45b09bc4bbde7e8a09791d50, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: 5999cc413d636c04faafbc6c03b6891f, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -514,7 +514,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: E or LT
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 3230aa5b45b09bc4bbde7e8a09791d50, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: 5999cc413d636c04faafbc6c03b6891f, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}

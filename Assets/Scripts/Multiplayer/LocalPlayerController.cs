@@ -28,12 +28,15 @@ public class LocalPlayerController : MonoBehaviour
 
     public ushort id;
 
+    HealthManager hm;
+
     private void Awake()
     {
         nm = NetworkManager.instance;
         id = nm.Client.Id;
         controls = new Controls();
         rb = GetComponent<Rigidbody>();
+        hm = GetComponent<HealthManager>();
 
         controls.Player.Move.performed += ctx => Move(ctx.ReadValue<Vector2>());
         controls.Player.Move.canceled += ctx => Move(ctx.ReadValue<Vector2>());
@@ -45,12 +48,16 @@ public class LocalPlayerController : MonoBehaviour
     {
         if (!nm.gameIsStarted)
             return;
-        rb.AddForce(new Vector3(desMoveDir.x, 0, desMoveDir.y) * currentMovementSpeed, ForceMode.VelocityChange);
 
-        RaycastHit hit;
-        Physics.Raycast(transform.position, new Vector3(lookDir.x, 0, lookDir.y), out hit, Mathf.Infinity, lm);
+        if (!hm.isDead)
+        {
+            rb.AddForce(new Vector3(desMoveDir.x, 0, desMoveDir.y) * currentMovementSpeed, ForceMode.VelocityChange);
 
-        cursor.position = cam.WorldToScreenPoint(hit.point);
+            RaycastHit hit;
+            Physics.Raycast(transform.position, new Vector3(lookDir.x, 0, lookDir.y), out hit, Mathf.Infinity, lm);
+
+            cursor.position = cam.WorldToScreenPoint(hit.point);
+        }  
 
         Message playerPosRot = Message.Create(MessageSendMode.unreliable, NetworkManager.MessageIds.playerPos, shouldAutoRelay: true);
         playerPosRot.AddUShort(id);
@@ -61,7 +68,7 @@ public class LocalPlayerController : MonoBehaviour
 
     private void Update()
     {
-        if (!nm.gameIsStarted)
+        if (!nm.gameIsStarted || hm.isDead)
             return;
         miniMapCam.transform.position = new Vector3(transform.position.x, 200, transform.position.z);
         miniMapCam.transform.rotation = Quaternion.Euler(new Vector3(90, 0, 0));
@@ -100,6 +107,7 @@ public class LocalPlayerController : MonoBehaviour
 
     private void OnDisable()
     {
-        controls.Disable();
+        if (controls != null)
+            controls.Disable();
     }
 }
