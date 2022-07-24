@@ -11,6 +11,7 @@ public class LocalGunManager : MonoBehaviour
 
     private LocalPlayerController playerController;
     private LocalInventoryManager im;
+    private HealthManager hm;
     public LayerMask lm;
     public LayerMask gunLm;
     public Animator interactUiAnimation;
@@ -41,6 +42,7 @@ public class LocalGunManager : MonoBehaviour
 
         playerController = GetComponent<LocalPlayerController>();
         im = GetComponent<LocalInventoryManager>();
+        hm = GetComponent<HealthManager>();
     }
 
     private void InteractButton(bool press)
@@ -58,7 +60,7 @@ public class LocalGunManager : MonoBehaviour
 
     private void Update()
     {
-        if (!NetworkManager.instance.gameIsStarted)
+        if (!NetworkManager.instance.gameIsStarted || !hm.isDead)
             return;
 
         RaycastHit hit;

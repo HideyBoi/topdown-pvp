@@ -25,7 +25,7 @@ MonoBehaviour:
   automatic: 1
   damage: 10
   maxAmmoCount: 30
-  timeBetweenShots: 0.065
+  timeBetweenShots: 0.073
   reloadTime: 1.2
   shotCount: 0
   spread: 0.3

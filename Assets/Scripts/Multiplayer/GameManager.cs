@@ -270,10 +270,12 @@ public class GameManager : MonoBehaviour
         {
             GameObject obj = Instantiate(instance.syringe, pos, Quaternion.identity);
             obj.GetComponent<Healable>().networkSpawned = true;
+            obj.GetComponent<Healable>().id = id;
         } else
         {
             GameObject obj = Instantiate(instance.medkit, pos, Quaternion.identity);
             obj.GetComponent<Healable>().networkSpawned = true;
+            obj.GetComponent<Healable>().id = id;
         }
     }
 

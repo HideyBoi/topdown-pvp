@@ -67,7 +67,7 @@ public class LocalInventoryManager : MonoBehaviour
         controls.Player.UseMedkit.performed += _ => UseMedkit(true);
         controls.Player.UseMedkit.canceled += _ => UseMedkit(false);
         controls.Player.UseSyringe.performed += _ => UseSyringe(true);
-        controls.Player.UseSyringe.performed += _ => UseSyringe(false);
+        controls.Player.UseSyringe.canceled += _ => UseSyringe(false);
 
         UpdateWeaponVisual();
     }
@@ -76,26 +76,44 @@ public class LocalInventoryManager : MonoBehaviour
     {
         if (medkitCount > 0)
         {
+            currentMedkitTime = 0f;
+            currentSyringeTime = 0f;
             wantsToUseMedkit = pressed;
             wantsToUseSyringe = false;
         } else
         {
+            currentMedkitTime = 0f;
+            currentSyringeTime = 0f;
             wantsToUseMedkit = false;
             wantsToUseSyringe = false;
-        }  
+        }
+
+        if (!pressed)
+        {
+            currentMedkitTime = 0f;
+        }
     }
 
     void UseSyringe(bool pressed)
     {
         if (syringeCount > 0)
         {
+            currentSyringeTime = 0f;
+            currentMedkitTime = 0f;
             wantsToUseSyringe = pressed;
             wantsToUseMedkit = false;
         } else
         {
+            currentMedkitTime = 0f;
+            currentSyringeTime = 0f;
             wantsToUseSyringe = false;
             wantsToUseMedkit = false;
-        }      
+        }
+
+        if (!pressed)
+        {
+            currentSyringeTime = 0f;
+        }
     }
 
     void Scroll(float amount)
@@ -156,6 +174,7 @@ public class LocalInventoryManager : MonoBehaviour
             {
                 currentMedkitTime = 0f;
                 wantsToUseMedkit = false;
+                medkitCount--;
                 GetComponent<HealthManager>().Heal(150);
             }
         }
@@ -167,6 +186,7 @@ public class LocalInventoryManager : MonoBehaviour
             {
                 currentSyringeTime = 0;
                 wantsToUseSyringe = false;
+                syringeCount--;
                 GetComponent<HealthManager>().Heal(30);
             }
         }
