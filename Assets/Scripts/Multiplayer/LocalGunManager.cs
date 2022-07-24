@@ -60,7 +60,7 @@ public class LocalGunManager : MonoBehaviour
 
     private void Update()
     {
-        if (!NetworkManager.instance.gameIsStarted || !hm.isDead)
+        if (!NetworkManager.instance.gameIsStarted || hm.isDead)
             return;
 
         RaycastHit hit;

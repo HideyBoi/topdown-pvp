@@ -16,6 +16,6 @@ public class PlayerListItem : MonoBehaviour
         username = _username;
         id = _id;
 
-        text.text = $"ID:{id} <b>{username}";
+        text.text = $"<b>{username}";
     }
 }

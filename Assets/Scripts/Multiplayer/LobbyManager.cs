@@ -3,11 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using RiptideNetworking;
 using RiptideNetworking.Utils;
+using TMPro;
 
 public class LobbyManager : MonoBehaviour
 {
 
     public GameObject startButton;
+
+    public GameObject disconnectPrompt;
+    public TMP_Text disconnectText;
 
     private void Awake()
     {
@@ -29,5 +33,28 @@ public class LobbyManager : MonoBehaviour
             NetworkManager.StartGame(msg);
             NetworkManager.instance.stillInLobby = false;
         }
+    }
+
+    public void DisconnectButtonPress()
+    {
+        disconnectPrompt.SetActive(true);
+        if (NetworkManager.instance.Server.IsRunning)
+        {
+            disconnectText.text = "Are you sure you want to disconnect all players and go back to main menu?";
+        }
+        else
+        {
+            disconnectText.text = "Are you sure you want to disconnect from the host and go back to main menu?";
+        }
+    }
+
+    public void DisconnectPromptDecline()
+    {
+        disconnectPrompt.SetActive(false);
+    }
+
+    public void DisconnectPromptAccept()
+    {
+        NetworkManager.instance.LeaveGame();
     }
 }

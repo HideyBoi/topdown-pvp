@@ -16,6 +16,10 @@ public class MainMenuUIManager : MonoBehaviour
 
     public TMP_InputField usernameInput;
 
+    public GameObject exitGame;
+    public TMP_Text exitTitle;
+    public TMP_Text exitBody;
+
     [Header("Join")]
     public TMP_InputField ipInput;
     public TMP_InputField portInput;
@@ -82,10 +86,20 @@ public class MainMenuUIManager : MonoBehaviour
         }
     }
 
-    public void Disconnected()
+    public void ExitGamePressed()
     {
-        Destroy(currentLobbyMenu);
-        hostPanel.SetActive(false);
-        joinPanel.SetActive(false);
+        exitGame.SetActive(true);
+        exitBody.text = "Are you sure you want to exit to the desktop?";
+        exitTitle.text = "Exit Game?";
+    }
+
+    public void ExitGameAccept()
+    {
+        Application.Quit();
+    }
+
+    public void ExitGameDecline()
+    {
+        exitGame.SetActive(false);
     }
 }

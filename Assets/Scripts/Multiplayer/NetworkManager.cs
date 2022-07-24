@@ -179,6 +179,7 @@ public class NetworkManager : MonoBehaviour
         Message msg = Message.Create(MessageSendMode.reliable, MessageIds.playerInfo, shouldAutoRelay: true);
         msg.AddUShort(Client.Id);
         msg.AddString(mainMenuUIManager.playerName);
+        msg.AddString(Application.version);
         Client.Send(msg);
     }
 
@@ -187,6 +188,17 @@ public class NetworkManager : MonoBehaviour
     {
         ushort id = msg.GetUShort();
         string username = msg.GetString();
+        string version = msg.GetString();
+
+        if (version != Application.version || instance.gameIsStarted)
+        {
+            if (instance.Server.IsRunning)
+            {
+                instance.Server.DisconnectClient(id);
+            }
+
+            return;
+        }
 
         bool exists = false;
         foreach (var player in instance.connectedPlayers)

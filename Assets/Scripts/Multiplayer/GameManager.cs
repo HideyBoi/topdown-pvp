@@ -27,6 +27,8 @@ public class GameManager : MonoBehaviour
 
     bool generationStarted = false;
 
+    public List<Transform> spawns;
+
     private void Awake()
     {
         for (int i = 0; i < possibleWeapons.Length; i++)
@@ -51,6 +53,7 @@ public class GameManager : MonoBehaviour
             {
                 GameObject remPlayer = Instantiate(remotePlayerPrefab);
                 remPlayer.GetComponent<RemotePlayer>()._id = player.id;
+                remPlayer.GetComponent<RemotePlayer>()._name = player.name;
                 remPlayer.GetComponent<HealthManager>().thisId = player.id;
                 remotePlayers.Add(remPlayer.GetComponent<RemotePlayer>());
                 player.playerObject = remPlayer;
@@ -126,6 +129,30 @@ public class GameManager : MonoBehaviour
                 player.healthManager.Damage(damage, fromId, gunId, true);
             }
         }
+    }
+
+    [MessageHandler((ushort)NetworkManager.MessageIds.playerHeal)]
+    static void HealPlayer(Message msg)
+    {
+        ushort id = msg.GetUShort();
+
+        foreach (var player in instance.remotePlayers)
+        {
+            if (player._id == id)
+            {
+                player.healthManager.Heal(msg.GetInt(), true);
+            }
+        }
+    }
+
+    public void AddSpawn(Transform t)
+    {
+        spawns.Add(t);
+    }
+
+    public void Respawn()
+    {
+        localPlayerObject.transform.position = spawns[Random.Range(0, spawns.Count)].position;
     }
 
     [Header("Loot")]
@@ -205,6 +232,19 @@ public class GameManager : MonoBehaviour
         return loot;
     }
 
+    public Weapon GetWeaponById(int gunId)
+    {
+        foreach (var gun in possibleWeapons)
+        {
+            if (gun.id == gunId)
+            {
+                return gun;
+            }
+        }
+
+        return null;
+    }
+
     bool Chance(int chance)
     {
         if (Random.Range(0, 100) < chance)
@@ -212,6 +252,19 @@ public class GameManager : MonoBehaviour
             return true;
         }
         else { return false; }
+    }
+
+    public RemotePlayer GetRemotePlayer(ushort id)
+    {
+        foreach (var player in remotePlayers)
+        {
+            if (player._id == id)
+            {
+                return player;
+            }
+        }
+
+        return null;
     }
 
     [MessageHandler((ushort)NetworkManager.MessageIds.openChest)]

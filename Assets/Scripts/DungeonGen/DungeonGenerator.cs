@@ -105,6 +105,8 @@ public class DungeonGenerator : MonoBehaviour
             doneGenerating.AddUShort(NetworkManager.instance.Client.Id);
             NetworkManager.instance.MapIsReady(NetworkManager.instance.Client.Id);
             NetworkManager.instance.Client.Send(doneGenerating);
+
+            GameManager.instance.Respawn();
         }
     }
 
@@ -176,6 +178,8 @@ public class DungeonGenerator : MonoBehaviour
         doneGenerating.AddUShort(NetworkManager.instance.Client.Id);
         NetworkManager.instance.MapIsReady(NetworkManager.instance.Client.Id);
         NetworkManager.instance.Client.Send(doneGenerating);
+
+        GameManager.instance.Respawn();
     }
 
     void MazeGenerator()

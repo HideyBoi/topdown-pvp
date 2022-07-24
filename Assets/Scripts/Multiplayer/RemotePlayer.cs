@@ -5,9 +5,11 @@ using UnityEngine;
 public class RemotePlayer : MonoBehaviour
 {
     public ushort _id;
+    public string _name;
     public Transform pivot;
     public RemoteInventoryManager invManager;
     public HealthManager healthManager;
+    public bool beingSpectated;
 
     private void Awake()
     {
