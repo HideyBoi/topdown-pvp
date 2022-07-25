@@ -30,6 +30,8 @@ Transform:
   m_Children:
   - {fileID: 1469048804}
   - {fileID: 907865840393989141}
+  - {fileID: 44111165662920198}
+  - {fileID: 5546967173925503365}
   m_Father: {fileID: 8965412635764103339}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -57,7 +59,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1469048803}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: 0.5}
+  m_LocalPosition: {x: 0.5, y: 1.5810001, z: 0.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -179,6 +181,68 @@ MonoBehaviour:
   m_ShadowLayerMask: 1
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
+--- !u!1 &3335620654642438395
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 44111165662920198}
+  m_Layer: 0
+  m_Name: GunAmmo
+  m_TagString: Untagged
+  m_Icon: {fileID: 3306451490063965843, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &44111165662920198
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3335620654642438395}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.5, y: 1.581, z: 0.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 117561061}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &4582302438281829686
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5546967173925503365}
+  m_Layer: 0
+  m_Name: AuxAmmo
+  m_TagString: Untagged
+  m_Icon: {fileID: 3306451490063965843, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5546967173925503365
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4582302438281829686}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1, y: 0.75, z: 0.50008726}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 117561061}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5003400817606084857
 GameObject:
   m_ObjectHideFlags: 0
@@ -203,7 +267,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5003400817606084857}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.796, y: 0.721, z: 0.5}
+  m_LocalPosition: {x: 1.046, y: 0.721, z: 0.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -265,10 +329,14 @@ MonoBehaviour:
   chestId: {x: 0, y: 0, z: 0}
   groundItem: {fileID: 4491493733864199258, guid: 871cb2366c1ec1341a1b94ffda881e89,
     type: 3}
+  ammoObject: {fileID: 9176021081397741453, guid: e3eab27d2a283c647a81ea91ad2f5275,
+    type: 3}
   sfx: {fileID: 7098371210533266199, guid: 03ca22f20a0d6c145ab412dadd2b8800, type: 3}
   chestOpenSound: {fileID: 8300000, guid: b477e423ce264dd468ce0ad95d9f770f, type: 3}
   weaponSpawnPos: {fileID: 1469048804}
   healSpawnPos: {fileID: 907865840393989141}
+  gunAmmoSpawnPos: {fileID: 44111165662920198}
+  auxAmmoSpawnPos: {fileID: 5546967173925503365}
 --- !u!137 &3585622162370183927
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 0

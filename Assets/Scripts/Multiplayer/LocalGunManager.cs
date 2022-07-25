@@ -110,7 +110,7 @@ public class LocalGunManager : MonoBehaviour
 
             ToolTip tip = hit.collider.GetComponent<ToolTip>();
 
-            if (tip != null && (hit.collider.CompareTag("Interactable") || hit.collider.CompareTag("Item") || hit.collider.CompareTag("Heal")))
+            if (tip != null && (hit.collider.CompareTag("Interactable") || hit.collider.CompareTag("Item") || hit.collider.CompareTag("Heal") || hit.collider.CompareTag("Ammo")))
             {
                 if (lastTip == null)
                 {

@@ -72,6 +72,30 @@ public class LocalInventoryManager : MonoBehaviour
         UpdateWeaponVisual();
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Ammo"))
+        {
+            Ammo ammo = other.GetComponent<Ammo>();
+            switch (ammo.type)
+            {
+                case AmmoType.Light:
+                    lightAmmoCount += ammo.count;
+                    break;
+                case AmmoType.Medium:
+                    mediumAmmoCount += ammo.count;
+                    break;
+                case AmmoType.Heavy:
+                    heavyAmmoCount += ammo.count;
+                    break;
+                case AmmoType.Shells:
+                    shellsAmmoCount += ammo.count;
+                    break;
+            }
+            ammo.Pickup(false);
+        }
+    }
+
     void UseMedkit(bool pressed)
     {
         if (medkitCount > 0)

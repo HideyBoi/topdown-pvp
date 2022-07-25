@@ -66,7 +66,7 @@ public class GroundItem : MonoBehaviour
 
         if (!networkSpawned)
         {
-            id = (int)Random.Range(0, 696969696969);
+            id = (int)Random.Range(0, 2147483646);
 
             Message msg = Message.Create(MessageSendMode.reliable, NetworkManager.MessageIds.spawnItem, shouldAutoRelay: true);
             msg.AddInt(id);

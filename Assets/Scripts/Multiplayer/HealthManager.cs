@@ -26,10 +26,13 @@ public class HealthManager : MonoBehaviour
 
     public GameObject deathOverlay;
     public TMP_Text killerNameText;
+    public TMP_Text respawningStatus;
+    public TMP_Text currentlySpectatingText;
     public TMP_Text gunNameText;
     public TMP_Text killerHealthText;
     public GameObject[] rarityIndicator;
     public Slider killerHealth;
+    bool canRespawn;
 
     public bool isLocalPlayer = false;
     private void FixedUpdate()
@@ -39,13 +42,15 @@ public class HealthManager : MonoBehaviour
             if (isSpectating)
             {
                 cam.m_Follow = spectating.transform;
+                currentlySpectatingText.text = "Spectating: " + spectating._name;
             }
 
             animator.SetInteger("Health", health);
             timeUntilRespawn -= Time.fixedDeltaTime;
-            if (timeUntilRespawn < 0 && isDead)
+            if (timeUntilRespawn < 0 && isDead && canRespawn)
             {
                 isDead = false;
+                canRespawn = false;
                 Respawn();
             }
             heatlhBar.value = health;
@@ -96,6 +101,29 @@ public class HealthManager : MonoBehaviour
         transform.position = new Vector3(-30, 0, 30);
         if (isLocalPlayer)
         {
+            if (GameManager.instance.lives > 0)
+            {
+                GameManager.instance.lives--;
+
+                if (GameManager.instance.lives == 0)
+                {
+                    canRespawn = false;
+                    respawningStatus.text = "You're out of the game, you've lost your last life!";
+                } else if (GameManager.instance.lives == 1)
+                {
+                    respawningStatus.text = $"You're on your last life, respawning, please wait...";
+                    canRespawn = true;
+                } else
+                {
+                    respawningStatus.text = $"You have {GameManager.instance.lives} lives left, respawning, please wait...";
+                    canRespawn = true;
+                }        
+            } else if (GameManager.instance.lives == -1)
+            {
+                respawningStatus.text = "Respawning, please wait...";
+                canRespawn = true;
+            }
+
             timeUntilRespawn = respawnTime;
             isDead = true;
             isSpectating = true;
@@ -111,9 +139,9 @@ public class HealthManager : MonoBehaviour
             killerNameText.text = rm._name;
             gunNameText.text = GameManager.instance.GetWeaponById(gunId).gunName;
 
-            rarityIndicator[0].SetActive(true);
-            rarityIndicator[1].SetActive(true);
-            rarityIndicator[2].SetActive(true);
+            rarityIndicator[0].SetActive(false);
+            rarityIndicator[1].SetActive(false);
+            rarityIndicator[2].SetActive(false);
 
             switch (GameManager.instance.GetWeaponById(gunId).rarity)
             {

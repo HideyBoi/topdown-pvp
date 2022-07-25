@@ -29,6 +29,8 @@ public class GameManager : MonoBehaviour
 
     public List<Transform> spawns;
 
+    public int lives = 3;
+
     private void Awake()
     {
         for (int i = 0; i < possibleWeapons.Length; i++)
@@ -162,6 +164,7 @@ public class GameManager : MonoBehaviour
     public List<Chest> spawnedChests;
     public List<GroundItem> spawnedItems;
     public List<Healable> spawnedHealables;
+    public List<Ammo> spawnedAmmo;
 
     public Weapon[] genericWeapons;
 
@@ -174,27 +177,17 @@ public class GameManager : MonoBehaviour
     public GameObject medkit;
     public int medkitChance;
 
+    public GameObject ammoPrefab;
+
     [System.Serializable]
     public class Loot
     {
         public Weapon weapon;
-        //ammmo
         public GameObject health = null;
-    }
-
-    public void AddChest(Chest chest)
-    {
-        spawnedChests.Add(chest);
-    }
-
-    public void AddItem(GroundItem item)
-    {
-        spawnedItems.Add(item);
-    }
-
-    public void AddHealItem(Healable item)
-    {
-        spawnedHealables.Add(item);
+        public LocalInventoryManager.AmmoType ammoForGun;
+        public int ammoForGunCount;
+        public LocalInventoryManager.AmmoType auxAmmo;
+        public int auxAmmoCount;
     }
 
     public Loot GenerateLoot()
@@ -227,9 +220,48 @@ public class GameManager : MonoBehaviour
             loot.health = medkit;
         }
 
-        //correct and aux ammo
+        loot.ammoForGun = loot.weapon.ammoType;
+        loot.ammoForGunCount = loot.weapon.maxAmmoCount;
+
+        switch (Random.Range(0, 4))
+        {
+            case 0:
+                loot.auxAmmo = LocalInventoryManager.AmmoType.Light;
+                break;
+            case 1:
+                loot.auxAmmo = LocalInventoryManager.AmmoType.Medium;
+                break;
+            case 2:
+                loot.auxAmmo = LocalInventoryManager.AmmoType.Heavy;
+                break;
+            case 3:
+                loot.auxAmmo = LocalInventoryManager.AmmoType.Shells;
+                break;
+        }
+
+        loot.auxAmmoCount = Random.Range(4, 12);
 
         return loot;
+    }
+
+    public void AddChest(Chest chest)
+    {
+        spawnedChests.Add(chest);
+    }
+
+    public void AddItem(GroundItem item)
+    {
+        spawnedItems.Add(item);
+    }
+
+    public void AddHealItem(Healable item)
+    {
+        spawnedHealables.Add(item);
+    }
+
+    public void AddAmmo(Ammo item)
+    {
+        spawnedAmmo.Add(item);
     }
 
     public Weapon GetWeaponById(int gunId)
@@ -340,6 +372,57 @@ public class GameManager : MonoBehaviour
         Healable itemGround = null;
 
         foreach (var item in instance.spawnedHealables)
+        {
+            if (item.id == deltedItemId)
+            {
+                itemGround = item;
+            }
+        }
+
+        itemGround.Pickup(true);
+    }
+
+    [MessageHandler((ushort)NetworkManager.MessageIds.spawnAmmo)]
+    static void SpawnAmmo(Message msg)
+    {
+        int id = msg.GetInt();
+        Vector3 pos = msg.GetVector3();
+        int typeId = msg.GetInt();
+        int count = msg.GetInt();
+
+        LocalInventoryManager.AmmoType type = LocalInventoryManager.AmmoType.Light;
+
+        switch (typeId)
+        {
+            case 0:
+                type = LocalInventoryManager.AmmoType.Light;
+                break;
+            case 1:
+                type = LocalInventoryManager.AmmoType.Medium;
+                break;
+            case 2:
+                type = LocalInventoryManager.AmmoType.Heavy;
+                break;
+            case 3:
+                type = LocalInventoryManager.AmmoType.Shells;
+                break;
+        }
+
+        GameObject ammoObj = Instantiate(instance.ammoPrefab, pos, Quaternion.identity);
+        ammoObj.GetComponent<Ammo>().networkSpawned = true;
+        ammoObj.GetComponent<Ammo>().id = id;
+        ammoObj.GetComponent<Ammo>().type = type;
+        ammoObj.GetComponent<Ammo>().count = count;
+    }
+
+    [MessageHandler((ushort)NetworkManager.MessageIds.pickUpAmmo)]
+    static void PickUpAmmo(Message msg)
+    {
+        int deltedItemId = msg.GetInt();
+
+        Ammo itemGround = null;
+
+        foreach (var item in instance.spawnedAmmo)
         {
             if (item.id == deltedItemId)
             {

@@ -55,14 +55,16 @@ public class NetworkManager : MonoBehaviour
         spawnItem, //tells other players that an item has spawned
         pickUpItem, //tells other players that an item has been picked up
         spawnHeal,  //tells other players that a healing item has spawned
-        pickUpHeal, // tells other players that a healing item has been picked up
+        pickUpHeal, //tells other players that a healing item has been picked up
+        spawnAmmo, //tells other players that an ammo item has spawned
+        pickUpAmmo, //tells other players that an ammo item has been picked up
         playerHoldItem, //tells other players what item local player is holding
         playerGunRot,//tells other players what direction the gun is facing
         particleEffect, //tells other players to spawn a particle effect
         playerReloadSound, //sound effects that should travel with a player (ie, a reloading sound effect should follow the player)
         playerShot, //contains data about what gun was shot and where
         playerDamage, //tells all players that player x has been damaged
-        playerHeal
+        playerHeal, //tells other players that the local player has healed
     }
 
     private void Start()

@@ -9,6 +9,7 @@ TagManager:
   - NonInteractable
   - Item
   - RemotePlayer
+  - Heal
   layers:
   - Default
   - TransparentFX

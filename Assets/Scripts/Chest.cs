@@ -8,6 +8,7 @@ public class Chest : MonoBehaviour
 {
     public Vector3 chestId;
     public GameObject groundItem;
+    public GameObject ammoObject;
     public GameObject sfx;
     public AudioClip chestOpenSound;
 
@@ -15,6 +16,8 @@ public class Chest : MonoBehaviour
 
     public Transform weaponSpawnPos;
     public Transform healSpawnPos;
+    public Transform gunAmmoSpawnPos;
+    public Transform auxAmmoSpawnPos;
 
     private void Awake()
     {
@@ -44,6 +47,16 @@ public class Chest : MonoBehaviour
             GameObject item = Instantiate(groundItem, weaponSpawnPos.position, Quaternion.identity);
             item.GetComponent<GroundItem>().UpdateItem(inv);
             item.GetComponent<GroundItem>().networkSpawned = false;
+
+            GameObject gunAmmo = Instantiate(ammoObject, gunAmmoSpawnPos.position, Quaternion.identity);
+            gunAmmo.GetComponent<Ammo>().type = loot.ammoForGun;
+            gunAmmo.GetComponent<Ammo>().count = loot.ammoForGunCount;
+            gunAmmo.GetComponent<Ammo>().networkSpawned = false;
+
+            GameObject auxAmmo = Instantiate(ammoObject, auxAmmoSpawnPos.position, Quaternion.identity);
+            auxAmmo.GetComponent<Ammo>().type = loot.auxAmmo;
+            auxAmmo.GetComponent<Ammo>().count = loot.auxAmmoCount;
+            auxAmmo.GetComponent<Ammo>().networkSpawned = false;
 
             if (loot.health != null)
             {

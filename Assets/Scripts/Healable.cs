@@ -35,7 +35,7 @@ public class Healable : MonoBehaviour
     {
         if (!networkSpawned)
         {
-            id = (int)Random.Range(0, 696969696969);
+            id = (int)Random.Range(0, 2147483646);
 
             Message msg = Message.Create(MessageSendMode.reliable, NetworkManager.MessageIds.spawnHeal, shouldAutoRelay: true);
             msg.AddInt(id);

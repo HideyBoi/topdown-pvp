@@ -168,7 +168,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   generatedRooms: []
-  size: {x: 5, y: 5}
+  size: {x: 2, y: 2}
   startPos: 0
   rooms:
   - room: {fileID: 6779243269862341282, guid: 37e54a1b4b42c59449a7b62abbccfbaa, type: 3}
@@ -231,6 +231,7 @@ MonoBehaviour:
   soundEffect: {fileID: 7098371210533266199, guid: 03ca22f20a0d6c145ab412dadd2b8800,
     type: 3}
   spawns: []
+  lives: 3
   possibleWeapons:
   - {fileID: 11400000, guid: 9cfb42c50d7fac142a3722a23ca9074e, type: 2}
   - {fileID: 11400000, guid: c1feb8e7f03c3df4fbfd7bc670503c49, type: 2}
@@ -241,6 +242,7 @@ MonoBehaviour:
   spawnedChests: []
   spawnedItems: []
   spawnedHealables: []
+  spawnedAmmo: []
   genericWeapons:
   - {fileID: 11400000, guid: 736175ee30b67e449a20955b99b4f00c, type: 2}
   - {fileID: 11400000, guid: b578df79dbab6d044ac373d4339d5e54, type: 2}
@@ -256,6 +258,8 @@ MonoBehaviour:
   syringeChance: 50
   medkit: {fileID: 8573082192986105258, guid: 47b1df7ab81aba945ab9c47ca51bbf5d, type: 3}
   medkitChance: 25
+  ammoPrefab: {fileID: 9176021081397741453, guid: e3eab27d2a283c647a81ea91ad2f5275,
+    type: 3}
 --- !u!4 &685446773
 Transform:
   m_ObjectHideFlags: 0
