@@ -1011,7 +1011,7 @@ MonoBehaviour:
   thisId: 0
   animator: {fileID: 5446089997807071736}
   isDead: 0
-  heatlhBar: {fileID: 2404681942706527565}
+  healthBar: {fileID: 2404681942706527565}
   healthBarText: {fileID: 8919657743411849320}
   cam: {fileID: 458818465136178912}
   spectating: {fileID: 0}

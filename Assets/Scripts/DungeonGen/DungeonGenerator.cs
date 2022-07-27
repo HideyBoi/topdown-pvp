@@ -73,7 +73,7 @@ public class DungeonGenerator : MonoBehaviour
         instance = this;
     }
 
-    private void OnEnable()
+    private void Start()
     {
         size = Vector2Int.CeilToInt(GameManager.instance.mapSize);
     }
