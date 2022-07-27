@@ -50,9 +50,6 @@ public class LocalGunManager : MonoBehaviour
         pressingInteract = press;
     }
 
-    public ToolTip lastTip;
-    public ToolTip currentTip;
-
     void Shoot(bool isPressing)
     {
         wantsToShoot = isPressing;
@@ -112,42 +109,11 @@ public class LocalGunManager : MonoBehaviour
 
             if (tip != null && (hit.collider.CompareTag("Interactable") || hit.collider.CompareTag("Item") || hit.collider.CompareTag("Heal") || hit.collider.CompareTag("Ammo")))
             {
-                if (lastTip == null)
-                {
-                    currentTip = tip;
-                    lastTip = tip;
-                    tip.IsAimedAt(true);
-                }
-                else {
-                    if (currentTip.GetInstanceID() != lastTip.GetInstanceID())
-                    {
-                        lastTip.IsAimedAt(false);
-                        lastTip = null;
-                    } else
-                    {
-                        lastTip = currentTip;
-                        currentTip.IsAimedAt(true);
-                    }
-                }
-            }  else
-            {
-                if (lastTip != null)
-                {
-                    lastTip.IsAimedAt(false);
-                    lastTip = null;
-                }
+                tip.IsAimedAt(true);
             }
-            
         } else
         {
             interactUiAnimation.SetBool("interacting", false);
-
-            if (lastTip != null)
-            {
-
-                lastTip.IsAimedAt(false);
-                lastTip = null;
-            }
         }
 
         if (im.inventoryItem[im.currentIndex].weapon != null)
