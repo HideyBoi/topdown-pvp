@@ -116,8 +116,6 @@ public class HealthManager : MonoBehaviour
 
     public void Die(ushort killingPlayer, int gunId)
     {
-        health = 150;
-        transform.position = new Vector3(-30, 0, 30);
         if (isLocalPlayer)
         {
             if (GameManager.instance.lives > 0)
@@ -192,6 +190,9 @@ public class HealthManager : MonoBehaviour
                 GameManager.instance.GetRemotePlayer(killingPlayer).beingSpectated = true;
             }
         }
+
+        health = 150;
+        transform.position = new Vector3(-30, 0, 30);
     }
 
     void Respawn()

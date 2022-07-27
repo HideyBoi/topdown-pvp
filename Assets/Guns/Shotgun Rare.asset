@@ -21,7 +21,7 @@ MonoBehaviour:
   pickupSound: {fileID: 8300000, guid: 2380dbf9169fcac47a8a848433bc6252, type: 3}
   reloadSound: {fileID: 8300000, guid: 2380dbf9169fcac47a8a848433bc6252, type: 3}
   rarity: 1
-  ammoType: 0
+  ammoType: 3
   automatic: 0
   damage: 3
   maxAmmoCount: 4
