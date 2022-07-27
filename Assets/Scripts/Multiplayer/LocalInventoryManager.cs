@@ -407,10 +407,10 @@ public class LocalInventoryManager : MonoBehaviour
     {
         if (heal.type == Healable.HealType.Medkit)
         {
-            medkitCount++;
+            medkitCount += heal.count;
         } else
         {
-            syringeCount++;
+            syringeCount += heal.count;
         }
 
         heal.Pickup(false);
