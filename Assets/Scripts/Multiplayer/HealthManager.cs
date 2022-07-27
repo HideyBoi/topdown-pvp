@@ -207,42 +207,69 @@ public class HealthManager : MonoBehaviour
 
     void DropLoot()
     {
-        GameObject item1 = Instantiate(item, lootLocs[0].position, Quaternion.identity);
-        item1.GetComponent<GroundItem>().UpdateItem(inv.inventoryItem[0]);
+        if (inv.inventoryItem[0].weapon != null)
+        {
+            GameObject item1 = Instantiate(item, lootLocs[0].position, Quaternion.identity);
+            item1.GetComponent<GroundItem>().UpdateItem(inv.inventoryItem[0]);
+        }      
 
-        GameObject item2 = Instantiate(item, lootLocs[1].position, Quaternion.identity);
-        item2.GetComponent<GroundItem>().UpdateItem(inv.inventoryItem[1]);
+        if (inv.inventoryItem[1].weapon != null)
+        {
+            GameObject item2 = Instantiate(item, lootLocs[1].position, Quaternion.identity);
+            item2.GetComponent<GroundItem>().UpdateItem(inv.inventoryItem[1]);
+        }      
 
-        GameObject item3 = Instantiate(item, lootLocs[2].position, Quaternion.identity);
-        item3.GetComponent<GroundItem>().UpdateItem(inv.inventoryItem[2]);
+        if (inv.inventoryItem[2].weapon != null)
+        {
+            GameObject item3 = Instantiate(item, lootLocs[2].position, Quaternion.identity);
+            item3.GetComponent<GroundItem>().UpdateItem(inv.inventoryItem[2]);
+        }      
 
-        GameObject lightAmmo = Instantiate(ammo, lootLocs[3].position, Quaternion.identity);
-        lightAmmo.GetComponent<Ammo>().networkSpawned = false;
-        lightAmmo.GetComponent<Ammo>().type = LocalInventoryManager.AmmoType.Light;
-        lightAmmo.GetComponent<Ammo>().count = inv.lightAmmoCount;
+        if (inv.lightAmmoCount > 0)
+        {
+            GameObject lightAmmo = Instantiate(ammo, lootLocs[3].position, Quaternion.identity);
+            lightAmmo.GetComponent<Ammo>().networkSpawned = false;
+            lightAmmo.GetComponent<Ammo>().type = LocalInventoryManager.AmmoType.Light;
+            lightAmmo.GetComponent<Ammo>().count = inv.lightAmmoCount;
+        }
+
+        if (inv.mediumAmmoCount > 0)
+        {
+            GameObject mediumAmmo = Instantiate(ammo, lootLocs[4].position, Quaternion.identity);
+            mediumAmmo.GetComponent<Ammo>().networkSpawned = false;
+            mediumAmmo.GetComponent<Ammo>().type = LocalInventoryManager.AmmoType.Medium;
+            mediumAmmo.GetComponent<Ammo>().count = inv.mediumAmmoCount;
+        }
         
-        GameObject mediumAmmo = Instantiate(ammo, lootLocs[4].position, Quaternion.identity);
-        mediumAmmo.GetComponent<Ammo>().networkSpawned = false;
-        mediumAmmo.GetComponent<Ammo>().type = LocalInventoryManager.AmmoType.Medium;
-        mediumAmmo.GetComponent<Ammo>().count = inv.mediumAmmoCount;
+        if (inv.heavyAmmoCount > 0)
+        {
+            GameObject heavyAmmo = Instantiate(ammo, lootLocs[5].position, Quaternion.identity);
+            heavyAmmo.GetComponent<Ammo>().networkSpawned = false;
+            heavyAmmo.GetComponent<Ammo>().type = LocalInventoryManager.AmmoType.Heavy;
+            heavyAmmo.GetComponent<Ammo>().count = inv.heavyAmmoCount;
+        }   
 
-        GameObject heavyAmmo = Instantiate(ammo, lootLocs[5].position, Quaternion.identity);
-        heavyAmmo.GetComponent<Ammo>().networkSpawned = false;
-        heavyAmmo.GetComponent<Ammo>().type = LocalInventoryManager.AmmoType.Heavy;
-        heavyAmmo.GetComponent<Ammo>().count = inv.heavyAmmoCount;
+        if (inv.shellsAmmoCount > 0)
+        {
+            GameObject shellsAmmo = Instantiate(ammo, lootLocs[6].position, Quaternion.identity);
+            shellsAmmo.GetComponent<Ammo>().networkSpawned = false;
+            shellsAmmo.GetComponent<Ammo>().type = LocalInventoryManager.AmmoType.Shells;
+            shellsAmmo.GetComponent<Ammo>().count = inv.shellsAmmoCount;
+        }
 
-        GameObject shellsAmmo = Instantiate(ammo, lootLocs[6].position, Quaternion.identity);
-        shellsAmmo.GetComponent<Ammo>().networkSpawned = false;
-        shellsAmmo.GetComponent<Ammo>().type = LocalInventoryManager.AmmoType.Shells;
-        shellsAmmo.GetComponent<Ammo>().count = inv.shellsAmmoCount;
+        if (inv.medkitCount > 0)
+        {
+            GameObject medkit = Instantiate(healing[1], lootLocs[7].position, Quaternion.identity);
+            medkit.GetComponent<Healable>().networkSpawned = false;
+            medkit.GetComponent<Healable>().count = inv.medkitCount;
+        }
 
-        GameObject medkit = Instantiate(healing[1], lootLocs[7].position, Quaternion.identity);
-        medkit.GetComponent<Healable>().networkSpawned = false;
-        medkit.GetComponent<Healable>().count = inv.medkitCount;
-
-        GameObject syringe = Instantiate(healing[0], lootLocs[8].position, Quaternion.identity);
-        syringe.GetComponent<Healable>().networkSpawned = false;
-        syringe.GetComponent<Healable>().count = inv.syringeCount;
+        if (inv.syringeCount > 0)
+        {
+            GameObject syringe = Instantiate(healing[0], lootLocs[8].position, Quaternion.identity);
+            syringe.GetComponent<Healable>().networkSpawned = false;
+            syringe.GetComponent<Healable>().count = inv.syringeCount;
+        }
 
         if (GameManager.instance.giveStartingStatsOnDropLoot)
         {
