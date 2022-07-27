@@ -15,6 +15,8 @@ public class Healable : MonoBehaviour
 
     public HealType type;
 
+    public int count = 1;
+
     public TMP_Text nameTex;
     public TMP_Text subTex;
 
@@ -35,7 +37,7 @@ public class Healable : MonoBehaviour
     {
         if (!networkSpawned)
         {
-            id = (int)Random.Range(0, 2147483646);
+            id = Random.Range(0, 2147483646);
 
             Message msg = Message.Create(MessageSendMode.reliable, NetworkManager.MessageIds.spawnHeal, shouldAutoRelay: true);
             msg.AddInt(id);
@@ -47,17 +49,18 @@ public class Healable : MonoBehaviour
             {
                 msg.AddInt(0);
             }
+            msg.AddInt(count);
             NetworkManager.instance.Client.Send(msg);
         }
 
         if (type == HealType.Syringe)
         {
             nameTex.text = "Syringe";
-            subTex.text = "+ 30 HP";
+            subTex.text = $"{count}x + 30 HP";
         } else
         {
             nameTex.text = "Medkit";
-            subTex.text = "+150hp";
+            subTex.text = $"{count}x +150hp";
         }
     }
 

@@ -69,6 +69,13 @@ public class LocalInventoryManager : MonoBehaviour
         controls.Player.UseSyringe.performed += _ => UseSyringe(true);
         controls.Player.UseSyringe.canceled += _ => UseSyringe(false);
 
+        syringeCount = GameManager.instance.startingSyringes;
+        medkitCount = GameManager.instance.startingMedkits;
+        lightAmmoCount = GameManager.instance.startingLightAmmo;
+        mediumAmmoCount = GameManager.instance.startingMediumAmmo;
+        heavyAmmoCount = GameManager.instance.startingHeavyAmmo;
+        shellsAmmoCount = GameManager.instance.startingShellsAmmo;
+
         UpdateWeaponVisual();
     }
 

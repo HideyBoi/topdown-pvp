@@ -10,6 +10,7 @@ using Cinemachine;
 public class HealthManager : MonoBehaviour
 {
     int health = 150;
+    int maxHealth = 150;
     public GameObject deathEffect;
     public ushort thisId;
 
@@ -18,9 +19,10 @@ public class HealthManager : MonoBehaviour
     float respawnTime = 6f;
     public bool isDead;
     float timeUntilRespawn;
-    [SerializeField] private Slider heatlhBar;
+    public Slider healthBar;
     [SerializeField] private TMP_Text healthBarText;
     [SerializeField] private CinemachineVirtualCamera cam;
+    private LocalInventoryManager inv;
     public RemotePlayer spectating;
     bool isSpectating;
 
@@ -35,6 +37,22 @@ public class HealthManager : MonoBehaviour
     bool canRespawn;
 
     public bool isLocalPlayer = false;
+
+    public Transform[] lootLocs = new Transform[9];
+    public GameObject item;
+    public GameObject[] healing;
+    public GameObject ammo;
+
+    private void Awake()
+    {
+        if (isLocalPlayer)
+        {
+            maxHealth = GameManager.instance.maxHealth;
+            health = maxHealth;
+            healthBar.maxValue = maxHealth;
+        }
+    }
+
     private void FixedUpdate()
     {
         if (isLocalPlayer)
@@ -53,7 +71,7 @@ public class HealthManager : MonoBehaviour
                 canRespawn = false;
                 Respawn();
             }
-            heatlhBar.value = health;
+            healthBar.value = health;
             healthBarText.text = health.ToString();
         }
     }
@@ -81,9 +99,9 @@ public class HealthManager : MonoBehaviour
     public void Heal(int heal, bool fromNetwork)
     {
         health += heal;
-        if (health > 150)
+        if (health > maxHealth)
         {
-            health = 150;
+            health = maxHealth;
         }
 
         if (!fromNetwork)
@@ -109,14 +127,23 @@ public class HealthManager : MonoBehaviour
                 {
                     canRespawn = false;
                     respawningStatus.text = "You're out of the game, you've lost your last life!";
+                    DropLoot();
                 } else if (GameManager.instance.lives == 1)
                 {
                     respawningStatus.text = $"You're on your last life, respawning, please wait...";
                     canRespawn = true;
+                    if (GameManager.instance.dropLootOnEveryDeath)
+                    {
+                        DropLoot();
+                    }
                 } else
                 {
                     respawningStatus.text = $"You have {GameManager.instance.lives} lives left, respawning, please wait...";
                     canRespawn = true;
+                    if (GameManager.instance.dropLootOnEveryDeath)
+                    {
+                        DropLoot();
+                    }
                 }        
             } else if (GameManager.instance.lives == -1)
             {
@@ -170,9 +197,71 @@ public class HealthManager : MonoBehaviour
     {
         deathOverlay.SetActive(false);
         GameManager.instance.Respawn();
-        health = 150;
+        health = maxHealth;
         isSpectating = false;
         spectating.beingSpectated = false;
         cam.m_Follow = transform;
+    }
+
+    void DropLoot()
+    {
+        GameObject item1 = Instantiate(item, lootLocs[0].position, Quaternion.identity);
+        item1.GetComponent<GroundItem>().UpdateItem(inv.inventoryItem[0]);
+
+        GameObject item2 = Instantiate(item, lootLocs[1].position, Quaternion.identity);
+        item2.GetComponent<GroundItem>().UpdateItem(inv.inventoryItem[1]);
+
+        GameObject item3 = Instantiate(item, lootLocs[2].position, Quaternion.identity);
+        item3.GetComponent<GroundItem>().UpdateItem(inv.inventoryItem[2]);
+
+        GameObject lightAmmo = Instantiate(ammo, lootLocs[3].position, Quaternion.identity);
+        lightAmmo.GetComponent<Ammo>().networkSpawned = false;
+        lightAmmo.GetComponent<Ammo>().type = LocalInventoryManager.AmmoType.Light;
+        lightAmmo.GetComponent<Ammo>().count = inv.lightAmmoCount;
+        
+        GameObject mediumAmmo = Instantiate(ammo, lootLocs[4].position, Quaternion.identity);
+        mediumAmmo.GetComponent<Ammo>().networkSpawned = false;
+        mediumAmmo.GetComponent<Ammo>().type = LocalInventoryManager.AmmoType.Medium;
+        mediumAmmo.GetComponent<Ammo>().count = inv.mediumAmmoCount;
+
+        GameObject heavyAmmo = Instantiate(ammo, lootLocs[5].position, Quaternion.identity);
+        heavyAmmo.GetComponent<Ammo>().networkSpawned = false;
+        heavyAmmo.GetComponent<Ammo>().type = LocalInventoryManager.AmmoType.Heavy;
+        heavyAmmo.GetComponent<Ammo>().count = inv.heavyAmmoCount;
+
+        GameObject shellsAmmo = Instantiate(ammo, lootLocs[6].position, Quaternion.identity);
+        shellsAmmo.GetComponent<Ammo>().networkSpawned = false;
+        shellsAmmo.GetComponent<Ammo>().type = LocalInventoryManager.AmmoType.Shells;
+        shellsAmmo.GetComponent<Ammo>().count = inv.shellsAmmoCount;
+
+        GameObject medkit = Instantiate(healing[1], lootLocs[7].position, Quaternion.identity);
+        medkit.GetComponent<Healable>().networkSpawned = false;
+        medkit.GetComponent<Healable>().count = inv.medkitCount;
+
+        GameObject syringe = Instantiate(healing[0], lootLocs[8].position, Quaternion.identity);
+        syringe.GetComponent<Healable>().networkSpawned = false;
+        syringe.GetComponent<Healable>().count = inv.syringeCount;
+
+        if (GameManager.instance.giveStartingStatsOnDropLoot)
+        {
+            inv.medkitCount = GameManager.instance.startingMedkits;
+            inv.syringeCount = GameManager.instance.startingSyringes;
+            inv.lightAmmoCount = GameManager.instance.startingLightAmmo;
+            inv.mediumAmmoCount = GameManager.instance.startingMediumAmmo;
+            inv.heavyAmmoCount = GameManager.instance.startingHeavyAmmo;
+            inv.shellsAmmoCount = GameManager.instance.startingShellsAmmo;
+        } else
+        {
+            inv.medkitCount = 0;
+            inv.syringeCount = 0;
+            inv.lightAmmoCount = 0;
+            inv.mediumAmmoCount = 0;
+            inv.heavyAmmoCount = 0;
+            inv.shellsAmmoCount = 0;
+        }
+
+        inv.inventoryItem[0].weapon = null;
+        inv.inventoryItem[1].weapon = null;
+        inv.inventoryItem[2].weapon = null;
     }
 }

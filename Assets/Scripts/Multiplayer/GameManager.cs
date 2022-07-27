@@ -29,7 +29,18 @@ public class GameManager : MonoBehaviour
 
     public List<Transform> spawns;
 
+    [Header("Game Settings")]
     public int lives = 3;
+    public bool dropLootOnEveryDeath;
+    public bool giveStartingStatsOnDropLoot;
+    public Vector2 mapSize;
+    public int maxHealth;
+    public int startingSyringes;
+    public int startingMedkits;
+    public int startingLightAmmo;
+    public int startingMediumAmmo;
+    public int startingHeavyAmmo;
+    public int startingShellsAmmo;
 
     private void Awake()
     {
@@ -356,11 +367,13 @@ public class GameManager : MonoBehaviour
             GameObject obj = Instantiate(instance.syringe, pos, Quaternion.identity);
             obj.GetComponent<Healable>().networkSpawned = true;
             obj.GetComponent<Healable>().id = id;
+            obj.GetComponent<Healable>().count = msg.GetInt();
         } else
         {
             GameObject obj = Instantiate(instance.medkit, pos, Quaternion.identity);
             obj.GetComponent<Healable>().networkSpawned = true;
             obj.GetComponent<Healable>().id = id;
+            obj.GetComponent<Healable>().count = msg.GetInt();
         }
     }
 

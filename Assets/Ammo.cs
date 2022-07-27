@@ -67,7 +67,7 @@ public class Ammo : MonoBehaviour
 
         if (!networkSpawned)
         {
-            id = (int)Random.Range(0, 2147483646);
+            id = Random.Range(0, 2147483646);
 
             Message msg = Message.Create(MessageSendMode.reliable, NetworkManager.MessageIds.spawnAmmo, shouldAutoRelay: true);
             msg.AddInt(id);

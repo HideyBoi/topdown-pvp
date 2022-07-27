@@ -73,6 +73,11 @@ public class DungeonGenerator : MonoBehaviour
         instance = this;
     }
 
+    private void OnEnable()
+    {
+        size = Vector2Int.CeilToInt(GameManager.instance.mapSize);
+    }
+
     // Start is called before the first frame update
     public void StartGenerating()
     {
