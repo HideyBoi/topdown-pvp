@@ -62,6 +62,7 @@ public class Chest : MonoBehaviour
             {
                 GameObject heal = Instantiate(loot.health, healSpawnPos.position, Quaternion.identity);
                 heal.GetComponent<Healable>().networkSpawned = false;
+                heal.GetComponent<Healable>().count = 1;
             }
         }  
     }
