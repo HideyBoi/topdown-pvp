@@ -47,6 +47,7 @@ public class HealthManager : MonoBehaviour
     {
         if (isLocalPlayer)
         {
+            inv = GetComponent<LocalInventoryManager>();
             maxHealth = GameManager.instance.maxHealth;
             health = maxHealth;
             healthBar.maxValue = maxHealth;

@@ -233,7 +233,7 @@ MonoBehaviour:
   spawns: []
   lives: 3
   dropLootOnEveryDeath: 0
-  giveStartingStatsOnDropLoot: 0
+  giveStartingStatsOnDropLoot: 1
   mapSize: {x: 6, y: 6}
   maxHealth: 150
   startingSyringes: 0
