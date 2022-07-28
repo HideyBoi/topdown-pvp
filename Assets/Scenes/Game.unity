@@ -179,7 +179,7 @@ MonoBehaviour:
     minPosition: {x: 0, y: 0}
     maxPosition: {x: 69, y: 69}
     obligatory: 0
-  offset: {x: 34, y: 34}
+  offset: {x: 60, y: 60}
   totalRooms: 0
   currentRoomCount: 0
   sentMapData: 0
@@ -234,7 +234,7 @@ MonoBehaviour:
   lives: 3
   dropLootOnEveryDeath: 0
   giveStartingStatsOnDropLoot: 1
-  mapSize: {x: 6, y: 6}
+  mapSize: {x: 150, y: 150}
   maxHealth: 150
   startingSyringes: 0
   startingMedkits: 0

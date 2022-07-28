@@ -10,17 +10,21 @@ public class WallCollision : MonoBehaviour
     // Start is called before the first frame update
     public void BreakHoles()
     {
-        if (Random.Range(0, 100) < 25)
+        if (Random.Range(0, 100) < 35)
         {
-            Collider[] colliders = Physics.OverlapSphere(transform.position, .01f);
+            Collider[] colliders = Physics.OverlapSphere(transform.position, 3f);
+            Debug.Log(colliders);
 
             List<GameObject> walls = new List<GameObject>();
 
-            foreach (Collider collider in colliders)
+            if (colliders != null)
             {
-                if (collider.tag == "Wall")
+                foreach (Collider collider in colliders)
                 {
-                    walls.Add(collider.gameObject);
+                    if (collider.tag == "Wall")
+                    {
+                        walls.Add(collider.gameObject);
+                    }
                 }
             }
 
@@ -28,8 +32,8 @@ public class WallCollision : MonoBehaviour
             {
                 foreach (GameObject wall in walls)
                 {
-                    wall.transform.parent.gameObject.GetComponent<WallCollision>().UpdateFloorForBrokenWall();
-                }            
+                    wall.gameObject.GetComponent<WallCollision>().UpdateFloorForBrokenWall();
+                }
             }
         }
     }
@@ -38,6 +42,11 @@ public class WallCollision : MonoBehaviour
     {
         room.currStatus[id] = true;
         room.UpdateRoom(room.currStatus);
-        gameObject.SetActive(false);
+        transform.parent.gameObject.SetActive(false);
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawWireSphere(transform.position, 3f);
     }
 }
