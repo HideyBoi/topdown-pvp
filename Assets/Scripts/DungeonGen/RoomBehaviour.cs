@@ -16,7 +16,7 @@ public class RoomBehaviour : MonoBehaviour
         for (int i = 0; i < status.Length; i++)
         {
             doors[i].SetActive(status[i]);
-            walls[i].gameObject.SetActive(!status[i]);
+            walls[i].transform.parent.gameObject.SetActive(!status[i]);
         }
 
         if (!doneBreakingHoles)

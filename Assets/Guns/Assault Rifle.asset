@@ -23,7 +23,7 @@ MonoBehaviour:
   rarity: 0
   ammoType: 1
   automatic: 1
-  damage: 10
+  damage: 9
   maxAmmoCount: 30
   timeBetweenShots: 0.073
   reloadTime: 1.2

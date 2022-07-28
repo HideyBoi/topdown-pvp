@@ -73,7 +73,7 @@ public class LocalGunManager : MonoBehaviour
             {
                 interactUiAnimation.SetBool("interacting", true);
 
-                timeHeld += Time.fixedDeltaTime;
+                timeHeld += Time.deltaTime;
 
                 interactProgressbar.value = timeHeld;
 

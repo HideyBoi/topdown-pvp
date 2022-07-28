@@ -29,6 +29,8 @@ public class GameManager : MonoBehaviour
 
     public List<Transform> spawns;
 
+    public List<NetworkManager.MultiplayerPlayer> playersInGame;
+
     [Header("Game Settings")]
     public int lives = 3;
     public bool dropLootOnEveryDeath;
@@ -47,6 +49,11 @@ public class GameManager : MonoBehaviour
         for (int i = 0; i < possibleWeapons.Length; i++)
         {
             possibleWeapons[i].id = i;
+        }
+
+        foreach (var player in NetworkManager.instance.connectedPlayers)
+        {
+            playersInGame.Add(player);
         }
 
         instance = this;
@@ -83,6 +90,8 @@ public class GameManager : MonoBehaviour
         networkManager.PlayerIsReady(localPlayerId);
     }
 
+    bool endedGame = false;
+
     private void FixedUpdate()
     {
         if (!generationStarted && networkManager.isDoneLoading)
@@ -90,6 +99,13 @@ public class GameManager : MonoBehaviour
             generationStarted = true;
             if (networkManager.Server.IsRunning)
                 generator.StartGenerating();
+        }
+
+        if (playersInGame.Count == 1 && NetworkManager.instance.connectedPlayers.Count > 1 && !endedGame)
+        {
+            endedGame = true;
+            Debug.Log("GAME END");
+            LoadingScreen.instance.LoadLevel("MainMenu");
         }
     }
 
@@ -102,6 +118,30 @@ public class GameManager : MonoBehaviour
                 Debug.Log("Player is disconnecting while in game.");
                 Destroy(player.gameObject);
                 remotePlayers.Remove(player);
+                return;
+            }
+        }
+
+        foreach (var player in playersInGame)
+        {
+            if (player.id == id)
+            {
+                playersInGame.Remove(player);
+                return;
+            }
+        }
+    }
+
+    [MessageHandler((ushort)NetworkManager.MessageIds.playerOutOfGame)]
+    static void PlayerOutOfGame(Message msg)
+    {
+        ushort id = msg.GetUShort();
+
+        foreach (var item in instance.playersInGame)
+        {
+            if (item.id == id)
+            {
+                instance.playersInGame.Remove(item);
                 return;
             }
         }
@@ -207,17 +247,17 @@ public class GameManager : MonoBehaviour
 
         if (Chance(rareChance))
         {
-            Debug.Log("Rare");
+            //Debug.Log("Rare");
             loot.weapon = rareWeapons[Random.Range(0, rareWeapons.Length)];
         }
         else if (Chance(legendaryChance))
         {
-            Debug.Log("Legendary");
+            //Debug.Log("Legendary");
             loot.weapon = legendaryWeapons[Random.Range(0, legendaryWeapons.Length)];
         }
         else
         {
-            Debug.Log("Generic");
+            //Debug.Log("Generic");
             loot.weapon = genericWeapons[Random.Range(0, genericWeapons.Length)];
         }
 

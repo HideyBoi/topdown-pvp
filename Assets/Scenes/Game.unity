@@ -231,10 +231,11 @@ MonoBehaviour:
   soundEffect: {fileID: 7098371210533266199, guid: 03ca22f20a0d6c145ab412dadd2b8800,
     type: 3}
   spawns: []
+  playersInGame: []
   lives: 3
   dropLootOnEveryDeath: 0
   giveStartingStatsOnDropLoot: 1
-  mapSize: {x: 150, y: 150}
+  mapSize: {x: 5, y: 5}
   maxHealth: 150
   startingSyringes: 0
   startingMedkits: 0
@@ -249,6 +250,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 2c5c2add7a2f2f74ebaffa4a8cd76e74, type: 2}
   - {fileID: 11400000, guid: b578df79dbab6d044ac373d4339d5e54, type: 2}
   - {fileID: 11400000, guid: 8008595968631a943b1ff823423eda91, type: 2}
+  - {fileID: 11400000, guid: 6aba5d929d7e3e543bbfda57c4b16ca3, type: 2}
   spawnedChests: []
   spawnedItems: []
   spawnedHealables: []
@@ -257,12 +259,13 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 736175ee30b67e449a20955b99b4f00c, type: 2}
   - {fileID: 11400000, guid: b578df79dbab6d044ac373d4339d5e54, type: 2}
   rareWeapons:
-  - {fileID: 11400000, guid: 8008595968631a943b1ff823423eda91, type: 2}
   - {fileID: 11400000, guid: 2c5c2add7a2f2f74ebaffa4a8cd76e74, type: 2}
   - {fileID: 11400000, guid: c1feb8e7f03c3df4fbfd7bc670503c49, type: 2}
+  - {fileID: 11400000, guid: 6aba5d929d7e3e543bbfda57c4b16ca3, type: 2}
   rareChance: 31
   legendaryWeapons:
   - {fileID: 11400000, guid: 9cfb42c50d7fac142a3722a23ca9074e, type: 2}
+  - {fileID: 11400000, guid: 8008595968631a943b1ff823423eda91, type: 2}
   legendaryChance: 16
   syringe: {fileID: 391935329170582414, guid: bac15720f8e4922489357fcb3e2fefb6, type: 3}
   syringeChance: 50

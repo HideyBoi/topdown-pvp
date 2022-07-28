@@ -127,6 +127,7 @@ public class HealthManager : MonoBehaviour
                     canRespawn = false;
                     respawningStatus.text = "You're out of the game, you've lost your last life!";
                     DropLoot();
+                    OutOfGame();
                 } else if (GameManager.instance.lives == 1)
                 {
                     respawningStatus.text = $"You're on your last life, respawning, please wait...";
@@ -292,5 +293,21 @@ public class HealthManager : MonoBehaviour
         inv.inventoryItem[0].weapon = null;
         inv.inventoryItem[1].weapon = null;
         inv.inventoryItem[2].weapon = null;
+    }
+
+    void OutOfGame()
+    {
+        Message msg = Message.Create(MessageSendMode.reliable, NetworkManager.MessageIds.playerOutOfGame, shouldAutoRelay: true);
+        msg.AddUShort(thisId);
+        NetworkManager.instance.Client.Send(msg);
+
+        foreach (var player in GameManager.instance.playersInGame)
+        {
+            if (player.id == thisId)
+            {
+                GameManager.instance.playersInGame.Remove(player);
+                return;
+            }
+        }
     }
 }

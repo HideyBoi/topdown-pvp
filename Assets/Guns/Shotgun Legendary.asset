@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cf83bf71196d14643a3a1271980fad3f, type: 3}
-  m_Name: Shotgun Rare
+  m_Name: Shotgun Legendary
   m_EditorClassIdentifier: 
   gunName: Shotgun
   id: 5
@@ -20,12 +20,12 @@ MonoBehaviour:
   shootSound: {fileID: 8300000, guid: 69957dd27d5fe1c40a387306e974d395, type: 3}
   pickupSound: {fileID: 8300000, guid: 2380dbf9169fcac47a8a848433bc6252, type: 3}
   reloadSound: {fileID: 8300000, guid: 2380dbf9169fcac47a8a848433bc6252, type: 3}
-  rarity: 1
+  rarity: 2
   ammoType: 3
   automatic: 0
-  damage: 5
+  damage: 6
   maxAmmoCount: 4
   timeBetweenShots: 1.5
   reloadTime: 2.8
-  shotCount: 19
-  spread: 1.9
+  shotCount: 20
+  spread: 1.8

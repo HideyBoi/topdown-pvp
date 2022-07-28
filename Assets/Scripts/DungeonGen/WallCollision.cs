@@ -10,10 +10,9 @@ public class WallCollision : MonoBehaviour
     // Start is called before the first frame update
     public void BreakHoles()
     {
-        if (Random.Range(0, 100) < 35)
+        if (Random.Range(0, 100) < 48)
         {
             Collider[] colliders = Physics.OverlapSphere(transform.position, 3f);
-            Debug.Log(colliders);
 
             List<GameObject> walls = new List<GameObject>();
 

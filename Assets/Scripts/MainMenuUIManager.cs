@@ -20,6 +20,10 @@ public class MainMenuUIManager : MonoBehaviour
     public TMP_Text exitTitle;
     public TMP_Text exitBody;
 
+    public TMP_Text verisonText;
+
+    public Texture2D cursor;
+
     [Header("Join")]
     public TMP_InputField ipInput;
     public TMP_InputField portInput;
@@ -84,6 +88,10 @@ public class MainMenuUIManager : MonoBehaviour
                 currentLobbyMenu = Instantiate(lobbyMenu);
             }
         }
+
+        verisonText.text = "Version: " + Application.version + "\nUnity Game Engine Version: " + Application.unityVersion;
+
+        Cursor.SetCursor(cursor, new Vector2(cursor.width / 2, cursor.height / 2), CursorMode.Auto);
     }
 
     public void ExitGamePressed()

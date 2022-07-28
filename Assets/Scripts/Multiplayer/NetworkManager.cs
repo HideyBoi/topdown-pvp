@@ -65,6 +65,7 @@ public class NetworkManager : MonoBehaviour
         playerShot, //contains data about what gun was shot and where
         playerDamage, //tells all players that player x has been damaged
         playerHeal, //tells other players that the local player has healed
+        playerOutOfGame, //tells other players when a player is no longer in the game
     }
 
     private void Start()

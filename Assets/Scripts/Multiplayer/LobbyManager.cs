@@ -19,6 +19,13 @@ public class LobbyManager : MonoBehaviour
         {
             startButton.SetActive(true);
         }
+
+        NetworkManager.instance.readyPlayers = new List<ushort>();
+        NetworkManager.instance.mapReadyPlayers = new List<ushort>();
+
+        NetworkManager.instance.gameIsStarted = false;
+        NetworkManager.instance.stillInLobby = true;
+        NetworkManager.instance.isDoneLoading = false;
     }
 
     public void StartGame()

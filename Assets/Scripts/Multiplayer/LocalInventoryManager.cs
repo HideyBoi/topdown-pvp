@@ -24,7 +24,13 @@ public class LocalInventoryManager : MonoBehaviour
     public GameObject[] genericMarker;
     public GameObject[] rareMarker;
     public GameObject[] legendaryMarker;
+    public Image[] slotsImage;
     public CanvasGroup[] slots;
+
+    public Color legendaryColor;
+    public Color rareColor;
+    public Color genericColor;
+    public Color noneColor;
 
     public enum AmmoType
     {
@@ -312,9 +318,9 @@ public class LocalInventoryManager : MonoBehaviour
             gunMeshRenderer.material = inventoryItem[currentIndex].weapon.gunMaterial;
         }
 
-        slots[0].alpha = 0.7f;
-        slots[1].alpha = 0.7f;
-        slots[2].alpha = 0.7f;
+        slots[0].alpha = 0.45f;
+        slots[1].alpha = 0.45f;
+        slots[2].alpha = 0.45f;
 
         slots[currentIndex].alpha = 1f;
 
@@ -353,13 +359,13 @@ public class LocalInventoryManager : MonoBehaviour
             switch (inventoryItem[pos].weapon.rarity)
             {
                 case Weapon.Rarity.generic:
-                    genericMarker[pos].SetActive(true);
+                    slotsImage[pos].color = genericColor;
                     break;
                 case Weapon.Rarity.rare:
-                    rareMarker[pos].SetActive(true);
+                    slotsImage[pos].color = rareColor;
                     break;
                 case Weapon.Rarity.legendary:
-                    legendaryMarker[pos].SetActive(true);
+                    slotsImage[pos].color = legendaryColor;
                     break;
             }
         }
@@ -373,6 +379,7 @@ public class LocalInventoryManager : MonoBehaviour
             gunMeshFilter.mesh = null;
             gunMeshRenderer.material = null;
             totalAmmoCount[pos].text = "--";
+            slotsImage[pos].color = noneColor;
         }
     }
 
