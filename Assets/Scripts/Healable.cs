@@ -76,7 +76,7 @@ public class Healable : MonoBehaviour
     {
         GameObject sfxOBJ = Instantiate(sfx, transform.position, Quaternion.identity);
         SoundEffect effect = sfxOBJ.GetComponent<SoundEffect>();
-        effect.PlaySound(pickupSfx, 1, 30);
+        effect.PlaySound(pickupSfx, 30, 1);
         Destroy(GetComponent<BoxCollider>());
 
         if (!fromNetwork)

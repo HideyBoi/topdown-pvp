@@ -19,7 +19,7 @@ public class SoundEffect : MonoBehaviour
     {
         if (!source.isPlaying)
         {
-            Destroy(gameObject);
+            //Destroy(gameObject);
         }
     }
 }

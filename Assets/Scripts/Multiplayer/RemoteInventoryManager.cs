@@ -20,7 +20,7 @@ public class RemoteInventoryManager : MonoBehaviour
             meshFilter.mesh = gun.gunMesh;
             meshRenderer.material = gun.gunMaterial;
 
-            Instantiate(soundEffect, transform.position, Quaternion.identity).GetComponent<SoundEffect>().PlaySound(gun.pickupSound, 1, 35);
+            Instantiate(soundEffect, transform.position, Quaternion.identity).GetComponent<SoundEffect>().PlaySound(gun.pickupSound, 35, 1);
         } else
         {
             meshFilter.mesh = null;

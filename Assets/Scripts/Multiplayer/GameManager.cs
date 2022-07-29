@@ -545,7 +545,7 @@ public class GameManager : MonoBehaviour
         {
             if (player._id == id)
             {
-                Instantiate(instance.soundEffect, player.transform).GetComponent<SoundEffect>().PlaySound(instance.possibleWeapons[msg.GetInt()].shootSound, 1, 60);
+                Instantiate(instance.soundEffect, player.transform).GetComponent<SoundEffect>().PlaySound(instance.possibleWeapons[msg.GetInt()].shootSound, 60, 1);
                 Instantiate(instance.muzzleFlash, msg.GetVector3(), msg.GetQuaternion(), player.pivot);
             }
         }
@@ -560,7 +560,7 @@ public class GameManager : MonoBehaviour
         {
             if (player._id == id)
             {
-                Instantiate(instance.soundEffect, player.transform).GetComponent<SoundEffect>().PlaySound(instance.possibleWeapons[msg.GetInt()].reloadSound, 1, 35);
+                Instantiate(instance.soundEffect, player.transform).GetComponent<SoundEffect>().PlaySound(instance.possibleWeapons[msg.GetInt()].reloadSound, 35, 1);
             }
         }
     }

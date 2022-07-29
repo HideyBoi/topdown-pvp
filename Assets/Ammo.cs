@@ -102,7 +102,7 @@ public class Ammo : MonoBehaviour
     {
         GameObject sfxOBJ = Instantiate(sfx, transform.position, Quaternion.identity);
         SoundEffect effect = sfxOBJ.GetComponent<SoundEffect>();
-        effect.PlaySound(ammoPickUpSound, 1, 30);
+        effect.PlaySound(ammoPickUpSound, 30, 1);
         Destroy(GetComponent<BoxCollider>());
 
         if (!fromNetwork)
