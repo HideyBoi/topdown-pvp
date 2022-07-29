@@ -8,16 +8,19 @@ using TMPro;
 public class LobbyManager : MonoBehaviour
 {
 
-    public GameObject startButton;
+    public GameObject settingsPanel;
 
     public GameObject disconnectPrompt;
     public TMP_Text disconnectText;
+
+    public TMP_Text readyText;
+    bool isReady;
 
     private void Awake()
     {
         if (NetworkManager.instance.Server.IsRunning)
         {
-            startButton.SetActive(true);
+            settingsPanel.SetActive(true);
         }
 
         NetworkManager.instance.readyPlayers = new List<ushort>();
@@ -28,17 +31,23 @@ public class LobbyManager : MonoBehaviour
         NetworkManager.instance.isDoneLoading = false;
     }
 
-    public void StartGame()
+    public void ReadyUp()
     {
-        if (NetworkManager.instance.Server.IsRunning)
-        {
-            startButton.SetActive(false);
+        Message msg = Message.Create(MessageSendMode.reliable, NetworkManager.MessageIds.readyUp, shouldAutoRelay: true);
+        msg.AddBool(!isReady);
+        msg.AddUShort(NetworkManager.instance.Client.Id);
+        NetworkManager.instance.Client.Send(msg);
 
-            Message msg = Message.Create(MessageSendMode.reliable, NetworkManager.MessageIds.startGame, shouldAutoRelay: true);
-            msg.AddBool(true);
-            NetworkManager.instance.Client.Send(msg);
-            NetworkManager.StartGame(msg);
-            NetworkManager.instance.stillInLobby = false;
+        NetworkManager.instance.PlayerReadyUp(!isReady, NetworkManager.instance.Client.Id);
+
+        isReady = !isReady;
+
+        if (isReady)
+        {
+            readyText.text = "Unready";
+        } else
+        {
+            readyText.text = "Ready!";
         }
     }
 

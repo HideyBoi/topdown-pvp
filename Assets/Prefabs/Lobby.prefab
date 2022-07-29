@@ -244,6 +244,7 @@ RectTransform:
   m_Children:
   - {fileID: 6756190962187809307}
   - {fileID: 1960907530804544841}
+  - {fileID: 8455161761325466529}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -326,9 +327,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aff42c60227785a42a78a27d7f20ec97, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startButton: {fileID: 6466256118219852333}
+  settingsPanel: {fileID: 6540759552990172798}
   disconnectPrompt: {fileID: 7088877829942489435}
   disconnectText: {fileID: 3426137184283453636}
+  readyText: {fileID: 316725131107057731}
 --- !u!1 &2891554890824169086
 GameObject:
   m_ObjectHideFlags: 0
@@ -719,12 +721,12 @@ GameObject:
   - component: {fileID: 5455733757572275582}
   - component: {fileID: 353856826159781154}
   m_Layer: 5
-  m_Name: StartButton
+  m_Name: Ready
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &2287634339107085097
 RectTransform:
   m_ObjectHideFlags: 0
@@ -830,7 +832,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 2141554103988314149}
         m_TargetAssemblyTypeName: LobbyManager, Assembly-CSharp
-        m_MethodName: StartGame
+        m_MethodName: ReadyUp
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -840,6 +842,42 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!1 &6540759552990172798
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8455161761325466529}
+  m_Layer: 5
+  m_Name: setting
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &8455161761325466529
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6540759552990172798}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1480511469087027748}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &7004683026953632326
 GameObject:
   m_ObjectHideFlags: 0
@@ -1203,7 +1241,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Start Game
+  m_text: Ready!
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}

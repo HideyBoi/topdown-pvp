@@ -17,10 +17,13 @@ public class NetworkManager : MonoBehaviour
 
     public List<MultiplayerPlayer> connectedPlayers = new List<MultiplayerPlayer>();
 
+    public bool localPlayerIsHost = false;
+
     public bool gameIsStarted = false;
     public bool stillInLobby = true;
     public bool isDoneLoading = false;
 
+    public List<ushort> playersReadyToStart = new List<ushort>();
     public List<ushort> readyPlayers = new List<ushort>();
     public List<ushort> mapReadyPlayers = new List<ushort>();
 
@@ -30,7 +33,7 @@ public class NetworkManager : MonoBehaviour
         public ushort id;
         public string name;
         public GameObject playerObject;
-        public bool isReady = false;
+        public bool isHost = false;
 
         public ushort skinId;
         public ushort hatId;
@@ -47,6 +50,7 @@ public class NetworkManager : MonoBehaviour
         playerInfo = 1, //contains data about player (cosmetics, name)
         startGame, //tells the players to start loading the game world
         playerReady, //player has finished loading game world
+        readyUp, //lets everyone else know that you are ready to start the game
         mapHeader, //contains basic information about the generated map, ie total room count
         mapData, //contains room information, ie type of room, which halls are open
         mapDone, //map generation has finished
@@ -216,6 +220,43 @@ public class NetworkManager : MonoBehaviour
         if (!exists)
         {
             instance.connectedPlayers.Add(new MultiplayerPlayer(id, username));
+        }
+    }
+
+    [MessageHandler((ushort)MessageIds.readyUp)]
+    public static void ReadyUp(Message msg)
+    {
+        bool ready = msg.GetBool();
+        ushort id = msg.GetUShort();
+
+        instance.PlayerReadyUp(ready, id);
+    }
+
+    public void PlayerReadyUp(bool ready, ushort id)
+    {
+        Debug.Log($"{id} is ready({ready})");
+
+        if (ready)
+        {
+            instance.playersReadyToStart.Add(id);
+        }
+        else
+        {
+            instance.playersReadyToStart.Remove(id);
+        }
+
+        if (instance.playersReadyToStart.Count == instance.connectedPlayers.Count)
+        {
+            instance.playersReadyToStart.Clear();
+
+            if (instance.Server.IsRunning)
+            {
+                Message message = Message.Create(MessageSendMode.reliable, MessageIds.startGame, shouldAutoRelay: true);
+                message.AddBool(true);
+                instance.Client.Send(message);
+                StartGame(message);
+                instance.stillInLobby = false;
+            }
         }
     }
 
