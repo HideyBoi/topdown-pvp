@@ -226,12 +226,26 @@ MonoBehaviour:
     type: 3}
   particleObjects:
   - {fileID: 3124112141188442420, guid: 8bb6cee50d81f8342a4a952984b87c4f, type: 3}
+  - {fileID: 5027107366694167322, guid: 6aa63e7fb0aa0d040b50bc690a1c7fca, type: 3}
   muzzleFlash: {fileID: 503261244163821301, guid: 82968f14cd878794fa71f386769df172,
     type: 3}
   soundEffect: {fileID: 7098371210533266199, guid: 03ca22f20a0d6c145ab412dadd2b8800,
     type: 3}
   spawns: []
   playersInGame: []
+  clips:
+  - {fileID: 8300000, guid: 14b90906e4310cd4e82c82ad8a29b56a, type: 3}
+  - {fileID: 8300000, guid: adcfd96e7ea47d546acaa6844e192ad1, type: 3}
+  - {fileID: 8300000, guid: ad976137b11607a408313d2942a6c6dc, type: 3}
+  - {fileID: 8300000, guid: a4b3b69ba4613ee46bcd97cc371e36a1, type: 3}
+  - {fileID: 8300000, guid: b6fadf8536096cd4d88c20f0f01b3161, type: 3}
+  - {fileID: 8300000, guid: dee53081b3d8c07459239877cd7d5344, type: 3}
+  - {fileID: 8300000, guid: b7c2d7c764681b247b80f35dac73f4bc, type: 3}
+  - {fileID: 8300000, guid: fb46215a70bcb4c46a13ac2c39c9acec, type: 3}
+  - {fileID: 8300000, guid: c055d05d426464e42974bb7abdea21af, type: 3}
+  - {fileID: 8300000, guid: 91637c8c4ce886c4babc9e376134b84b, type: 3}
+  - {fileID: 8300000, guid: 8814c62d373e0d7489c13c860898d1d3, type: 3}
+  - {fileID: 8300000, guid: f5dcb0a5544ac194b82b6be0d9ff67dc, type: 3}
   lives: 3
   dropLootOnEveryDeath: 0
   giveStartingStatsOnDropLoot: 1

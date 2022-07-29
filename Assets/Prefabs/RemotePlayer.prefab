@@ -146,9 +146,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _id: 0
+  _name: 
   pivot: {fileID: 1625184518820680196}
   invManager: {fileID: 974717709019665829}
   healthManager: {fileID: 0}
+  beingSpectated: 0
 --- !u!114 &974717709019665829
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -163,7 +165,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   meshFilter: {fileID: 1039993086178418562}
   meshRenderer: {fileID: 526128813409697564}
-  soundEffect: {fileID: 4491493733864199258, guid: 871cb2366c1ec1341a1b94ffda881e89,
+  soundEffect: {fileID: 7098371210533266199, guid: 03ca22f20a0d6c145ab412dadd2b8800,
     type: 3}
   gunPivot: {fileID: 7882332431855857025}
 --- !u!114 &2511984471038183554
@@ -178,11 +180,39 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2e12d7fc895eb0458d0ce9289bd630a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  deathEffect: {fileID: 0}
   thisId: 0
+  healEffect: {fileID: 1363855616742251421, guid: c5cff502f5f9ac644886f5926865fc9c,
+    type: 3}
+  deathEffect: {fileID: 5027107366694167322, guid: 6aa63e7fb0aa0d040b50bc690a1c7fca,
+    type: 3}
   animator: {fileID: 0}
   isDead: 0
+  healthBar: {fileID: 0}
+  healthBarText: {fileID: 0}
+  cam: {fileID: 0}
+  spectating: {fileID: 0}
+  deathOverlay: {fileID: 0}
+  killerNameText: {fileID: 0}
+  respawningStatus: {fileID: 0}
+  currentlySpectatingText: {fileID: 0}
+  gunNameText: {fileID: 0}
+  killerHealthText: {fileID: 0}
+  rarityIndicator: []
+  killerHealth: {fileID: 0}
   isLocalPlayer: 0
+  lootLocs:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  item: {fileID: 0}
+  healing: []
+  ammo: {fileID: 0}
 --- !u!1 &2989654674347335035
 GameObject:
   m_ObjectHideFlags: 0

@@ -84,6 +84,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tooltip: {fileID: 2763372839508241739}
+  timeLeftUntilDisappear: 0
 --- !u!114 &8319157448717960705
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -97,12 +98,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 0
+  count: 1
   nameTex: {fileID: 3640750778616293388}
   subTex: {fileID: 4063670635596423095}
   networkSpawned: 0
   pivot: {fileID: 8573082194647486441}
   id: 0
   speed: 120
+  sfx: {fileID: 7098371210533266199, guid: 03ca22f20a0d6c145ab412dadd2b8800, type: 3}
+  pickupSfx: {fileID: 8300000, guid: 62b7126ed8553494ba492cf3dc4ee5c4, type: 3}
 --- !u!1 &8573082194409431415
 GameObject:
   m_ObjectHideFlags: 0

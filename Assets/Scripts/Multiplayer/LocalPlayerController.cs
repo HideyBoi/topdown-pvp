@@ -30,6 +30,12 @@ public class LocalPlayerController : MonoBehaviour
 
     HealthManager hm;
 
+    bool wantsToMove;
+    float currentMoveTimer;
+    public float moveTimer;
+
+    public LayerMask groundLm;
+
     private void Awake()
     {
         nm = NetworkManager.instance;
@@ -38,8 +44,8 @@ public class LocalPlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         hm = GetComponent<HealthManager>();
 
-        controls.Player.Move.performed += ctx => Move(ctx.ReadValue<Vector2>());
-        controls.Player.Move.canceled += ctx => Move(ctx.ReadValue<Vector2>());
+        controls.Player.Move.performed += ctx => Move(ctx.ReadValue<Vector2>(), true);
+        controls.Player.Move.canceled += ctx => Move(ctx.ReadValue<Vector2>(), false);
         controls.Player.PointGamepad.performed += ctx => PointGamepad(ctx.ReadValue<Vector2>());
         controls.Player.PointMouse.performed += ctx => PointMouse(ctx.ReadValue<Vector2>());
     }
@@ -64,19 +70,53 @@ public class LocalPlayerController : MonoBehaviour
         playerPosRot.AddVector3(transform.position);
         playerPosRot.AddQuaternion(pivot.rotation);
         nm.Client.Send(playerPosRot);
+
+        currentMoveTimer -= Time.fixedDeltaTime * ((rb.velocity.magnitude/8 - 0f) / (currentMovementSpeed - 0f));
+
+        if (currentMoveTimer < 0 && wantsToMove)
+        {
+            currentMoveTimer = moveTimer;
+
+            RaycastHit hit;
+            Physics.Raycast(transform.position, Vector3.down, out hit, 8f, groundLm);
+
+            if (hit.collider != null)
+            {
+                int rng = 0;
+
+                if (hit.collider.CompareTag("Water"))
+                {
+                    rng = Random.Range(5, 10);
+                } else
+                {   
+                    rng = Random.Range(0, 5);
+                }
+
+                Message msg = Message.Create(MessageSendMode.reliable, NetworkManager.MessageIds.soundEffect, shouldAutoRelay: true);
+                msg.AddVector3(transform.position);
+                msg.AddInt(rng);
+                msg.AddFloat(1f);
+                msg.AddFloat(90);
+                NetworkManager.instance.Client.Send(msg);
+
+                GameManager.instance.PlaySoundEffectByID(transform.position, rng, 1f, 90);
+            }
+        }
     }
 
     private void Update()
     {
         if (!nm.gameIsStarted || hm.isDead)
             return;
+
         miniMapCam.transform.position = new Vector3(transform.position.x, 200, transform.position.z);
         miniMapCam.transform.rotation = Quaternion.Euler(new Vector3(90, 0, 0));
     }
 
-    void Move(Vector2 rawdir)
+    void Move(Vector2 rawdir, bool moving)
     {
         desMoveDir = rawdir;
+        wantsToMove = moving;
     }
 
     void PointMouse(Vector2 mousePos)

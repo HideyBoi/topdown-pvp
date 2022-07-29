@@ -28,6 +28,9 @@ public class Healable : MonoBehaviour
 
     public float speed = 120;
 
+    public GameObject sfx;
+    public AudioClip pickupSfx;
+
     private void Awake()
     {
         GameManager.instance.AddHealItem(this);
@@ -71,9 +74,9 @@ public class Healable : MonoBehaviour
 
     public void Pickup(bool fromNetwork)
     {
-        //GameObject sfxOBJ = Instantiate(sfx, transform.position, Quaternion.identity);
-        //SoundEffect effect = sfxOBJ.GetComponent<SoundEffect>();
-        //effect.PlaySound(currentItem.weapon.pickupSound);
+        GameObject sfxOBJ = Instantiate(sfx, transform.position, Quaternion.identity);
+        SoundEffect effect = sfxOBJ.GetComponent<SoundEffect>();
+        effect.PlaySound(pickupSfx, 1, 30);
         Destroy(GetComponent<BoxCollider>());
 
         if (!fromNetwork)

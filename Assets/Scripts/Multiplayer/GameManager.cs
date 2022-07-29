@@ -31,6 +31,8 @@ public class GameManager : MonoBehaviour
 
     public List<NetworkManager.MultiplayerPlayer> playersInGame;
 
+    public AudioClip[] clips;
+
     [Header("Game Settings")]
     public int lives = 3;
     public bool dropLootOnEveryDeath;
@@ -206,6 +208,19 @@ public class GameManager : MonoBehaviour
     public void Respawn()
     {
         localPlayerObject.transform.position = spawns[Random.Range(0, spawns.Count)].position;
+    }
+
+    [MessageHandler((ushort)NetworkManager.MessageIds.soundEffect)]
+    static void Sfx(Message msg)
+    {
+        instance.PlaySoundEffectByID(msg.GetVector3(), msg.GetInt(), msg.GetFloat(), msg.GetFloat());
+    }
+
+    public void PlaySoundEffectByID(Vector3 position, int audioID, float volume, float maxDistance)
+    {
+        AudioClip cliptoplay = clips[audioID];
+
+        Instantiate(soundEffect, position, Quaternion.identity).GetComponent<SoundEffect>().PlaySound(cliptoplay, maxDistance, volume);
     }
 
     [Header("Loot")]
@@ -530,7 +545,7 @@ public class GameManager : MonoBehaviour
         {
             if (player._id == id)
             {
-                Instantiate(instance.soundEffect, player.transform).GetComponent<SoundEffect>().PlaySound(instance.possibleWeapons[msg.GetInt()].shootSound);
+                Instantiate(instance.soundEffect, player.transform).GetComponent<SoundEffect>().PlaySound(instance.possibleWeapons[msg.GetInt()].shootSound, 1, 60);
                 Instantiate(instance.muzzleFlash, msg.GetVector3(), msg.GetQuaternion(), player.pivot);
             }
         }
@@ -545,7 +560,7 @@ public class GameManager : MonoBehaviour
         {
             if (player._id == id)
             {
-                Instantiate(instance.soundEffect, player.transform).GetComponent<SoundEffect>().PlaySound(instance.possibleWeapons[msg.GetInt()].reloadSound);
+                Instantiate(instance.soundEffect, player.transform).GetComponent<SoundEffect>().PlaySound(instance.possibleWeapons[msg.GetInt()].reloadSound, 1, 35);
             }
         }
     }

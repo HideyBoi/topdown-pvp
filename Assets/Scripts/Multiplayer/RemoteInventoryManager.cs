@@ -19,6 +19,8 @@ public class RemoteInventoryManager : MonoBehaviour
             Weapon gun = GameManager.instance.possibleWeapons[gunId];
             meshFilter.mesh = gun.gunMesh;
             meshRenderer.material = gun.gunMaterial;
+
+            Instantiate(soundEffect, transform.position, Quaternion.identity).GetComponent<SoundEffect>().PlaySound(gun.pickupSound, 1, 35);
         } else
         {
             meshFilter.mesh = null;

@@ -66,6 +66,7 @@ public class NetworkManager : MonoBehaviour
         playerDamage, //tells all players that player x has been damaged
         playerHeal, //tells other players that the local player has healed
         playerOutOfGame, //tells other players when a player is no longer in the game
+        soundEffect, //tells other players to play a sound effect
     }
 
     private void Start()

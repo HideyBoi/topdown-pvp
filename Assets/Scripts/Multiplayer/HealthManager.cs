@@ -11,8 +11,10 @@ public class HealthManager : MonoBehaviour
 {
     int health = 150;
     int maxHealth = 150;
-    public GameObject deathEffect;
     public ushort thisId;
+
+    public GameObject healEffect;
+    public GameObject deathEffect;
 
     [Header("Local Player Specific")]
     [SerializeField] private Animator animator;
@@ -105,6 +107,8 @@ public class HealthManager : MonoBehaviour
             health = maxHealth;
         }
 
+        Instantiate(healEffect, transform.position, Quaternion.identity);
+
         if (!fromNetwork)
         {
             Message msg = Message.Create(MessageSendMode.reliable, NetworkManager.MessageIds.playerHeal, shouldAutoRelay: true);
@@ -116,6 +120,8 @@ public class HealthManager : MonoBehaviour
 
     public void Die(ushort killingPlayer, int gunId)
     {
+        Instantiate(deathEffect, transform.position, Quaternion.identity);
+
         if (isLocalPlayer)
         {
             if (GameManager.instance.lives > 0)

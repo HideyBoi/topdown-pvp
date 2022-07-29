@@ -29,6 +29,7 @@ public class LocalGunManager : MonoBehaviour
 
     public GameObject muzzleFlash;
     public GameObject impactEffect;
+    public GameObject bloodEffect;
     public GameObject soundEffect;
 
 
@@ -141,7 +142,7 @@ public class LocalGunManager : MonoBehaviour
                 if (im.inventoryItem[im.currentIndex].ammoCount > 0)
                 {
                     im.inventoryItem[im.currentIndex].ammoCount--;
-                    Instantiate(soundEffect, transform.position, Quaternion.identity).GetComponent<SoundEffect>().PlaySound(im.inventoryItem[im.currentIndex].weapon.shootSound);
+                    Instantiate(soundEffect, transform.position, Quaternion.identity).GetComponent<SoundEffect>().PlaySound(im.inventoryItem[im.currentIndex].weapon.shootSound, 1, 60);
                     Instantiate(muzzleFlash, gunPivot.position + gunPivot.transform.TransformDirection(im.inventoryItem[im.currentIndex].weapon.muzzleLocation), gunPivot.rotation, gunPivot);
                     shootCooldown = im.inventoryItem[im.currentIndex].weapon.timeBetweenShots;
 
@@ -174,6 +175,8 @@ public class LocalGunManager : MonoBehaviour
 
                             if (shoot.collider.CompareTag("RemotePlayer"))
                             {
+                                Instantiate(bloodEffect, shoot.point, Quaternion.LookRotation(Vector3.forward, shoot.normal));
+
                                 HealthManager hm = shoot.collider.GetComponent<HealthManager>();
                                 Damage(im.inventoryItem[im.currentIndex].weapon.damage, im.inventoryItem[im.currentIndex].weapon.id, hm);
                             }
