@@ -34,7 +34,7 @@ RectTransform:
   m_Children:
   - {fileID: 7054317646355174034}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -91,6 +91,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17276be1eff1cab438070f22f20d993e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  id: 0
   text: {fileID: 4697441224898675908}
 --- !u!114 &5834008302829905368
 MonoBehaviour:
@@ -180,8 +181,9 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'ID: 0 <b>MAX</b>'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 3230aa5b45b09bc4bbde7e8a09791d50, type: 2}
+  m_sharedMaterial: {fileID: 1903526051497087997, guid: 3230aa5b45b09bc4bbde7e8a09791d50,
+    type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []

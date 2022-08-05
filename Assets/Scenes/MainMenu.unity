@@ -2215,9 +2215,11 @@ MonoBehaviour:
   mainMenuUIManager: {fileID: 0}
   gameManager: {fileID: 0}
   connectedPlayers: []
+  localPlayerIsHost: 0
   gameIsStarted: 0
   stillInLobby: 1
   isDoneLoading: 0
+  playersReadyToStart: 
   readyPlayers: 
   mapReadyPlayers: 
 --- !u!4 &702538375

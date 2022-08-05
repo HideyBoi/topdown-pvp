@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using EZCameraShake;
 
 [CreateAssetMenu(fileName = "NewGun", menuName = "Gun", order = 1)]
 public class Weapon : ScriptableObject
@@ -22,6 +23,10 @@ public class Weapon : ScriptableObject
     public AudioClip shootSound;
     public AudioClip pickupSound;
     public AudioClip reloadSound;
+    public float magnitude;
+    public float roughness;
+    public float shakeFadeIn;
+    public float shakeFadeOut;
     [Header("Gun Stats")]
     public Rarity rarity;
     public LocalInventoryManager.AmmoType ammoType;

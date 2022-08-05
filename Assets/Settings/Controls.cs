@@ -212,7 +212,7 @@ public partial class @Controls : IInputActionCollection2, IDisposable
                     ""id"": ""87a064ff-7912-485c-8a36-c06107fd4217"",
                     ""path"": ""<Mouse>/scroll/y"",
                     ""interactions"": """",
-                    ""processors"": ""Clamp(min=-1,max=1)"",
+                    ""processors"": ""Invert,Clamp(min=-1,max=1)"",
                     ""groups"": ""KBM"",
                     ""action"": ""Scroll"",
                     ""isComposite"": false,

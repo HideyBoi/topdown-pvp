@@ -1,5 +1,6 @@
 https://www.youtube.com/watch?v=gHU5RQWbmWE - Dungeon Generation System
 https://github.com/tom-weiland/RiptideNetworking - Networking: Tom Weiland
+https://github.com/andersonaddo/EZ-Camera-Shake-Unity - EZ Camera Shake
 
 
 SOUNDS:

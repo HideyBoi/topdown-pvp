@@ -164,27 +164,46 @@ public class DungeonGenerator : MonoBehaviour
             }
         }
 
-        NetworkManager inst = NetworkManager.instance;
-
-        Message mapHeader = Message.Create(MessageSendMode.reliable, NetworkManager.MessageIds.mapHeader, shouldAutoRelay: true);
-        mapHeader.AddInt(generatedRooms.Count);
-        inst.Client.Send(mapHeader);
-
-        foreach (var genRoom in generatedRooms)
+        if (size.x * size.y * 0.75f <= generatedRooms.Count)
         {
-            Message mapData = Message.Create(MessageSendMode.reliable, NetworkManager.MessageIds.mapData, shouldAutoRelay: true);
-            mapData.AddInt(genRoom.room);
-            mapData.AddVector3(genRoom.roomPos);
-            mapData.AddBools(genRoom.roomObj.currStatus);
-            inst.Client.Send(mapData);
+            Debug.Log("Map accepted, starting trasmission");
+
+            NetworkManager inst = NetworkManager.instance;
+
+            Message mapHeader = Message.Create(MessageSendMode.reliable, NetworkManager.MessageIds.mapHeader, shouldAutoRelay: true);
+            mapHeader.AddInt(generatedRooms.Count);
+            inst.Client.Send(mapHeader);
+
+            foreach (var genRoom in generatedRooms)
+            {
+                Message mapData = Message.Create(MessageSendMode.reliable, NetworkManager.MessageIds.mapData, shouldAutoRelay: true);
+                mapData.AddInt(genRoom.room);
+                mapData.AddVector3(genRoom.roomPos);
+                mapData.AddBools(genRoom.roomObj.currStatus);
+                inst.Client.Send(mapData);
+            }
+
+            Message doneGenerating = Message.Create(MessageSendMode.reliable, NetworkManager.MessageIds.mapDone, shouldAutoRelay: true);
+            doneGenerating.AddUShort(NetworkManager.instance.Client.Id);
+            NetworkManager.instance.MapIsReady(NetworkManager.instance.Client.Id);
+            NetworkManager.instance.Client.Send(doneGenerating);
+
+            GameManager.instance.Respawn();
         }
+        else
+        {
+            Debug.Log("Map failed checks, restarting generation.");
 
-        Message doneGenerating = Message.Create(MessageSendMode.reliable, NetworkManager.MessageIds.mapDone, shouldAutoRelay: true);
-        doneGenerating.AddUShort(NetworkManager.instance.Client.Id);
-        NetworkManager.instance.MapIsReady(NetworkManager.instance.Client.Id);
-        NetworkManager.instance.Client.Send(doneGenerating);
+            foreach (var rooms in generatedRooms)
+            {
+                Destroy(rooms.roomObj.gameObject);
+            }
 
-        GameManager.instance.Respawn();
+            board = new List<Cell>();
+            generatedRooms = new List<Room>();
+
+            StartGenerating();
+        }
     }
 
     void MazeGenerator()

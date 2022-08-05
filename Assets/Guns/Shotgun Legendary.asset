@@ -20,6 +20,10 @@ MonoBehaviour:
   shootSound: {fileID: 8300000, guid: 69957dd27d5fe1c40a387306e974d395, type: 3}
   pickupSound: {fileID: 8300000, guid: 2380dbf9169fcac47a8a848433bc6252, type: 3}
   reloadSound: {fileID: 8300000, guid: 2380dbf9169fcac47a8a848433bc6252, type: 3}
+  magnitude: 3
+  roughness: 8
+  shakeFadeIn: 0.1
+  shakeFadeOut: 0.2
   rarity: 2
   ammoType: 3
   automatic: 0

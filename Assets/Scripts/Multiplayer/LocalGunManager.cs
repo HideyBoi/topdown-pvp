@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using RiptideNetworking;
 using RiptideNetworking.Utils;
+using EZCameraShake;
 
 public class LocalGunManager : MonoBehaviour
 {
@@ -172,6 +173,8 @@ public class LocalGunManager : MonoBehaviour
                         if (shoot.collider != null)
                         {
                             Instantiate(impactEffect, shoot.point, Quaternion.LookRotation(Vector3.forward, shoot.normal));
+
+                            CameraShaker.Instance.ShakeOnce(im.inventoryItem[im.currentIndex].weapon.magnitude, im.inventoryItem[im.currentIndex].weapon.roughness, im.inventoryItem[im.currentIndex].weapon.shakeFadeIn, im.inventoryItem[im.currentIndex].weapon.shakeFadeOut);
 
                             if (shoot.collider.CompareTag("RemotePlayer"))
                             {

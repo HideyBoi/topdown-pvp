@@ -84,6 +84,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tooltip: {fileID: 3456242987506683756}
+  timeLeftUntilDisappear: 0
 --- !u!114 &8349595434277600429
 MonoBehaviour:
   m_ObjectHideFlags: 0

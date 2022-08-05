@@ -4224,6 +4224,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4375786759090587362}
   - component: {fileID: 458818465136178912}
+  - component: {fileID: 6312139078310880652}
   m_Layer: 0
   m_Name: VCam
   m_TagString: Untagged
@@ -4285,6 +4286,22 @@ MonoBehaviour:
         m_Calls: []
   m_LegacyBlendHint: 0
   m_ComponentOwner: {fileID: 7293744408438580190}
+--- !u!114 &6312139078310880652
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4054451825578328245}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ab8353b5ebd32545867da143199a814, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DefaultPosInfluence: {x: 0.15, y: 0.15, z: 0.15}
+  DefaultRotInfluence: {x: 1, y: 1, z: 1}
+  RestPositionOffset: {x: 0, y: 18, z: 0}
+  RestRotationOffset: {x: 90, y: 0, z: 0}
 --- !u!1 &4152579321226775932
 GameObject:
   m_ObjectHideFlags: 0

@@ -10,6 +10,8 @@ TagManager:
   - Item
   - RemotePlayer
   - Heal
+  - Ammo
+  - Water
   layers:
   - Default
   - TransparentFX
