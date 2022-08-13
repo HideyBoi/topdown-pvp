@@ -92,6 +92,8 @@ public class MainMenuUIManager : MonoBehaviour
         verisonText.text = "Version: " + Application.version + "\nUnity Game Engine Version: " + Application.unityVersion;
 
         Cursor.SetCursor(cursor, new Vector2(cursor.width / 2, cursor.height / 2), CursorMode.Auto);
+
+        ProfianityFilter.Init();
     }
 
     public void ExitGamePressed()
