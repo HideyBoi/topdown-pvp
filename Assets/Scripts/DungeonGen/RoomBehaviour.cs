@@ -17,7 +17,11 @@ public class RoomBehaviour : MonoBehaviour
         {
             doors[i].SetActive(status[i]);
             walls[i].transform.parent.gameObject.SetActive(!status[i]);
-        }
+        }           
+    }
+
+    public void BreakHoles()
+    {
 
         if (!doneBreakingHoles)
         {
@@ -27,6 +31,5 @@ public class RoomBehaviour : MonoBehaviour
             }
             doneBreakingHoles = true;
         }
-            
     }
 }

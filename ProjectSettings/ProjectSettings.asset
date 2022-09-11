@@ -141,8 +141,9 @@ PlayerSettings:
     16:10: 1
     16:9: 1
     Others: 1
-  bundleVersion: 0.1.0-ALPHA_PLAYTEST5
+  bundleVersion: 0.1.0-ALPHA_PLAYTEST6
   preloadedAssets:
+  - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
@@ -293,7 +294,7 @@ PlayerSettings:
   - m_BuildTarget: 
     m_Icons:
     - serializedVersion: 2
-      m_Icon: {fileID: 2800000, guid: 749daf7ff8ce5cd49ac6237962d0ca1d, type: 3}
+      m_Icon: {fileID: 2800000, guid: 6b54a8668eb9dd24f870f97c63ebdff1, type: 3}
       m_Width: 128
       m_Height: 128
       m_Kind: 0
@@ -807,7 +808,7 @@ PlayerSettings:
   additionalCompilerArguments: {}
   platformArchitecture: {}
   scriptingBackend:
-    Standalone: 0
+    Standalone: 1
   il2cppCompilerConfiguration: {}
   il2cppCodeGeneration: {}
   managedStrippingLevel: {}

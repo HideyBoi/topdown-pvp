@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
 
     public DungeonGenerator generator;
+    public GameObject gen;
     NetworkManager networkManager;
     public ushort localPlayerId;
 
@@ -132,6 +133,16 @@ public class GameManager : MonoBehaviour
                 return;
             }
         }
+    }
+
+    public void ResetDungeonGen()
+    {
+        GameObject newGen = Instantiate(gen);
+        generator = newGen.GetComponent<DungeonGenerator>();
+        generator.ShouldGen = true;
+
+        spawnedChests = new List<Chest>();
+        spawns = new List<Transform>();
     }
 
     [MessageHandler((ushort)NetworkManager.MessageIds.playerOutOfGame)]

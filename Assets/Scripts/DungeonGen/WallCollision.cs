@@ -7,7 +7,6 @@ public class WallCollision : MonoBehaviour
     public RoomBehaviour room;
     public int id;
 
-    // Start is called before the first frame update
     public void BreakHoles()
     {
         if (Random.Range(0, 100) < 48)

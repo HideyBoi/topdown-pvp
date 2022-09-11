@@ -57,6 +57,7 @@ public class DungeonGenerator : MonoBehaviour
 
     public Vector2Int size;
     public int startPos = 0;
+    public GameObject baseRoom;
     public Rule[] rooms;
     public Vector2 offset;
 
@@ -68,6 +69,8 @@ public class DungeonGenerator : MonoBehaviour
     public bool sentMapData = false;
     public bool doneGenerating = false;
 
+    public bool ShouldGen = false;
+
     private void Awake()
     {
         instance = this;
@@ -78,12 +81,18 @@ public class DungeonGenerator : MonoBehaviour
         size = Vector2Int.CeilToInt(GameManager.instance.mapSize);
     }
 
-    // Start is called before the first frame update
+    private void FixedUpdate()
+    {
+        if (ShouldGen)
+        {
+            ShouldGen = false;
+            MazeGenerator(); 
+        }
+    }
+
     public void StartGenerating()
     {
-        //cam.transform.position = new Vector3((size.x * offset.x / 2) - size.x, 100, -((size.y * offset.y) / 2) + size.y);
-        //cam.orthographicSize = offset.x * size.x / 2;
-        MazeGenerator();
+        ShouldGen = true;
     }
 
     [MessageHandler((ushort)NetworkManager.MessageIds.mapHeader)]
@@ -101,7 +110,10 @@ public class DungeonGenerator : MonoBehaviour
             instance = GameObject.Find("Generator").GetComponent<DungeonGenerator>();
         instance.currentRoomCount++;
 
-        var newRoom = Instantiate(instance.rooms[msg.GetInt()].room, msg.GetVector3(), Quaternion.identity, instance.transform).GetComponent<RoomBehaviour>();
+        var spawnedBase = Instantiate(instance.baseRoom, msg.GetVector3(), Quaternion.identity, instance.transform);
+        Instantiate(instance.rooms[msg.GetInt()].room, spawnedBase.transform);
+
+        var newRoom = spawnedBase.GetComponent<RoomBehaviour>();
         newRoom.UpdateRoom(msg.GetBools());
 
         if (instance.currentRoomCount == instance.totalRooms)
@@ -155,18 +167,26 @@ public class DungeonGenerator : MonoBehaviour
                     }
 
 
-                    var newRoom = Instantiate(rooms[randomRoom].room, new Vector3(i * offset.x, 0, -j * offset.y), Quaternion.identity, transform).GetComponent<RoomBehaviour>();
+                    var spawnedBase = Instantiate(baseRoom, new Vector3(i * offset.x, 0, -j * offset.y), Quaternion.identity);
+                    Instantiate(rooms[randomRoom].room, spawnedBase.transform);
+
+                    var newRoom = spawnedBase.GetComponent<RoomBehaviour>();
                     newRoom.UpdateRoom(currentCell.status);
                     newRoom.name += " " + i + "-" + j;
 
                     generatedRooms.Add(new Room(randomRoom, new Vector3(i * offset.x, 0, -j * offset.y), newRoom));
                 }
             }
-        }
+        } 
 
-        if (size.x * size.y * 0.75f <= generatedRooms.Count)
+        if (size.x * size.y * 0.85f <= generatedRooms.Count)
         {
-            Debug.Log("Map accepted, starting trasmission");
+            foreach (var room in generatedRooms)
+            {
+                room.roomObj.BreakHoles();
+            }
+
+            Debug.Log("Map accepted and broken holes have finished, starting trasmission. " + gameObject.name);
 
             NetworkManager inst = NetworkManager.instance;
 
@@ -192,17 +212,15 @@ public class DungeonGenerator : MonoBehaviour
         }
         else
         {
-            Debug.Log("Map failed checks, restarting generation.");
+            Debug.Log("Map failed checks, restarting generation. " + gameObject.name);
 
-            foreach (var rooms in generatedRooms)
+            foreach (var room in generatedRooms)
             {
-                Destroy(rooms.roomObj.gameObject);
+                Destroy(room.roomObj.gameObject);
             }
 
-            board = new List<Cell>();
-            generatedRooms = new List<Room>();
-
-            StartGenerating();
+            GameManager.instance.ResetDungeonGen();
+            Destroy(gameObject);
         }
     }
 
