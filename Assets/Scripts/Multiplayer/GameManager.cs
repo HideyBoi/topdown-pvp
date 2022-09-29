@@ -1,8 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using RiptideNetworking;
-using RiptideNetworking.Utils;
+using Riptide;
+using Riptide.Utils;
 
 public class GameManager : MonoBehaviour
 {
@@ -86,7 +86,7 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        Message msg = Message.Create(MessageSendMode.reliable, NetworkManager.MessageIds.playerReady, shouldAutoRelay: true);
+        Message msg = Message.Create(MessageSendMode.Reliable, NetworkManager.MessageIds.playerReady);
         msg.AddUShort(localPlayerId);
 
         networkManager.Client.Send(msg);

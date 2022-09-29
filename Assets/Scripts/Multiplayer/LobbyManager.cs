@@ -1,8 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using RiptideNetworking;
-using RiptideNetworking.Utils;
+using Riptide;
+using Riptide.Utils;
 using TMPro;
 
 public class LobbyManager : MonoBehaviour
@@ -33,7 +33,7 @@ public class LobbyManager : MonoBehaviour
 
     public void ReadyUp()
     {
-        Message msg = Message.Create(MessageSendMode.reliable, NetworkManager.MessageIds.readyUp, shouldAutoRelay: true);
+        Message msg = Message.Create(MessageSendMode.Reliable, NetworkManager.MessageIds.readyUp);
         msg.AddBool(!isReady);
         msg.AddUShort(NetworkManager.instance.Client.Id);
         NetworkManager.instance.Client.Send(msg);

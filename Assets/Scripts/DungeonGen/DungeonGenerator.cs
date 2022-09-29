@@ -1,8 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using RiptideNetworking;
-using RiptideNetworking.Utils;
+using Riptide;
+using Riptide.Utils;
 
 public class DungeonGenerator : MonoBehaviour
 {
@@ -118,7 +118,7 @@ public class DungeonGenerator : MonoBehaviour
 
         if (instance.currentRoomCount == instance.totalRooms)
         {
-            Message doneGenerating = Message.Create(MessageSendMode.reliable, NetworkManager.MessageIds.mapDone, shouldAutoRelay: true);
+            Message doneGenerating = Message.Create(MessageSendMode.Reliable, NetworkManager.MessageIds.mapDone);
             doneGenerating.AddUShort(NetworkManager.instance.Client.Id);
             NetworkManager.instance.MapIsReady(NetworkManager.instance.Client.Id);
             NetworkManager.instance.Client.Send(doneGenerating);
@@ -158,7 +158,7 @@ public class DungeonGenerator : MonoBehaviour
                     {
                         if (availableRooms.Count > 0)
                         {
-                            randomRoom = availableRooms[Random.Range(0, availableRooms.Count)];
+                            randomRoom = availableRooms[Random.Range(0, rooms.Length)];
                         }
                         else
                         {
@@ -190,20 +190,20 @@ public class DungeonGenerator : MonoBehaviour
 
             NetworkManager inst = NetworkManager.instance;
 
-            Message mapHeader = Message.Create(MessageSendMode.reliable, NetworkManager.MessageIds.mapHeader, shouldAutoRelay: true);
+            Message mapHeader = Message.Create(MessageSendMode.Reliable, NetworkManager.MessageIds.mapHeader);
             mapHeader.AddInt(generatedRooms.Count);
             inst.Client.Send(mapHeader);
 
             foreach (var genRoom in generatedRooms)
             {
-                Message mapData = Message.Create(MessageSendMode.reliable, NetworkManager.MessageIds.mapData, shouldAutoRelay: true);
-                mapData.AddInt(genRoom.room);
+                Message mapData = Message.Create(MessageSendMode.Reliable, NetworkManager.MessageIds.mapData);
                 mapData.AddVector3(genRoom.roomPos);
+                mapData.AddInt(genRoom.room); 
                 mapData.AddBools(genRoom.roomObj.currStatus);
                 inst.Client.Send(mapData);
             }
 
-            Message doneGenerating = Message.Create(MessageSendMode.reliable, NetworkManager.MessageIds.mapDone, shouldAutoRelay: true);
+            Message doneGenerating = Message.Create(MessageSendMode.Reliable, NetworkManager.MessageIds.mapDone);
             doneGenerating.AddUShort(NetworkManager.instance.Client.Id);
             NetworkManager.instance.MapIsReady(NetworkManager.instance.Client.Id);
             NetworkManager.instance.Client.Send(doneGenerating);

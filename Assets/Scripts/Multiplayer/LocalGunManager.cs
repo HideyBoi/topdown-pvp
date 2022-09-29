@@ -2,8 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using RiptideNetworking;
-using RiptideNetworking.Utils;
+using Riptide;
+using Riptide.Utils;
 using EZCameraShake;
 
 public class LocalGunManager : MonoBehaviour
@@ -124,7 +124,7 @@ public class LocalGunManager : MonoBehaviour
             Physics.Raycast(transform.position, new Vector3(playerController.lookDir.x, 0, playerController.lookDir.y), out lookDir, Mathf.Infinity, gunLm);
             gunPivot.LookAt(lookDir.point);
 
-            Message gunRot = Message.Create(MessageSendMode.unreliable, NetworkManager.MessageIds.playerGunRot, shouldAutoRelay: true);
+            Message gunRot = Message.Create(MessageSendMode.Reliable, NetworkManager.MessageIds.playerGunRot);
             gunRot.AddUShort(playerController.id);
             gunRot.AddQuaternion(gunPivot.rotation);
             NetworkManager.instance.Client.Send(gunRot);
@@ -147,7 +147,7 @@ public class LocalGunManager : MonoBehaviour
                     Instantiate(muzzleFlash, gunPivot.position + gunPivot.transform.TransformDirection(im.inventoryItem[im.currentIndex].weapon.muzzleLocation), gunPivot.rotation, gunPivot);
                     shootCooldown = im.inventoryItem[im.currentIndex].weapon.timeBetweenShots;
 
-                    Message muzzleFlashMsg = Message.Create(MessageSendMode.reliable, NetworkManager.MessageIds.playerShot, shouldAutoRelay: true);
+                    Message muzzleFlashMsg = Message.Create(MessageSendMode.Reliable, NetworkManager.MessageIds.playerShot);
                     muzzleFlashMsg.AddUShort(playerController.id);
                     muzzleFlashMsg.AddInt(im.inventoryItem[im.currentIndex].weapon.id);
                     muzzleFlashMsg.AddVector3(gunPivot.position + gunPivot.transform.TransformDirection(im.inventoryItem[im.currentIndex].weapon.muzzleLocation));

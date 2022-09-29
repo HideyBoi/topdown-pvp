@@ -1,8 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using RiptideNetworking;
-using RiptideNetworking.Utils;
+using Riptide;
+using Riptide.Utils;
 using TMPro;
 
 public class Ammo : MonoBehaviour
@@ -69,7 +69,7 @@ public class Ammo : MonoBehaviour
         {
             id = Random.Range(0, 2147483646);
 
-            Message msg = Message.Create(MessageSendMode.reliable, NetworkManager.MessageIds.spawnAmmo, shouldAutoRelay: true);
+            Message msg = Message.Create(MessageSendMode.Reliable, NetworkManager.MessageIds.spawnAmmo);
             msg.AddInt(id);
             msg.AddVector3(transform.position);
 
@@ -107,7 +107,7 @@ public class Ammo : MonoBehaviour
 
         if (!fromNetwork)
         {
-            Message msg = Message.Create(MessageSendMode.reliable, NetworkManager.MessageIds.pickUpAmmo, shouldAutoRelay: true);
+            Message msg = Message.Create(MessageSendMode.Reliable, NetworkManager.MessageIds.pickUpAmmo);
             msg.AddInt(id);
 
             NetworkManager.instance.Client.Send(msg);

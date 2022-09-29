@@ -4,8 +4,8 @@ using System;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
-using RiptideNetworking;
-using RiptideNetworking.Utils;
+using Riptide;
+using Riptide.Utils;
 
 public class GameSettingsManager : MonoBehaviour
 {
@@ -54,6 +54,11 @@ public class GameSettingsManager : MonoBehaviour
     public TMP_InputField startingShellAmmo;
     public GameObject startingShellAmmoError;
     public int defaultStartingShell = 8;
+
+    private void Awake()
+    {
+        LoadValues();
+    }
 
     public void ValuesUpdated()
     {
@@ -171,7 +176,7 @@ public class GameSettingsManager : MonoBehaviour
 
         try
         {
-            PlayerPrefs.SetInt("STARTING_HEAVY", int.Parse(startingHeavyAmmo.text));
+            PlayerPrefs.SetInt("STARTING_HEAVYAMMO", int.Parse(startingHeavyAmmo.text));
             startingHeavyAmmoError.SetActive(false);
         }
         catch (FormatException)
@@ -182,13 +187,106 @@ public class GameSettingsManager : MonoBehaviour
 
         try
         {
-            PlayerPrefs.SetInt("STARTING_HEAVYAMMO", int.Parse(startingHeavyAmmo.text));
-            startingHeavyAmmoError.SetActive(false);
+            PlayerPrefs.SetInt("STARTING_SHELLS", int.Parse(startingShellAmmo.text));
+            startingShellAmmoError.SetActive(false);
         }
         catch (FormatException)
         {
-            Debug.Log("STARTING HEAVYAMMO is invalid!");
-            startingHeavyAmmoError.SetActive(true);
+            Debug.Log("STARTING SHELLAMMO is invalid!");
+            startingShellAmmoError.SetActive(true);
         }
+    }
+
+    public void LoadValues()
+    {
+        if (PlayerPrefs.HasKey("MAP_SIZE"))
+        {
+            mapError.SetActive(false);
+            mapSize.text = PlayerPrefs.GetInt("MAP_SIZE").ToString();
+            Debug.Log("GMAING " + PlayerPrefs.GetInt("MAP_SIZE"));
+            if (PlayerPrefs.GetInt("AUTO_MAP_SIZE") == 1)
+            {
+                autoMapSize.isOn = true;
+            }
+            else
+            {
+                autoMapSize.isOn = false;
+            }
+        }
+
+        if (PlayerPrefs.HasKey("LIFE_COUNT"))
+        {
+            livesError.SetActive(false);
+            lives.text = PlayerPrefs.GetInt("LIFE_COUNT").ToString();
+
+            if (PlayerPrefs.GetInt("INFINITE_LIVES") == 1)
+            {
+                infiniteLives.isOn = true;
+            }
+            else
+            {
+                infiniteLives.isOn = false;
+            }
+        }
+
+        if (PlayerPrefs.HasKey("DROP_LOOT_ON_DEATH"))
+        {
+            if (PlayerPrefs.GetInt("DROP_LOOT_ON_DEATH") == 1)
+            {
+                dropLootOnDeath.isOn = true;
+            } else
+            {
+                dropLootOnDeath.isOn = false;
+            }
+        }
+
+        if (PlayerPrefs.HasKey("GIVE_STARTING_LOOT_ON_DROP_WEAPONS"))
+        {
+            if (PlayerPrefs.GetInt("GIVE_STARTING_LOOT_ON_DROP_WEAPONS") == 1)
+            {
+                giveStartingLootOnDeath.isOn = true;
+            } else
+            {
+                giveStartingLootOnDeath.isOn = false;
+            }
+        }
+
+        if (PlayerPrefs.HasKey("MAX_HEALTH"))
+        {
+            maxHealthError.SetActive(false);
+            maxHealth.text = PlayerPrefs.GetInt("MAX_HEALTH").ToString();
+        }
+
+        if (PlayerPrefs.HasKey("STARTING_SYRINGES"))
+        {
+            startingSyringes.text = PlayerPrefs.GetInt("STARTING_SYRINGES").ToString();
+        }
+
+        if (PlayerPrefs.HasKey("STARTING_MEDKITS"))
+        {
+            startingMedkits.text = PlayerPrefs.GetInt("STARTING_MEDKITS").ToString();
+        }
+
+        if (PlayerPrefs.HasKey("STARTING_LIGHTAMMO"))
+        {
+            startingLightAmmo.text = PlayerPrefs.GetInt("STARTING_LIGHTAMMO").ToString();
+        }
+
+        if (PlayerPrefs.HasKey("STARTING_MEDIUMAMMO"))
+        {
+            startingMediumAmmo.text = PlayerPrefs.GetInt("STARTING_MEDIUMAMMO").ToString();
+        }
+
+        if (PlayerPrefs.HasKey("STARTING_HEAVYAMMO"))
+        {
+            startingHeavyAmmo.text = PlayerPrefs.GetInt("STARTING_HEAVYAMMO").ToString();
+        }
+
+        if (PlayerPrefs.HasKey("STARTING_SHELLAMMO"))
+        {
+            startingShellAmmo.text = PlayerPrefs.GetInt("STARTING_SHELLAMMO").ToString();
+        }
+
+        ValuesUpdated();
     }
 }

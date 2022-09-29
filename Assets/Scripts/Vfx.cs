@@ -1,8 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using RiptideNetworking;
-using RiptideNetworking.Utils;
+using Riptide;
+using Riptide.Utils;
 
 public class Vfx : MonoBehaviour
 {
@@ -14,7 +14,7 @@ public class Vfx : MonoBehaviour
     {
         if (!networkSpawned && particleId != -1)
         {
-            Message msg = Message.Create(MessageSendMode.reliable, NetworkManager.MessageIds.particleEffect, shouldAutoRelay: true);
+            Message msg = Message.Create(MessageSendMode.Reliable, NetworkManager.MessageIds.particleEffect);
             msg.AddInt(particleId);
             msg.AddVector3(transform.position);
             msg.AddQuaternion(transform.rotation);

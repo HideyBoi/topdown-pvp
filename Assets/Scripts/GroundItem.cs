@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
 using TMPro;
-using RiptideNetworking;
-using RiptideNetworking.Utils;
+using Riptide;
+using Riptide.Utils;
 
 public class GroundItem : MonoBehaviour
 {
@@ -68,7 +68,7 @@ public class GroundItem : MonoBehaviour
         {
             id = (int)Random.Range(0, 2147483646);
 
-            Message msg = Message.Create(MessageSendMode.reliable, NetworkManager.MessageIds.spawnItem, shouldAutoRelay: true);
+            Message msg = Message.Create(MessageSendMode.Reliable, NetworkManager.MessageIds.spawnItem);
             msg.AddInt(id);
             msg.AddVector3(transform.position);
             msg.AddInt(currentItem.weapon.id);
@@ -86,7 +86,7 @@ public class GroundItem : MonoBehaviour
 
         if (!isFromNetwork)
         {
-            Message msg = Message.Create(MessageSendMode.reliable, NetworkManager.MessageIds.pickUpItem, shouldAutoRelay: true);
+            Message msg = Message.Create(MessageSendMode.Reliable, NetworkManager.MessageIds.pickUpItem);
             msg.AddInt(id);
             NetworkManager.instance.Client.Send(msg);
         }

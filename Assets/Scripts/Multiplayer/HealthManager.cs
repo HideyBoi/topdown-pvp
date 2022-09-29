@@ -1,8 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using RiptideNetworking;
-using RiptideNetworking.Utils;
+using Riptide;
+using Riptide.Utils;
 using UnityEngine.UI;
 using TMPro;
 using Cinemachine;
@@ -90,7 +90,7 @@ public class HealthManager : MonoBehaviour
 
         if (!fromNetwork)
         {
-            Message msg = Message.Create(MessageSendMode.reliable, NetworkManager.MessageIds.playerDamage, shouldAutoRelay: true);
+            Message msg = Message.Create(MessageSendMode.Reliable, NetworkManager.MessageIds.playerDamage);
             msg.AddUShort(thisId);
             msg.AddInt(damage);
             msg.AddUShort(attackingPlayer);
@@ -111,7 +111,7 @@ public class HealthManager : MonoBehaviour
 
         if (!fromNetwork)
         {
-            Message msg = Message.Create(MessageSendMode.reliable, NetworkManager.MessageIds.playerHeal, shouldAutoRelay: true);
+            Message msg = Message.Create(MessageSendMode.Reliable, NetworkManager.MessageIds.playerHeal);
             msg.AddUShort(thisId);
             msg.AddInt(heal);
             NetworkManager.instance.Client.Send(msg);
@@ -303,7 +303,7 @@ public class HealthManager : MonoBehaviour
 
     void OutOfGame()
     {
-        Message msg = Message.Create(MessageSendMode.reliable, NetworkManager.MessageIds.playerOutOfGame, shouldAutoRelay: true);
+        Message msg = Message.Create(MessageSendMode.Reliable, NetworkManager.MessageIds.playerOutOfGame);
         msg.AddUShort(thisId);
         NetworkManager.instance.Client.Send(msg);
 

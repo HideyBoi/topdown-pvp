@@ -1,8 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using RiptideNetworking;
-using RiptideNetworking.Utils;
+using Riptide;
+using Riptide.Utils;
 using System;
 
 public class NetworkManager : MonoBehaviour
@@ -82,7 +82,23 @@ public class NetworkManager : MonoBehaviour
 
         RiptideLogger.Initialize(Debug.Log, Debug.Log, Debug.LogWarning, Debug.LogError, false);
 
-        Server = new Server { AllowAutoMessageRelay = true };
+        Server = new Server();
+
+        List<ushort> msgIdsToRelay = new List<ushort>();
+
+        foreach (MessageIds id in Enum.GetValues(typeof(MessageIds)))
+        {
+            msgIdsToRelay.Add((ushort)id);
+        }
+
+        MessageRelayFilter filter = new MessageRelayFilter(25);
+
+        foreach (var id in msgIdsToRelay)
+        {
+            filter.EnableRelay(id);
+        }
+
+        Server.RelayFilter = filter;
 
         Client = new Client();
         Client.Connected += Connected;
@@ -142,10 +158,10 @@ public class NetworkManager : MonoBehaviour
     {
         if (Server.IsRunning)
         {
-            Server.Tick();
+            Server.Update();
         }
 
-        Client.Tick();
+        Client.Update();
     }
 
     void Connected(object sender, EventArgs e)
@@ -184,7 +200,7 @@ public class NetworkManager : MonoBehaviour
 
     void SendMyPlayerInfo()
     {
-        Message msg = Message.Create(MessageSendMode.reliable, MessageIds.playerInfo, shouldAutoRelay: true);
+        Message msg = Message.Create(MessageSendMode.Reliable, MessageIds.playerInfo);
         msg.AddUShort(Client.Id);
         msg.AddString(mainMenuUIManager.playerName);
         msg.AddString(Application.version);
@@ -251,7 +267,7 @@ public class NetworkManager : MonoBehaviour
 
             if (instance.Server.IsRunning)
             {
-                Message message = Message.Create(MessageSendMode.reliable, MessageIds.startGame, shouldAutoRelay: true);
+                Message message = Message.Create(MessageSendMode.Reliable, MessageIds.startGame);
                 message.AddBool(true);
                 instance.Client.Send(message);
                 StartGame(message);

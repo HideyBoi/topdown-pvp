@@ -2,8 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-using RiptideNetworking;
-using RiptideNetworking.Utils;
+using Riptide;
+using Riptide.Utils;
 
 public class Healable : MonoBehaviour
 {
@@ -42,7 +42,7 @@ public class Healable : MonoBehaviour
         {
             id = Random.Range(0, 2147483646);
 
-            Message msg = Message.Create(MessageSendMode.reliable, NetworkManager.MessageIds.spawnHeal, shouldAutoRelay: true);
+            Message msg = Message.Create(MessageSendMode.Reliable, NetworkManager.MessageIds.spawnHeal);
             msg.AddInt(id);
             msg.AddVector3(transform.position);
             if (type == HealType.Medkit)
@@ -81,7 +81,7 @@ public class Healable : MonoBehaviour
 
         if (!fromNetwork)
         {
-            Message msg = Message.Create(MessageSendMode.reliable, NetworkManager.MessageIds.pickUpHeal, shouldAutoRelay: true);
+            Message msg = Message.Create(MessageSendMode.Reliable, NetworkManager.MessageIds.pickUpHeal);
             msg.AddInt(id);
             NetworkManager.instance.Client.Send(msg);
         }

@@ -1,8 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using RiptideNetworking;
-using RiptideNetworking.Utils;
+using Riptide;
+using Riptide.Utils;
 
 public class Chest : MonoBehaviour
 {
@@ -34,7 +34,7 @@ public class Chest : MonoBehaviour
         Instantiate(sfx, transform.position, Quaternion.identity).GetComponent<SoundEffect>().PlaySound(chestOpenSound, 45, 1);
         if (!isFromNetwork)
         {
-            Message msg = Message.Create(MessageSendMode.reliable, NetworkManager.MessageIds.openChest, shouldAutoRelay: true);
+            Message msg = Message.Create(MessageSendMode.Reliable, NetworkManager.MessageIds.openChest);
             msg.AddVector3(chestId);
             NetworkManager.instance.Client.Send(msg);
 

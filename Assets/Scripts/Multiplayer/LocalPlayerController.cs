@@ -2,8 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
-using RiptideNetworking;
-using RiptideNetworking.Utils;
+using Riptide;
+using Riptide.Utils;
 
 public class LocalPlayerController : MonoBehaviour
 {
@@ -65,7 +65,7 @@ public class LocalPlayerController : MonoBehaviour
             cursor.position = cam.WorldToScreenPoint(hit.point);
         }  
 
-        Message playerPosRot = Message.Create(MessageSendMode.unreliable, NetworkManager.MessageIds.playerPos, shouldAutoRelay: true);
+        Message playerPosRot = Message.Create(MessageSendMode.Unreliable, NetworkManager.MessageIds.playerPos);
         playerPosRot.AddUShort(id);
         playerPosRot.AddVector3(transform.position);
         playerPosRot.AddQuaternion(pivot.rotation);
@@ -92,7 +92,7 @@ public class LocalPlayerController : MonoBehaviour
                     rng = Random.Range(0, 5);
                 }
 
-                Message msg = Message.Create(MessageSendMode.reliable, NetworkManager.MessageIds.soundEffect, shouldAutoRelay: true);
+                Message msg = Message.Create(MessageSendMode.Reliable, NetworkManager.MessageIds.soundEffect);
                 msg.AddVector3(transform.position);
                 msg.AddInt(rng);
                 msg.AddFloat(1f);

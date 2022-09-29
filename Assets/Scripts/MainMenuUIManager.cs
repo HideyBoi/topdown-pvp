@@ -43,8 +43,7 @@ public class MainMenuUIManager : MonoBehaviour
         if (usernameInput.text == "")
             return;
         NetworkManager.instance.mainMenuUIManager = this;
-        //NetworkManager.instance.JoinGame(ipInput.text, ushort.Parse(portInput.text));
-        NetworkManager.instance.JoinGame("73.45.137.127", ushort.Parse("19132"));
+        NetworkManager.instance.JoinGame(ipInput.text, ushort.Parse(portInput.text));
         currentLobbyMenu = Instantiate(lobbyMenu);
     }
 
