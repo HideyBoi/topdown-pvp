@@ -50,7 +50,7 @@ public class HealthManager : MonoBehaviour
         if (isLocalPlayer)
         {
             inv = GetComponent<LocalInventoryManager>();
-            maxHealth = GameManager.instance.maxHealth;
+            maxHealth = RulesManager.instance.maxHealth;
             health = maxHealth;
             healthBar.maxValue = maxHealth;
         }
@@ -124,34 +124,34 @@ public class HealthManager : MonoBehaviour
 
         if (isLocalPlayer)
         {
-            if (GameManager.instance.lives > 0)
+            if (RulesManager.instance.lives > 0)
             {
-                GameManager.instance.lives--;
+                RulesManager.instance.lives--;
 
-                if (GameManager.instance.lives == 0)
+                if (RulesManager.instance.lives == 0)
                 {
                     canRespawn = false;
                     respawningStatus.text = "You're out of the game, you've lost your last life!";
                     DropLoot();
                     OutOfGame();
-                } else if (GameManager.instance.lives == 1)
+                } else if (RulesManager.instance.lives == 1)
                 {
                     respawningStatus.text = $"You're on your last life, respawning, please wait...";
                     canRespawn = true;
-                    if (GameManager.instance.dropLootOnEveryDeath)
+                    if (RulesManager.instance.dropLootOnEveryDeath)
                     {
                         DropLoot();
                     }
                 } else
                 {
-                    respawningStatus.text = $"You have {GameManager.instance.lives} lives left, respawning, please wait...";
+                    respawningStatus.text = $"You have {RulesManager.instance.lives} lives left, respawning, please wait...";
                     canRespawn = true;
-                    if (GameManager.instance.dropLootOnEveryDeath)
+                    if (RulesManager.instance.dropLootOnEveryDeath)
                     {
                         DropLoot();
                     }
                 }        
-            } else if (GameManager.instance.lives == -1)
+            } else if (RulesManager.instance.lives == -1)
             {
                 respawningStatus.text = "Respawning, please wait...";
                 canRespawn = true;
@@ -278,14 +278,14 @@ public class HealthManager : MonoBehaviour
             syringe.GetComponent<Healable>().count = inv.syringeCount;
         }
 
-        if (GameManager.instance.giveStartingStatsOnDropLoot)
+        if (RulesManager.instance.giveStartingStatsOnDropLoot)
         {
-            inv.medkitCount = GameManager.instance.startingMedkits;
-            inv.syringeCount = GameManager.instance.startingSyringes;
-            inv.lightAmmoCount = GameManager.instance.startingLightAmmo;
-            inv.mediumAmmoCount = GameManager.instance.startingMediumAmmo;
-            inv.heavyAmmoCount = GameManager.instance.startingHeavyAmmo;
-            inv.shellsAmmoCount = GameManager.instance.startingShellsAmmo;
+            inv.medkitCount = RulesManager.instance.startingMedkits;
+            inv.syringeCount = RulesManager.instance.startingSyringes;
+            inv.lightAmmoCount = RulesManager.instance.startingLightAmmo;
+            inv.mediumAmmoCount = RulesManager.instance.startingMediumAmmo;
+            inv.heavyAmmoCount = RulesManager.instance.startingHeavyAmmo;
+            inv.shellsAmmoCount = RulesManager.instance.startingShellsAmmo;
         } else
         {
             inv.medkitCount = 0;

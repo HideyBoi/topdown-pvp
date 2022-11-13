@@ -78,7 +78,7 @@ public class DungeonGenerator : MonoBehaviour
 
     private void Start()
     {
-        size = Vector2Int.CeilToInt(GameManager.instance.mapSize);
+        size = Vector2Int.CeilToInt(RulesManager.instance.mapSize);
     }
 
     private void FixedUpdate()

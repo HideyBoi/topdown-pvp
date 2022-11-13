@@ -75,12 +75,12 @@ public class LocalInventoryManager : MonoBehaviour
         controls.Player.UseSyringe.performed += _ => UseSyringe(true);
         controls.Player.UseSyringe.canceled += _ => UseSyringe(false);
 
-        syringeCount = GameManager.instance.startingSyringes;
-        medkitCount = GameManager.instance.startingMedkits;
-        lightAmmoCount = GameManager.instance.startingLightAmmo;
-        mediumAmmoCount = GameManager.instance.startingMediumAmmo;
-        heavyAmmoCount = GameManager.instance.startingHeavyAmmo;
-        shellsAmmoCount = GameManager.instance.startingShellsAmmo;
+        syringeCount = RulesManager.instance.startingSyringes;
+        medkitCount = RulesManager.instance.startingMedkits;
+        lightAmmoCount = RulesManager.instance.startingLightAmmo;
+        mediumAmmoCount = RulesManager.instance.startingMediumAmmo;
+        heavyAmmoCount = RulesManager.instance.startingHeavyAmmo;
+        shellsAmmoCount = RulesManager.instance.startingShellsAmmo;
 
         UpdateWeaponVisual();
     }
@@ -466,7 +466,7 @@ public class LocalInventoryManager : MonoBehaviour
                     wantsToReload = true;
                     reloadCooldown = inventoryItem[currentIndex].weapon.reloadTime;
 
-                    currentReloadSound = Instantiate(soundEffect, transform.position, Quaternion.identity);
+                    currentReloadSound = Instantiate(soundEffect, transform.position, Quaternion.identity, transform);
                     currentReloadSound.GetComponent<SoundEffect>().PlaySound(inventoryItem[currentIndex].weapon.reloadSound, 35, 1);
 
                     Message msg = Message.Create(MessageSendMode.Reliable, NetworkManager.MessageIds.playerReloadSound);
@@ -481,7 +481,7 @@ public class LocalInventoryManager : MonoBehaviour
                     wantsToReload = true;
                     reloadCooldown = inventoryItem[currentIndex].weapon.reloadTime;
 
-                    currentReloadSound = Instantiate(soundEffect, transform.position, Quaternion.identity);
+                    currentReloadSound = Instantiate(soundEffect, transform.position, Quaternion.identity, transform);
                     currentReloadSound.GetComponent<SoundEffect>().PlaySound(inventoryItem[currentIndex].weapon.reloadSound, 35, 1);
 
                     Message msg = Message.Create(MessageSendMode.Reliable, NetworkManager.MessageIds.playerReloadSound);
@@ -496,7 +496,7 @@ public class LocalInventoryManager : MonoBehaviour
                     wantsToReload = true;
                     reloadCooldown = inventoryItem[currentIndex].weapon.reloadTime;
 
-                    currentReloadSound = Instantiate(soundEffect, transform.position, Quaternion.identity);
+                    currentReloadSound = Instantiate(soundEffect, transform.position, Quaternion.identity, transform);
                     currentReloadSound.GetComponent<SoundEffect>().PlaySound(inventoryItem[currentIndex].weapon.reloadSound, 35, 1);
 
                     Message msg = Message.Create(MessageSendMode.Reliable, NetworkManager.MessageIds.playerReloadSound);
@@ -511,7 +511,7 @@ public class LocalInventoryManager : MonoBehaviour
                     wantsToReload = true;
                     reloadCooldown = inventoryItem[currentIndex].weapon.reloadTime;
 
-                    currentReloadSound = Instantiate(soundEffect, transform.position, Quaternion.identity);
+                    currentReloadSound = Instantiate(soundEffect, transform.position, Quaternion.identity, transform);
                     currentReloadSound.GetComponent<SoundEffect>().PlaySound(inventoryItem[currentIndex].weapon.reloadSound, 35, 1);
 
                     Message msg = Message.Create(MessageSendMode.Reliable, NetworkManager.MessageIds.playerReloadSound);

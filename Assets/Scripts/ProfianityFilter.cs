@@ -39,10 +39,11 @@ public class ProfianityFilter
             }
         }
 
-        //tests
+        /*/tests
         Debug.Log(Filter("ur a cunt CUNT"));
         Debug.Log(Filter("ur cool"));
         Debug.Log(Filter("fuck fucking asshole you squiggkly diggly"));
+        */
     }
 
     public static string Filter(string s)

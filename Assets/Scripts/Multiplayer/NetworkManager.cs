@@ -48,6 +48,7 @@ public class NetworkManager : MonoBehaviour
     public enum MessageIds : ushort
     {
         playerInfo = 1, //contains data about player (cosmetics, name)
+        rules, //sends game rules from host to player
         startGame, //tells the players to start loading the game world
         playerReady, //player has finished loading game world
         readyUp, //lets everyone else know that you are ready to start the game
@@ -55,7 +56,7 @@ public class NetworkManager : MonoBehaviour
         mapData, //contains room information, ie type of room, which halls are open
         mapDone, //map generation has finished
         playerPos, //player position and rotation updates
-        openChest, //tell other players that a chest has been opened
+        openChest, //tells other players that a chest has been opened
         spawnItem, //tells other players that an item has spawned
         pickUpItem, //tells other players that an item has been picked up
         spawnHeal,  //tells other players that a healing item has spawned
@@ -75,10 +76,16 @@ public class NetworkManager : MonoBehaviour
 
     private void Start()
     {
-        DontDestroyOnLoad(gameObject);
-
         if (instance == null)
+        {
+            Debug.Log("Setting NetworkManager instance!");
+            DontDestroyOnLoad(gameObject);
             instance = this;
+        } else
+        {
+            Destroy(gameObject);
+        }
+            
 
         RiptideLogger.Initialize(Debug.Log, Debug.Log, Debug.LogWarning, Debug.LogError, false);
 
@@ -91,7 +98,8 @@ public class NetworkManager : MonoBehaviour
             msgIdsToRelay.Add((ushort)id);
         }
 
-        MessageRelayFilter filter = new MessageRelayFilter(25);
+        //value needs to be 1 more than the highest ID in MessageIds
+        MessageRelayFilter filter = new MessageRelayFilter(26);
 
         foreach (var id in msgIdsToRelay)
         {
@@ -124,6 +132,7 @@ public class NetworkManager : MonoBehaviour
 
     public void HostGame(ushort port, ushort maxPlayers)
     {
+        Debug.Log("Starting to host.");
         Server.Start(port, maxPlayers);
         Client.Connect($"127.0.0.1:{port}");
     }
@@ -173,6 +182,10 @@ public class NetworkManager : MonoBehaviour
     void PlayerJoined(object sender, ClientConnectedEventArgs e)
     {
         SendMyPlayerInfo();
+        if (instance.Server.IsRunning)
+        {
+            RulesManager.instance.SendRuleChangesToPlayers();
+        }
     }
 
     void PlayerLeft(object sender, ClientDisconnectedEventArgs e)

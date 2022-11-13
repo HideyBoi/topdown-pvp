@@ -14,7 +14,7 @@ public class LobbyManager : MonoBehaviour
     public TMP_Text disconnectText;
 
     public TMP_Text readyText;
-    bool isReady;
+    public bool isReady;
 
     private void Awake()
     {

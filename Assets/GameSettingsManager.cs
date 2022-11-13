@@ -9,6 +9,15 @@ using Riptide.Utils;
 
 public class GameSettingsManager : MonoBehaviour
 {
+    public static GameSettingsManager instance;
+
+    public LobbyManager lobby;
+
+    public GameObject readyButton;
+    public GameObject rulesCover;
+
+    public GameObject resetPrompt;
+
     public TMP_InputField mapSize;
     public Toggle autoMapSize;
     public GameObject mapError;
@@ -55,20 +64,51 @@ public class GameSettingsManager : MonoBehaviour
     public GameObject startingShellAmmoError;
     public int defaultStartingShell = 8;
 
+    bool loading = false;
+
     private void Awake()
     {
         LoadValues();
+        instance = this;
+    }
+
+    private void FixedUpdate()
+    {
+        if (NetworkManager.instance.Server.IsRunning)
+        {
+            rulesCover.SetActive(lobby.isReady);
+        } else
+        {
+            rulesCover.SetActive(true);
+        }
     }
 
     public void ValuesUpdated()
     {
+        if (loading || lobby.isReady || !NetworkManager.instance.Server.IsRunning)
+        {
+            LoadValues();
+            return;
+        } 
+
+        bool failure = false;
+
         try
         {
-            PlayerPrefs.SetInt("MAP_SIZE", int.Parse(mapSize.text));
-            mapError.SetActive(false);
+            if (int.Parse(mapSize.text) > 1)
+            {
+                PlayerPrefs.SetInt("MAP_SIZE", int.Parse(mapSize.text));
+                mapError.SetActive(false);
+            } else
+            {
+                failure = true;
+                Debug.Log("MAP SIZE is invalid!");
+                mapError.SetActive(true);
+            }           
         }
         catch (FormatException)
         {
+            failure = true;
             Debug.Log("MAP SIZE is invalid!");
             mapError.SetActive(true);
         }
@@ -83,11 +123,21 @@ public class GameSettingsManager : MonoBehaviour
 
         try
         {
-            PlayerPrefs.SetInt("LIFE_COUNT", int.Parse(lives.text));
-            livesError.SetActive(false);
+            if (int.Parse(lives.text) > 0)
+            {
+                PlayerPrefs.SetInt("LIFE_COUNT", int.Parse(lives.text));
+                livesError.SetActive(false);
+            }
+            else
+            {
+                failure = true;
+                Debug.Log("LIFE COUNT is invalid!");
+                livesError.SetActive(true);
+            }
         }
         catch (FormatException)
         {
+            failure = true;
             Debug.Log("LIFE COUNT is invalid");
             livesError.SetActive(true);
         }
@@ -121,19 +171,38 @@ public class GameSettingsManager : MonoBehaviour
 
         try
         {
-            PlayerPrefs.SetInt("MAX_HEALTH", int.Parse(maxHealth.text));
-            maxHealthError.SetActive(false);
+            if (int.Parse(maxHealth.text) > 0)
+            {
+                PlayerPrefs.SetInt("MAX_HEALTH", int.Parse(maxHealth.text));
+                maxHealthError.SetActive(false);
+            }
+            else
+            {
+                failure = true;
+                Debug.Log("MAX HEALTH is invalid!");
+                maxHealthError.SetActive(true);
+            }
         }
         catch (FormatException)
         {
+            failure = true;
             Debug.Log("MAX HEALTH is invalid!");
             maxHealthError.SetActive(true);
         }
 
         try
         {
-            PlayerPrefs.SetInt("STARTING_SYRINGES", int.Parse(startingSyringes.text));
-            startingSyringesError.SetActive(false);
+            if (int.Parse(startingSyringes.text) >= 0)
+            {
+                PlayerPrefs.SetInt("STARTING_SYRINGES", int.Parse(startingSyringes.text));
+                startingSyringesError.SetActive(false);
+            }
+            else
+            {
+                failure = true;
+                Debug.Log("STARTING SYRINGES is invalid!");
+                startingSyringesError.SetActive(true);
+            }
         }
         catch (FormatException)
         {
@@ -143,67 +212,124 @@ public class GameSettingsManager : MonoBehaviour
 
         try
         {
-            PlayerPrefs.SetInt("STARTING_MEDKITS", int.Parse(startingMedkits.text));
-            startingMedkitsError.SetActive(false);
+            if (int.Parse(startingMedkits.text) >= 0)
+            {
+                PlayerPrefs.SetInt("STARTING_MEDKITS", int.Parse(startingMedkits.text));
+                startingMedkitsError.SetActive(false);
+            }
+            else
+            {
+                failure = true;
+                Debug.Log("STARTING MEDKITS is invalid!");
+                startingMedkitsError.SetActive(true);
+            }
         }
         catch (FormatException)
         {
+            failure = true;
             Debug.Log("STARTING MEDKITS is invalid!");
             startingMedkitsError.SetActive(true);
         }
 
         try
         {
-            PlayerPrefs.SetInt("STARTING_LIGHTAMMO", int.Parse(startingLightAmmo.text));
-            startingLightAmmoError.SetActive(false);
+            if (int.Parse(startingLightAmmo.text) >= 0)
+            {
+                PlayerPrefs.SetInt("STARTING_LIGHTAMMO", int.Parse(startingLightAmmo.text));
+                startingLightAmmoError.SetActive(false);
+            }
+            else
+            {
+                failure = true;
+                Debug.Log("STARTING LIGHTAMMO is invalid!");
+                startingLightAmmoError.SetActive(true);
+            }
         }
         catch (FormatException)
         {
+            failure = true;
             Debug.Log("STARTING LIGHTAMMO is invalid!");
             startingLightAmmoError.SetActive(true);
         }
 
         try
         {
-            PlayerPrefs.SetInt("STARTING_MEDIUMAMMO", int.Parse(startingMediumAmmo.text));
-            startingMediumAmmoError.SetActive(false);
+            if (int.Parse(startingMediumAmmo.text) >= 0)
+            {
+                PlayerPrefs.SetInt("STARTING_MEDIUMAMMO", int.Parse(startingMediumAmmo.text));
+                startingMediumAmmoError.SetActive(false);
+            }
+            else
+            {
+                failure = true;
+                Debug.Log("STARTING MEDIUMAMMO is invalid!");
+                startingMediumAmmoError.SetActive(true);
+            }
         }
         catch (FormatException)
         {
+            failure = true;
             Debug.Log("STARTING MEDIUMAMMO is invalid!");
             startingMediumAmmoError.SetActive(true);
         }
 
         try
         {
-            PlayerPrefs.SetInt("STARTING_HEAVYAMMO", int.Parse(startingHeavyAmmo.text));
-            startingHeavyAmmoError.SetActive(false);
+            if (int.Parse(startingHeavyAmmo.text) >= 0)
+            {
+                PlayerPrefs.SetInt("STARTING_HEAVYAMMO", int.Parse(startingHeavyAmmo.text));
+                startingHeavyAmmoError.SetActive(false);
+            }
+            else
+            {
+                failure = true;
+                Debug.Log("STARTING HEAVYAMMO is invalid!");
+                startingHeavyAmmoError.SetActive(true);
+            }
         }
         catch (FormatException)
         {
-            Debug.Log("STARTING HEAVY is invalid!");
+            failure = true;
+            Debug.Log("STARTING HEAVYAMMO is invalid!");
             startingHeavyAmmoError.SetActive(true);
         }
 
         try
         {
-            PlayerPrefs.SetInt("STARTING_SHELLS", int.Parse(startingShellAmmo.text));
-            startingShellAmmoError.SetActive(false);
+            if (int.Parse(startingShellAmmo.text) >= 0)
+            {
+                PlayerPrefs.SetInt("STARTING_SHELLS", int.Parse(startingShellAmmo.text));
+                startingShellAmmoError.SetActive(false);
+            }
+            else
+            {
+                failure = true;
+                Debug.Log("STARTING SHELLS is invalid!");
+                startingShellAmmoError.SetActive(true);
+            }
         }
         catch (FormatException)
         {
-            Debug.Log("STARTING SHELLAMMO is invalid!");
+            failure = true;
+            Debug.Log("STARTING SHELLS is invalid!");
             startingShellAmmoError.SetActive(true);
         }
+
+        if (!failure)
+            RulesManager.instance.RulesUpdated();
+
+        readyButton.SetActive(!failure);
     }
 
     public void LoadValues()
     {
+        loading = true;
+
         if (PlayerPrefs.HasKey("MAP_SIZE"))
         {
             mapError.SetActive(false);
             mapSize.text = PlayerPrefs.GetInt("MAP_SIZE").ToString();
-            Debug.Log("GMAING " + PlayerPrefs.GetInt("MAP_SIZE"));
+            Debug.Log("Loaded Map size: " + PlayerPrefs.GetInt("MAP_SIZE"));
             if (PlayerPrefs.GetInt("AUTO_MAP_SIZE") == 1)
             {
                 autoMapSize.isOn = true;
@@ -216,6 +342,7 @@ public class GameSettingsManager : MonoBehaviour
 
         if (PlayerPrefs.HasKey("LIFE_COUNT"))
         {
+            Debug.Log("loading life");
             livesError.SetActive(false);
             lives.text = PlayerPrefs.GetInt("LIFE_COUNT").ToString();
 
@@ -282,11 +409,75 @@ public class GameSettingsManager : MonoBehaviour
             startingHeavyAmmo.text = PlayerPrefs.GetInt("STARTING_HEAVYAMMO").ToString();
         }
 
-        if (PlayerPrefs.HasKey("STARTING_SHELLAMMO"))
+        if (PlayerPrefs.HasKey("STARTING_SHELLS"))
         {
-            startingShellAmmo.text = PlayerPrefs.GetInt("STARTING_SHELLAMMO").ToString();
+            startingShellAmmo.text = PlayerPrefs.GetInt("STARTING_SHELLS").ToString();
         }
 
-        ValuesUpdated();
+        if (NetworkManager.instance.Server.IsRunning)
+        {
+            RulesManager.instance.RulesUpdated();
+        }
+
+        loading = false;
+    }
+
+    public void Reset()
+    {
+        if (loading || lobby.isReady || !NetworkManager.instance.Server.IsRunning)
+        {
+            LoadValues();
+            return;
+        }
+
+        PlayerPrefs.SetInt("MAP_SIZE", defaultMapSize);
+
+        if (defaultAutoMapSize)
+        {
+            PlayerPrefs.SetInt("AUTO_MAP_SIZE", 1);
+        }
+        else
+        {
+            PlayerPrefs.SetInt("AUTO_MAP_SIZE", 0);
+        }
+
+        PlayerPrefs.SetInt("LIFE_COUNT", defaultLivesCount);
+
+        if (defaultInfiniteLives)
+        {
+            PlayerPrefs.SetInt("INFINITE_LIVES", 1);
+        }
+        else
+        {
+            PlayerPrefs.SetInt("INFINITE_LIVES", 0);
+        }
+
+        if (dropLootOnDeathDefault)
+        {
+            PlayerPrefs.SetInt("DROP_LOOT_ON_DEATH", 1);
+        }
+        else
+        {
+            PlayerPrefs.SetInt("DROP_LOOT_ON_DEATH", 0);
+        }
+
+        if (giveStartingLootOnDeathDefault)
+        {
+            PlayerPrefs.SetInt("GIVE_STARTING_LOOT_ON_DROP_WEAPONS", 1);
+        }
+        else
+        {
+            PlayerPrefs.SetInt("GIVE_STARTING_LOOT_ON_DROP_WEAPONS", 0);
+        }
+
+        PlayerPrefs.SetInt("MAX_HEALTH", defaulltMaxHealth);
+        PlayerPrefs.SetInt("STARTING_SYRINGES", defaultSyringeCount);
+        PlayerPrefs.SetInt("STARTING_MEDKITS", defaultMedkitsCount);
+        PlayerPrefs.SetInt("STARTING_LIGHTAMMO", defaultStartingLightAmmo);
+        PlayerPrefs.SetInt("STARTING_MEDIUMAMMO", defaultStartingMediumAmmo);
+        PlayerPrefs.SetInt("STARTING_HEAVYAMMO", defaultStartingHeavyAmmo);
+        PlayerPrefs.SetInt("STARTING_SHELLS", defaultStartingShell);
+
+        LoadValues();
     }
 }

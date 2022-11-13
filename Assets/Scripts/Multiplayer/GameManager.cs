@@ -34,18 +34,6 @@ public class GameManager : MonoBehaviour
 
     public AudioClip[] clips;
 
-    [Header("Game Settings")]
-    public int lives = 3;
-    public bool dropLootOnEveryDeath;
-    public bool giveStartingStatsOnDropLoot;
-    public Vector2 mapSize;
-    public int maxHealth;
-    public int startingSyringes;
-    public int startingMedkits;
-    public int startingLightAmmo;
-    public int startingMediumAmmo;
-    public int startingHeavyAmmo;
-    public int startingShellsAmmo;
 
     private void Awake()
     {

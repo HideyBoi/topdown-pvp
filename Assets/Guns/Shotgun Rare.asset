@@ -19,7 +19,7 @@ MonoBehaviour:
   muzzleLocation: {x: 0, y: 0.048, z: 0.308}
   shootSound: {fileID: 8300000, guid: 69957dd27d5fe1c40a387306e974d395, type: 3}
   pickupSound: {fileID: 8300000, guid: 2380dbf9169fcac47a8a848433bc6252, type: 3}
-  reloadSound: {fileID: 8300000, guid: 2380dbf9169fcac47a8a848433bc6252, type: 3}
+  reloadSound: {fileID: 8300000, guid: 87432bae43ba58948adf6b27db09f4f0, type: 3}
   magnitude: 3
   roughness: 8
   shakeFadeIn: 0.1
@@ -30,6 +30,6 @@ MonoBehaviour:
   damage: 5
   maxAmmoCount: 4
   timeBetweenShots: 1.5
-  reloadTime: 2.8
+  reloadTime: 3.128
   shotCount: 19
   spread: 1.9
