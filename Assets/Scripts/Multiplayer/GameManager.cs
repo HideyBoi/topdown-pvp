@@ -34,6 +34,8 @@ public class GameManager : MonoBehaviour
 
     public AudioClip[] clips;
 
+    public GameObject sploosh;
+
 
     private void Awake()
     {
@@ -218,6 +220,11 @@ public class GameManager : MonoBehaviour
     public void PlaySoundEffectByID(Vector3 position, int audioID, float volume, float maxDistance)
     {
         AudioClip cliptoplay = clips[audioID];
+
+        if (audioID > 4 && audioID < 10)
+        {
+            Instantiate(sploosh, position, Quaternion.identity);
+        }
 
         Instantiate(soundEffect, position, Quaternion.identity).GetComponent<SoundEffect>().PlaySound(cliptoplay, maxDistance, volume);
     }

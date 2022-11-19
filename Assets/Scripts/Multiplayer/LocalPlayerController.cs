@@ -36,6 +36,9 @@ public class LocalPlayerController : MonoBehaviour
 
     public LayerMask groundLm;
 
+    public GameObject waterSploosh;
+    public Transform waterSplooshEmitter;
+
     private void Awake()
     {
         nm = NetworkManager.instance;
@@ -99,7 +102,7 @@ public class LocalPlayerController : MonoBehaviour
                 msg.AddFloat(90);
                 NetworkManager.instance.Client.Send(msg);
 
-                GameManager.instance.PlaySoundEffectByID(transform.position, rng, 1f, 90);
+                GameManager.instance.PlaySoundEffectByID(waterSplooshEmitter.position, rng, 1f, 90);
             }
         }
     }

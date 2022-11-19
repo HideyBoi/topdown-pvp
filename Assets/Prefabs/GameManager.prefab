@@ -30,7 +30,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &891731222191506223
 MonoBehaviour:
@@ -78,17 +78,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 91637c8c4ce886c4babc9e376134b84b, type: 3}
   - {fileID: 8300000, guid: 8814c62d373e0d7489c13c860898d1d3, type: 3}
   - {fileID: 8300000, guid: f5dcb0a5544ac194b82b6be0d9ff67dc, type: 3}
-  lives: 3
-  dropLootOnEveryDeath: 0
-  giveStartingStatsOnDropLoot: 1
-  mapSize: {x: 5, y: 5}
-  maxHealth: 150
-  startingSyringes: 0
-  startingMedkits: 0
-  startingLightAmmo: 35
-  startingMediumAmmo: 35
-  startingHeavyAmmo: 12
-  startingShellsAmmo: 8
+  sploosh: {fileID: 5463529501548234624, guid: 5a0ebb9ff531c124a832ce887b1bb7c7, type: 3}
   possibleWeapons:
   - {fileID: 11400000, guid: 9cfb42c50d7fac142a3722a23ca9074e, type: 2}
   - {fileID: 11400000, guid: c1feb8e7f03c3df4fbfd7bc670503c49, type: 2}

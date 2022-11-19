@@ -19,10 +19,8 @@ public class GameSettingsManager : MonoBehaviour
     public GameObject resetPrompt;
 
     public TMP_InputField mapSize;
-    public Toggle autoMapSize;
     public GameObject mapError;
     public int defaultMapSize = 5;
-    public bool defaultAutoMapSize = true;
 
     public TMP_InputField lives;
     public Toggle infiniteLives;
@@ -111,14 +109,6 @@ public class GameSettingsManager : MonoBehaviour
             failure = true;
             Debug.Log("MAP SIZE is invalid!");
             mapError.SetActive(true);
-        }
-
-        if (autoMapSize.isOn)
-        {
-            PlayerPrefs.SetInt("AUTO_MAP_SIZE", 1);
-        } else
-        {
-            PlayerPrefs.SetInt("AUTO_MAP_SIZE", 0);
         }
 
         try
@@ -330,14 +320,6 @@ public class GameSettingsManager : MonoBehaviour
             mapError.SetActive(false);
             mapSize.text = PlayerPrefs.GetInt("MAP_SIZE").ToString();
             Debug.Log("Loaded Map size: " + PlayerPrefs.GetInt("MAP_SIZE"));
-            if (PlayerPrefs.GetInt("AUTO_MAP_SIZE") == 1)
-            {
-                autoMapSize.isOn = true;
-            }
-            else
-            {
-                autoMapSize.isOn = false;
-            }
         }
 
         if (PlayerPrefs.HasKey("LIFE_COUNT"))
@@ -431,15 +413,6 @@ public class GameSettingsManager : MonoBehaviour
         }
 
         PlayerPrefs.SetInt("MAP_SIZE", defaultMapSize);
-
-        if (defaultAutoMapSize)
-        {
-            PlayerPrefs.SetInt("AUTO_MAP_SIZE", 1);
-        }
-        else
-        {
-            PlayerPrefs.SetInt("AUTO_MAP_SIZE", 0);
-        }
 
         PlayerPrefs.SetInt("LIFE_COUNT", defaultLivesCount);
 
