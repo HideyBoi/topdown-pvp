@@ -3,13 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using Riptide;
 using Riptide.Utils;
+using Riptide.Transports.Steam;
 using System;
 
 public class NetworkManager : MonoBehaviour
 {
+    public bool isSteam = true;
+    public GameObject steamManager;
+
     public static NetworkManager instance;
 
-    public MainMenuUIManager mainMenuUIManager;
+    public MainUIManager mainMenuUIManager;
     public GameManager gameManager;
 
     public Server Server;
@@ -76,6 +80,15 @@ public class NetworkManager : MonoBehaviour
 
     private void Start()
     {
+
+        if (!isSteam)
+        {
+            if (steamManager)
+            {
+                Destroy(steamManager);
+            }
+        }
+
         if (instance == null)
         {
             Debug.Log("Setting NetworkManager instance!");
@@ -175,7 +188,7 @@ public class NetworkManager : MonoBehaviour
 
     void Connected(object sender, EventArgs e)
     {
-        connectedPlayers.Add(new MultiplayerPlayer(Client.Id, mainMenuUIManager.playerName));
+        connectedPlayers.Add(new MultiplayerPlayer(Client.Id, mainMenuUIManager.currentUsername));
         SendMyPlayerInfo();
     }
 
@@ -215,7 +228,7 @@ public class NetworkManager : MonoBehaviour
     {
         Message msg = Message.Create(MessageSendMode.Reliable, MessageIds.playerInfo);
         msg.AddUShort(Client.Id);
-        msg.AddString(mainMenuUIManager.playerName);
+        msg.AddString(mainMenuUIManager.currentUsername);
         msg.AddString(Application.version);
         Client.Send(msg);
     }
