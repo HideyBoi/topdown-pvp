@@ -98,7 +98,6 @@ public class NetworkManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
-            
 
         RiptideLogger.Initialize(Debug.Log, Debug.Log, Debug.LogWarning, Debug.LogError, false);
 
@@ -199,6 +198,7 @@ public class NetworkManager : MonoBehaviour
 
     void Connected(object sender, EventArgs e)
     {
+        Debug.Log(mainMenuUIManager);
         connectedPlayers.Add(new MultiplayerPlayer(Client.Id, mainMenuUIManager.currentUsername));
         SendMyPlayerInfo();
     }

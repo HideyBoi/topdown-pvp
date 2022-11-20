@@ -66,7 +66,7 @@ public class SteamLobbyManager : MonoBehaviour
         SteamMatchmaking.SetLobbyData(lobbyId, HostAddressKey, SteamUser.GetSteamID().ToString());
         MainUIManager.instance.ConnectedToLobby();
 
-        NetworkManager.instance.Server.Start(0, MainUIManager.instance.maxPlayers, 255);
+        NetworkManager.instance.Server.Start(0, MainUIManager.instance.maxPlayers, messageHandlerGroupId: 255);
         NetworkManager.instance.Client.Connect("127.0.0.1", messageHandlerGroupId: 255);
     }
 

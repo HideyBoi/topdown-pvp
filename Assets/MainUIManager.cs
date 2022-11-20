@@ -20,10 +20,11 @@ public class MainUIManager : MonoBehaviour
 
     public string currentUsername = "";
 
-    public TextMeshProUGUI lobbyIdText;
     public TMP_InputField lobbyCodeInput;
 
-    private void Awake()
+    public Texture2D cursor;
+
+    private void Start()
     {
 #if DEBUG
         debugVersionInfo.gameObject.SetActive(true);
@@ -33,11 +34,14 @@ public class MainUIManager : MonoBehaviour
         currentUsername = SteamFriends.GetPersonaName();
 
         instance = this;
+
+        NetworkManager.instance.mainMenuUIManager = this;
+
+        Cursor.SetCursor(cursor, new Vector2(cursor.width / 2, cursor.height / 2), CursorMode.Auto);
     }
 
     public void ConnectedToLobby()
     {
         currentLobby = Instantiate(lobby);
-        lobbyIdText.text = SteamLobbyManager.Singleton.lobbyId.ToString();
     }
 }
