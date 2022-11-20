@@ -102,7 +102,19 @@ public class NetworkManager : MonoBehaviour
 
         RiptideLogger.Initialize(Debug.Log, Debug.Log, Debug.LogWarning, Debug.LogError, false);
 
-        Server = new Server();
+        if (SteamManager.Initialized)
+        {
+            SteamServer steamServer = new SteamServer();
+
+            Server = new Server(steamServer);
+            Client = new Client(new SteamClient(steamServer));
+        } else
+        {
+            Server = new Server();
+            Client = new Client();
+        }
+
+        
 
         List<ushort> msgIdsToRelay = new List<ushort>();
 
@@ -121,7 +133,6 @@ public class NetworkManager : MonoBehaviour
 
         Server.RelayFilter = filter;
 
-        Client = new Client();
         Client.Connected += Connected;
         //Client.ConnectionFailed += FailedToConnect;
         Client.ClientConnected += PlayerJoined;

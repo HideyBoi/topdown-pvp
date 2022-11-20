@@ -9204,7 +9204,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   debugVersionInfo: {fileID: 1746662950}
   maxPlayers: 8
-  lobby: {fileID: 0}
+  lobby: {fileID: 2190361410227602060, guid: fc762d98e64c7d14e83a851ec9648ef0, type: 3}
   currentUsername: 
   lobbyIdText: {fileID: 1852823198}
   lobbyCodeInput: {fileID: 1810207079}
