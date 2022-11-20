@@ -29,7 +29,7 @@ public class SteamLobbyManager : MonoBehaviour
     protected Callback<LobbyEnter_t> lobbyEnter;
 
     private const string HostAddressKey = "HostAddress";
-    private CSteamID lobbyId;
+    public CSteamID lobbyId;
 
     private void Awake()
     {
@@ -49,9 +49,9 @@ public class SteamLobbyManager : MonoBehaviour
         lobbyEnter = Callback<LobbyEnter_t>.Create(OnLobbyEnter);
     }
 
-    internal void CreateLobby()
+    public void CreateLobby()
     {
-        SteamMatchmaking.CreateLobby(ELobbyType.k_ELobbyTypeFriendsOnly, 5);
+        SteamMatchmaking.CreateLobby(ELobbyType.k_ELobbyTypeFriendsOnly, MainUIManager.instance.maxPlayers);
     }
 
     private void OnLobbyCreated(LobbyCreated_t callback)
@@ -70,9 +70,9 @@ public class SteamLobbyManager : MonoBehaviour
         NetworkManager.instance.Client.Connect("127.0.0.1", messageHandlerGroupId: 255);
     }
 
-    internal void JoinLobby(ulong lobbyId)
+    public void JoinLobby()
     {
-        SteamMatchmaking.JoinLobby(new CSteamID(lobbyId));
+        SteamMatchmaking.JoinLobby(new CSteamID(ulong.Parse(MainUIManager.instance.lobbyCodeInput.text)));
     }
 
     private void OnGameLobbyJoinRequested(GameLobbyJoinRequested_t callback)

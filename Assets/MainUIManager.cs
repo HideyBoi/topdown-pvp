@@ -20,6 +20,9 @@ public class MainUIManager : MonoBehaviour
 
     public string currentUsername = "";
 
+    public TextMeshProUGUI lobbyIdText;
+    public TMP_InputField lobbyCodeInput;
+
     private void Awake()
     {
 #if DEBUG
@@ -35,5 +38,6 @@ public class MainUIManager : MonoBehaviour
     public void ConnectedToLobby()
     {
         currentLobby = Instantiate(lobby);
+        lobbyIdText.text = SteamLobbyManager.Singleton.lobbyId.ToString();
     }
 }
