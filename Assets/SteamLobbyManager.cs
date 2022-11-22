@@ -66,8 +66,8 @@ public class SteamLobbyManager : MonoBehaviour
         SteamMatchmaking.SetLobbyData(lobbyId, HostAddressKey, SteamUser.GetSteamID().ToString());
         MainUIManager.instance.ConnectedToLobby();
 
-        NetworkManager.instance.Server.Start(0, MainUIManager.instance.maxPlayers, messageHandlerGroupId: 255);
-        NetworkManager.instance.Client.Connect("127.0.0.1", messageHandlerGroupId: 255);
+        NetworkManager.instance.Server.Start(0, MainUIManager.instance.maxPlayers, messageHandlerGroupId: 0);
+        NetworkManager.instance.Client.Connect("127.0.0.1", messageHandlerGroupId: 0);
     }
 
     public void JoinLobby()
@@ -88,7 +88,7 @@ public class SteamLobbyManager : MonoBehaviour
         lobbyId = new CSteamID(callback.m_ulSteamIDLobby);
         string hostAddress = SteamMatchmaking.GetLobbyData(lobbyId, HostAddressKey);
 
-        NetworkManager.instance.Client.Connect(hostAddress, messageHandlerGroupId: 255);
+        NetworkManager.instance.Client.Connect(hostAddress, messageHandlerGroupId: 0);
         MainUIManager.instance.ConnectedToLobby();
     }
 
