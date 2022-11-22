@@ -14,6 +14,7 @@ public class ErrorPrompt : MonoBehaviour
     private void Awake()
     {
         instance = this;
+        DontDestroyOnLoad(transform.parent.gameObject);
     }
 
     public static void ShowError(string errorBodyText)
