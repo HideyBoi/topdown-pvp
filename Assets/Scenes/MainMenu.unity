@@ -9069,7 +9069,6 @@ MonoBehaviour:
   maxPlayers: 8
   lobby: {fileID: 2190361410227602060, guid: fc762d98e64c7d14e83a851ec9648ef0, type: 3}
   currentUsername: 
-  lobbyIdText: {fileID: 0}
   lobbyCodeInput: {fileID: 1810207079}
   cursor: {fileID: 2800000, guid: c08557d374818d54cb09c75260c8b18e, type: 3}
 --- !u!114 &2039629025
