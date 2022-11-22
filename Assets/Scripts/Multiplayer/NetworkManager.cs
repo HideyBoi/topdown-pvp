@@ -103,6 +103,7 @@ public class NetworkManager : MonoBehaviour
 
         if (SteamManager.Initialized)
         {
+            Debug.Log("Steam is initalized, starting steam server.");
             SteamServer steamServer = new SteamServer();
 
             Server = new Server(steamServer);
@@ -111,6 +112,7 @@ public class NetworkManager : MonoBehaviour
         {
             Server = new Server();
             Client = new Client();
+            Debug.Log("Steam is not initalized, using direction connection server.");
         }
 
         List<ushort> msgIdsToRelay = new List<ushort>();

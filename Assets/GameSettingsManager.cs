@@ -93,7 +93,7 @@ public class GameSettingsManager : MonoBehaviour
 
         try
         {
-            if (int.Parse(mapSize.text) > 1)
+            if (int.Parse(mapSize.text) > 2)
             {
                 PlayerPrefs.SetInt("MAP_SIZE", int.Parse(mapSize.text));
                 mapError.SetActive(false);
@@ -319,12 +319,10 @@ public class GameSettingsManager : MonoBehaviour
         {
             mapError.SetActive(false);
             mapSize.text = PlayerPrefs.GetInt("MAP_SIZE").ToString();
-            Debug.Log("Loaded Map size: " + PlayerPrefs.GetInt("MAP_SIZE"));
         }
 
         if (PlayerPrefs.HasKey("LIFE_COUNT"))
         {
-            Debug.Log("loading life");
             livesError.SetActive(false);
             lives.text = PlayerPrefs.GetInt("LIFE_COUNT").ToString();
 
