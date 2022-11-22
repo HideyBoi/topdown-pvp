@@ -31,6 +31,14 @@ public class MainUIManager : MonoBehaviour
         debugVersionInfo.text = $"THIS APPLICATION IS RUNNING IN <i>DEBUG MODE</i>\n{Application.companyName}       {Application.productName}\n<b>Version: {Application.version} running on Unity version {Application.unityVersion}</b>";
 #endif
 
+        if (NetworkManager.instance != null)
+        {
+            if (NetworkManager.instance.Client.IsConnected)
+            {
+                currentLobby = Instantiate(lobby);
+            }
+        }
+
         currentUsername = SteamFriends.GetPersonaName();
 
         instance = this;
