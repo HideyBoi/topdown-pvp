@@ -87,6 +87,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: b578df79dbab6d044ac373d4339d5e54, type: 2}
   - {fileID: 11400000, guid: 8008595968631a943b1ff823423eda91, type: 2}
   - {fileID: 11400000, guid: 6aba5d929d7e3e543bbfda57c4b16ca3, type: 2}
+  - {fileID: 11400000, guid: 714e874ff70735d4dbb517bfb0aa65d7, type: 2}
+  - {fileID: 11400000, guid: ea77fa0df5d0e3f4cb22f20610f54a3d, type: 2}
   spawnedChests: []
   spawnedItems: []
   spawnedHealables: []
@@ -98,10 +100,12 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 2c5c2add7a2f2f74ebaffa4a8cd76e74, type: 2}
   - {fileID: 11400000, guid: c1feb8e7f03c3df4fbfd7bc670503c49, type: 2}
   - {fileID: 11400000, guid: 6aba5d929d7e3e543bbfda57c4b16ca3, type: 2}
+  - {fileID: 11400000, guid: 714e874ff70735d4dbb517bfb0aa65d7, type: 2}
   rareChance: 31
   legendaryWeapons:
   - {fileID: 11400000, guid: 9cfb42c50d7fac142a3722a23ca9074e, type: 2}
   - {fileID: 11400000, guid: 8008595968631a943b1ff823423eda91, type: 2}
+  - {fileID: 11400000, guid: ea77fa0df5d0e3f4cb22f20610f54a3d, type: 2}
   legendaryChance: 16
   syringe: {fileID: 391935329170582414, guid: bac15720f8e4922489357fcb3e2fefb6, type: 3}
   syringeChance: 50

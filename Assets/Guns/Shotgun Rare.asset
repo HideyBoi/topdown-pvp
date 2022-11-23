@@ -31,5 +31,5 @@ MonoBehaviour:
   maxAmmoCount: 4
   timeBetweenShots: 1.5
   reloadTime: 3.128
-  shotCount: 19
-  spread: 1.9
+  shotCount: 10
+  spread: 0.35

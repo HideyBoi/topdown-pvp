@@ -4,25 +4,30 @@ using UnityEngine;
 
 public class BulletTracer : MonoBehaviour
 {
-    [SerializeField] private LineRenderer line;
+    [SerializeField] private TrailRenderer line;
     [SerializeField] private float speed;
+    [SerializeField] private Transform endPoint;
+    private bool running = false;
 
-    public void SetStartEnd(Vector3 end)
+    public void SetData(Vector3 endPos)
     {
-        line.SetPosition(0, Vector3.zero);
-        line.SetPosition(1, Vector3.zero);
-        line.SetPosition(2, transform.InverseTransformPoint(end));
+        endPoint.position = endPos;
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
-        float mag = (line.GetPosition(2) - line.GetPosition(0)).sqrMagnitude;
-        float currMag = (line.GetPosition(1) - line.GetPosition(0)).sqrMagnitude;
-        Vector3 dir = (line.GetPosition(2) - line.GetPosition(0)).normalized;
-        line.SetPosition(1, line.GetPosition(1) + dir * mag * Time.deltaTime);
-        if (mag < currMag)
-        {
-            line.SetPosition(1, Vector3.zero);
-        }
+        Vector3 dir = endPoint.position - line.transform.position;
+
+        line.transform.position += dir * speed * Time.fixedDeltaTime;
+
+        if (!running)
+            StartCoroutine("TimeOut");
+    }
+
+    IEnumerator TimeOut()
+    {
+        running = true;
+        yield return new WaitForSeconds(0.6f);
+        Destroy(gameObject);
     }
 }

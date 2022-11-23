@@ -32,4 +32,4 @@ MonoBehaviour:
   timeBetweenShots: 0.1
   reloadTime: 0.8
   shotCount: 0
-  spread: 0
+  spread: 0.02

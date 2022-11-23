@@ -16,6 +16,8 @@ public class LobbyManager : MonoBehaviour
     public TMP_Text readyText;
     public bool isReady;
 
+    public TMP_Text idTex;
+
     private void Awake()
     {
         if (NetworkManager.instance.Server.IsRunning)
@@ -29,6 +31,11 @@ public class LobbyManager : MonoBehaviour
         NetworkManager.instance.gameIsStarted = false;
         NetworkManager.instance.stillInLobby = true;
         NetworkManager.instance.isDoneLoading = false;
+
+        if (SteamManager.Initialized)
+        {
+            idTex.text = "Lobby ID: " + SteamLobbyManager.Singleton.lobbyId;
+        }
     }
 
     public void ReadyUp()

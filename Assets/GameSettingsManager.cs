@@ -67,6 +67,7 @@ public class GameSettingsManager : MonoBehaviour
     private void Awake()
     {
         LoadValues();
+        RulesManager.instance.RulesUpdated();
         instance = this;
     }
 
@@ -83,17 +84,24 @@ public class GameSettingsManager : MonoBehaviour
 
     public void ValuesUpdated()
     {
-        if (loading || lobby.isReady || !NetworkManager.instance.Server.IsRunning)
+        //Debug.Log("[Game Settings Manager] Values changed, saving game settings.");
+
+        if (lobby.isReady || !NetworkManager.instance.Server.IsRunning)
         {
             LoadValues();
             return;
-        } 
+        }
+
+        if (loading)
+        {
+            return;
+        }
 
         bool failure = false;
 
         try
         {
-            if (int.Parse(mapSize.text) > 1)
+            if (int.Parse(mapSize.text) > 2)
             {
                 PlayerPrefs.SetInt("MAP_SIZE", int.Parse(mapSize.text));
                 mapError.SetActive(false);
@@ -313,18 +321,18 @@ public class GameSettingsManager : MonoBehaviour
 
     public void LoadValues()
     {
+        //Debug.Log("[Game Settings Manager] Loading game settings.");
+
         loading = true;
 
         if (PlayerPrefs.HasKey("MAP_SIZE"))
         {
             mapError.SetActive(false);
             mapSize.text = PlayerPrefs.GetInt("MAP_SIZE").ToString();
-            Debug.Log("Loaded Map size: " + PlayerPrefs.GetInt("MAP_SIZE"));
         }
 
         if (PlayerPrefs.HasKey("LIFE_COUNT"))
         {
-            Debug.Log("loading life");
             livesError.SetActive(false);
             lives.text = PlayerPrefs.GetInt("LIFE_COUNT").ToString();
 
@@ -411,6 +419,8 @@ public class GameSettingsManager : MonoBehaviour
             LoadValues();
             return;
         }
+
+        //Debug.Log("[Game Settings Manager] Saving default values.");
 
         PlayerPrefs.SetInt("MAP_SIZE", defaultMapSize);
 

@@ -94,6 +94,8 @@ public class Ammo : MonoBehaviour
             msg.AddInt(typeId);
             msg.AddInt(count);
 
+            Debug.Log($"[Item] Ammo({type}) with ID:{id} was spawned locally.");
+
             NetworkManager.instance.Client.Send(msg);
         }
     }
@@ -113,6 +115,7 @@ public class Ammo : MonoBehaviour
             NetworkManager.instance.Client.Send(msg);
         }
 
+        Debug.Log($"[Item] Ammo({type}) with ID:{id} was picked up locally.");
         GetComponent<Animator>().Play("Destroy");
     }
 

@@ -3,13 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using Riptide;
 using Riptide.Utils;
+using Riptide.Transports.Steam;
 using System;
 
 public class NetworkManager : MonoBehaviour
 {
+    public bool isSteam = true;
+    public GameObject steamManager;
+
     public static NetworkManager instance;
 
-    public MainMenuUIManager mainMenuUIManager;
+    public MainUIManager mainMenuUIManager;
     public GameManager gameManager;
 
     public Server Server;
@@ -76,20 +80,41 @@ public class NetworkManager : MonoBehaviour
 
     private void Start()
     {
+
+        if (!isSteam)
+        {
+            if (steamManager)
+            {
+                Destroy(steamManager);
+            }
+        }
+
         if (instance == null)
         {
-            Debug.Log("Setting NetworkManager instance!");
+            Debug.Log("[Network Manager] Setting NetworkManager instance!");
             DontDestroyOnLoad(gameObject);
             instance = this;
         } else
         {
             Destroy(gameObject);
+            return;
         }
-            
 
         RiptideLogger.Initialize(Debug.Log, Debug.Log, Debug.LogWarning, Debug.LogError, false);
 
-        Server = new Server();
+        if (SteamManager.Initialized)
+        {
+            Debug.Log("[Network Manager] Steam is initalized, starting steam server.");
+            SteamServer steamServer = new SteamServer();
+
+            Server = new Server(steamServer);
+            Client = new Client(new SteamClient(steamServer));
+        } else
+        {
+            Server = new Server();
+            Client = new Client();
+            Debug.Log("[Network Manager] Steam is not initalized, using direction connection server.");
+        }
 
         List<ushort> msgIdsToRelay = new List<ushort>();
 
@@ -107,8 +132,10 @@ public class NetworkManager : MonoBehaviour
         }
 
         Server.RelayFilter = filter;
+        
 
-        Client = new Client();
+        //Server.RelayFilter = new MessageRelayFilter((ushort)MessageIds.mapData, (ushort)MessageIds.mapDone, (ushort)MessageIds.mapHeader, (ushort)MessageIds.openChest, (ushort)MessageIds.particleEffect, (ushort)MessageIds.pickUpAmmo, (ushort)MessageIds.pickUpHeal, (ushort)MessageIds.pickUpItem, (ushort)MessageIds.playerDamage, (ushort)MessageIds.playerGunRot, (ushort)MessageIds.playerHeal, (ushort)MessageIds.playerHoldItem, (ushort)MessageIds.playerInfo, (ushort)MessageIds.playerOutOfGame, (ushort)MessageIds.playerPos, (ushort)MessageIds.playerReady, (ushort)MessageIds.playerReloadSound, (ushort)MessageIds.playerShot, (ushort)MessageIds.readyUp, (ushort)MessageIds.rules, (ushort)MessageIds.soundEffect, (ushort)MessageIds.spawnAmmo, (ushort)MessageIds.spawnHeal, (ushort)MessageIds.spawnItem, (ushort)MessageIds.startGame);
+
         Client.Connected += Connected;
         //Client.ConnectionFailed += FailedToConnect;
         Client.ClientConnected += PlayerJoined;
@@ -118,6 +145,8 @@ public class NetworkManager : MonoBehaviour
 
     public void Disconnected(object sender, EventArgs e)
     {
+        Debug.Log($"[Network Manager] Disconnected from server.");
+
         readyPlayers = new List<ushort>();
         mapReadyPlayers = new List<ushort>();
 
@@ -144,12 +173,18 @@ public class NetworkManager : MonoBehaviour
 
     public void LeaveGame()
     {
-        if (Server.IsRunning)
+        Debug.Log("[Network Manager] Leaving game.");
+        if (isSteam)
         {
-            Server.Stop();
+            SteamLobbyManager.Singleton.LeaveLobby();
+        } else
+        {
+            Client.Disconnect();
+            if (Server.IsRunning)
+            {
+                Server.Stop();
+            }
         }
-
-        Client.Disconnect();
 
         readyPlayers = new List<ushort>();
         mapReadyPlayers = new List<ushort>();
@@ -159,8 +194,6 @@ public class NetworkManager : MonoBehaviour
         gameIsStarted = false;
         stillInLobby = true;
         isDoneLoading = false;
-
-        LoadingScreen.instance.LoadLevel("MainMenu");
     }
 
     private void FixedUpdate()
@@ -175,21 +208,26 @@ public class NetworkManager : MonoBehaviour
 
     void Connected(object sender, EventArgs e)
     {
-        connectedPlayers.Add(new MultiplayerPlayer(Client.Id, mainMenuUIManager.playerName));
+        Debug.Log("[Network Manager] Successfully connected to server, sending player data.");
+        connectedPlayers.Add(new MultiplayerPlayer(Client.Id, mainMenuUIManager.currentUsername));
         SendMyPlayerInfo();
     }
 
     void PlayerJoined(object sender, ClientConnectedEventArgs e)
     {
+        Debug.Log("[Network Manager] Player has joined, sending client info.");
         SendMyPlayerInfo();
         if (instance.Server.IsRunning)
         {
+            Debug.Log("[Network Manager] Player has joined, client is hosting, sending game rules.");
             RulesManager.instance.SendRuleChangesToPlayers();
         }
     }
 
     void PlayerLeft(object sender, ClientDisconnectedEventArgs e)
     {
+        Debug.Log($"[Network Manager] Player is disconnecting.");
+
         if (gameManager != null)
             gameManager.PlayerLeft(e.Id);
 
@@ -215,7 +253,7 @@ public class NetworkManager : MonoBehaviour
     {
         Message msg = Message.Create(MessageSendMode.Reliable, MessageIds.playerInfo);
         msg.AddUShort(Client.Id);
-        msg.AddString(mainMenuUIManager.playerName);
+        msg.AddString(mainMenuUIManager.currentUsername);
         msg.AddString(Application.version);
         Client.Send(msg);
     }
@@ -227,10 +265,14 @@ public class NetworkManager : MonoBehaviour
         string username = msg.GetString();
         string version = msg.GetString();
 
+        Debug.Log($"[Network Manager] Got player info: ID:{id} Name:{username} Remote client version:{version}");
+
         if (version != Application.version || instance.gameIsStarted)
         {
+            Debug.Log("[Network Manager] Remote client[" + id + " + " + username + "] is not playing on the same version as local client.");
             if (instance.Server.IsRunning)
             {
+                Debug.Log("[Network Manager] Disconnecting remote client[" + id + " + " + username + " from server because remote client is not playing on the same version as local client.");
                 instance.Server.DisconnectClient(id);
             }
 
@@ -263,7 +305,13 @@ public class NetworkManager : MonoBehaviour
 
     public void PlayerReadyUp(bool ready, ushort id)
     {
-        Debug.Log($"{id} is ready({ready})");
+        if (ready)
+        {
+            Debug.Log($"[Network Manager] {id} is ready to start.");
+        } else
+        {
+            Debug.Log($"[Network Manager] {id} is not ready to start.");
+        }
 
         if (ready)
         {
@@ -292,6 +340,7 @@ public class NetworkManager : MonoBehaviour
     [MessageHandler((ushort)MessageIds.startGame)]
     public static void StartGame(Message msg)
     {
+        Debug.Log($"[Network Manager] Recieved start game packet. Loading game scene.");
         LoadingScreen.instance.LoadLevel("Game");
     }
 
@@ -305,8 +354,11 @@ public class NetworkManager : MonoBehaviour
     {
         readyPlayers.Add(id);
 
+        Debug.Log($"[Network Manager] {id} is done loading game scene. {instance.readyPlayers.Count}/{instance.connectedPlayers.Count} done.");
+
         if (instance.readyPlayers.Count == instance.connectedPlayers.Count)
         {
+            Debug.Log($"[Network Manager] All players finished loading game scene, starting world generation.");
             instance.isDoneLoading = true;
             readyPlayers.Clear();
         }
@@ -322,8 +374,11 @@ public class NetworkManager : MonoBehaviour
     {
         mapReadyPlayers.Add(id);
 
+        Debug.Log($"[Network Manager] {id} is done loading generated world. {instance.mapReadyPlayers.Count}/{instance.connectedPlayers.Count} done.");
+
         if (instance.mapReadyPlayers.Count == instance.connectedPlayers.Count)
         {
+            Debug.Log($"[Network Manager] All players are done loading generated world, unpausing game.");
             instance.gameIsStarted = true;
         }
     }
