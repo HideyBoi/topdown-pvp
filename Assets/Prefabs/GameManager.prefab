@@ -61,6 +61,8 @@ MonoBehaviour:
   - {fileID: 5027107366694167322, guid: 6aa63e7fb0aa0d040b50bc690a1c7fca, type: 3}
   muzzleFlash: {fileID: 503261244163821301, guid: 82968f14cd878794fa71f386769df172,
     type: 3}
+  bulletTracer: {fileID: 1735389628010250664, guid: f07bbfa7066c0d8408ac723a2b4f6f99,
+    type: 3}
   soundEffect: {fileID: 7098371210533266199, guid: 03ca22f20a0d6c145ab412dadd2b8800,
     type: 3}
   spawns: []

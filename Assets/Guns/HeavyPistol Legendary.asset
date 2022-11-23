@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: HeavyPistol Legendary
   m_EditorClassIdentifier: 
   gunName: Heavy Pistol
-  id: 4
+  id: 8
   gunMesh: {fileID: 1220828769319070387, guid: 4adbbdc07be0c6a46953997a68269c84, type: 3}
   gunMaterial: {fileID: 2100000, guid: ff5507e8191e58546923497720ea104c, type: 2}
   muzzleLocation: {x: 0, y: 0.065, z: 0.225}
@@ -27,7 +27,7 @@ MonoBehaviour:
   rarity: 2
   ammoType: 2
   automatic: 0
-  damage: 22
+  damage: 26
   maxAmmoCount: 6
   timeBetweenShots: 0.55
   reloadTime: 2
