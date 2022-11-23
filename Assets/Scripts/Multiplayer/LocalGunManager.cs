@@ -29,6 +29,7 @@ public class LocalGunManager : MonoBehaviour
     public Transform pivot;
 
     public GameObject muzzleFlash;
+    public GameObject bulletTracer;
     public GameObject impactEffect;
     public GameObject bloodEffect;
     public GameObject soundEffect;
@@ -147,12 +148,6 @@ public class LocalGunManager : MonoBehaviour
                     Instantiate(muzzleFlash, gunPivot.position + gunPivot.transform.TransformDirection(im.inventoryItem[im.currentIndex].weapon.muzzleLocation), gunPivot.rotation, gunPivot);
                     shootCooldown = im.inventoryItem[im.currentIndex].weapon.timeBetweenShots;
 
-                    Message muzzleFlashMsg = Message.Create(MessageSendMode.Reliable, NetworkManager.MessageIds.playerShot);
-                    muzzleFlashMsg.AddUShort(playerController.id);
-                    muzzleFlashMsg.AddInt(im.inventoryItem[im.currentIndex].weapon.id);
-                    muzzleFlashMsg.AddVector3(gunPivot.position + gunPivot.transform.TransformDirection(im.inventoryItem[im.currentIndex].weapon.muzzleLocation));
-                    muzzleFlashMsg.AddQuaternion(gunPivot.rotation);
-                    NetworkManager.instance.Client.Send(muzzleFlashMsg);
 
                     if (!im.inventoryItem[im.currentIndex].weapon.automatic)
                     {
@@ -164,6 +159,7 @@ public class LocalGunManager : MonoBehaviour
                         RaycastHit shoot;
 
                         Vector3 dir = new Vector3(playerController.lookDir.x, 0, playerController.lookDir.y);
+                        dir.Normalize();
                         dir = pivot.InverseTransformDirection(dir);
                         dir.x += Random.Range(-im.inventoryItem[im.currentIndex].weapon.spread, im.inventoryItem[im.currentIndex].weapon.spread);
                         dir = pivot.TransformDirection(dir);
@@ -176,9 +172,19 @@ public class LocalGunManager : MonoBehaviour
 
                             CameraShaker.Instance.ShakeOnce(im.inventoryItem[im.currentIndex].weapon.magnitude, im.inventoryItem[im.currentIndex].weapon.roughness, im.inventoryItem[im.currentIndex].weapon.shakeFadeIn, im.inventoryItem[im.currentIndex].weapon.shakeFadeOut);
 
+                            Message muzzleFlashMsg = Message.Create(MessageSendMode.Reliable, NetworkManager.MessageIds.playerShot);
+                            muzzleFlashMsg.AddUShort(playerController.id);
+                            muzzleFlashMsg.AddInt(im.inventoryItem[im.currentIndex].weapon.id);
+                            muzzleFlashMsg.AddVector3(gunPivot.position + gunPivot.transform.TransformDirection(im.inventoryItem[im.currentIndex].weapon.muzzleLocation));
+                            muzzleFlashMsg.AddQuaternion(gunPivot.rotation);
+                            muzzleFlashMsg.AddVector3(shoot.point);
+                            NetworkManager.instance.Client.Send(muzzleFlashMsg);
+
+                            Instantiate(bulletTracer, gunPivot.position + gunPivot.transform.TransformDirection(im.inventoryItem[im.currentIndex].weapon.muzzleLocation), Quaternion.identity).GetComponent<BulletTracer>().SetData(shoot.point);
+
                             if (shoot.collider.CompareTag("RemotePlayer"))
                             {
-                                Instantiate(bloodEffect, shoot.point, Quaternion.LookRotation(Vector3.forward, shoot.normal));
+                                Instantiate(bloodEffect, shoot.point, Quaternion.LookRotation(shoot.normal, Vector3.up));
 
                                 HealthManager hm = shoot.collider.GetComponent<HealthManager>();
                                 Damage(im.inventoryItem[im.currentIndex].weapon.damage, im.inventoryItem[im.currentIndex].weapon.id, hm);

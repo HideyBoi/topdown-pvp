@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf83bf71196d14643a3a1271980fad3f, type: 3}
+  m_Name: HeavyPistol Rare
+  m_EditorClassIdentifier: 
+  gunName: Heavy Pistol
+  id: 4
+  gunMesh: {fileID: 1220828769319070387, guid: 4adbbdc07be0c6a46953997a68269c84, type: 3}
+  gunMaterial: {fileID: 2100000, guid: ff5507e8191e58546923497720ea104c, type: 2}
+  muzzleLocation: {x: 0, y: 0.065, z: 0.225}
+  shootSound: {fileID: 8300000, guid: 6466bbadd59783f40ae6a01bdb322dc0, type: 3}
+  pickupSound: {fileID: 8300000, guid: cc4995917dd52784eb73d371dc69940b, type: 3}
+  reloadSound: {fileID: 8300000, guid: 2b29da7fb77d7e342aca5378ce2f07a3, type: 3}
+  magnitude: 4
+  roughness: 4
+  shakeFadeIn: 0.2
+  shakeFadeOut: 0.3
+  rarity: 1
+  ammoType: 2
+  automatic: 0
+  damage: 20
+  maxAmmoCount: 6
+  timeBetweenShots: 0.6
+  reloadTime: 2
+  shotCount: 0
+  spread: 0.02

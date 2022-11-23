@@ -9,8 +9,8 @@ using Cinemachine;
 
 public class HealthManager : MonoBehaviour
 {
-    int health = 150;
-    int maxHealth = 150;
+    public int health = 150;
+    public int maxHealth = 150;
     public ushort thisId;
 
     public GameObject healEffect;
@@ -121,6 +121,14 @@ public class HealthManager : MonoBehaviour
     public void Die(ushort killingPlayer, int gunId)
     {
         Instantiate(deathEffect, transform.position, Quaternion.identity);
+
+        if (killingPlayer == NetworkManager.instance.Client.Id)
+        {
+            if (health <= 0)
+            {
+                Debug.Log("[Health Manager] Detected that local client has killed a remote client: " + thisId);
+            }
+        }
 
         if (isLocalPlayer)
         {

@@ -28,10 +28,11 @@ public class RulesManager : MonoBehaviour
 
     public void RulesUpdated()
     {
+        Debug.Log("[Rules Manager] Rules updated!");
+
         if (PlayerPrefs.HasKey("MAP_SIZE"))
         {
             mapSize = new Vector2(PlayerPrefs.GetInt("MAP_SIZE"), PlayerPrefs.GetInt("MAP_SIZE"));
-            Debug.Log("map size: " + mapSize);
         }
 
         if (PlayerPrefs.HasKey("LIFE_COUNT"))
@@ -102,11 +103,23 @@ public class RulesManager : MonoBehaviour
             startingShellsAmmo = PlayerPrefs.GetInt("STARTING_SHELLS");
         }
 
-        SendRuleChangesToPlayers();
+        if (NetworkManager.instance.Client != null)
+        {
+            SendRuleChangesToPlayers();
+        } else
+        {
+            //Debug.Log("[Rules Manager] Local client has not connected to local server yet, rules have not been sent to remote clients.");
+        }
+        
     }
 
     public void SendRuleChangesToPlayers()
     {
+        if (!NetworkManager.instance.Client.IsConnected)
+        {
+            return;
+        }
+        //Debug.Log("[Rules Manager] Sending rules to players.");
         Message msg = Message.Create(MessageSendMode.Reliable, NetworkManager.MessageIds.rules);
 
         msg.AddInt(lives);
@@ -122,11 +135,14 @@ public class RulesManager : MonoBehaviour
         msg.AddInt(startingShellsAmmo);
 
         NetworkManager.instance.Client.Send(msg);
+        Debug.Log("[Rules Manager] Sent rules.");
     }
 
     [MessageHandler((ushort)NetworkManager.MessageIds.rules)]
     static void NewRules(Message msg)
     {
+        //Debug.Log("[Rules Manager] Recieved new rules.");
+
         instance.lives = msg.GetInt();
         PlayerPrefs.SetInt("LIFE_COUNT", instance.lives);
         instance.dropLootOnEveryDeath = msg.GetBool();
@@ -152,6 +168,7 @@ public class RulesManager : MonoBehaviour
         instance.startingShellsAmmo = msg.GetInt();
         PlayerPrefs.SetInt("STARTING_SHELLS", instance.startingShellsAmmo);
 
-        GameSettingsManager.instance.LoadValues();
+        if (GameSettingsManager.instance != null)
+            GameSettingsManager.instance.LoadValues();
     }
 }

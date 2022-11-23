@@ -73,6 +73,8 @@ public class GroundItem : MonoBehaviour
             msg.AddVector3(transform.position);
             msg.AddInt(currentItem.weapon.id);
             NetworkManager.instance.Client.Send(msg);
+
+            Debug.Log($"[Item] gun({currentItem.weapon.gunName}) with ID:{id} was spawned locally.");
         }
     }
 
@@ -91,6 +93,7 @@ public class GroundItem : MonoBehaviour
             NetworkManager.instance.Client.Send(msg);
         }
 
+        Debug.Log($"[Item] Gun({currentItem.weapon.gunName}) with ID:{id} was picked up locally.");
         GetComponent<Animator>().Play("Destroy");
     }
 
