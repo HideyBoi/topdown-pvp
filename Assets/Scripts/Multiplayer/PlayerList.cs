@@ -54,5 +54,20 @@ public class PlayerList : MonoBehaviour
                 return;
             }
         }
+
+        foreach (var item in items)
+        {
+            bool ready = false;
+
+            foreach (var player in networkManager.readyPlayers)
+            {
+                if (player == item.id)
+                {
+                    ready = true;
+                }
+            }
+
+            item.ChangeReady(ready);
+        }
     }
 }

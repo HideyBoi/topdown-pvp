@@ -171,7 +171,7 @@ public class GameManager : MonoBehaviour
         {
             if (player._id == fromId)
             {
-                if (player.transform != null)
+                if (player != null)
                 {
                     player.transform.position = msg.GetVector3();
                     player.transform.rotation = msg.GetQuaternion();
