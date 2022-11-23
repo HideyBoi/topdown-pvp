@@ -34,6 +34,9 @@ public class PlayerListItem : MonoBehaviour
 
     public void KickThisPlayer()
     {
-        NetworkManager.instance.Server.DisconnectClient(id);
+        if (id != NetworkManager.instance.Client.Id)
+        {
+            NetworkManager.instance.Server.DisconnectClient(id);
+        }
     }
 }

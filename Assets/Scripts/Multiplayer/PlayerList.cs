@@ -59,7 +59,7 @@ public class PlayerList : MonoBehaviour
         {
             bool ready = false;
 
-            foreach (var player in networkManager.readyPlayers)
+            foreach (var player in networkManager.playersReadyToStart)
             {
                 if (player == item.id)
                 {
