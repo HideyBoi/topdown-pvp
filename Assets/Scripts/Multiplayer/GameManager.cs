@@ -23,6 +23,7 @@ public class GameManager : MonoBehaviour
 
     public GameObject[] particleObjects;
     public GameObject muzzleFlash;
+    public GameObject bulletTracer;
 
     public GameObject soundEffect;
 
@@ -573,13 +574,20 @@ public class GameManager : MonoBehaviour
     static void MuzzleFlash(Message msg)
     {
         ushort id = msg.GetUShort();
+        int weaponId = msg.GetInt();
+        Vector3 flashPos = msg.GetVector3();
+        Quaternion gunPiv = msg.GetQuaternion();
+        Vector3 hitPoint = msg.GetVector3();
 
         foreach (var player in instance.remotePlayers)
         {
             if (player._id == id)
             {
-                Instantiate(instance.soundEffect, player.transform).GetComponent<SoundEffect>().PlaySound(instance.possibleWeapons[msg.GetInt()].shootSound, 60, 1);
-                Instantiate(instance.muzzleFlash, msg.GetVector3(), msg.GetQuaternion(), player.pivot);
+                Instantiate(instance.soundEffect, player.transform).GetComponent<SoundEffect>().PlaySound(instance.possibleWeapons[weaponId].shootSound, 60, 1);
+                Instantiate(instance.muzzleFlash, flashPos, gunPiv, player.pivot);
+
+                Instantiate(instance.bulletTracer, flashPos, Quaternion.identity).GetComponent<BulletTracer>().SetData(hitPoint);
+
             }
         }
     }

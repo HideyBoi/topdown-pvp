@@ -115,6 +115,10 @@ public class RulesManager : MonoBehaviour
 
     public void SendRuleChangesToPlayers()
     {
+        if (!NetworkManager.instance.Client.IsConnected)
+        {
+            return;
+        }
         //Debug.Log("[Rules Manager] Sending rules to players.");
         Message msg = Message.Create(MessageSendMode.Reliable, NetworkManager.MessageIds.rules);
 
@@ -164,6 +168,7 @@ public class RulesManager : MonoBehaviour
         instance.startingShellsAmmo = msg.GetInt();
         PlayerPrefs.SetInt("STARTING_SHELLS", instance.startingShellsAmmo);
 
-        GameSettingsManager.instance.LoadValues();
+        if (GameSettingsManager.instance != null)
+            GameSettingsManager.instance.LoadValues();
     }
 }

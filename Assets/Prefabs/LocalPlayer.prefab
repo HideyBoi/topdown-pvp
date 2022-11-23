@@ -997,6 +997,8 @@ MonoBehaviour:
   pivot: {fileID: 171931357186983504}
   muzzleFlash: {fileID: 503261244163821301, guid: 82968f14cd878794fa71f386769df172,
     type: 3}
+  bulletTracer: {fileID: 1735389628010250664, guid: f07bbfa7066c0d8408ac723a2b4f6f99,
+    type: 3}
   impactEffect: {fileID: 3124112141188442420, guid: 8bb6cee50d81f8342a4a952984b87c4f,
     type: 3}
   bloodEffect: {fileID: 5027107366694167322, guid: 6aa63e7fb0aa0d040b50bc690a1c7fca,
@@ -1015,6 +1017,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2e12d7fc895eb0458d0ce9289bd630a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  health: 150
+  maxHealth: 150
   thisId: 0
   healEffect: {fileID: 1363855616742251421, guid: c5cff502f5f9ac644886f5926865fc9c,
     type: 3}
