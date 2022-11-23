@@ -91,7 +91,7 @@ public class NetworkManager : MonoBehaviour
 
         if (instance == null)
         {
-            Debug.Log("Setting NetworkManager instance!");
+            Debug.Log("[Network Manager] Setting NetworkManager instance!");
             DontDestroyOnLoad(gameObject);
             instance = this;
         } else
@@ -103,7 +103,7 @@ public class NetworkManager : MonoBehaviour
 
         if (SteamManager.Initialized)
         {
-            Debug.Log("Steam is initalized, starting steam server.");
+            Debug.Log("[Network Manager] Steam is initalized, starting steam server.");
             SteamServer steamServer = new SteamServer();
 
             Server = new Server(steamServer);
@@ -112,7 +112,7 @@ public class NetworkManager : MonoBehaviour
         {
             Server = new Server();
             Client = new Client();
-            Debug.Log("Steam is not initalized, using direction connection server.");
+            Debug.Log("[Network Manager] Steam is not initalized, using direction connection server.");
         }
 
         List<ushort> msgIdsToRelay = new List<ushort>();
@@ -144,6 +144,8 @@ public class NetworkManager : MonoBehaviour
 
     public void Disconnected(object sender, EventArgs e)
     {
+        Debug.Log($"[Network Manager] Disconnected from server.");
+
         readyPlayers = new List<ushort>();
         mapReadyPlayers = new List<ushort>();
 
@@ -201,22 +203,26 @@ public class NetworkManager : MonoBehaviour
 
     void Connected(object sender, EventArgs e)
     {
-        Debug.Log(mainMenuUIManager);
+        Debug.Log("[Network Manager] Successfully connected to server, sending player data.");
         connectedPlayers.Add(new MultiplayerPlayer(Client.Id, mainMenuUIManager.currentUsername));
         SendMyPlayerInfo();
     }
 
     void PlayerJoined(object sender, ClientConnectedEventArgs e)
     {
+        Debug.Log("[Network Manager] Player has joined, sending client info.");
         SendMyPlayerInfo();
         if (instance.Server.IsRunning)
         {
+            Debug.Log("[Network Manager] Player has joined, client is hosting, sending game rules.");
             RulesManager.instance.SendRuleChangesToPlayers();
         }
     }
 
     void PlayerLeft(object sender, ClientDisconnectedEventArgs e)
     {
+        Debug.Log($"[Network Manager] Player is disconnecting.");
+
         if (gameManager != null)
             gameManager.PlayerLeft(e.Id);
 
@@ -254,10 +260,14 @@ public class NetworkManager : MonoBehaviour
         string username = msg.GetString();
         string version = msg.GetString();
 
+        Debug.Log($"[Network Manager] Got player info: ID:{id} Name:{username} Remote client version:{version}");
+
         if (version != Application.version || instance.gameIsStarted)
         {
+            Debug.Log("[Network Manager] Remote client[" + id + " + " + username + "] is not playing on the same version as local client.");
             if (instance.Server.IsRunning)
             {
+                Debug.Log("[Network Manager] Disconnecting remote client[" + id + " + " + username + " from server because remote client is not playing on the same version as local client.");
                 instance.Server.DisconnectClient(id);
             }
 
@@ -290,7 +300,13 @@ public class NetworkManager : MonoBehaviour
 
     public void PlayerReadyUp(bool ready, ushort id)
     {
-        Debug.Log($"{id} is ready({ready})");
+        if (ready)
+        {
+            Debug.Log($"[Network Manager] {id} is ready to start.");
+        } else
+        {
+            Debug.Log($"[Network Manager] {id} is not ready to start.");
+        }
 
         if (ready)
         {
@@ -319,6 +335,7 @@ public class NetworkManager : MonoBehaviour
     [MessageHandler((ushort)MessageIds.startGame)]
     public static void StartGame(Message msg)
     {
+        Debug.Log($"[Network Manager] Recieved start game packet. Loading game scene.");
         LoadingScreen.instance.LoadLevel("Game");
     }
 
@@ -332,8 +349,11 @@ public class NetworkManager : MonoBehaviour
     {
         readyPlayers.Add(id);
 
+        Debug.Log($"[Network Manager] {id} is done loading game scene. {instance.readyPlayers.Count}/{instance.connectedPlayers.Count} done.");
+
         if (instance.readyPlayers.Count == instance.connectedPlayers.Count)
         {
+            Debug.Log($"[Network Manager] All players finished loading game scene, starting world generation.");
             instance.isDoneLoading = true;
             readyPlayers.Clear();
         }
@@ -349,8 +369,11 @@ public class NetworkManager : MonoBehaviour
     {
         mapReadyPlayers.Add(id);
 
+        Debug.Log($"[Network Manager] {id} is done loading generated world. {instance.mapReadyPlayers.Count}/{instance.connectedPlayers.Count} done.");
+
         if (instance.mapReadyPlayers.Count == instance.connectedPlayers.Count)
         {
+            Debug.Log($"[Network Manager] All players are done loading generated world, unpausing game.");
             instance.gameIsStarted = true;
         }
     }

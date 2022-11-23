@@ -29,6 +29,7 @@ public class LoadingScreen : MonoBehaviour
 
     public void LoadLevel(string sceneName)
     {
+        Debug.Log("[Loading Screen] Starting fade out animation.");
         text.text = "Loading...";
         animator.Play("fadeToBlack");
         StartCoroutine("LoadAScene", sceneName);

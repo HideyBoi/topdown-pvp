@@ -65,6 +65,8 @@ public class Healable : MonoBehaviour
             nameTex.text = "Medkit";
             subTex.text = $"{count}x +150hp";
         }
+
+        Debug.Log($"[Item] Healing item({type}) with ID:{id} was picked up locally.");
     }
 
     private void FixedUpdate()
@@ -86,6 +88,7 @@ public class Healable : MonoBehaviour
             NetworkManager.instance.Client.Send(msg);
         }
 
+        Debug.Log($"[Item] Healing item({type}) with ID:{id} was picked up locally.");
         GetComponent<Animator>().Play("Destroy");
     }
     public void DestroyThis()

@@ -9357,7 +9357,7 @@ MonoBehaviour:
   resetPrompt: {fileID: 2210756374639008648}
   mapSize: {fileID: 341376120725371545}
   mapError: {fileID: 5611821030219318991}
-  defaultMapSize: 5
+  defaultMapSize: 3
   lives: {fileID: 8448376056205668265}
   infiniteLives: {fileID: 1026610003049074868}
   livesError: {fileID: 1550586558460304233}

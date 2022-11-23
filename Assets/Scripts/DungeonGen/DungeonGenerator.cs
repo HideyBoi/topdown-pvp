@@ -85,6 +85,7 @@ public class DungeonGenerator : MonoBehaviour
     {
         if (ShouldGen)
         {
+            Debug.Log("[Dungeon Generator] Starting dungeon generation.");
             ShouldGen = false;
             MazeGenerator(); 
         }
@@ -100,21 +101,34 @@ public class DungeonGenerator : MonoBehaviour
     {
         if (instance == null)
             instance = GameObject.Find("Generator").GetComponent<DungeonGenerator>();
-        instance.totalRooms = msg.GetInt();
+        int totalRooms = msg.GetInt();
+        instance.totalRooms = totalRooms;
+
+        Debug.Log("[Dungeon Generator] Recieved map header: Total rooms: " + totalRooms);
     }
 
     [MessageHandler((ushort)NetworkManager.MessageIds.mapData)]
     static void HandleMapData(Message msg)
     {
+        
+
         if (instance == null)
             instance = GameObject.Find("Generator").GetComponent<DungeonGenerator>();
         instance.currentRoomCount++;
 
-        var spawnedBase = Instantiate(instance.baseRoom, msg.GetVector3(), Quaternion.identity, instance.transform);
-        Instantiate(instance.rooms[msg.GetInt()].room, spawnedBase.transform);
+        Vector3 roomPos = msg.GetVector3();
+        int roomId = msg.GetInt();
+        bool[] bools = msg.GetBools();
+
+        var spawnedBase = Instantiate(instance.baseRoom, roomPos, Quaternion.identity, instance.transform);
+        Instantiate(instance.rooms[roomId].room, spawnedBase.transform);
+
+        
 
         var newRoom = spawnedBase.GetComponent<RoomBehaviour>();
-        newRoom.UpdateRoom(msg.GetBools());
+        newRoom.UpdateRoom(bools);
+
+        Debug.Log($"[Dungeon Generator] Recieved map data: Position:{roomPos} Room ID:{roomId} State:{bools}");
 
         if (instance.currentRoomCount == instance.totalRooms)
         {
@@ -186,7 +200,7 @@ public class DungeonGenerator : MonoBehaviour
                 room.roomObj.BreakHoles();
             }
 
-            Debug.Log("Map accepted and broken holes have finished, starting trasmission. " + gameObject.name);
+            Debug.Log("[Dungeon Generator] Map accepted and broken holes have finished, starting trasmission.");
 
             NetworkManager inst = NetworkManager.instance;
 
@@ -212,7 +226,7 @@ public class DungeonGenerator : MonoBehaviour
         }
         else
         {
-            Debug.Log("Map failed checks, restarting generation. " + gameObject.name);
+            Debug.Log("[Dungeon Generator] Map failed checks, restarting generation. ");
 
             foreach (var room in generatedRooms)
             {

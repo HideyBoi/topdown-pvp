@@ -39,11 +39,13 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
+        Debug.Log("[Game Manager] Setting weapon IDs.");
         for (int i = 0; i < possibleWeapons.Length; i++)
         {
             possibleWeapons[i].id = i;
         }
 
+        Debug.Log("[Game Manager] Registering connected players.");
         foreach (var player in NetworkManager.instance.connectedPlayers)
         {
             playersInGame.Add(player);
@@ -56,6 +58,9 @@ public class GameManager : MonoBehaviour
 
         localPlayerId = networkManager.Client.Id;
 
+
+        Debug.Log("[Game Manager] Creating local player.");
+
         localPlayerObject = Instantiate(playerPrefab);
         localPlayerObject.GetComponent<HealthManager>().isLocalPlayer = true;
         localPlayerObject.GetComponent<HealthManager>().thisId = networkManager.Client.Id;
@@ -64,6 +69,7 @@ public class GameManager : MonoBehaviour
         {
             if (player.id != localPlayerId)
             {
+                Debug.Log("[Game Manager] Creating remote player for " + player.id + " " + player.name);
                 GameObject remPlayer = Instantiate(remotePlayerPrefab);
                 remPlayer.GetComponent<RemotePlayer>()._id = player.id;
                 remPlayer.GetComponent<RemotePlayer>()._name = player.name;
@@ -76,6 +82,7 @@ public class GameManager : MonoBehaviour
             }
         }
 
+        Debug.Log("[Game Manager] Informing remote clients that local client is done initializing.");
         Message msg = Message.Create(MessageSendMode.Reliable, NetworkManager.MessageIds.playerReady);
         msg.AddUShort(localPlayerId);
 
@@ -96,8 +103,9 @@ public class GameManager : MonoBehaviour
 
         if (playersInGame.Count == 1 && NetworkManager.instance.connectedPlayers.Count > 1 && !endedGame)
         {
+            Debug.Log("[Game Manager] Players in game == 1, game is over, loading Main Menu.");
+
             endedGame = true;
-            Debug.Log("GAME END");
             LoadingScreen.instance.LoadLevel("MainMenu");
         }
     }
@@ -108,7 +116,7 @@ public class GameManager : MonoBehaviour
         {
             if (id == player._id)
             {
-                Debug.Log("Player is disconnecting while in game.");
+                Debug.Log("[Game Manager] Player is disconnecting while in game, removing player object.");
                 Destroy(player.gameObject);
                 remotePlayers.Remove(player);
                 return;
@@ -127,6 +135,8 @@ public class GameManager : MonoBehaviour
 
     public void ResetDungeonGen()
     {
+        Debug.Log("[Game Manager] Reinitializing dungeon generator.");
+
         GameObject newGen = Instantiate(gen);
         generator = newGen.GetComponent<DungeonGenerator>();
         generator.ShouldGen = true;
@@ -139,6 +149,8 @@ public class GameManager : MonoBehaviour
     static void PlayerOutOfGame(Message msg)
     {
         ushort id = msg.GetUShort();
+
+        Debug.Log("[Game Manager] player " + id + " is out of the game.");
 
         foreach (var item in instance.playersInGame)
         {
@@ -159,8 +171,11 @@ public class GameManager : MonoBehaviour
         {
             if (player._id == fromId)
             {
-                player.transform.position = msg.GetVector3();
-                player.transform.rotation = msg.GetQuaternion();
+                if (player.transform != null)
+                {
+                    player.transform.position = msg.GetVector3();
+                    player.transform.rotation = msg.GetQuaternion();
+                }   
             }
         }
     }
@@ -398,24 +413,28 @@ public class GameManager : MonoBehaviour
         inv.ammoCount = inv.weapon.maxAmmoCount;
 
         item.GetComponent<GroundItem>().UpdateItem(inv);
+
+        Debug.Log($"[Game Manager] Item with ID:{id} was spawned remotely.");
     }
 
     [MessageHandler((ushort)NetworkManager.MessageIds.pickUpItem)]
     static void PickUpItem(Message msg)
     {
-        int deltedItemId = msg.GetInt();
+        int deletedItemId = msg.GetInt();
 
         GroundItem itemGround = null;
 
         foreach (var item in instance.spawnedItems)
         {
-            if (item.id == deltedItemId)
+            if (item.id == deletedItemId)
             {
                 itemGround = item;
             }
         }
 
         itemGround.Pickup(true);
+
+        Debug.Log($"[Game Manager] Item with ID:{deletedItemId} was picked up remotely.");
     }
 
     [MessageHandler((ushort)NetworkManager.MessageIds.spawnHeal)]
@@ -436,24 +455,28 @@ public class GameManager : MonoBehaviour
             obj.GetComponent<Healable>().id = id;
             obj.GetComponent<Healable>().count = msg.GetInt();
         }
+
+        Debug.Log($"[Game Manager] Healing item with ID:{id} was spawned remotely.");
     }
 
     [MessageHandler((ushort)NetworkManager.MessageIds.pickUpHeal)]
     static void PickUpHeal(Message msg)
     {
-        int deltedItemId = msg.GetInt();
+        int deletedItemId = msg.GetInt();
 
         Healable itemGround = null;
 
         foreach (var item in instance.spawnedHealables)
         {
-            if (item.id == deltedItemId)
+            if (item.id == deletedItemId)
             {
                 itemGround = item;
             }
         }
 
         itemGround.Pickup(true);
+
+        Debug.Log($"[Game Manager] Healing item with ID:{deletedItemId} was picked up remotely.");
     }
 
     [MessageHandler((ushort)NetworkManager.MessageIds.spawnAmmo)]
@@ -487,24 +510,27 @@ public class GameManager : MonoBehaviour
         ammoObj.GetComponent<Ammo>().id = id;
         ammoObj.GetComponent<Ammo>().type = type;
         ammoObj.GetComponent<Ammo>().count = count;
+
+        Debug.Log($"[Game Manager] Ammo({type}) with ID:{id} was spawned remotely");
     }
 
     [MessageHandler((ushort)NetworkManager.MessageIds.pickUpAmmo)]
     static void PickUpAmmo(Message msg)
     {
-        int deltedItemId = msg.GetInt();
+        int deletedItemId = msg.GetInt();
 
         Ammo itemGround = null;
 
         foreach (var item in instance.spawnedAmmo)
         {
-            if (item.id == deltedItemId)
+            if (item.id == deletedItemId)
             {
                 itemGround = item;
             }
         }
 
         itemGround.Pickup(true);
+        Debug.Log($"[Game Manager] Ammo with ID:{deletedItemId} was picked up remotely.");
     }
 
     [MessageHandler((ushort)NetworkManager.MessageIds.playerHoldItem)]
@@ -530,7 +556,8 @@ public class GameManager : MonoBehaviour
         {
             if (player._id == id)
             {
-                player.invManager.UpdateGunRot(msg.GetQuaternion());
+                if (player.invManager != null)
+                    player.invManager.UpdateGunRot(msg.GetQuaternion());
             }
         }
     }
