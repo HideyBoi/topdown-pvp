@@ -108,14 +108,14 @@ public class RulesManager : MonoBehaviour
             SendRuleChangesToPlayers();
         } else
         {
-            Debug.Log("[Rules Manager] Local client has not connected to local server yet, rules have not been sent to remote clients.");
+            //Debug.Log("[Rules Manager] Local client has not connected to local server yet, rules have not been sent to remote clients.");
         }
         
     }
 
     public void SendRuleChangesToPlayers()
     {
-        Debug.Log("[Rules Manager] Sending rules to players.");
+        //Debug.Log("[Rules Manager] Sending rules to players.");
         Message msg = Message.Create(MessageSendMode.Reliable, NetworkManager.MessageIds.rules);
 
         msg.AddInt(lives);
@@ -137,7 +137,7 @@ public class RulesManager : MonoBehaviour
     [MessageHandler((ushort)NetworkManager.MessageIds.rules)]
     static void NewRules(Message msg)
     {
-        Debug.Log("[Rules Manager] Recieved new rules.");
+        //Debug.Log("[Rules Manager] Recieved new rules.");
 
         instance.lives = msg.GetInt();
         PlayerPrefs.SetInt("LIFE_COUNT", instance.lives);

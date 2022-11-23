@@ -84,7 +84,7 @@ public class GameSettingsManager : MonoBehaviour
 
     public void ValuesUpdated()
     {
-        Debug.Log("[Game Settings Manager] Values changed, saving game settings.");
+        //Debug.Log("[Game Settings Manager] Values changed, saving game settings.");
 
         if (lobby.isReady || !NetworkManager.instance.Server.IsRunning)
         {
@@ -321,7 +321,7 @@ public class GameSettingsManager : MonoBehaviour
 
     public void LoadValues()
     {
-        Debug.Log("[Game Settings Manager] Loading game settings.");
+        //Debug.Log("[Game Settings Manager] Loading game settings.");
 
         loading = true;
 
@@ -420,7 +420,7 @@ public class GameSettingsManager : MonoBehaviour
             return;
         }
 
-        Debug.Log("[Game Settings Manager] Saving default values.");
+        //Debug.Log("[Game Settings Manager] Saving default values.");
 
         PlayerPrefs.SetInt("MAP_SIZE", defaultMapSize);
 

@@ -52,4 +52,14 @@ public class MainUIManager : MonoBehaviour
     {
         currentLobby = Instantiate(lobby);
     }
+
+    public void Join()
+    {
+        SteamLobbyManager.Singleton.JoinLobby(lobbyCodeInput.text);
+    }
+
+    public void Host()
+    {
+        SteamLobbyManager.Singleton.CreateLobby(maxPlayers);
+    }
 }

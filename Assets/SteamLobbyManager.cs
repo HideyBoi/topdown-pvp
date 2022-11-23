@@ -33,7 +33,19 @@ public class SteamLobbyManager : MonoBehaviour
 
     private void Awake()
     {
-        Singleton = this;
+        if (Singleton == null)
+        {
+            Singleton = this;
+        }
+
+        if (Singleton != this)
+        {
+            Destroy(gameObject);
+            return;
+        } else
+        {
+            Singleton = this;
+        }
     }
 
     private void Start()
@@ -49,9 +61,9 @@ public class SteamLobbyManager : MonoBehaviour
         lobbyEnter = Callback<LobbyEnter_t>.Create(OnLobbyEnter);
     }
 
-    public void CreateLobby()
+    public void CreateLobby(ushort maxPlayers)
     {
-        SteamMatchmaking.CreateLobby(ELobbyType.k_ELobbyTypeFriendsOnly, MainUIManager.instance.maxPlayers);
+        SteamMatchmaking.CreateLobby(ELobbyType.k_ELobbyTypeFriendsOnly, maxPlayers);
     }
 
     private void OnLobbyCreated(LobbyCreated_t callback)
@@ -70,9 +82,9 @@ public class SteamLobbyManager : MonoBehaviour
         NetworkManager.instance.Client.Connect(SteamMatchmaking.GetLobbyData(lobbyId, HostAddressKey), messageHandlerGroupId: 0);
     }
 
-    public void JoinLobby()
+    public void JoinLobby(string input)
     {
-        SteamMatchmaking.JoinLobby(new CSteamID(ulong.Parse(MainUIManager.instance.lobbyCodeInput.text)));
+        SteamMatchmaking.JoinLobby(new CSteamID(ulong.Parse(input)));
     }
 
     private void OnGameLobbyJoinRequested(GameLobbyJoinRequested_t callback)
@@ -92,7 +104,7 @@ public class SteamLobbyManager : MonoBehaviour
         MainUIManager.instance.ConnectedToLobby();
     }
 
-    internal void LeaveLobby()
+    public void LeaveLobby()
     {
         NetworkManager.instance.Client.Disconnect();
         NetworkManager.instance.Server.Stop();

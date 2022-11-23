@@ -97,6 +97,7 @@ public class NetworkManager : MonoBehaviour
         } else
         {
             Destroy(gameObject);
+            return;
         }
 
         RiptideLogger.Initialize(Debug.Log, Debug.Log, Debug.LogWarning, Debug.LogError, false);
@@ -172,12 +173,18 @@ public class NetworkManager : MonoBehaviour
 
     public void LeaveGame()
     {
-        if (Server.IsRunning)
+        Debug.Log("[Network Manager] Leaving game.");
+        if (isSteam)
         {
-            Server.Stop();
+            SteamLobbyManager.Singleton.LeaveLobby();
+        } else
+        {
+            Client.Disconnect();
+            if (Server.IsRunning)
+            {
+                Server.Stop();
+            }
         }
-
-        Client.Disconnect();
 
         readyPlayers = new List<ushort>();
         mapReadyPlayers = new List<ushort>();
@@ -187,8 +194,6 @@ public class NetworkManager : MonoBehaviour
         gameIsStarted = false;
         stillInLobby = true;
         isDoneLoading = false;
-
-        LoadingScreen.instance.LoadLevel("MainMenu");
     }
 
     private void FixedUpdate()

@@ -20,16 +20,21 @@ public class LoadingScreen : MonoBehaviour
         if (instance == null)
         {
             instance = this;
+            DontDestroyOnLoad(gameObject);
+        } else
+        {
+            Destroy(gameObject);
+            return;
         }
 
-        DontDestroyOnLoad(gameObject);
+        
 
         SceneManager.sceneLoaded += SceneWasLoaded;
     }
 
     public void LoadLevel(string sceneName)
     {
-        Debug.Log("[Loading Screen] Starting fade out animation.");
+        Debug.Log("[Loading Screen] Loading scene " + sceneName);
         text.text = "Loading...";
         animator.Play("fadeToBlack");
         StartCoroutine("LoadAScene", sceneName);
