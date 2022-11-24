@@ -98,14 +98,20 @@ public class LocalGunManager : MonoBehaviour
 
             if (hit.collider.CompareTag("Item") && interactCooldown < 0 && pressingInteract)
             {
-                interactCooldown = 0.7f;
+                interactCooldown = 0.1f;
                 im.PickupWeapon(hit.collider.GetComponent<GroundItem>());
             }
 
             if (hit.collider.CompareTag("Heal") && interactCooldown < 0 && pressingInteract)
             {
-                interactCooldown = 0.4f;
+                interactCooldown = 0.1f;
                 im.PickupHeal(hit.collider.GetComponent<Healable>());
+            }
+
+            if (hit.collider.CompareTag("Ammo") && interactCooldown < 0 && pressingInteract)
+            {
+                interactCooldown = 0.1f;
+                im.PickupAmmo(hit.collider.GetComponent<Ammo>());
             }
 
             ToolTip tip = hit.collider.GetComponent<ToolTip>();

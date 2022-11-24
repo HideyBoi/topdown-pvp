@@ -89,23 +89,9 @@ public class LocalInventoryManager : MonoBehaviour
     {
         if (other.CompareTag("Ammo"))
         {
-            Ammo ammo = other.GetComponent<Ammo>();
-            switch (ammo.type)
-            {
-                case AmmoType.Light:
-                    lightAmmoCount += ammo.count;
-                    break;
-                case AmmoType.Medium:
-                    mediumAmmoCount += ammo.count;
-                    break;
-                case AmmoType.Heavy:
-                    heavyAmmoCount += ammo.count;
-                    break;
-                case AmmoType.Shells:
-                    shellsAmmoCount += ammo.count;
-                    break;
-            }
-            ammo.Pickup(false);
+            PickupAmmo(other.GetComponent<Ammo>());
+        } else if (other.CompareTag("Heal")) {
+            PickupHeal(other.GetComponent<Healable>());
         }
     }
 
@@ -439,6 +425,25 @@ public class LocalInventoryManager : MonoBehaviour
         }
 
         heal.Pickup(false);
+    }
+
+    public void PickupAmmo(Ammo ammo) { 
+        switch (ammo.type)
+        {
+            case AmmoType.Light:
+                lightAmmoCount += ammo.count;
+                break;
+            case AmmoType.Medium:
+                mediumAmmoCount += ammo.count;
+                break;
+            case AmmoType.Heavy:
+                heavyAmmoCount += ammo.count;
+                break;
+            case AmmoType.Shells:
+                shellsAmmoCount += ammo.count;
+                break;
+        }
+        ammo.Pickup(false);
     }
 
     public void DropWeapon(int index)
