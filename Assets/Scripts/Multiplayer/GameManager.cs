@@ -181,6 +181,21 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    [MessageHandler((ushort)NetworkManager.MessageIds.playerHealth)]
+    static void PlayerHealth(Message msg)
+    {
+        int newHealth = msg.GetInt();
+        ushort id = msg.GetUShort();
+
+        foreach (var player in instance.remotePlayers)
+        {
+            if (id == player._id)
+            {
+                player.healthManager.health = newHealth;
+            }
+        }
+    }
+
     [MessageHandler((ushort)NetworkManager.MessageIds.playerDamage)]
     static void DamagePlayer(Message msg)
     {

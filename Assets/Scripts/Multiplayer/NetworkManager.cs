@@ -60,6 +60,7 @@ public class NetworkManager : MonoBehaviour
         mapData, //contains room information, ie type of room, which halls are open
         mapDone, //map generation has finished
         playerPos, //player position and rotation updates
+        playerHealth, //player health updates
         openChest, //tells other players that a chest has been opened
         spawnItem, //tells other players that an item has spawned
         pickUpItem, //tells other players that an item has been picked up

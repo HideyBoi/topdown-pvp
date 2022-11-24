@@ -85,6 +85,11 @@ public class HealthManager : MonoBehaviour
             }
             healthBar.value = health;
             healthBarText.text = health.ToString();
+
+            Message msg = Message.Create(MessageSendMode.Unreliable, NetworkManager.MessageIds.playerHealth);
+            msg.AddInt(health);
+            msg.AddUShort(thisId);
+            NetworkManager.instance.Client.Send(msg);
         }
     }
 
@@ -141,8 +146,15 @@ public class HealthManager : MonoBehaviour
         Instantiate(killPopup, killPopupParent).GetComponent<KillPopup>().UpdateName(killed._name);
     }
 
+    public void Health(int newHealth)
+    {
+        health = newHealth;
+    }
+
     public void Die(ushort killingPlayer, int gunId)
     {
+        transform.position = new Vector3(-30, 0, 30);
+
         Instantiate(deathEffect, transform.position, Quaternion.identity);
 
         if (killingPlayer == NetworkManager.instance.Client.Id)
@@ -229,9 +241,6 @@ public class HealthManager : MonoBehaviour
                 GameManager.instance.GetRemotePlayer(killingPlayer).beingSpectated = true;
             }
         }
-
-        health = 150;
-        transform.position = new Vector3(-30, 0, 30);
     }
 
     void Respawn()
