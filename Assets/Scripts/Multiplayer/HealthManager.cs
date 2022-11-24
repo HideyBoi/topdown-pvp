@@ -153,9 +153,8 @@ public class HealthManager : MonoBehaviour
     }
 
     public void Die(ushort killingPlayer, int gunId)
-    {
+    {       
         coll.enabled = false;
-        transform.position = new Vector3(-30, 0, 30);
 
         Instantiate(deathEffect, transform.position, Quaternion.identity);
 
@@ -243,6 +242,9 @@ public class HealthManager : MonoBehaviour
                 GameManager.instance.GetRemotePlayer(killingPlayer).beingSpectated = true;
             }
         }
+
+
+        transform.position = new Vector3(-30, 0, 30);
     }
 
     void Respawn()

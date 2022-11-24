@@ -188,6 +188,7 @@ MonoBehaviour:
   deathEffect: {fileID: 5027107366694167322, guid: afb18c3eccac0464b9f03b17b202dfb5,
     type: 3}
   animator: {fileID: 0}
+  coll: {fileID: 1625184520517699734}
   isDead: 0
   healthBar: {fileID: 0}
   healthBarText: {fileID: 0}
@@ -217,6 +218,8 @@ MonoBehaviour:
   ammo: {fileID: 0}
   hitPopup: {fileID: 2067978172981829255, guid: f35e756a4e43a864da1382771a1dcd32,
     type: 3}
+  killPopup: {fileID: 0}
+  killPopupParent: {fileID: 0}
 --- !u!1 &2989654674347335035
 GameObject:
   m_ObjectHideFlags: 0
