@@ -68,6 +68,14 @@ public class HealthManager : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (health <= 0)
+        {
+            coll.enabled = false;
+        } else
+        {
+            coll.enabled = true;
+        }
+
         if (isLocalPlayer)
         {
             if (isSpectating)
@@ -153,22 +161,22 @@ public class HealthManager : MonoBehaviour
     }
 
     public void Die(ushort killingPlayer, int gunId)
-    {       
-        coll.enabled = false;
+    {
 
         Instantiate(deathEffect, transform.position, Quaternion.identity);
 
         if (killingPlayer == NetworkManager.instance.Client.Id)
         {
-            if (health <= 0)
-            {
-                Debug.Log("[Health Manager] Detected that local client has killed a remote client: " + thisId);
-                HealthManager.localHealthManager.KilledPlayer(thisId);
-            }
+            Debug.Log("[Health Manager] Detected that local client has killed a remote client: " + thisId);
+            localHealthManager.KilledPlayer(thisId);
         }
 
         if (isLocalPlayer)
         {
+            if (isDead)
+                return;
+
+
             if (RulesManager.instance.lives > 0)
             {
                 RulesManager.instance.lives--;
@@ -256,6 +264,7 @@ public class HealthManager : MonoBehaviour
         isSpectating = false;
         spectating.beingSpectated = false;
         cam.m_Follow = transform;
+        isDead = false;
     }
 
     void DropLoot()
@@ -361,10 +370,5 @@ public class HealthManager : MonoBehaviour
                 return;
             }
         }
-    }
-
-    public void GotKill(ushort killedPlayerID)
-    {
-
     }
 }

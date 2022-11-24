@@ -164,6 +164,61 @@
                     "isPartOfComposite": true
                 },
                 {
+                    "name": "Arrow",
+                    "id": "1989b490-68d9-440d-85d3-68c3f6dbe388",
+                    "path": "2DVector",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "up",
+                    "id": "4a8027c2-4447-4763-8cbd-d3437de373d3",
+                    "path": "<Keyboard>/upArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "down",
+                    "id": "fa9ea8aa-4a4a-48ad-8544-812621ec6050",
+                    "path": "<Keyboard>/downArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "left",
+                    "id": "d73d38df-6410-42c2-abbb-741b0038540f",
+                    "path": "<Keyboard>/leftArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "right",
+                    "id": "fed5a585-5414-4e74-ae84-f7bb5f075350",
+                    "path": "<Keyboard>/rightArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
                     "name": "",
                     "id": "bcc499bd-d732-4a11-961e-b788bece94d6",
                     "path": "<Gamepad>/rightStick",
@@ -275,6 +330,17 @@
                 },
                 {
                     "name": "",
+                    "id": "e120aed8-68f4-4b1a-885b-990dfcd73256",
+                    "path": "<Keyboard>/rightShift",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Interact",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "4016be18-5209-45ee-8cd0-53f870514cf8",
                     "path": "<Keyboard>/r",
                     "interactions": "",
@@ -291,6 +357,17 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "GAMEPAD",
+                    "action": "Reload",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "9119f733-a450-4507-bb3a-a5ebaaf6f772",
+                    "path": "<Keyboard>/slash",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
                     "action": "Reload",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -341,6 +418,17 @@
                 },
                 {
                     "name": "",
+                    "id": "3bcf0f3f-d082-4d00-95f7-045a1c2783cd",
+                    "path": "<Keyboard>/period",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "UseMedkit",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "90ba9637-22cb-442d-a8d0-8d7f0962dead",
                     "path": "<Keyboard>/t",
                     "interactions": "",
@@ -357,6 +445,17 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "GAMEPAD",
+                    "action": "UseSyringe",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "97c7e920-c555-4bac-959c-eb568202fb67",
+                    "path": "<Keyboard>/comma",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
                     "action": "UseSyringe",
                     "isComposite": false,
                     "isPartOfComposite": false

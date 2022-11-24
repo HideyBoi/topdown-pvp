@@ -58,7 +58,10 @@ public class SettingsUIManager : MonoBehaviour
         if (PlayerPrefs.HasKey("DES_FRAMERATE"))
         {
             refreshRateSlider.value = PlayerPrefs.GetInt("DES_FRAMERATE");
-        } else
+            refreshRateText.text = refreshRateSlider.value.ToString();
+            Application.targetFrameRate = PlayerPrefs.GetInt("DES_FRAMERATE");
+        }
+        else
         {
             refreshRateSlider.value = Screen.currentResolution.refreshRate;
         }
@@ -66,9 +69,7 @@ public class SettingsUIManager : MonoBehaviour
         if (PlayerPrefs.HasKey("QUALITY"))
         {
             qualityDropdown.value = PlayerPrefs.GetInt("QUALITY");
-        } else
-        {
-            qualityDropdown.value = 2;
+            QualitySettings.SetQualityLevel(PlayerPrefs.GetInt("QUALITY"));
         }
     }
 
@@ -85,7 +86,7 @@ public class SettingsUIManager : MonoBehaviour
     public void OnRefreshRateChange()
     {
         PlayerPrefs.SetInt("DES_FRAMERATE", (int)refreshRateSlider.value);
-        Screen.SetResolution(Screen.currentResolution.width, Screen.currentResolution.height, Screen.fullScreen, (int)refreshRateSlider.value);
+        Application.targetFrameRate = PlayerPrefs.GetInt("DES_FRAMERATE");
         refreshRateText.text = refreshRateSlider.value.ToString();
     }
 
