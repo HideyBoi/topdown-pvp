@@ -20,6 +20,7 @@ public class HealthManager : MonoBehaviour
 
     [Header("Local Player Specific")]
     [SerializeField] private Animator animator;
+    public Collider coll;
     float respawnTime = 6f;
     public bool isDead;
     float timeUntilRespawn;
@@ -153,6 +154,7 @@ public class HealthManager : MonoBehaviour
 
     public void Die(ushort killingPlayer, int gunId)
     {
+        coll.enabled = false;
         transform.position = new Vector3(-30, 0, 30);
 
         Instantiate(deathEffect, transform.position, Quaternion.identity);
@@ -245,6 +247,7 @@ public class HealthManager : MonoBehaviour
 
     void Respawn()
     {
+        coll.enabled = true;
         deathOverlay.SetActive(false);
         GameManager.instance.Respawn();
         health = maxHealth;

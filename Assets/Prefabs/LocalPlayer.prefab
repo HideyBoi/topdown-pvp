@@ -1025,6 +1025,7 @@ MonoBehaviour:
   deathEffect: {fileID: 5027107366694167322, guid: 6aa63e7fb0aa0d040b50bc690a1c7fca,
     type: 3}
   animator: {fileID: 5446089997807071736}
+  coll: {fileID: 171931358746057922}
   isDead: 0
   healthBar: {fileID: 2404681942706527565}
   healthBarText: {fileID: 8919657743411849320}

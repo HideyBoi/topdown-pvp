@@ -34,7 +34,12 @@ public class DiscordManager : MonoBehaviour
 
     void Update()
     {
-        discord.RunCallbacks();
+        try
+        {
+            discord.RunCallbacks();
+        } catch {
+            Destroy(gameObject);
+        }
     }
 
     void LateUpdate()
@@ -44,42 +49,50 @@ public class DiscordManager : MonoBehaviour
 
     void UpdateStatus()
     {
-        string status = "";
+        try
+        {
+            string status = "";
 
-        if (NetworkManager.instance.gameIsStarted)
-        {
-            status = "In a game.";
-        } else if (MainUIManager.instance.currentLobby != null)
-        {
-            status = "In the lobby.";
-        } else
-        {
-            status = "In the main menu.";
-        }
+            if (NetworkManager.instance.gameIsStarted)
+            {
+                status = "In a game.";
+            }
+            else if (MainUIManager.instance.currentLobby != null)
+            {
+                status = "In the lobby.";
+            }
+            else
+            {
+                status = "In the main menu.";
+            }
 
-        var activityManager = discord.GetActivityManager();
-        var activity = new Discord.Activity
-        {
-            Details = details,
-            State = status,
-            Assets =
+            var activityManager = discord.GetActivityManager();
+            var activity = new Discord.Activity
+            {
+                Details = details,
+                State = status,
+                Assets =
             {
                 LargeImage = largeImage,
                 LargeText = largeText,
                 SmallImage = smallImage,
                 SmallText = smallText
             }
-            /*,
-            Timestamps =
-            {
-                Start = time
-            }
-            */
-        };
+                /*,
+                Timestamps =
+                {
+                    Start = time
+                }
+                */
+            };
 
-        activityManager.UpdateActivity(activity, (res) =>
+            activityManager.UpdateActivity(activity, (res) =>
+            {
+                if (res != Discord.Result.Ok) Debug.LogWarning("Failed connecting to Discord!");
+            });
+        } catch
         {
-            if (res != Discord.Result.Ok) Debug.LogWarning("Failed connecting to Discord!");
-        });
+            Debug.Log("[Discord Manager] Couldn't update status.");
+        }
     }
 }
