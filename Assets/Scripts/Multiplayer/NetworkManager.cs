@@ -79,7 +79,7 @@ public class NetworkManager : MonoBehaviour
         soundEffect, //tells other players to play a sound effect
     }
 
-    private void OnEnable()
+    private void Start()
     {
 
         if (!isSteam)
