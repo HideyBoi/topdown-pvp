@@ -68,7 +68,7 @@ public class SteamManager : MonoBehaviour
 	}
 #endif
 
-	protected virtual void OnEnable()
+	protected virtual void Awake()
 	{
 		// Only one instance of SteamManager at a time!
 		if (s_instance != null)

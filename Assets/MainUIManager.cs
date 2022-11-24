@@ -16,7 +16,7 @@ public class MainUIManager : MonoBehaviour
     public ushort maxPlayers = 8;
 
     public GameObject lobby;
-    GameObject currentLobby;
+    public GameObject currentLobby;
 
     public string currentUsername = "";
 

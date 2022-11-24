@@ -14,11 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gunName: Heavy Pistol
   id: 7
-  gunMesh: {fileID: 1220828769319070387, guid: 4adbbdc07be0c6a46953997a68269c84, type: 3}
-  gunMaterial: {fileID: 2100000, guid: ff5507e8191e58546923497720ea104c, type: 2}
+  gunMesh: {fileID: -150708487618154739, guid: 4adbbdc07be0c6a46953997a68269c84, type: 3}
+  gunMaterial: {fileID: 2100000, guid: 1b3a68a99efabb741b5b19f1023e68c7, type: 2}
   muzzleLocation: {x: 0, y: 0.065, z: 0.225}
   shootSound: {fileID: 8300000, guid: 6466bbadd59783f40ae6a01bdb322dc0, type: 3}
-  pickupSound: {fileID: 8300000, guid: cc4995917dd52784eb73d371dc69940b, type: 3}
+  pickupSound: {fileID: 8300000, guid: 232463a8a1aeaaa488abba00e5ca4c5a, type: 3}
   reloadSound: {fileID: 8300000, guid: 2b29da7fb77d7e342aca5378ce2f07a3, type: 3}
   magnitude: 4
   roughness: 4
@@ -27,9 +27,9 @@ MonoBehaviour:
   rarity: 1
   ammoType: 2
   automatic: 0
-  damage: 25
+  damage: 26
   maxAmmoCount: 6
   timeBetweenShots: 0.6
   reloadTime: 2
   shotCount: 0
-  spread: 0.02
+  spread: 0.12
