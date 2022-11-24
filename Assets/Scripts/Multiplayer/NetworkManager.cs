@@ -125,7 +125,7 @@ public class NetworkManager : MonoBehaviour
         }
 
         //value needs to be 1 more than the highest ID in MessageIds
-        MessageRelayFilter filter = new MessageRelayFilter(26);
+        MessageRelayFilter filter = new MessageRelayFilter(27);
 
         foreach (var id in msgIdsToRelay)
         {
