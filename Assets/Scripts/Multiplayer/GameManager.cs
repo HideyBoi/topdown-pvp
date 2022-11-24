@@ -587,7 +587,6 @@ public class GameManager : MonoBehaviour
                 Instantiate(instance.muzzleFlash, flashPos, gunPiv, player.pivot);
 
                 Instantiate(instance.bulletTracer, flashPos, Quaternion.identity).GetComponent<BulletTracer>().SetData(hitPoint);
-
             }
         }
     }

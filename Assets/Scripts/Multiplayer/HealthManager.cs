@@ -9,6 +9,8 @@ using Cinemachine;
 
 public class HealthManager : MonoBehaviour
 {
+    public static HealthManager localHealthManager;
+
     public int health = 150;
     public int maxHealth = 150;
     public ushort thisId;
@@ -45,10 +47,17 @@ public class HealthManager : MonoBehaviour
     public GameObject[] healing;
     public GameObject ammo;
 
+    public GameObject hitPopup;
+    DamageNumber currentHitPopup;
+
+    public GameObject killPopup;
+    public Transform killPopupParent;
+
     private void Awake()
     {
         if (isLocalPlayer)
         {
+            localHealthManager = this;
             inv = GetComponent<LocalInventoryManager>();
             maxHealth = RulesManager.instance.maxHealth;
             health = maxHealth;
@@ -81,13 +90,6 @@ public class HealthManager : MonoBehaviour
 
     public void Damage(int damage, ushort attackingPlayer, int gunId, bool fromNetwork)
     {
-        health -= damage;
-        if (health <= 0)
-        {
-            health = 0;
-            Die(attackingPlayer, gunId); 
-        }
-
         if (!fromNetwork)
         {
             Message msg = Message.Create(MessageSendMode.Reliable, NetworkManager.MessageIds.playerDamage);
@@ -96,6 +98,20 @@ public class HealthManager : MonoBehaviour
             msg.AddUShort(attackingPlayer);
             msg.Add(gunId);
             NetworkManager.instance.Client.Send(msg);
+
+            if (currentHitPopup == null)
+            {
+                currentHitPopup = Instantiate(hitPopup, transform.position, Quaternion.identity, GameManager.instance.transform).GetComponent<DamageNumber>();
+            }
+
+            currentHitPopup.AddNumber(damage, transform.position);
+        }
+
+        health -= damage;
+        if (health <= 0)
+        {
+            health = 0;
+            Die(attackingPlayer, gunId);
         }
     }
 
@@ -118,6 +134,13 @@ public class HealthManager : MonoBehaviour
         }
     }
 
+    public void KilledPlayer(ushort id)
+    {
+        RemotePlayer killed = GameManager.instance.GetRemotePlayer(id);
+
+        Instantiate(killPopup, killPopupParent).GetComponent<KillPopup>().UpdateName(killed._name);
+    }
+
     public void Die(ushort killingPlayer, int gunId)
     {
         Instantiate(deathEffect, transform.position, Quaternion.identity);
@@ -127,6 +150,7 @@ public class HealthManager : MonoBehaviour
             if (health <= 0)
             {
                 Debug.Log("[Health Manager] Detected that local client has killed a remote client: " + thisId);
+                HealthManager.localHealthManager.KilledPlayer(thisId);
             }
         }
 
@@ -323,5 +347,10 @@ public class HealthManager : MonoBehaviour
                 return;
             }
         }
+    }
+
+    public void GotKill(ushort killedPlayerID)
+    {
+
     }
 }

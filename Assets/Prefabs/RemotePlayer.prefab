@@ -215,6 +215,8 @@ MonoBehaviour:
   item: {fileID: 0}
   healing: []
   ammo: {fileID: 0}
+  hitPopup: {fileID: 2067978172981829255, guid: f35e756a4e43a864da1382771a1dcd32,
+    type: 3}
 --- !u!1 &2989654674347335035
 GameObject:
   m_ObjectHideFlags: 0
