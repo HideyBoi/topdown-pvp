@@ -62,4 +62,9 @@ public class MainUIManager : MonoBehaviour
     {
         SteamLobbyManager.Singleton.CreateLobby(maxPlayers);
     }
+
+    public void OpenSettings()
+    {
+        SettingsUIManager.instance.ShowSettings();
+    }
 }

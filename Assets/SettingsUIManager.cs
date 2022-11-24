@@ -6,7 +6,8 @@ using TMPro;
 
 public class SettingsUIManager : MonoBehaviour
 {
-
+    public GameObject visRoot;
+    public static SettingsUIManager instance;
 
     [Header("Screen Res")]
     public TMP_Dropdown resolutionDropdown;
@@ -15,6 +16,19 @@ public class SettingsUIManager : MonoBehaviour
     public int currentResIndex = 0;
     public Slider refreshRateSlider;
     public TextMeshProUGUI refreshRateText;
+    [Header("Rendering")]
+    public TMP_Dropdown qualityDropdown;
+
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        } else
+        {
+            Destroy(this);
+        }
+    }
 
     private void Start()
     {
@@ -41,7 +55,26 @@ public class SettingsUIManager : MonoBehaviour
             refreshRateSlider.maxValue = Screen.currentResolution.refreshRate;
         }
 
-        refreshRateSlider.value = Screen.currentResolution.refreshRate;
+        if (PlayerPrefs.HasKey("DES_FRAMERATE"))
+        {
+            refreshRateSlider.value = PlayerPrefs.GetInt("DES_FRAMERATE");
+        } else
+        {
+            refreshRateSlider.value = Screen.currentResolution.refreshRate;
+        }
+
+        if (PlayerPrefs.HasKey("QUALITY"))
+        {
+            qualityDropdown.value = PlayerPrefs.GetInt("QUALITY");
+        } else
+        {
+            qualityDropdown.value = 2;
+        }
+    }
+
+    public void ShowSettings()
+    {
+        visRoot.SetActive(true);
     }
 
     public void OnResChange(int value)
@@ -51,7 +84,14 @@ public class SettingsUIManager : MonoBehaviour
 
     public void OnRefreshRateChange()
     {
+        PlayerPrefs.SetInt("DES_FRAMERATE", (int)refreshRateSlider.value);
         Screen.SetResolution(Screen.currentResolution.width, Screen.currentResolution.height, Screen.fullScreen, (int)refreshRateSlider.value);
         refreshRateText.text = refreshRateSlider.value.ToString();
+    }
+
+    public void OnQualityChange(int value)
+    {
+        QualitySettings.SetQualityLevel(value);
+        PlayerPrefs.SetInt("QUALITY", value);
     }
 }
