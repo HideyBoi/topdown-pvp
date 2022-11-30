@@ -55,6 +55,7 @@ public class MainUIManager : MonoBehaviour
     public void ConnectedToLobby()
     {
         currentLobby = Instantiate(lobby);
+        visRoot.SetActive(false);
     }
 
     public void Join()

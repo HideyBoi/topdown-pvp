@@ -16882,7 +16882,7 @@ MonoBehaviour:
   debugVersionInfo: {fileID: 1746662950}
   maxPlayers: 8
   lobby: {fileID: 2190361410227602060, guid: fc762d98e64c7d14e83a851ec9648ef0, type: 3}
-  visRoot: {fileID: 0}
+  visRoot: {fileID: 304662394}
   currentLobby: {fileID: 0}
   currentUsername: 
   lobbyCodeInput: {fileID: 263739060}
