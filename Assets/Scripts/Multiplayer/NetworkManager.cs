@@ -138,10 +138,15 @@ public class NetworkManager : MonoBehaviour
         //Server.RelayFilter = new MessageRelayFilter((ushort)MessageIds.mapData, (ushort)MessageIds.mapDone, (ushort)MessageIds.mapHeader, (ushort)MessageIds.openChest, (ushort)MessageIds.particleEffect, (ushort)MessageIds.pickUpAmmo, (ushort)MessageIds.pickUpHeal, (ushort)MessageIds.pickUpItem, (ushort)MessageIds.playerDamage, (ushort)MessageIds.playerGunRot, (ushort)MessageIds.playerHeal, (ushort)MessageIds.playerHoldItem, (ushort)MessageIds.playerInfo, (ushort)MessageIds.playerOutOfGame, (ushort)MessageIds.playerPos, (ushort)MessageIds.playerReady, (ushort)MessageIds.playerReloadSound, (ushort)MessageIds.playerShot, (ushort)MessageIds.readyUp, (ushort)MessageIds.rules, (ushort)MessageIds.soundEffect, (ushort)MessageIds.spawnAmmo, (ushort)MessageIds.spawnHeal, (ushort)MessageIds.spawnItem, (ushort)MessageIds.startGame);
 
         Client.Connected += Connected;
-        //Client.ConnectionFailed += FailedToConnect;
+        Client.ConnectionFailed += FailedToConnect;
         Client.ClientConnected += PlayerJoined;
         Client.ClientDisconnected += PlayerLeft;
         Client.Disconnected += Disconnected;
+    }
+
+    void FailedToConnect(object sender, EventArgs e)
+    {
+        LoadingScreen.instance.LoadLevel("MainMenu");
     }
 
     public void Disconnected(object sender, EventArgs e)

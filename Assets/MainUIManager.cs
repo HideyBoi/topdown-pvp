@@ -16,11 +16,14 @@ public class MainUIManager : MonoBehaviour
     public ushort maxPlayers = 8;
 
     public GameObject lobby;
+    public GameObject visRoot;
     public GameObject currentLobby;
 
     public string currentUsername = "";
 
     public TMP_InputField lobbyCodeInput;
+    public TMP_InputField maxPlayersInput;
+    public TMP_Dropdown lobbyType;
 
     public Texture2D cursor;
 
@@ -35,6 +38,7 @@ public class MainUIManager : MonoBehaviour
         {
             if (NetworkManager.instance.Client.IsConnected)
             {
+                visRoot.SetActive(false);
                 currentLobby = Instantiate(lobby);
             }
         }
@@ -60,7 +64,19 @@ public class MainUIManager : MonoBehaviour
 
     public void Host()
     {
-        SteamLobbyManager.Singleton.CreateLobby(maxPlayers);
+        int maxPlayers = 0;
+
+        try
+        {
+            maxPlayers = int.Parse(maxPlayersInput.text);
+            if (maxPlayers < 2)
+            {
+                return;
+            } else
+            {
+                SteamLobbyManager.Singleton.CreateLobby((ushort)maxPlayers, lobbyType.value);
+            }
+        } catch { return; }    
     }
 
     public void OpenSettings()

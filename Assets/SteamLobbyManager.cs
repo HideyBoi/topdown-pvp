@@ -61,9 +61,20 @@ public class SteamLobbyManager : MonoBehaviour
         lobbyEnter = Callback<LobbyEnter_t>.Create(OnLobbyEnter);
     }
 
-    public void CreateLobby(ushort maxPlayers)
+    public void CreateLobby(ushort maxPlayers, int lobbyType)
     {
-        SteamMatchmaking.CreateLobby(ELobbyType.k_ELobbyTypeFriendsOnly, maxPlayers);
+        switch (lobbyType)
+        {
+            case 1:
+                SteamMatchmaking.CreateLobby(ELobbyType.k_ELobbyTypePublic, maxPlayers);
+                break;
+            case 0:
+                SteamMatchmaking.CreateLobby(ELobbyType.k_ELobbyTypeFriendsOnly, maxPlayers);
+                break;
+            case 2:
+                SteamMatchmaking.CreateLobby(ELobbyType.k_ELobbyTypePrivate, maxPlayers);
+                break;
+        }
     }
 
     private void OnLobbyCreated(LobbyCreated_t callback)
@@ -100,7 +111,13 @@ public class SteamLobbyManager : MonoBehaviour
         lobbyId = new CSteamID(callback.m_ulSteamIDLobby);
         string hostAddress = SteamMatchmaking.GetLobbyData(lobbyId, HostAddressKey);
 
-        NetworkManager.instance.Client.Connect(hostAddress, messageHandlerGroupId: 0);
+        bool connected = NetworkManager.instance.Client.Connect(hostAddress, messageHandlerGroupId: 0);
+
+        if (!connected)
+        {
+            LoadingScreen.instance.LoadLevel("MainMenu");
+        }
+        
         MainUIManager.instance.ConnectedToLobby();
     }
 
