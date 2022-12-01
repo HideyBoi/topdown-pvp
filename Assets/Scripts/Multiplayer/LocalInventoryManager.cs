@@ -83,6 +83,8 @@ public class LocalInventoryManager : MonoBehaviour
         shellsAmmoCount = RulesManager.instance.startingShellsAmmo;
 
         UpdateWeaponVisual();
+
+        Debug.Log(inventoryItem[0]);
     }
 
     private void OnTriggerEnter(Collider other)

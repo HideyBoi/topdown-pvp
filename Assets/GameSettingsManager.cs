@@ -329,6 +329,10 @@ public class GameSettingsManager : MonoBehaviour
         {
             mapError.SetActive(false);
             mapSize.text = PlayerPrefs.GetInt("MAP_SIZE").ToString();
+        } else
+        {
+            Reset();
+            return;
         }
 
         if (PlayerPrefs.HasKey("LIFE_COUNT"))

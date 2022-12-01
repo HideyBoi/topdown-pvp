@@ -31,7 +31,8 @@ public class HealthManager : MonoBehaviour
     public RemotePlayer spectating;
     bool isSpectating;
 
-    public GameObject deathOverlay;
+    public GameObject deathUI;
+    public GameObject playingHUD;
     public TMP_Text killerNameText;
     public TMP_Text respawningStatus;
     public TMP_Text currentlySpectatingText;
@@ -214,12 +215,14 @@ public class HealthManager : MonoBehaviour
             isDead = true;
             isSpectating = true;
 
-            deathOverlay.SetActive(true);
+            deathUI.SetActive(true);
+            playingHUD.SetActive(false);
 
             RemotePlayer rm = GameManager.instance.GetRemotePlayer(killingPlayer);
             spectating = rm;
             rm.beingSpectated = true;
             killerHealth.value = rm.healthManager.health;
+            killerHealth.maxValue = RulesManager.instance.maxHealth;
             killerHealthText.text = rm.healthManager.health.ToString();
 
             killerNameText.text = rm._name;
@@ -258,7 +261,8 @@ public class HealthManager : MonoBehaviour
     void Respawn()
     {
         coll.enabled = true;
-        deathOverlay.SetActive(false);
+        deathUI.SetActive(false);
+        playingHUD.SetActive(true);
         GameManager.instance.Respawn();
         health = maxHealth;
         isSpectating = false;

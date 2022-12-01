@@ -119,8 +119,9 @@ public class DungeonGenerator : MonoBehaviour
         Vector3 roomPos = msg.GetVector3();
         int roomId = msg.GetInt();
         bool[] bools = msg.GetBools();
+        Quaternion rot = msg.GetQuaternion();
 
-        var spawnedBase = Instantiate(instance.baseRoom, roomPos, Quaternion.identity, instance.transform);
+        var spawnedBase = Instantiate(instance.baseRoom, roomPos, rot, instance.transform);
         Instantiate(instance.rooms[roomId].room, spawnedBase.transform);
 
         
@@ -180,9 +181,28 @@ public class DungeonGenerator : MonoBehaviour
                         }
                     }
 
+                    Quaternion rotation = Quaternion.identity;
+
+                    int rand = Random.Range(0, 4);
+
+                    switch(rand)
+                    {
+                        case 0:
+                            rotation = Quaternion.identity;
+                            break;
+                        case 1:
+                            rotation.eulerAngles = new Vector3(0, 90, 0);
+                            break;
+                        case 2:
+                            rotation.eulerAngles = new Vector3(0, 270, 0);
+                            break;
+                        case 3:
+                            rotation.eulerAngles = new Vector3(0, 180, 0);
+                            break;
+                    }
 
                     var spawnedBase = Instantiate(baseRoom, new Vector3(i * offset.x, 0, -j * offset.y), Quaternion.identity);
-                    Instantiate(rooms[randomRoom].room, spawnedBase.transform);
+                    Instantiate(rooms[randomRoom].room, spawnedBase.transform.position, rotation, spawnedBase.transform);
 
                     var newRoom = spawnedBase.GetComponent<RoomBehaviour>();
                     newRoom.UpdateRoom(currentCell.status);
@@ -214,6 +234,7 @@ public class DungeonGenerator : MonoBehaviour
                 mapData.AddVector3(genRoom.roomPos);
                 mapData.AddInt(genRoom.room); 
                 mapData.AddBools(genRoom.roomObj.currStatus);
+                mapData.AddQuaternion(genRoom.roomObj.transform.rotation);
                 inst.Client.Send(mapData);
             }
 
