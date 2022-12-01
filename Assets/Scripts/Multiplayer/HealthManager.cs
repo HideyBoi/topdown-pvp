@@ -126,7 +126,11 @@ public class HealthManager : MonoBehaviour
         if (health <= 0)
         {
             health = 0;
+            coll.enabled = false;
             Die(attackingPlayer, gunId);
+        } else
+        {
+            coll.enabled = true;
         }
     }
 
