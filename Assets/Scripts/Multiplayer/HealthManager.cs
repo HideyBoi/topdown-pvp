@@ -13,6 +13,12 @@ public class HealthManager : MonoBehaviour
 
     public int health = 150;
     public int maxHealth = 150;
+    public int lives = 3;
+    public TextMeshProUGUI livesText;
+
+    public int killCount = 0;
+    public TextMeshProUGUI killText;
+
     public ushort thisId;
 
     public GameObject healEffect;
@@ -62,6 +68,17 @@ public class HealthManager : MonoBehaviour
             localHealthManager = this;
             inv = GetComponent<LocalInventoryManager>();
             maxHealth = RulesManager.instance.maxHealth;
+            lives = RulesManager.instance.lives;
+            if (lives != -1)
+            {
+                livesText.text = "x " + lives;
+            } else
+            {
+                livesText.text = "Infinite";
+            }
+
+            killText.text = "x 0";
+
             health = maxHealth;
             healthBar.maxValue = maxHealth;
         }
@@ -157,6 +174,10 @@ public class HealthManager : MonoBehaviour
     {
         RemotePlayer killed = GameManager.instance.GetRemotePlayer(id);
 
+        killCount++;
+
+        killText.text = "x " + killCount;
+
         Instantiate(killPopup, killPopupParent).GetComponent<KillPopup>().UpdateName(killed._name);
     }
 
@@ -182,17 +203,17 @@ public class HealthManager : MonoBehaviour
                 return;
 
 
-            if (RulesManager.instance.lives > 0)
+            if (lives > 0)
             {
-                RulesManager.instance.lives--;
+                lives--;
 
-                if (RulesManager.instance.lives == 0)
+                if (lives == 0)
                 {
                     canRespawn = false;
                     respawningStatus.text = "You're out of the game, you've lost your last life!";
                     DropLoot();
                     OutOfGame();
-                } else if (RulesManager.instance.lives == 1)
+                } else if (lives == 1)
                 {
                     respawningStatus.text = $"You're on your last life, respawning, please wait...";
                     canRespawn = true;
@@ -202,17 +223,21 @@ public class HealthManager : MonoBehaviour
                     }
                 } else
                 {
-                    respawningStatus.text = $"You have {RulesManager.instance.lives} lives left, respawning, please wait...";
+                    respawningStatus.text = $"You have {lives} lives left, respawning, please wait...";
                     canRespawn = true;
                     if (RulesManager.instance.dropLootOnEveryDeath)
                     {
                         DropLoot();
                     }
-                }        
-            } else if (RulesManager.instance.lives == -1)
+                }
+
+                livesText.text = "x " + lives;
+            } else if (lives == -1)
             {
                 respawningStatus.text = "Respawning, please wait...";
                 canRespawn = true;
+                
+                livesText.text = "Infinite";
             }
 
             timeUntilRespawn = respawnTime;
