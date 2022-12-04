@@ -32,7 +32,13 @@ public class DiscordManager : MonoBehaviour
 
     void Start()
     {
-        discord = new Discord.Discord(applicationID, (System.UInt64)Discord.CreateFlags.NoRequireDiscord);
+        try {
+            discord = new Discord.Discord(applicationID, (System.UInt64)Discord.CreateFlags.NoRequireDiscord);
+        } catch
+        {
+            Destroy(gameObject);
+        }
+        
         UpdateStatus();
     }
 
