@@ -98,6 +98,13 @@ public class HealthManager : MonoBehaviour
         {
             if (isSpectating)
             {
+                if (spectating == null)
+                {
+                    int rand = Random.Range(0, GameManager.instance.remotePlayers.Count);
+
+                    spectating = GameManager.instance.remotePlayers[rand];
+                }
+
                 cam.m_Follow = spectating.transform;
                 currentlySpectatingText.text = "Spectating: " + spectating._name;
             }

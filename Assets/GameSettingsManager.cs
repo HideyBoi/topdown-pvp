@@ -204,6 +204,7 @@ public class GameSettingsManager : MonoBehaviour
         }
         catch (FormatException)
         {
+            failure = true;
             Debug.Log("STARTING SYRINGES is invalid!");
             startingSyringesError.SetActive(true);
         }
@@ -313,10 +314,15 @@ public class GameSettingsManager : MonoBehaviour
             startingShellAmmoError.SetActive(true);
         }
 
-        if (!failure)
+        if (failure)
+        {
+            readyButton.GetComponent<Button>().interactable = false;
+        }
+        else
+        {
+            readyButton.GetComponent<Button>().interactable = true;
             RulesManager.instance.RulesUpdated();
-
-        readyButton.SetActive(!failure);
+        }
     }
 
     public void LoadValues()
