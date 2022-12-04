@@ -18,6 +18,10 @@ public class DiscordManager : MonoBehaviour
 
     public Discord.Discord discord;
 
+    private long time;
+
+    
+
     void Awake()
     {
         if (instance == null)
@@ -47,44 +51,94 @@ public class DiscordManager : MonoBehaviour
         UpdateStatus();
     }
 
+    private void OnDestroy()
+    {
+        discord.Dispose();
+    }
+
     void UpdateStatus()
     {
         try
         {
             string status = "";
+            Discord.Activity activity;
+
 
             if (NetworkManager.instance.gameIsStarted)
             {
+                if (time == 0)
+                {
+                    time = System.DateTimeOffset.Now.ToUnixTimeMilliseconds();
+                }
+
                 status = "In a game.";
+
+                activity = new Discord.Activity
+                {
+                    Details = details,
+                    State = status,
+                    Assets =
+                    {
+                        LargeImage = largeImage,
+                        LargeText = largeText,
+                        SmallImage = smallImage,
+                        SmallText = smallText
+                    },
+                    
+                    Timestamps =
+                    {
+                        Start = time
+                    }
+                    
+                };
             }
             else if (MainUIManager.instance.currentLobby != null)
             {
+                if (time != 0)
+                {
+                    time = 0;
+                }
+
                 status = "In the lobby.";
+
+                activity = new Discord.Activity
+                {
+                    Details = details,
+                    State = status,
+                    Assets =
+                    {
+                        LargeImage = largeImage,
+                        LargeText = largeText,
+                        SmallImage = smallImage,
+                        SmallText = smallText
+                    }
+                };
             }
             else
             {
+                if (time != 0)
+                {
+                    time = 0;
+                }
+
                 status = "In the main menu.";
+
+                activity = new Discord.Activity
+                {
+                    Details = details,
+                    State = status,
+                    Assets =
+                    {
+                        LargeImage = largeImage,
+                        LargeText = largeText,
+                        SmallImage = smallImage,
+                        SmallText = smallText
+                    }
+                };
             }
 
             var activityManager = discord.GetActivityManager();
-            var activity = new Discord.Activity
-            {
-                Details = details,
-                State = status,
-                Assets =
-            {
-                LargeImage = largeImage,
-                LargeText = largeText,
-                SmallImage = smallImage,
-                SmallText = smallText
-            }
-                /*,
-                Timestamps =
-                {
-                    Start = time
-                }
-                */
-            };
+            
 
             activityManager.UpdateActivity(activity, (res) =>
             {
