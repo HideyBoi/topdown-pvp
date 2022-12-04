@@ -58,8 +58,9 @@ public class DiscordManager : MonoBehaviour
     }
 
     private void OnDestroy()
-    {
-        discord.Dispose();
+    {   
+        if (discord != null)
+            discord.Dispose();
     }
 
     void UpdateStatus()
