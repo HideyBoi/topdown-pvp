@@ -78,7 +78,14 @@ public class DungeonGenerator : MonoBehaviour
 
     private void Start()
     {
-        size = Vector2Int.CeilToInt(RulesManager.instance.mapSize);
+        if (RulesManager.instance != null)
+        {
+            size = Vector2Int.CeilToInt(RulesManager.instance.mapSize);
+        } else
+        {
+            size = new Vector2Int(9, 9);
+            ShouldGen = true;
+        }     
     }
 
     private void FixedUpdate()
@@ -220,30 +227,33 @@ public class DungeonGenerator : MonoBehaviour
                 room.roomObj.BreakHoles();
             }
 
-            Debug.Log("[Dungeon Generator] Map accepted and broken holes have finished, starting trasmission.");
-
-            NetworkManager inst = NetworkManager.instance;
-
-            Message mapHeader = Message.Create(MessageSendMode.Reliable, NetworkManager.MessageIds.mapHeader);
-            mapHeader.AddInt(generatedRooms.Count);
-            inst.Client.Send(mapHeader);
-
-            foreach (var genRoom in generatedRooms)
+            if (NetworkManager.instance != null)
             {
-                Message mapData = Message.Create(MessageSendMode.Reliable, NetworkManager.MessageIds.mapData);
-                mapData.AddVector3(genRoom.roomPos);
-                mapData.AddInt(genRoom.room); 
-                mapData.AddBools(genRoom.roomObj.currStatus);
-                mapData.AddQuaternion(genRoom.roomObj.transform.rotation);
-                inst.Client.Send(mapData);
+                Debug.Log("[Dungeon Generator] Map accepted and broken holes have finished, starting trasmission.");
+
+                NetworkManager inst = NetworkManager.instance;
+
+                Message mapHeader = Message.Create(MessageSendMode.Reliable, NetworkManager.MessageIds.mapHeader);
+                mapHeader.AddInt(generatedRooms.Count);
+                inst.Client.Send(mapHeader);
+
+                foreach (var genRoom in generatedRooms)
+                {
+                    Message mapData = Message.Create(MessageSendMode.Reliable, NetworkManager.MessageIds.mapData);
+                    mapData.AddVector3(genRoom.roomPos);
+                    mapData.AddInt(genRoom.room);
+                    mapData.AddBools(genRoom.roomObj.currStatus);
+                    mapData.AddQuaternion(genRoom.roomObj.transform.rotation);
+                    inst.Client.Send(mapData);
+                }
+
+                Message doneGenerating = Message.Create(MessageSendMode.Reliable, NetworkManager.MessageIds.mapDone);
+                doneGenerating.AddUShort(NetworkManager.instance.Client.Id);
+                NetworkManager.instance.MapIsReady(NetworkManager.instance.Client.Id);
+                NetworkManager.instance.Client.Send(doneGenerating);
+
+                GameManager.instance.Respawn();
             }
-
-            Message doneGenerating = Message.Create(MessageSendMode.Reliable, NetworkManager.MessageIds.mapDone);
-            doneGenerating.AddUShort(NetworkManager.instance.Client.Id);
-            NetworkManager.instance.MapIsReady(NetworkManager.instance.Client.Id);
-            NetworkManager.instance.Client.Send(doneGenerating);
-
-            GameManager.instance.Respawn();
         }
         else
         {

@@ -37,6 +37,8 @@ public class GameManager : MonoBehaviour
 
     public GameObject sploosh;
 
+    public float timeTillEndscreen;
+
 
     private void Awake()
     {
@@ -107,8 +109,15 @@ public class GameManager : MonoBehaviour
             Debug.Log("[Game Manager] Players in game == 1, game is over, loading Main Menu.");
 
             endedGame = true;
-            LoadingScreen.instance.LoadLevel("MainMenu");
+            StartCoroutine("EndGame");
         }
+    }
+
+    IEnumerator EndGame()
+    {
+        yield return new WaitForSeconds(timeTillEndscreen);
+
+        LoadingScreen.instance.LoadLevel("MainMenu");
     }
 
     public void PlayerLeft(ushort id)
