@@ -169,3 +169,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   line: {fileID: 2397542725653840392}
   speed: 1
+  endPoint: {fileID: 0}

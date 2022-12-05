@@ -65,6 +65,18 @@ MonoBehaviour:
     minPosition: {x: 0, y: 0}
     maxPosition: {x: 69, y: 69}
     obligatory: 0
+  - room: {fileID: 8500310014974771289, guid: fbf9a17780cd4e6428a4dadc79fe6dda, type: 3}
+    minPosition: {x: 0, y: 0}
+    maxPosition: {x: 69, y: 69}
+    obligatory: 0
+  - room: {fileID: 6008897718932969140, guid: aba7b0c637519774399a145f0a62a85b, type: 3}
+    minPosition: {x: 0, y: 0}
+    maxPosition: {x: 69, y: 69}
+    obligatory: 0
+  - room: {fileID: 935638662731377403, guid: 747f7a4dab7fcff43b09458b8e649f6d, type: 3}
+    minPosition: {x: 0, y: 0}
+    maxPosition: {x: 69, y: 69}
+    obligatory: 0
   offset: {x: 60, y: 60}
   totalRooms: 0
   currentRoomCount: 0
