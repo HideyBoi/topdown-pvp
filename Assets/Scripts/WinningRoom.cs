@@ -32,6 +32,7 @@ public class WinningRoom : MonoBehaviour
 
     IEnumerator Sequence(ushort id)
     {
+        yield return new WaitForSeconds(3f);
         winCamOrbit.SetActive(true);
         HealthManager.localHealthManager.playingHUD.SetActive(false);
         HealthManager.localHealthManager.deathUI.SetActive(false);
@@ -40,7 +41,7 @@ public class WinningRoom : MonoBehaviour
 
         SetWinUI(id);
 
-        yield return new WaitForSeconds(30f);
+        yield return new WaitForSeconds(10f);
         LoadingScreen.instance.LoadLevel("MainMenu");
     }
 

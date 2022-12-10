@@ -128,8 +128,8 @@ public class DungeonGenerator : MonoBehaviour
         bool[] bools = msg.GetBools();
         Quaternion rot = msg.GetQuaternion();
 
-        var spawnedBase = Instantiate(instance.baseRoom, roomPos, rot, instance.transform);
-        Instantiate(instance.rooms[roomId].room, spawnedBase.transform);
+        var spawnedBase = Instantiate(instance.baseRoom, roomPos, Quaternion.identity, instance.transform);
+        Instantiate(instance.rooms[roomId].room, spawnedBase.transform.position, rot, spawnedBase.transform);
 
         
 
