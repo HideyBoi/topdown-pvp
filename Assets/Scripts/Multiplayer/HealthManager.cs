@@ -63,12 +63,12 @@ public class HealthManager : MonoBehaviour
 
     private void Awake()
     {
+        lives = RulesManager.instance.lives;
         if (isLocalPlayer)
         {
             localHealthManager = this;
             inv = GetComponent<LocalInventoryManager>();
             maxHealth = RulesManager.instance.maxHealth;
-            lives = RulesManager.instance.lives;
             if (lives != -1)
             {
                 livesText.text = "x " + lives;
@@ -202,6 +202,15 @@ public class HealthManager : MonoBehaviour
         {
             Debug.Log("[Health Manager] Detected that local client has killed a remote client: " + thisId);
             localHealthManager.KilledPlayer(thisId);
+        } else
+        {
+            foreach (var player in GameManager.instance.remotePlayers)
+            {
+                if (player._id == killingPlayer)
+                {
+                    player.healthManager.killCount++;
+                }
+            }
         }
 
         if (isLocalPlayer)
@@ -282,6 +291,7 @@ public class HealthManager : MonoBehaviour
             }
         } else
         {
+            lives--;
             if (GetComponent<RemotePlayer>().beingSpectated)
             {
                 GetComponent<RemotePlayer>().beingSpectated = false;

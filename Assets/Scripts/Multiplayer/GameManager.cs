@@ -109,7 +109,14 @@ public class GameManager : MonoBehaviour
             Debug.Log("[Game Manager] Players in game == 1, game is over, loading Main Menu.");
 
             endedGame = true;
-            WinningRoom.instance.Win(); 
+            ushort winningId = 0;
+
+            foreach (var player in playersInGame)
+            {
+                winningId = player.id;
+            }
+
+            WinningRoom.instance.Win(winningId); 
         }
     }
 
