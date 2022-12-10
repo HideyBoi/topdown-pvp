@@ -9,6 +9,7 @@ public class LocalPlayerController : MonoBehaviour
 {
 
     private Controls controls;
+    public static LocalPlayerController instance;
 
     Vector2 desMoveDir;
     public Vector2 lookDir;
@@ -41,6 +42,7 @@ public class LocalPlayerController : MonoBehaviour
 
     private void Awake()
     {
+        instance = this;
         nm = NetworkManager.instance;
         id = nm.Client.Id;
         controls = new Controls();

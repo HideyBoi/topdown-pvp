@@ -109,15 +109,8 @@ public class GameManager : MonoBehaviour
             Debug.Log("[Game Manager] Players in game == 1, game is over, loading Main Menu.");
 
             endedGame = true;
-            StartCoroutine("EndGame");
+            WinningRoom.instance.Win(); 
         }
-    }
-
-    IEnumerator EndGame()
-    {
-        yield return new WaitForSeconds(timeTillEndscreen);
-
-        LoadingScreen.instance.LoadLevel("MainMenu");
     }
 
     public void PlayerLeft(ushort id)
