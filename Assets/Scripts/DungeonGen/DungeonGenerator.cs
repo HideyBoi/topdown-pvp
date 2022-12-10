@@ -243,7 +243,7 @@ public class DungeonGenerator : MonoBehaviour
                     mapData.AddVector3(genRoom.roomPos);
                     mapData.AddInt(genRoom.room);
                     mapData.AddBools(genRoom.roomObj.currStatus);
-                    mapData.AddQuaternion(genRoom.roomObj.transform.rotation);
+                    mapData.AddQuaternion(genRoom.roomObj.transform.GetChild(3).rotation);
                     inst.Client.Send(mapData);
                 }
 
