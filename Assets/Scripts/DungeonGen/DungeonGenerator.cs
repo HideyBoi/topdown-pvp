@@ -90,7 +90,7 @@ public class DungeonGenerator : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (ShouldGen)
+        if (ShouldGen && NetworkManager.instance.Server.IsRunning)
         {
             Debug.Log("[Dungeon Generator] Starting dungeon generation.");
             ShouldGen = false;
