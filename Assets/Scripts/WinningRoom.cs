@@ -36,6 +36,7 @@ public class WinningRoom : MonoBehaviour
         HealthManager.localHealthManager.playingHUD.SetActive(false);
         HealthManager.localHealthManager.deathUI.SetActive(false);
         LocalPlayerController.instance.cam.gameObject.SetActive(false);
+        gameObject.GetComponent<Animator>().Play("Win");
 
         SetWinUI(id);
 
@@ -45,7 +46,7 @@ public class WinningRoom : MonoBehaviour
 
     void SetWinUI(ushort id)
     {
-        UI.SetActive(false);
+        UI.SetActive(true);
 
         if (id == NetworkManager.instance.Client.Id)
         {
