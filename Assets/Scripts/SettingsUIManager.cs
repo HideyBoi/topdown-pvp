@@ -50,9 +50,9 @@ public class SettingsUIManager : MonoBehaviour
         resolutionDropdown.value = currentResIndex;
         resolutionDropdown.RefreshShownValue();
 
-        if (Screen.currentResolution.refreshRate > refreshRateSlider.maxValue)
+        if (Screen.currentResolution.refreshRateRatio.value > refreshRateSlider.maxValue)
         {
-            refreshRateSlider.maxValue = Screen.currentResolution.refreshRate;
+            refreshRateSlider.maxValue = (float)Screen.currentResolution.refreshRateRatio.value;
         }
 
         if (PlayerPrefs.HasKey("DES_FRAMERATE"))
@@ -63,7 +63,7 @@ public class SettingsUIManager : MonoBehaviour
         }
         else
         {
-            refreshRateSlider.value = Screen.currentResolution.refreshRate;
+            refreshRateSlider.value = (float)Screen.currentResolution.refreshRateRatio.value;
         }
 
         if (PlayerPrefs.HasKey("QUALITY"))
@@ -80,7 +80,7 @@ public class SettingsUIManager : MonoBehaviour
 
     public void OnResChange(int value)
     {
-        Screen.SetResolution(resolutions[value].width, resolutions[value].height, true, Screen.currentResolution.refreshRate);
+        Screen.SetResolution(resolutions[value].width, resolutions[value].height, FullScreenMode.FullScreenWindow, Screen.currentResolution.refreshRateRatio);
     }
 
     public void OnRefreshRateChange()
