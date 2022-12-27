@@ -306,6 +306,7 @@ public class HealthManager : MonoBehaviour
 
     void Respawn()
     {
+        inv.canSwitch = true;
         coll.enabled = true;
         deathUI.SetActive(false);
         playingHUD.SetActive(true);

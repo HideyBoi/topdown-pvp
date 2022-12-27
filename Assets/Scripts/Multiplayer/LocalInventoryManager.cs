@@ -68,6 +68,9 @@ public class LocalInventoryManager : MonoBehaviour
         gm = GetComponent<LocalGunManager>();
 
         controls.Player.Scroll.performed += ctx => Scroll(ctx.ReadValue<float>());
+        controls.Player._1.performed += _ => Scroll(0);
+        controls.Player._2.performed += _ => Scroll(1);
+        controls.Player._3.performed += _ => Scroll(2);
         controls.Player.Reload.performed += _ => Reload();
         controls.Player.Drop.performed += _ => DropWeapon(currentIndex);
         controls.Player.UseMedkit.performed += _ => UseMedkit(true);
@@ -160,6 +163,25 @@ public class LocalInventoryManager : MonoBehaviour
                 currentIndex = inventoryItem.Length - 1;
             }
 
+            if (inventoryItem[currentIndex].weapon != null)
+            {
+                SoundEffect sfx = Instantiate(soundEffect, transform.position, Quaternion.identity).GetComponent<SoundEffect>();
+                sfx.PlaySound(inventoryItem[currentIndex].weapon.pickupSound, 35, 1);
+            }
+
+            PlayerHoldChanged();
+        }
+    }
+
+    void Scroll(int indexToSwapTo)
+    {
+        Destroy(currentReloadSound);
+        wantsToReload = false;
+
+        if (canSwitch)
+        {
+            currentIndex = indexToSwapTo;
+            
             if (inventoryItem[currentIndex].weapon != null)
             {
                 SoundEffect sfx = Instantiate(soundEffect, transform.position, Quaternion.identity).GetComponent<SoundEffect>();

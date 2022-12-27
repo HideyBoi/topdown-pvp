@@ -42,9 +42,45 @@
                     "initialStateCheck": true
                 },
                 {
+                    "name": "1",
+                    "type": "Button",
+                    "id": "791ad8df-4374-4e95-8b2a-b7fc489ac942",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "2",
+                    "type": "Button",
+                    "id": "b526ef22-84b0-493d-a834-20565e3e8221",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "3",
+                    "type": "Button",
+                    "id": "da4f679e-ae51-43bc-b681-0c05e12d3590",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "Shoot",
                     "type": "Button",
                     "id": "fc77173a-7537-4c3c-a348-8c6557cc09e0",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Aim",
+                    "type": "Button",
+                    "id": "e116a67e-49f1-4bc6-bf2f-c4c6f682d66c",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -375,7 +411,7 @@
                 {
                     "name": "",
                     "id": "42f06588-2e53-43bd-a4e3-00224387e5f7",
-                    "path": "<Keyboard>/f",
+                    "path": "<Keyboard>/backquote",
                     "interactions": "",
                     "processors": "",
                     "groups": "KBM",
@@ -397,7 +433,7 @@
                 {
                     "name": "",
                     "id": "555d386b-25ce-440b-b863-12e43912e378",
-                    "path": "<Keyboard>/g",
+                    "path": "<Keyboard>/ctrl",
                     "interactions": "",
                     "processors": "",
                     "groups": "KBM",
@@ -430,7 +466,7 @@
                 {
                     "name": "",
                     "id": "90ba9637-22cb-442d-a8d0-8d7f0962dead",
-                    "path": "<Keyboard>/t",
+                    "path": "<Keyboard>/shift",
                     "interactions": "",
                     "processors": "",
                     "groups": "KBM",
@@ -457,6 +493,61 @@
                     "processors": "",
                     "groups": "",
                     "action": "UseSyringe",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "9dbb7f37-9408-48bc-8cea-860e6f5b2176",
+                    "path": "<Keyboard>/3",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "3",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "6221fcb1-5c02-4a5d-897c-d3303af5d61d",
+                    "path": "<Keyboard>/2",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "2",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "7b6d67ff-35a0-4c61-8d96-fa8b54b6fe2c",
+                    "path": "<Keyboard>/1",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "1",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "93b2d0e2-95cc-4715-b5bc-1679f049faef",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Aim",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c4e1740f-2c4e-4938-a991-05dc4fb8cf90",
+                    "path": "<Gamepad>/leftTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Aim",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

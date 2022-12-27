@@ -64,9 +64,45 @@ public partial class @Controls : IInputActionCollection2, IDisposable
                     ""initialStateCheck"": true
                 },
                 {
+                    ""name"": ""1"",
+                    ""type"": ""Button"",
+                    ""id"": ""791ad8df-4374-4e95-8b2a-b7fc489ac942"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""2"",
+                    ""type"": ""Button"",
+                    ""id"": ""b526ef22-84b0-493d-a834-20565e3e8221"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""3"",
+                    ""type"": ""Button"",
+                    ""id"": ""da4f679e-ae51-43bc-b681-0c05e12d3590"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
                     ""name"": ""Shoot"",
                     ""type"": ""Button"",
                     ""id"": ""fc77173a-7537-4c3c-a348-8c6557cc09e0"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Aim"",
+                    ""type"": ""Button"",
+                    ""id"": ""e116a67e-49f1-4bc6-bf2f-c4c6f682d66c"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -397,7 +433,7 @@ public partial class @Controls : IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""42f06588-2e53-43bd-a4e3-00224387e5f7"",
-                    ""path"": ""<Keyboard>/f"",
+                    ""path"": ""<Keyboard>/backquote"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""KBM"",
@@ -419,7 +455,7 @@ public partial class @Controls : IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""555d386b-25ce-440b-b863-12e43912e378"",
-                    ""path"": ""<Keyboard>/g"",
+                    ""path"": ""<Keyboard>/ctrl"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""KBM"",
@@ -452,7 +488,7 @@ public partial class @Controls : IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""90ba9637-22cb-442d-a8d0-8d7f0962dead"",
-                    ""path"": ""<Keyboard>/t"",
+                    ""path"": ""<Keyboard>/shift"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""KBM"",
@@ -479,6 +515,61 @@ public partial class @Controls : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""UseSyringe"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9dbb7f37-9408-48bc-8cea-860e6f5b2176"",
+                    ""path"": ""<Keyboard>/3"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""3"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6221fcb1-5c02-4a5d-897c-d3303af5d61d"",
+                    ""path"": ""<Keyboard>/2"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""2"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7b6d67ff-35a0-4c61-8d96-fa8b54b6fe2c"",
+                    ""path"": ""<Keyboard>/1"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""1"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""93b2d0e2-95cc-4715-b5bc-1679f049faef"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Aim"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c4e1740f-2c4e-4938-a991-05dc4fb8cf90"",
+                    ""path"": ""<Gamepad>/leftTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Aim"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -521,7 +612,11 @@ public partial class @Controls : IInputActionCollection2, IDisposable
         m_Player_PointGamepad = m_Player.FindAction("PointGamepad", throwIfNotFound: true);
         m_Player_PointMouse = m_Player.FindAction("PointMouse", throwIfNotFound: true);
         m_Player_Scroll = m_Player.FindAction("Scroll", throwIfNotFound: true);
+        m_Player__1 = m_Player.FindAction("1", throwIfNotFound: true);
+        m_Player__2 = m_Player.FindAction("2", throwIfNotFound: true);
+        m_Player__3 = m_Player.FindAction("3", throwIfNotFound: true);
         m_Player_Shoot = m_Player.FindAction("Shoot", throwIfNotFound: true);
+        m_Player_Aim = m_Player.FindAction("Aim", throwIfNotFound: true);
         m_Player_Interact = m_Player.FindAction("Interact", throwIfNotFound: true);
         m_Player_Reload = m_Player.FindAction("Reload", throwIfNotFound: true);
         m_Player_Drop = m_Player.FindAction("Drop", throwIfNotFound: true);
@@ -590,7 +685,11 @@ public partial class @Controls : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_PointGamepad;
     private readonly InputAction m_Player_PointMouse;
     private readonly InputAction m_Player_Scroll;
+    private readonly InputAction m_Player__1;
+    private readonly InputAction m_Player__2;
+    private readonly InputAction m_Player__3;
     private readonly InputAction m_Player_Shoot;
+    private readonly InputAction m_Player_Aim;
     private readonly InputAction m_Player_Interact;
     private readonly InputAction m_Player_Reload;
     private readonly InputAction m_Player_Drop;
@@ -604,7 +703,11 @@ public partial class @Controls : IInputActionCollection2, IDisposable
         public InputAction @PointGamepad => m_Wrapper.m_Player_PointGamepad;
         public InputAction @PointMouse => m_Wrapper.m_Player_PointMouse;
         public InputAction @Scroll => m_Wrapper.m_Player_Scroll;
+        public InputAction @_1 => m_Wrapper.m_Player__1;
+        public InputAction @_2 => m_Wrapper.m_Player__2;
+        public InputAction @_3 => m_Wrapper.m_Player__3;
         public InputAction @Shoot => m_Wrapper.m_Player_Shoot;
+        public InputAction @Aim => m_Wrapper.m_Player_Aim;
         public InputAction @Interact => m_Wrapper.m_Player_Interact;
         public InputAction @Reload => m_Wrapper.m_Player_Reload;
         public InputAction @Drop => m_Wrapper.m_Player_Drop;
@@ -631,9 +734,21 @@ public partial class @Controls : IInputActionCollection2, IDisposable
                 @Scroll.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnScroll;
                 @Scroll.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnScroll;
                 @Scroll.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnScroll;
+                @_1.started -= m_Wrapper.m_PlayerActionsCallbackInterface.On_1;
+                @_1.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.On_1;
+                @_1.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.On_1;
+                @_2.started -= m_Wrapper.m_PlayerActionsCallbackInterface.On_2;
+                @_2.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.On_2;
+                @_2.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.On_2;
+                @_3.started -= m_Wrapper.m_PlayerActionsCallbackInterface.On_3;
+                @_3.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.On_3;
+                @_3.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.On_3;
                 @Shoot.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnShoot;
                 @Shoot.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnShoot;
                 @Shoot.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnShoot;
+                @Aim.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAim;
+                @Aim.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAim;
+                @Aim.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAim;
                 @Interact.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnInteract;
                 @Interact.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnInteract;
                 @Interact.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnInteract;
@@ -665,9 +780,21 @@ public partial class @Controls : IInputActionCollection2, IDisposable
                 @Scroll.started += instance.OnScroll;
                 @Scroll.performed += instance.OnScroll;
                 @Scroll.canceled += instance.OnScroll;
+                @_1.started += instance.On_1;
+                @_1.performed += instance.On_1;
+                @_1.canceled += instance.On_1;
+                @_2.started += instance.On_2;
+                @_2.performed += instance.On_2;
+                @_2.canceled += instance.On_2;
+                @_3.started += instance.On_3;
+                @_3.performed += instance.On_3;
+                @_3.canceled += instance.On_3;
                 @Shoot.started += instance.OnShoot;
                 @Shoot.performed += instance.OnShoot;
                 @Shoot.canceled += instance.OnShoot;
+                @Aim.started += instance.OnAim;
+                @Aim.performed += instance.OnAim;
+                @Aim.canceled += instance.OnAim;
                 @Interact.started += instance.OnInteract;
                 @Interact.performed += instance.OnInteract;
                 @Interact.canceled += instance.OnInteract;
@@ -711,7 +838,11 @@ public partial class @Controls : IInputActionCollection2, IDisposable
         void OnPointGamepad(InputAction.CallbackContext context);
         void OnPointMouse(InputAction.CallbackContext context);
         void OnScroll(InputAction.CallbackContext context);
+        void On_1(InputAction.CallbackContext context);
+        void On_2(InputAction.CallbackContext context);
+        void On_3(InputAction.CallbackContext context);
         void OnShoot(InputAction.CallbackContext context);
+        void OnAim(InputAction.CallbackContext context);
         void OnInteract(InputAction.CallbackContext context);
         void OnReload(InputAction.CallbackContext context);
         void OnDrop(InputAction.CallbackContext context);

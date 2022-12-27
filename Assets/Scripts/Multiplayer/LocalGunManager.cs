@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using Riptide;
 using Riptide.Utils;
 using EZCameraShake;
+using Cinemachine;
 
 public class LocalGunManager : MonoBehaviour
 {
@@ -25,6 +26,14 @@ public class LocalGunManager : MonoBehaviour
     bool wantsToShoot = false;
     public float shootCooldown;
 
+    public Transform camOffsetTransform;
+    public float camOffset;
+    public float zoomAmount;
+    public float currentFOV;
+    public float normalFOV;
+    public float adsFOV;
+    public CinemachineVirtualCamera cam;
+    public CinemachineFramingTransposer transposor;
     public Transform gunPivot;
     public Transform pivot;
 
@@ -42,6 +51,8 @@ public class LocalGunManager : MonoBehaviour
         controls.Player.Interact.canceled += _ => InteractButton(false);
         controls.Player.Shoot.performed += _ => Shoot(true);
         controls.Player.Shoot.canceled += _ => Shoot(false);
+        //controls.Player.Aim.performed += _ => Aim(true);
+        //controls.Player.Aim.canceled += _ => Aim(false);
 
         playerController = GetComponent<LocalPlayerController>();
         im = GetComponent<LocalInventoryManager>();
@@ -53,6 +64,19 @@ public class LocalGunManager : MonoBehaviour
         pressingInteract = press;
     }
 
+    void Aim(bool isAiming)
+    {
+        if (isAiming)
+        {
+            camOffset = zoomAmount;
+            currentFOV = adsFOV;
+        } else
+        {
+            camOffset = 0;
+            currentFOV = normalFOV;
+        }
+    }
+
     void Shoot(bool isPressing)
     {
         wantsToShoot = isPressing;
@@ -62,6 +86,22 @@ public class LocalGunManager : MonoBehaviour
     {
         if (!NetworkManager.instance.gameIsStarted || hm.isDead)
             return;
+
+        /*
+        cam.m_Lens.FieldOfView = Mathf.Lerp(cam.m_Lens.FieldOfView, currentFOV, Time.deltaTime*4);
+
+        if (transposor != null)
+        {
+            Vector2 V2lookDir = playerController.lookDir.normalized;
+            Vector3 V3lookDir = new Vector3(V2lookDir.x * camOffset, 8, V2lookDir.y * camOffset); 
+            transposor.m_TrackedObjectOffset = Vector3.Lerp(transposor.m_TrackedObjectOffset, V3lookDir, Time.deltaTime * 4);
+            transposor.m_TrackedObjectOffset.y = 8;
+        } else
+        {
+            transposor = cam.GetCinemachineComponent<CinemachineFramingTransposer>();
+        }
+        */
+
 
         RaycastHit hit;
 
