@@ -15,6 +15,8 @@ public class LocalInventoryManager : MonoBehaviour
     public InventoryItem[] inventoryItem = new InventoryItem[3];
 
     public bool canSwitch = true;
+    public float whenCanSwitch;
+    float sinceLastSwitch;
 
     public TMP_Text[] ammoCount;
     public TMP_Text[] totalAmmoCount;
@@ -146,11 +148,11 @@ public class LocalInventoryManager : MonoBehaviour
 
     void Scroll(float amount)
     {
-        Destroy(currentReloadSound);
-        wantsToReload = false;
-
-        if (canSwitch)
+        if (canSwitch && sinceLastSwitch > whenCanSwitch)
         {
+            Destroy(currentReloadSound);
+            wantsToReload = false;
+
             currentIndex += (int)amount;
 
             if (currentIndex >= inventoryItem.Length)
@@ -175,11 +177,11 @@ public class LocalInventoryManager : MonoBehaviour
 
     void Scroll(int indexToSwapTo)
     {
-        Destroy(currentReloadSound);
-        wantsToReload = false;
-
-        if (canSwitch)
+        if (canSwitch && sinceLastSwitch > whenCanSwitch && indexToSwapTo != currentIndex)
         {
+            Destroy(currentReloadSound);
+            wantsToReload = false;
+
             currentIndex = indexToSwapTo;
             
             if (inventoryItem[currentIndex].weapon != null)
@@ -213,6 +215,8 @@ public class LocalInventoryManager : MonoBehaviour
     {
         if (!NetworkManager.instance.gameIsStarted)
             return;
+
+        sinceLastSwitch += Time.fixedDeltaTime;
 
         if (wantsToUseMedkit)
         {

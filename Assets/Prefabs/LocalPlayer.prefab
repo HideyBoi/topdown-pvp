@@ -944,6 +944,7 @@ MonoBehaviour:
   - ammoCount: 0
     weapon: {fileID: 0}
   canSwitch: 1
+  whenCanSwitch: 0.7
   ammoCount:
   - {fileID: 8743796609630708056}
   - {fileID: 8777283249570266591}
