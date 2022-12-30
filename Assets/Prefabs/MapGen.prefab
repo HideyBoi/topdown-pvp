@@ -77,7 +77,7 @@ MonoBehaviour:
     minPosition: {x: 0, y: 0}
     maxPosition: {x: 69, y: 69}
     obligatory: 0
-  offset: {x: 60, y: 60}
+  offset: {x: 46.29, y: 46.29}
   totalRooms: 0
   currentRoomCount: 0
   sentMapData: 0
