@@ -22,7 +22,7 @@ TagManager:
   - LocalPlayer
   - RemotePlayer
   - Item
-  - 
+  - CantShootCanCollide
   - 
   - 
   - 
