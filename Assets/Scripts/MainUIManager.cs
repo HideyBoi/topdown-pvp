@@ -65,7 +65,7 @@ public class MainUIManager : MonoBehaviour
 
     public void Host()
     {
-        int maxPlayers = 0;
+        int maxPlayers;
 
         try
         {

@@ -13,14 +13,14 @@ MonoBehaviour:
   m_Name: Submachine Gun Rare
   m_EditorClassIdentifier: 
   gunName: Submachine Gun
-  id: 0
+  id: 9
   gunMesh: {fileID: -5939715470075842565, guid: 4adbbdc07be0c6a46953997a68269c84,
     type: 3}
   gunMaterial: {fileID: 2100000, guid: 9e1136d971c7845468d0b4bcc8ce6281, type: 2}
   muzzleLocation: {x: 0, y: 0, z: 0}
-  shootSound: {fileID: 8300000, guid: d9f6e3de32d469b458c549dd13199050, type: 3}
+  shootSound: {fileID: 8300000, guid: 8616a5ff94849854abeb97eeca91167c, type: 3}
   pickupSound: {fileID: 8300000, guid: adf5b54f40c1ae04a9c547e6b6474a4c, type: 3}
-  reloadSound: {fileID: 8300000, guid: 8682172d8fdd5ac43aca1a1a2fd8da1d, type: 3}
+  reloadSound: {fileID: 8300000, guid: 621871c98b6fd8543b3342930438f47c, type: 3}
   magnitude: 1
   roughness: 1
   shakeFadeIn: 0.2
@@ -29,8 +29,8 @@ MonoBehaviour:
   ammoType: 0
   automatic: 1
   damage: 10
-  maxAmmoCount: 30
-  timeBetweenShots: 0.1
+  maxAmmoCount: 15
+  timeBetweenShots: 0.075
   reloadTime: 1.2
   shotCount: 1
-  spread: 0.004
+  spread: 0.08
