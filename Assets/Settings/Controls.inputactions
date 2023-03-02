@@ -42,6 +42,15 @@
                     "initialStateCheck": true
                 },
                 {
+                    "name": "0",
+                    "type": "Button",
+                    "id": "2e55890e-2f6c-49b7-ac40-fb25ffa62d58",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "1",
                     "type": "Button",
                     "id": "791ad8df-4374-4e95-8b2a-b7fc489ac942",
@@ -499,10 +508,10 @@
                 {
                     "name": "",
                     "id": "9dbb7f37-9408-48bc-8cea-860e6f5b2176",
-                    "path": "<Keyboard>/3",
+                    "path": "<Keyboard>/4",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "KBM",
                     "action": "3",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -510,10 +519,10 @@
                 {
                     "name": "",
                     "id": "6221fcb1-5c02-4a5d-897c-d3303af5d61d",
-                    "path": "<Keyboard>/2",
+                    "path": "<Keyboard>/3",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "KBM",
                     "action": "2",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -521,10 +530,10 @@
                 {
                     "name": "",
                     "id": "7b6d67ff-35a0-4c61-8d96-fa8b54b6fe2c",
-                    "path": "<Keyboard>/1",
+                    "path": "<Keyboard>/2",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "KBM",
                     "action": "1",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -548,6 +557,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Aim",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "6d9cdc8b-0601-4b6a-a786-1e2b037c5cf7",
+                    "path": "<Keyboard>/1",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "KBM",
+                    "action": "0",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

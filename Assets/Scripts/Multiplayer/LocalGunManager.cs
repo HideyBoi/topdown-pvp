@@ -167,81 +167,144 @@ public class LocalGunManager : MonoBehaviour
 
         if (im.inventoryItem[im.currentIndex].weapon != null)
         {
-            RaycastHit lookDir;
-            Physics.Raycast(transform.position, new Vector3(playerController.lookDir.x, 0, playerController.lookDir.y), out lookDir, Mathf.Infinity, gunLm);
-            gunPivot.LookAt(lookDir.point);
-
-            Message gunRot = Message.Create(MessageSendMode.Reliable, NetworkManager.MessageIds.playerGunRot);
-            gunRot.AddUShort(playerController.id);
-            gunRot.AddQuaternion(gunPivot.rotation);
-            NetworkManager.instance.Client.Send(gunRot);
-
-            if (shootCooldown < 0)
+            if (im.currentIndex == 0)
             {
-                im.canSwitch = true;
-            }
-            else
-            {
-                im.canSwitch = false;
-            }
 
-            if (wantsToShoot && im.reloadCooldown < 0 && shootCooldown < 0)
-            {
-                if (im.inventoryItem[im.currentIndex].ammoCount > 0)
+                RaycastHit lookDir;
+                Physics.Raycast(transform.position, new Vector3(playerController.lookDir.x, 0, playerController.lookDir.y), out lookDir, Mathf.Infinity, gunLm);
+                gunPivot.LookAt(lookDir.point);
+
+                Message gunRot = Message.Create(MessageSendMode.Reliable, NetworkManager.MessageIds.playerGunRot);
+                gunRot.AddUShort(playerController.id);
+                gunRot.AddQuaternion(gunPivot.rotation);
+                NetworkManager.instance.Client.Send(gunRot);
+
+                if (shootCooldown < 0)
                 {
-                    im.inventoryItem[im.currentIndex].ammoCount--;
-                    Instantiate(soundEffect, transform.position, Quaternion.identity).GetComponent<SoundEffect>().PlaySound(im.inventoryItem[im.currentIndex].weapon.shootSound, 60, 1);
-                    Instantiate(muzzleFlash, gunPivot.position + gunPivot.transform.TransformDirection(im.inventoryItem[im.currentIndex].weapon.muzzleLocation), gunPivot.rotation, gunPivot);
-                    shootCooldown = im.inventoryItem[im.currentIndex].weapon.timeBetweenShots;
-
-
-                    if (!im.inventoryItem[im.currentIndex].weapon.automatic)
-                    {
-                        wantsToShoot = false;
-                    }
-
-                    for (int i = 0; i <= im.inventoryItem[im.currentIndex].weapon.shotCount; i++)
-                    {
-                        RaycastHit shoot;
-
-                        Vector3 dir = new Vector3(playerController.lookDir.x, 0, playerController.lookDir.y);
-                        dir.Normalize();
-                        dir = pivot.InverseTransformDirection(dir);
-                        dir.x += Random.Range(-im.inventoryItem[im.currentIndex].weapon.spread, im.inventoryItem[im.currentIndex].weapon.spread);
-                        dir = pivot.TransformDirection(dir);
-
-                        Physics.Raycast(transform.position, dir, out shoot, Mathf.Infinity, gunLm);
-
-                        if (shoot.collider != null)
-                        {
-                            Instantiate(impactEffect, shoot.point, Quaternion.LookRotation(Vector3.forward, shoot.normal));
-
-                            CameraShaker.Instance.ShakeOnce(im.inventoryItem[im.currentIndex].weapon.magnitude, im.inventoryItem[im.currentIndex].weapon.roughness, im.inventoryItem[im.currentIndex].weapon.shakeFadeIn, im.inventoryItem[im.currentIndex].weapon.shakeFadeOut);
-
-                            Message muzzleFlashMsg = Message.Create(MessageSendMode.Reliable, NetworkManager.MessageIds.playerShot);
-                            muzzleFlashMsg.AddUShort(playerController.id);
-                            muzzleFlashMsg.AddInt(im.inventoryItem[im.currentIndex].weapon.id);
-                            muzzleFlashMsg.AddVector3(gunPivot.position + gunPivot.transform.TransformDirection(im.inventoryItem[im.currentIndex].weapon.muzzleLocation));
-                            muzzleFlashMsg.AddQuaternion(gunPivot.rotation);
-                            muzzleFlashMsg.AddVector3(shoot.point);
-                            NetworkManager.instance.Client.Send(muzzleFlashMsg);
-
-                            Instantiate(bulletTracer, gunPivot.position + gunPivot.transform.TransformDirection(im.inventoryItem[im.currentIndex].weapon.muzzleLocation), Quaternion.identity).GetComponent<BulletTracer>().SetData(shoot.point);
-
-                            if (shoot.collider.CompareTag("RemotePlayer"))
-                            {
-                                Instantiate(bloodEffect, shoot.point, Quaternion.LookRotation(shoot.normal, Vector3.up));
-
-                                HealthManager hm = shoot.collider.GetComponent<HealthManager>();
-                                Damage(im.inventoryItem[im.currentIndex].weapon.damage, im.inventoryItem[im.currentIndex].weapon.id, hm);
-                            }
-                        }
-                    }
+                    im.canSwitch = true;
                 }
                 else
                 {
-                    if (!im.wantsToReload)
-                        im.Reload();
+                    im.canSwitch = false;
+                }
+
+                if (wantsToShoot && im.reloadCooldown < 0 && shootCooldown < 0)
+                {
+                    wantsToShoot = false;
+                    shootCooldown = im.inventoryItem[im.currentIndex].weapon.timeBetweenShots;
+
+                    RaycastHit shoot;
+
+                    Vector3 dir = new Vector3(playerController.lookDir.x, 0, playerController.lookDir.y);
+                    dir.Normalize();
+                    dir = pivot.InverseTransformDirection(dir);
+                    dir.x += Random.Range(-im.inventoryItem[im.currentIndex].weapon.spread, im.inventoryItem[im.currentIndex].weapon.spread);
+                    dir = pivot.TransformDirection(dir);
+
+                    Physics.Raycast(transform.position, dir, out shoot, 3.5f, gunLm);
+
+                    if (shoot.collider != null)
+                    {
+                        CameraShaker.Instance.ShakeOnce(im.inventoryItem[im.currentIndex].weapon.magnitude, im.inventoryItem[im.currentIndex].weapon.roughness, im.inventoryItem[im.currentIndex].weapon.shakeFadeIn, im.inventoryItem[im.currentIndex].weapon.shakeFadeOut);
+
+                        Message punch = Message.Create(MessageSendMode.Reliable, NetworkManager.MessageIds.punch);
+                        punch.AddBool(shoot.collider.CompareTag("RemotePlayer"));
+                        punch.AddVector3(shoot.point);
+                        punch.AddQuaternion(Quaternion.LookRotation(Vector3.forward, shoot.normal));
+                        NetworkManager.instance.Client.Send(punch);
+
+                        if (shoot.collider.CompareTag("RemotePlayer"))
+                        {
+                            Instantiate(bloodEffect, shoot.point, Quaternion.LookRotation(shoot.normal, Vector3.up));
+                            Instantiate(soundEffect, transform.position, Quaternion.identity).GetComponent<SoundEffect>().PlaySound(im.inventoryItem[im.currentIndex].weapon.shootSound, 45, 1);
+
+                            HealthManager hm = shoot.collider.GetComponent<HealthManager>();
+                            Damage(im.inventoryItem[im.currentIndex].weapon.damage, im.inventoryItem[im.currentIndex].weapon.id, hm);
+                        } else
+                        {
+                            Instantiate(soundEffect, transform.position, Quaternion.identity).GetComponent<SoundEffect>().PlaySound(im.inventoryItem[im.currentIndex].weapon.reloadSound, 30, 1);
+                        }
+                    }
+                }
+
+            } else
+            {
+                RaycastHit lookDir;
+                Physics.Raycast(transform.position, new Vector3(playerController.lookDir.x, 0, playerController.lookDir.y), out lookDir, Mathf.Infinity, gunLm);
+                gunPivot.LookAt(lookDir.point);
+
+                Message gunRot = Message.Create(MessageSendMode.Reliable, NetworkManager.MessageIds.playerGunRot);
+                gunRot.AddUShort(playerController.id);
+                gunRot.AddQuaternion(gunPivot.rotation);
+                NetworkManager.instance.Client.Send(gunRot);
+
+                if (shootCooldown < 0)
+                {
+                    im.canSwitch = true;
+                }
+                else
+                {
+                    im.canSwitch = false;
+                }
+
+                if (wantsToShoot && im.reloadCooldown < 0 && shootCooldown < 0)
+                {
+                    if (im.inventoryItem[im.currentIndex].ammoCount > 0)
+                    {
+                        im.inventoryItem[im.currentIndex].ammoCount--;
+                        Instantiate(soundEffect, transform.position, Quaternion.identity).GetComponent<SoundEffect>().PlaySound(im.inventoryItem[im.currentIndex].weapon.shootSound, 60, 1);
+                        Instantiate(muzzleFlash, gunPivot.position + gunPivot.transform.TransformDirection(im.inventoryItem[im.currentIndex].weapon.muzzleLocation), gunPivot.rotation, gunPivot);
+                        shootCooldown = im.inventoryItem[im.currentIndex].weapon.timeBetweenShots;
+
+
+                        if (!im.inventoryItem[im.currentIndex].weapon.automatic)
+                        {
+                            wantsToShoot = false;
+                        }
+
+                        for (int i = 0; i <= im.inventoryItem[im.currentIndex].weapon.shotCount; i++)
+                        {
+                            RaycastHit shoot;
+
+                            Vector3 dir = new Vector3(playerController.lookDir.x, 0, playerController.lookDir.y);
+                            dir.Normalize();
+                            dir = pivot.InverseTransformDirection(dir);
+                            dir.x += Random.Range(-im.inventoryItem[im.currentIndex].weapon.spread, im.inventoryItem[im.currentIndex].weapon.spread);
+                            dir = pivot.TransformDirection(dir);
+
+                            Physics.Raycast(transform.position, dir, out shoot, Mathf.Infinity, gunLm);
+
+                            if (shoot.collider != null)
+                            {
+                                Instantiate(impactEffect, shoot.point, Quaternion.LookRotation(Vector3.forward, shoot.normal));
+
+                                CameraShaker.Instance.ShakeOnce(im.inventoryItem[im.currentIndex].weapon.magnitude, im.inventoryItem[im.currentIndex].weapon.roughness, im.inventoryItem[im.currentIndex].weapon.shakeFadeIn, im.inventoryItem[im.currentIndex].weapon.shakeFadeOut);
+
+                                Message muzzleFlashMsg = Message.Create(MessageSendMode.Reliable, NetworkManager.MessageIds.playerShot);
+                                muzzleFlashMsg.AddUShort(playerController.id);
+                                muzzleFlashMsg.AddInt(im.inventoryItem[im.currentIndex].weapon.id);
+                                muzzleFlashMsg.AddVector3(gunPivot.position + gunPivot.transform.TransformDirection(im.inventoryItem[im.currentIndex].weapon.muzzleLocation));
+                                muzzleFlashMsg.AddQuaternion(gunPivot.rotation);
+                                muzzleFlashMsg.AddVector3(shoot.point);
+                                NetworkManager.instance.Client.Send(muzzleFlashMsg);
+
+                                Instantiate(bulletTracer, gunPivot.position + gunPivot.transform.TransformDirection(im.inventoryItem[im.currentIndex].weapon.muzzleLocation), Quaternion.identity).GetComponent<BulletTracer>().SetData(shoot.point);
+
+                                if (shoot.collider.CompareTag("RemotePlayer"))
+                                {
+                                    Instantiate(bloodEffect, shoot.point, Quaternion.LookRotation(shoot.normal, Vector3.up));
+
+                                    HealthManager hm = shoot.collider.GetComponent<HealthManager>();
+                                    Damage(im.inventoryItem[im.currentIndex].weapon.damage, im.inventoryItem[im.currentIndex].weapon.id, hm);
+                                }
+                            }
+                        }
+                    }
+                    else
+                    {
+                        if (!im.wantsToReload)
+                            im.Reload();
+                    }
                 }
             }
         }

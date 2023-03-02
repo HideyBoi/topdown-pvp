@@ -73,6 +73,7 @@ public class NetworkManager : MonoBehaviour
         particleEffect, //tells other players to spawn a particle effect
         playerReloadSound, //sound effects that should travel with a player (ie, a reloading sound effect should follow the player)
         playerShot, //contains data about what gun was shot and where
+        punch, //lets others know that a punch was performed
         playerDamage, //tells all players that player x has been damaged
         playerHeal, //tells other players that the local player has healed
         playerOutOfGame, //tells other players when a player is no longer in the game

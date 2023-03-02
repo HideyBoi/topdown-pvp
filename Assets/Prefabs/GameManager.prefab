@@ -80,9 +80,12 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 91637c8c4ce886c4babc9e376134b84b, type: 3}
   - {fileID: 8300000, guid: 8814c62d373e0d7489c13c860898d1d3, type: 3}
   - {fileID: 8300000, guid: f5dcb0a5544ac194b82b6be0d9ff67dc, type: 3}
+  - {fileID: 8300000, guid: b396d92be1e206944a828a3b5e2dbaff, type: 3}
+  - {fileID: 8300000, guid: 2341f0522c29dff48aa878e1d842971e, type: 3}
   sploosh: {fileID: 5463529501548234624, guid: 5a0ebb9ff531c124a832ce887b1bb7c7, type: 3}
   timeTillEndscreen: 0
   possibleWeapons:
+  - {fileID: 11400000, guid: bc7e01c2bcf3ddf49b0a2623f6c7e607, type: 2}
   - {fileID: 11400000, guid: 9cfb42c50d7fac142a3722a23ca9074e, type: 2}
   - {fileID: 11400000, guid: c1feb8e7f03c3df4fbfd7bc670503c49, type: 2}
   - {fileID: 11400000, guid: 736175ee30b67e449a20955b99b4f00c, type: 2}

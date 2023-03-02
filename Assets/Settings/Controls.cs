@@ -64,6 +64,15 @@ public partial class @Controls : IInputActionCollection2, IDisposable
                     ""initialStateCheck"": true
                 },
                 {
+                    ""name"": ""0"",
+                    ""type"": ""Button"",
+                    ""id"": ""2e55890e-2f6c-49b7-ac40-fb25ffa62d58"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
                     ""name"": ""1"",
                     ""type"": ""Button"",
                     ""id"": ""791ad8df-4374-4e95-8b2a-b7fc489ac942"",
@@ -521,10 +530,10 @@ public partial class @Controls : IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""9dbb7f37-9408-48bc-8cea-860e6f5b2176"",
-                    ""path"": ""<Keyboard>/3"",
+                    ""path"": ""<Keyboard>/4"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""KBM"",
                     ""action"": ""3"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -532,10 +541,10 @@ public partial class @Controls : IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""6221fcb1-5c02-4a5d-897c-d3303af5d61d"",
-                    ""path"": ""<Keyboard>/2"",
+                    ""path"": ""<Keyboard>/3"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""KBM"",
                     ""action"": ""2"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -543,10 +552,10 @@ public partial class @Controls : IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""7b6d67ff-35a0-4c61-8d96-fa8b54b6fe2c"",
-                    ""path"": ""<Keyboard>/1"",
+                    ""path"": ""<Keyboard>/2"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""KBM"",
                     ""action"": ""1"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -570,6 +579,17 @@ public partial class @Controls : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Aim"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6d9cdc8b-0601-4b6a-a786-1e2b037c5cf7"",
+                    ""path"": ""<Keyboard>/1"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KBM"",
+                    ""action"": ""0"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -612,6 +632,7 @@ public partial class @Controls : IInputActionCollection2, IDisposable
         m_Player_PointGamepad = m_Player.FindAction("PointGamepad", throwIfNotFound: true);
         m_Player_PointMouse = m_Player.FindAction("PointMouse", throwIfNotFound: true);
         m_Player_Scroll = m_Player.FindAction("Scroll", throwIfNotFound: true);
+        m_Player__0 = m_Player.FindAction("0", throwIfNotFound: true);
         m_Player__1 = m_Player.FindAction("1", throwIfNotFound: true);
         m_Player__2 = m_Player.FindAction("2", throwIfNotFound: true);
         m_Player__3 = m_Player.FindAction("3", throwIfNotFound: true);
@@ -685,6 +706,7 @@ public partial class @Controls : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_PointGamepad;
     private readonly InputAction m_Player_PointMouse;
     private readonly InputAction m_Player_Scroll;
+    private readonly InputAction m_Player__0;
     private readonly InputAction m_Player__1;
     private readonly InputAction m_Player__2;
     private readonly InputAction m_Player__3;
@@ -703,6 +725,7 @@ public partial class @Controls : IInputActionCollection2, IDisposable
         public InputAction @PointGamepad => m_Wrapper.m_Player_PointGamepad;
         public InputAction @PointMouse => m_Wrapper.m_Player_PointMouse;
         public InputAction @Scroll => m_Wrapper.m_Player_Scroll;
+        public InputAction @_0 => m_Wrapper.m_Player__0;
         public InputAction @_1 => m_Wrapper.m_Player__1;
         public InputAction @_2 => m_Wrapper.m_Player__2;
         public InputAction @_3 => m_Wrapper.m_Player__3;
@@ -734,6 +757,9 @@ public partial class @Controls : IInputActionCollection2, IDisposable
                 @Scroll.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnScroll;
                 @Scroll.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnScroll;
                 @Scroll.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnScroll;
+                @_0.started -= m_Wrapper.m_PlayerActionsCallbackInterface.On_0;
+                @_0.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.On_0;
+                @_0.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.On_0;
                 @_1.started -= m_Wrapper.m_PlayerActionsCallbackInterface.On_1;
                 @_1.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.On_1;
                 @_1.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.On_1;
@@ -780,6 +806,9 @@ public partial class @Controls : IInputActionCollection2, IDisposable
                 @Scroll.started += instance.OnScroll;
                 @Scroll.performed += instance.OnScroll;
                 @Scroll.canceled += instance.OnScroll;
+                @_0.started += instance.On_0;
+                @_0.performed += instance.On_0;
+                @_0.canceled += instance.On_0;
                 @_1.started += instance.On_1;
                 @_1.performed += instance.On_1;
                 @_1.canceled += instance.On_1;
@@ -838,6 +867,7 @@ public partial class @Controls : IInputActionCollection2, IDisposable
         void OnPointGamepad(InputAction.CallbackContext context);
         void OnPointMouse(InputAction.CallbackContext context);
         void OnScroll(InputAction.CallbackContext context);
+        void On_0(InputAction.CallbackContext context);
         void On_1(InputAction.CallbackContext context);
         void On_2(InputAction.CallbackContext context);
         void On_3(InputAction.CallbackContext context);

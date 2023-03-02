@@ -594,6 +594,22 @@ public class GameManager : MonoBehaviour
         particle.GetComponent<Vfx>().networkSpawned = true;
     }
 
+    [MessageHandler((ushort)NetworkManager.MessageIds.punch)]
+    static void Punch(Message msg) 
+    { 
+        bool player = msg.GetBool();
+        Vector3 pos = msg.GetVector3();
+        Quaternion rotation = msg.GetQuaternion();
+        if (player)
+        {
+            Instantiate(instance.soundEffect, pos, Quaternion.identity).GetComponent<SoundEffect>().PlaySound(instance.clips[13], 45, 1);
+            Instantiate(instance.particleObjects[1], pos, rotation);
+        } else
+        {
+            Instantiate(instance.soundEffect, pos, Quaternion.identity).GetComponent<SoundEffect>().PlaySound(instance.clips[12], 30, 1);
+
+        }
+    }
     [MessageHandler((ushort)NetworkManager.MessageIds.playerShot)]
     static void MuzzleFlash(Message msg)
     {
