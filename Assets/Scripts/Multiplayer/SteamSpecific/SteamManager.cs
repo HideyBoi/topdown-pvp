@@ -115,7 +115,7 @@ public class SteamManager : MonoBehaviour
 		{ // We catch this exception here, as it will be the first occurrence of it.
 			Debug.LogError("[Steamworks.NET] Could not load [lib]steam_api.dll/so/dylib. It's likely not in the correct location. Refer to the README for more details.\n" + e, this);
 
-			ErrorPrompt.ShowError("[Steam Manager\n" +
+			ErrorPrompt.ShowError("[Steam Manager]\n" +
 				"\n" +
 				"Counldn't load [steam_api.dll/so/dylib]\n" +
 				"\n" +
