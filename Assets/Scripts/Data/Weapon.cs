@@ -32,10 +32,12 @@ public class Weapon : ScriptableObject
     public LocalInventoryManager.AmmoType ammoType;
     public bool automatic;
     public int damage;
+    public float damageFalloff = 0;
     public int maxAmmoCount;
     public float timeBetweenShots;
     public float reloadTime;
     public int shotCount;
     public float spread;
+    public float speedModifier = 1;
 }
 

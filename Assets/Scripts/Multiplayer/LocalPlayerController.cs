@@ -30,6 +30,7 @@ public class LocalPlayerController : MonoBehaviour
     public ushort id;
 
     HealthManager hm;
+    LocalInventoryManager inventory;
 
     bool wantsToMove;
     float currentMoveTimer;
@@ -48,6 +49,7 @@ public class LocalPlayerController : MonoBehaviour
         controls = new Controls();
         rb = GetComponent<Rigidbody>();
         hm = GetComponent<HealthManager>();
+        inventory = GetComponent<LocalInventoryManager>();
 
         controls.Player.Move.performed += ctx => Move(ctx.ReadValue<Vector2>(), true);
         controls.Player.Move.canceled += ctx => Move(ctx.ReadValue<Vector2>(), false);
@@ -62,7 +64,8 @@ public class LocalPlayerController : MonoBehaviour
 
         if (!hm.isDead)
         {
-            rb.AddForce(new Vector3(desMoveDir.x, 0, desMoveDir.y) * currentMovementSpeed, ForceMode.VelocityChange);
+            rb.AddForce(new Vector3(desMoveDir.x, 0, desMoveDir.y) * currentMovementSpeed * inventory.inventoryItem[inventory.currentIndex].weapon.speedModifier, ForceMode.VelocityChange);
+            //rb.AddForce(new Vector3(desMoveDir.x, 0, desMoveDir.y) * currentMovementSpeed, ForceMode.VelocityChange);
 
             RaycastHit hit;
             Physics.Raycast(transform.position, new Vector3(lookDir.x, 0, lookDir.y), out hit, Mathf.Infinity, lm);

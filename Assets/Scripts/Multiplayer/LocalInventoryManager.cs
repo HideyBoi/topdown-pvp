@@ -70,9 +70,10 @@ public class LocalInventoryManager : MonoBehaviour
         gm = GetComponent<LocalGunManager>();
 
         controls.Player.Scroll.performed += ctx => Scroll(ctx.ReadValue<float>());
-        controls.Player._1.performed += _ => Scroll(0);
-        controls.Player._2.performed += _ => Scroll(1);
-        controls.Player._3.performed += _ => Scroll(2);
+        controls.Player._0.performed += _ => Scroll(0);
+        controls.Player._1.performed += _ => Scroll(1);
+        controls.Player._2.performed += _ => Scroll(2);
+        controls.Player._3.performed += _ => Scroll(3);
         controls.Player.Reload.performed += _ => Reload();
         controls.Player.Drop.performed += _ => DropWeapon(currentIndex);
         controls.Player.UseMedkit.performed += _ => UseMedkit(true);
@@ -88,8 +89,6 @@ public class LocalInventoryManager : MonoBehaviour
         shellsAmmoCount = RulesManager.instance.startingShellsAmmo;
 
         UpdateWeaponVisual();
-
-        Debug.Log(inventoryItem[0]);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -169,15 +168,17 @@ public class LocalInventoryManager : MonoBehaviour
             {
                 SoundEffect sfx = Instantiate(soundEffect, transform.position, Quaternion.identity).GetComponent<SoundEffect>();
                 sfx.PlaySound(inventoryItem[currentIndex].weapon.pickupSound, 35, 1);
+                PlayerHoldChanged();
+            } else {
+                Scroll(amount);
             }
-
-            PlayerHoldChanged();
+            
         }
     }
 
     void Scroll(int indexToSwapTo)
     {
-        if (canSwitch && sinceLastSwitch > whenCanSwitch && indexToSwapTo != currentIndex)
+        if (canSwitch && sinceLastSwitch > whenCanSwitch && indexToSwapTo != currentIndex && inventoryItem[indexToSwapTo].weapon != null)
         {
             Destroy(currentReloadSound);
             wantsToReload = false;
@@ -340,9 +341,9 @@ public class LocalInventoryManager : MonoBehaviour
 
     void UpdateWeaponVisual()
     {
-        UpdateSlot(0);
         UpdateSlot(1);
         UpdateSlot(2);
+        UpdateSlot(3);
 
         if (inventoryItem[currentIndex].weapon != null)
         {
@@ -353,6 +354,7 @@ public class LocalInventoryManager : MonoBehaviour
         slots[0].alpha = 0.45f;
         slots[1].alpha = 0.45f;
         slots[2].alpha = 0.45f;
+        slots[3].alpha = 0.45f;
 
         slots[currentIndex].alpha = 1f;
 
@@ -366,52 +368,52 @@ public class LocalInventoryManager : MonoBehaviour
     {
         if (inventoryItem[pos].weapon != null)
         {
-            ammoCount[pos].text = inventoryItem[pos].ammoCount.ToString();
-            gunName[pos].text = inventoryItem[pos].weapon.gunName;
+            ammoCount[pos - 1].text = inventoryItem[pos].ammoCount.ToString();
+            gunName[pos - 1].text = inventoryItem[pos].weapon.gunName;
             switch (inventoryItem[pos].weapon.ammoType)
             {
                 case AmmoType.Light:
-                    totalAmmoCount[pos].text = (lightAmmoCount).ToString();
+                    totalAmmoCount[pos - 1].text = (lightAmmoCount).ToString();
                     break;
                 case AmmoType.Medium:
-                    totalAmmoCount[pos].text = (mediumAmmoCount).ToString();
+                    totalAmmoCount[pos - 1].text = (mediumAmmoCount).ToString();
                     break;
                 case AmmoType.Heavy:
-                    totalAmmoCount[pos].text = (heavyAmmoCount).ToString();
+                    totalAmmoCount[pos - 1].text = (heavyAmmoCount).ToString();
                     break;
                 case AmmoType.Shells:
-                    totalAmmoCount[pos].text = (shellsAmmoCount).ToString();
+                    totalAmmoCount[pos - 1].text = (shellsAmmoCount).ToString();
                     break;
             }
 
-            genericMarker[pos].SetActive(false);
-            rareMarker[pos].SetActive(false);
-            legendaryMarker[pos].SetActive(false);
+            genericMarker[pos - 1].SetActive(false);
+            rareMarker[pos - 1].SetActive(false);
+            legendaryMarker[pos - 1].SetActive(false);
 
             switch (inventoryItem[pos].weapon.rarity)
             {
                 case Weapon.Rarity.generic:
-                    slotsImage[pos].color = genericColor;
+                    slotsImage[pos - 1].color = genericColor;
                     break;
                 case Weapon.Rarity.rare:
-                    slotsImage[pos].color = rareColor;
+                    slotsImage[pos - 1].color = rareColor;
                     break;
                 case Weapon.Rarity.legendary:
-                    slotsImage[pos].color = legendaryColor;
+                    slotsImage[pos - 1].color = legendaryColor;
                     break;
             }
         }
         else
         {
-            genericMarker[pos].SetActive(false);
-            rareMarker[pos].SetActive(false);
-            legendaryMarker[pos].SetActive(false);
-            ammoCount[pos].text = "--";
-            gunName[pos].text = "Fist";
+            genericMarker[pos - 1].SetActive(false);
+            rareMarker[pos - 1].SetActive(false);
+            legendaryMarker[pos - 1].SetActive(false);
+            ammoCount[pos - 1].text = "- -";
+            gunName[pos - 1].text = "- - - - -";
             gunMeshFilter.mesh = null;
             gunMeshRenderer.material = null;
-            totalAmmoCount[pos].text = "--";
-            slotsImage[pos].color = noneColor;
+            totalAmmoCount[pos - 1].text = "- -";
+            slotsImage[pos - 1].color = noneColor;
         }
     }
 
@@ -476,11 +478,13 @@ public class LocalInventoryManager : MonoBehaviour
 
     public void DropWeapon(int index)
     {
-        if (inventoryItem[index].weapon != null)
+        if (inventoryItem[index].weapon != null && currentIndex != 0)
         {
             Instantiate(groundItem, transform.position, Quaternion.identity).GetComponent<GroundItem>().UpdateItem(inventoryItem[index]);
 
             inventoryItem[index].weapon = null;
+
+            Scroll(1.0f);
         }
 
         PlayerHoldChanged();
@@ -488,7 +492,7 @@ public class LocalInventoryManager : MonoBehaviour
 
     public void Reload()
     {
-        if (inventoryItem[currentIndex].weapon == null || wantsToReload)
+        if (inventoryItem[currentIndex].weapon == null || wantsToReload || currentIndex == 0)
             return;
 
         switch (inventoryItem[currentIndex].weapon.ammoType)
