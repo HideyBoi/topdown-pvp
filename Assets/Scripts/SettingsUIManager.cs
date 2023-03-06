@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Audio;
 using TMPro;
 
 public class SettingsUIManager : MonoBehaviour
@@ -18,6 +19,11 @@ public class SettingsUIManager : MonoBehaviour
     public TextMeshProUGUI refreshRateText;
     [Header("Rendering")]
     public TMP_Dropdown qualityDropdown;
+    [Header("Audio")]
+    public AudioMixer Master;
+    public Slider MasterSlider;
+    public Slider AmbientSlider;
+    public Slider SoundEffectsSlider;
 
     private void Awake()
     {
@@ -43,6 +49,22 @@ public class SettingsUIManager : MonoBehaviour
             {
                 currentResIndex = i;
             }
+        }
+
+        if (PlayerPrefs.HasKey("DES_MASTERSOUND"))
+        {
+            MasterSlider.value = PlayerPrefs.GetFloat("DES_MASTERSOUND");
+            Master.SetFloat("MasterVol", PlayerPrefs.GetFloat("DES_MASTERSOUND"));
+        }
+        if (PlayerPrefs.HasKey("DES_AMBSOUND"))
+        {
+            AmbientSlider.value = PlayerPrefs.GetFloat("DES_AMBSOUND");
+            Master.SetFloat("AmbientVol", PlayerPrefs.GetFloat("DES_AMBSOUND"));
+        }
+        if (PlayerPrefs.HasKey("DES_SFXSOUND"))
+        {
+            SoundEffectsSlider.value = PlayerPrefs.GetFloat("DES_SFXSOUND");
+            Master.SetFloat("SoundEffectsVol", PlayerPrefs.GetFloat("DES_SFXSOUND"));
         }
 
         resolutionDropdown.ClearOptions();
@@ -94,5 +116,21 @@ public class SettingsUIManager : MonoBehaviour
     {
         QualitySettings.SetQualityLevel(value);
         PlayerPrefs.SetInt("QUALITY", value);
+    }
+
+    public void OnMasterVolChanged(float value)
+    {
+        Master.SetFloat("MasterVol", value);
+        PlayerPrefs.SetFloat("DES_MASTERSOUND", value);
+    }
+    public void OnAmbientVolChanged(float value)
+    {
+        Master.SetFloat("AmbientVol", value);
+        PlayerPrefs.SetFloat("DES_AMBSOUND", value);
+    }
+    public void OnSfxVolChanged(float value)
+    {
+        Master.SetFloat("SoundEffectsVol", value);
+        PlayerPrefs.SetFloat("DES_SFXSOUND", value);
     }
 }

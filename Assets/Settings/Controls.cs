@@ -161,6 +161,15 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""UniMenu"",
+                    ""type"": ""Button"",
+                    ""id"": ""9bdb993c-cd3b-42bf-8446-faefc5ee3aaa"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -592,6 +601,28 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""action"": ""0"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""66c69dc2-f0a6-4f49-8f88-6cf9e9118dd1"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KBM"",
+                    ""action"": ""UniMenu"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3a7f5db5-f295-4b4d-b88e-1c4b1b7584ce"",
+                    ""path"": ""<Gamepad>/start"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""GAMEPAD"",
+                    ""action"": ""UniMenu"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -643,6 +674,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         m_Player_Drop = m_Player.FindAction("Drop", throwIfNotFound: true);
         m_Player_UseMedkit = m_Player.FindAction("UseMedkit", throwIfNotFound: true);
         m_Player_UseSyringe = m_Player.FindAction("UseSyringe", throwIfNotFound: true);
+        m_Player_UniMenu = m_Player.FindAction("UniMenu", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -719,6 +751,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Drop;
     private readonly InputAction m_Player_UseMedkit;
     private readonly InputAction m_Player_UseSyringe;
+    private readonly InputAction m_Player_UniMenu;
     public struct PlayerActions
     {
         private @Controls m_Wrapper;
@@ -738,6 +771,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         public InputAction @Drop => m_Wrapper.m_Player_Drop;
         public InputAction @UseMedkit => m_Wrapper.m_Player_UseMedkit;
         public InputAction @UseSyringe => m_Wrapper.m_Player_UseSyringe;
+        public InputAction @UniMenu => m_Wrapper.m_Player_UniMenu;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -792,6 +826,9 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @UseSyringe.started += instance.OnUseSyringe;
             @UseSyringe.performed += instance.OnUseSyringe;
             @UseSyringe.canceled += instance.OnUseSyringe;
+            @UniMenu.started += instance.OnUniMenu;
+            @UniMenu.performed += instance.OnUniMenu;
+            @UniMenu.canceled += instance.OnUniMenu;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -841,6 +878,9 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @UseSyringe.started -= instance.OnUseSyringe;
             @UseSyringe.performed -= instance.OnUseSyringe;
             @UseSyringe.canceled -= instance.OnUseSyringe;
+            @UniMenu.started -= instance.OnUniMenu;
+            @UniMenu.performed -= instance.OnUniMenu;
+            @UniMenu.canceled -= instance.OnUniMenu;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -893,5 +933,6 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         void OnDrop(InputAction.CallbackContext context);
         void OnUseMedkit(InputAction.CallbackContext context);
         void OnUseSyringe(InputAction.CallbackContext context);
+        void OnUniMenu(InputAction.CallbackContext context);
     }
 }

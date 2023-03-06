@@ -93,7 +93,7 @@ public class GameManager : MonoBehaviour
         networkManager.PlayerIsReady(localPlayerId);
     }
 
-    bool endedGame = false;
+    public bool endedGame = false;
 
     private void FixedUpdate()
     {

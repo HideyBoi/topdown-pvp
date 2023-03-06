@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Shotgun Legendary
   m_EditorClassIdentifier: 
   gunName: Shotgun
-  id: 5
+  id: 6
   gunMesh: {fileID: 3814378201483603881, guid: 4adbbdc07be0c6a46953997a68269c84, type: 3}
   gunMaterial: {fileID: 2100000, guid: 6b98da722a7efe049b9908818d880e00, type: 2}
   muzzleLocation: {x: 0, y: 0.048, z: 0.308}
@@ -28,8 +28,10 @@ MonoBehaviour:
   ammoType: 3
   automatic: 0
   damage: 10
+  damageFalloff: 0
   maxAmmoCount: 4
   timeBetweenShots: 1.5
   reloadTime: 3.128
   shotCount: 17
   spread: 0.35
+  speedModifier: 0.5
