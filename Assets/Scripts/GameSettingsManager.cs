@@ -66,7 +66,13 @@ public class GameSettingsManager : MonoBehaviour
 
     private void Awake()
     {
-        LoadValues();
+        if (PlayerPrefs.HasKey("MAX_HEALTH"))
+        {
+            LoadValues();
+        } else
+        {
+            Reset();
+        }
         RulesManager.instance.RulesUpdated();
         instance = this;
     }
@@ -424,12 +430,14 @@ public class GameSettingsManager : MonoBehaviour
 
     public void Reset()
     {
-        if (loading || lobby.isReady || !NetworkManager.instance.Server.IsRunning)
-        {
-            LoadValues();
-            return;
-        }
 
+        //loading || lobby.isReady || 
+
+        //if (!NetworkManager.instance.Server.IsRunning)
+       // {
+            //LoadValues();
+            //return;
+        //}
         //Debug.Log("[Game Settings Manager] Saving default values.");
 
         PlayerPrefs.SetInt("MAP_SIZE", defaultMapSize);

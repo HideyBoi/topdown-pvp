@@ -320,22 +320,22 @@ public class HealthManager : MonoBehaviour
 
     void DropLoot()
     {
-        if (inv.inventoryItem[0].weapon != null)
-        {
-            GameObject item1 = Instantiate(item, lootLocs[0].position, Quaternion.identity);
-            item1.GetComponent<GroundItem>().UpdateItem(inv.inventoryItem[0]);
-        }      
-
         if (inv.inventoryItem[1].weapon != null)
         {
-            GameObject item2 = Instantiate(item, lootLocs[1].position, Quaternion.identity);
-            item2.GetComponent<GroundItem>().UpdateItem(inv.inventoryItem[1]);
+            GameObject item1 = Instantiate(item, lootLocs[0].position, Quaternion.identity);
+            item1.GetComponent<GroundItem>().UpdateItem(inv.inventoryItem[1]);
         }      
 
         if (inv.inventoryItem[2].weapon != null)
         {
+            GameObject item2 = Instantiate(item, lootLocs[1].position, Quaternion.identity);
+            item2.GetComponent<GroundItem>().UpdateItem(inv.inventoryItem[2]);
+        }      
+
+        if (inv.inventoryItem[3].weapon != null)
+        {
             GameObject item3 = Instantiate(item, lootLocs[2].position, Quaternion.identity);
-            item3.GetComponent<GroundItem>().UpdateItem(inv.inventoryItem[2]);
+            item3.GetComponent<GroundItem>().UpdateItem(inv.inventoryItem[3]);
         }      
 
         if (inv.lightAmmoCount > 0)

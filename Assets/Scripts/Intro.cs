@@ -13,6 +13,11 @@ public class Intro : MonoBehaviour
         SceneManager.LoadSceneAsync("MainMenu");
     }
 
+    public void Play()
+    {
+        GetComponent<AudioSource>().Play();
+    }
+
     private void Awake()
     {
         tex.text = "This game is in active development.\n\nGame Version: " + Application.version;
