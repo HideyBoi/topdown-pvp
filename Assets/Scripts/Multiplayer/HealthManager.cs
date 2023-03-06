@@ -306,6 +306,8 @@ public class HealthManager : MonoBehaviour
 
     void Respawn()
     {
+        inv.currentIndex = 0;
+        inv.Scroll(0);
         inv.canSwitch = true;
         coll.enabled = true;
         deathUI.SetActive(false);
@@ -402,9 +404,9 @@ public class HealthManager : MonoBehaviour
             inv.shellsAmmoCount = 0;
         }
 
-        inv.inventoryItem[0].weapon = null;
         inv.inventoryItem[1].weapon = null;
         inv.inventoryItem[2].weapon = null;
+        inv.inventoryItem[3].weapon = null;
     }
 
     void OutOfGame()

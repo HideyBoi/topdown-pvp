@@ -176,7 +176,7 @@ public class LocalInventoryManager : MonoBehaviour
         }
     }
 
-    void Scroll(int indexToSwapTo)
+    public void Scroll(int indexToSwapTo)
     {
         if (canSwitch && sinceLastSwitch > whenCanSwitch && indexToSwapTo != currentIndex && inventoryItem[indexToSwapTo].weapon != null)
         {
