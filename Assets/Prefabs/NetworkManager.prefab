@@ -11816,7 +11816,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   leaveHost: {fileID: 1223759679810107344}
   leaveNormal: {fileID: 7862428772907320153}
-  settings: {fileID: 4997212339570969713}
+  settings: {fileID: 691237759}
   MainMenu: {fileID: 2289015891000530503}
   Lobby: {fileID: 3030173973076066887}
   InGame: {fileID: 3348965701870880750}
