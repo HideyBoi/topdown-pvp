@@ -23,7 +23,8 @@ public class RulesManager : MonoBehaviour
 
     private void Awake()
     {
-        instance = this;
+        if (instance == null)
+            instance = this;
     }
 
     public void RulesUpdated()
@@ -103,7 +104,7 @@ public class RulesManager : MonoBehaviour
             startingShellsAmmo = PlayerPrefs.GetInt("STARTING_SHELLS");
         }
 
-        if (NetworkManager.instance.Client != null)
+        if (NetworkManager.instance.Server.IsRunning)
         {
             SendRuleChangesToPlayers();
         } else

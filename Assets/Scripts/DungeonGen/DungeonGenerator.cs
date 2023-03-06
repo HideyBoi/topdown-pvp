@@ -69,6 +69,15 @@ public class DungeonGenerator : MonoBehaviour
     {
         if (ShouldGen && NetworkManager.instance.Server.IsRunning)
         {
+            if (RulesManager.instance != null)
+            {
+                size = Vector2Int.CeilToInt(RulesManager.instance.mapSize);
+            }
+            else
+            {
+                size = new Vector2Int(9, 9);
+            }
+
             Debug.Log("[Dungeon Generator] Starting dungeon generation.");
             ShouldGen = false;
             MazeGenerator(); 
