@@ -104,7 +104,7 @@ public class NetworkManager : MonoBehaviour
 
         RiptideLogger.Initialize(Debug.Log, Debug.Log, Debug.LogWarning, Debug.LogError, false);
 
-        if (SteamManager.Initialized)
+        if (SteamManager.Initialized && isSteam)
         {
             Debug.Log("[Network Manager] Steam is initalized, starting steam server.");
             SteamServer steamServer = new SteamServer();
@@ -126,7 +126,7 @@ public class NetworkManager : MonoBehaviour
         }
 
         //value needs to be 1 more than the highest ID in MessageIds
-        MessageRelayFilter filter = new MessageRelayFilter(27);
+        MessageRelayFilter filter = new MessageRelayFilter(28);
 
         foreach (var id in msgIdsToRelay)
         {

@@ -299,7 +299,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""id"": ""bcc499bd-d732-4a11-961e-b788bece94d6"",
                     ""path"": ""<Gamepad>/rightStick"",
                     ""interactions"": """",
-                    ""processors"": ""StickDeadzone(min=0.3,max=0.3)"",
+                    ""processors"": ""StickDeadzone(min=0.8,max=0.8)"",
                     ""groups"": ""GAMEPAD"",
                     ""action"": ""PointGamepad"",
                     ""isComposite"": false,
@@ -429,7 +429,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""53e06912-bad9-4949-90aa-7f27e7a243a6"",
-                    ""path"": ""<Gamepad>/leftShoulder"",
+                    ""path"": ""<Gamepad>/buttonWest"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""GAMEPAD"",
@@ -484,7 +484,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""d94463aa-8c7d-47c1-93e9-470813f7c489"",
-                    ""path"": ""<Gamepad>/dpad/up"",
+                    ""path"": ""<Gamepad>/dpad/right"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""GAMEPAD"",
@@ -517,7 +517,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""d4c94fef-47b7-4d92-b59a-57ae8fef2acd"",
-                    ""path"": ""<Gamepad>/dpad/right"",
+                    ""path"": ""<Gamepad>/dpad/left"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""GAMEPAD"",

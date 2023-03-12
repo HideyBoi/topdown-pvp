@@ -141,6 +141,8 @@ public class LocalPlayerController : MonoBehaviour
 
     void PointGamepad(Vector2 pointDir)
     {
+        if (pointDir.magnitude == 0)
+            return;
         Point(pointDir);
     }
 

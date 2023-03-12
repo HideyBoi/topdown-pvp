@@ -227,7 +227,8 @@ public class LocalGunManager : MonoBehaviour
                     }
                 }
 
-            } else
+            } 
+            else
             {
                 RaycastHit lookDir;
                 Physics.Raycast(transform.position, new Vector3(playerController.lookDir.x, 0, playerController.lookDir.y), out lookDir, Mathf.Infinity, gunLm);
@@ -289,6 +290,20 @@ public class LocalGunManager : MonoBehaviour
                                 NetworkManager.instance.Client.Send(muzzleFlashMsg);
 
                                 Instantiate(bulletTracer, gunPivot.position + gunPivot.transform.TransformDirection(im.inventoryItem[im.currentIndex].weapon.muzzleLocation), Quaternion.identity).GetComponent<BulletTracer>().SetData(shoot.point);
+
+                                int damage = im.inventoryItem[im.currentIndex].weapon.damage;
+                                float dist = Vector3.Distance(transform.position, shoot.point);
+                                int distanceDiminish = (int)(dist * im.inventoryItem[im.currentIndex].weapon.damageFalloff);
+
+                                if (distanceDiminish > damage)
+                                {
+                                    damage = 0;
+                                } else
+                                {
+                                    damage -= distanceDiminish;
+                                }
+                                
+                                Debug.Log($"{damage} : {distanceDiminish} : {im.inventoryItem[im.currentIndex].weapon.damage} | {dist}");
 
                                 if (shoot.collider.CompareTag("RemotePlayer"))
                                 {
