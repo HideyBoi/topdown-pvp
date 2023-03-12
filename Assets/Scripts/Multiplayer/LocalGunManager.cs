@@ -201,7 +201,7 @@ public class LocalGunManager : MonoBehaviour
                     dir.x += Random.Range(-im.inventoryItem[im.currentIndex].weapon.spread, im.inventoryItem[im.currentIndex].weapon.spread);
                     dir = pivot.TransformDirection(dir);
 
-                    Physics.Raycast(transform.position, dir, out shoot, 3.5f, gunLm);
+                    Physics.Raycast(transform.position, dir, out shoot, 5f, gunLm);
 
                     if (shoot.collider != null)
                     {

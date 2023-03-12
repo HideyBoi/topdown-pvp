@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Water
+  m_Name: WaterShallow
   m_Shader: {fileID: -6465566751694194690, guid: 21470e49dfb5cec48a5ad4804f06c27c,
     type: 3}
   m_Parent: {fileID: 0}
@@ -92,41 +92,30 @@ Material:
     - _ClearCoatSmoothness: 0
     - _Cull: 2
     - _Cutoff: 0.5
-    - _DepthFadeDistance: 0.6
+    - _DepthFadeDistance: 0.02
     - _DetailAlbedoMapScale: 1
     - _DetailNormalMapScale: 1
-    - _Direction: 0
     - _DstBlend: 10
     - _DstBlendAlpha: 10
     - _EnvironmentReflections: 1
-    - _FoamDirection: 0
-    - _FoamSpeed: 0
-    - _FoamTiling: 0
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
-    - _IntersectionFoamBlend: 0.2
-    - _IntersectionFoamDepth: 5.66
-    - _IntersectionFoamDirection: -2.7
-    - _IntersectionFoamFade: -0.63
-    - _IntersectionFoamScale: 3.03
-    - _IntersectionFoamSpeed: -0.6
-    - _IntersectrionFoamCutoff: 0
-    - _LightingHardness: 0.01
-    - _LightingSmoothness: 0.54
+    - _LightingHardness: 0
+    - _LightingSmoothness: 0.2
     - _Metallic: 0
     - _NormalsScale: 1
     - _NormalsSpeed: 0.2
-    - _NormalsStrength: 0.08
+    - _NormalsStrength: 1
     - _OcclusionStrength: 1
     - _Offset: 0.52
     - _Parallax: 0.005
     - _QueueControl: 1
     - _QueueOffset: 0
     - _ReceiveShadows: 1
-    - _RefractionScale: 0.17
+    - _RefractionScale: 0.4
     - _RefractionSpeed: 0.2
-    - _RefractionStrength: 0.01
+    - _RefractionStrength: 0.001
     - _Scale: 1.94
     - _Smoothness: 0.5
     - _SmoothnessTextureChannel: 0
@@ -134,23 +123,22 @@ Material:
     - _SrcBlend: 1
     - _SrcBlendAlpha: 1
     - _Surface: 1
-    - _SurfaceFoamDirection: 0.4
-    - _SurfaceFoamDistortion: 2.62
-    - _SurfaceFoamSpeed: 0.18
-    - _SurfaceFoamTiling: 10.98
+    - _SurfaceFoamDirection: 0.09
+    - _SurfaceFoamDistortion: 2.4
+    - _SurfaceFoamSpeed: 0.2
+    - _SurfaceFoamTiling: 9.18
     - _WaveSpeed: 1
     - _WorkflowMode: 1
     - _ZWrite: 0
     m_Colors:
     - _BaseColor: {r: 0, g: 1, b: 0.8652897, a: 0.21176471}
     - _Color: {r: 0, g: 1, b: 0.8652897, a: 0.21176471}
-    - _DeepColor: {r: 0, g: 0.12953566, b: 0.234, a: 0.07058824}
+    - _DeepColor: {r: 0, g: 0.12222218, b: 0.22, a: 0.07058824}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _IntersectionFoamColor: {r: 1, g: 1, b: 1, a: 0.30588236}
-    - _ShallowColor: {r: 0.20495589, g: 0.2927941, b: 0.36200002, a: 1}
+    - _ShallowColor: {r: 0.23768628, g: 0.3376784, b: 0.41799998, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
-    - _SpecularColor: {r: 1, g: 1, b: 1, a: 1}
-    - _SurfaceFoamColor: {r: 1, g: 1, b: 1, a: 0.3764706}
+    - _SpecularColor: {r: 0, g: 0, b: 0, a: 1}
+    - _SurfaceFoamColor: {r: 1, g: 1, b: 1, a: 0.2}
     - _WaterColor: {r: 0, g: 0.53096557, b: 0.6509434, a: 1}
   m_BuildTextureStacks: []
 --- !u!114 &8834710540725582224
