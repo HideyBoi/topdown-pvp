@@ -39,13 +39,15 @@ public class NetworkManager : MonoBehaviour
         public GameObject playerObject;
         public bool isHost = false;
 
-        public ushort skinId;
-        public ushort hatId;
+        public int skinId;
+        public int hatId;
 
-        public MultiplayerPlayer(ushort id, string name)
+        public MultiplayerPlayer(ushort id, string name, int skinId, int hatId)
         {
             this.id = id;
             this.name = name;
+            this.skinId = skinId;
+            this.hatId = hatId;
         }
     }
 
@@ -216,7 +218,7 @@ public class NetworkManager : MonoBehaviour
     void Connected(object sender, EventArgs e)
     {
         Debug.Log("[Network Manager] Successfully connected to server, sending player data.");
-        connectedPlayers.Add(new MultiplayerPlayer(Client.Id, mainMenuUIManager.currentUsername));
+        connectedPlayers.Add(new MultiplayerPlayer(Client.Id, mainMenuUIManager.currentUsername, PlayerPrefs.GetInt("DES_SKIN"), PlayerPrefs.GetInt("DES_HAT")));
         SendMyPlayerInfo();
     }
 
@@ -261,6 +263,8 @@ public class NetworkManager : MonoBehaviour
         Message msg = Message.Create(MessageSendMode.Reliable, MessageIds.playerInfo);
         msg.AddUShort(Client.Id);
         msg.AddString(mainMenuUIManager.currentUsername);
+        msg.AddInt(PlayerPrefs.GetInt("DES_SKIN"));
+        msg.AddInt(PlayerPrefs.GetInt("DES_HAT"));
         msg.AddString(Application.version);
         Client.Send(msg);
     }
@@ -270,6 +274,8 @@ public class NetworkManager : MonoBehaviour
     {
         ushort id = msg.GetUShort();
         string username = msg.GetString();
+        int skinId = msg.GetInt();
+        int hatId = msg.GetInt();
         string version = msg.GetString();
 
         Debug.Log($"[Network Manager] Got player info: ID:{id} Name:{username} Remote client version:{version}");
@@ -297,7 +303,7 @@ public class NetworkManager : MonoBehaviour
 
         if (!exists)
         {
-            instance.connectedPlayers.Add(new MultiplayerPlayer(id, username));
+            instance.connectedPlayers.Add(new MultiplayerPlayer(id, username, skinId, hatId));
         }
     }
 

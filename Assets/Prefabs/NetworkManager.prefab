@@ -5576,6 +5576,81 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!1 &1131371077889159459
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5275330504619826014}
+  - component: {fileID: 2858761225174108420}
+  m_Layer: 0
+  m_Name: CosmeticsManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5275330504619826014
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1131371077889159459}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6077828425873381015}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2858761225174108420
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1131371077889159459}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff0ce823d8e1688438395092e3af8001, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hats:
+  - name: No Hat
+    mesh: {fileID: 0}
+    materials: []
+  - name: Hardhat
+    mesh: {fileID: 3060653192905257562, guid: 8d582f0cfe48119459d3ed8990630c3a, type: 3}
+    materials:
+    - {fileID: 2100000, guid: 52344104f85cdb947ac4e06658c54f78, type: 2}
+    - {fileID: 2100000, guid: 10e84ed0355e0ac44baeb6a3da57d63e, type: 2}
+    - {fileID: 2100000, guid: 146551045d4e0f6499bce62725edc5a5, type: 2}
+    - {fileID: 2100000, guid: 39137b9516b3adf44b84ee45ff432e61, type: 2}
+  - name: Party Hat
+    mesh: {fileID: -4646989170497678978, guid: 8d582f0cfe48119459d3ed8990630c3a, type: 3}
+    materials:
+    - {fileID: 2100000, guid: 340f34a0b0c8c8746933d381b7a42a68, type: 2}
+  - name: Top Hat w/ Mustache
+    mesh: {fileID: 7058887041728448346, guid: 8d582f0cfe48119459d3ed8990630c3a, type: 3}
+    materials:
+    - {fileID: 2100000, guid: fb443ede3e3aa7f4684faf21ab014e08, type: 2}
+    - {fileID: 2100000, guid: 7a0a91e63d43d474496740b5a11109ed, type: 2}
+    - {fileID: 2100000, guid: 2970cfe00534fde448a3f593d58f741d, type: 2}
+  - name: Mustache
+    mesh: {fileID: 3131188959575262684, guid: 8d582f0cfe48119459d3ed8990630c3a, type: 3}
+    materials:
+    - {fileID: 2100000, guid: 2970cfe00534fde448a3f593d58f741d, type: 2}
+  skins:
+  - {fileID: 2100000, guid: 46031d073f02df0489f9fbf8637bdfa9, type: 2}
+  - {fileID: 2100000, guid: 993a669bf23cc0d47981edad3a4d2feb, type: 2}
+  - {fileID: 2100000, guid: 52291bd34bccb0043ab68b7f0b72ca0a, type: 2}
+  - {fileID: 2100000, guid: b511c14d9aa84234792a418500cc8fa7, type: 2}
+  - {fileID: 2100000, guid: 569c3d1288dbfc546b3a84baec96938a, type: 2}
 --- !u!1 &1201142363695044695
 GameObject:
   m_ObjectHideFlags: 0
@@ -11773,10 +11848,11 @@ Transform:
   - {fileID: 834130315043189234}
   - {fileID: 1816321390}
   - {fileID: 6416458749475091856}
+  - {fileID: 5275330504619826014}
   - {fileID: 3186215135101902993}
   - {fileID: 2504303771356144818}
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &6077828425873381014
 MonoBehaviour:

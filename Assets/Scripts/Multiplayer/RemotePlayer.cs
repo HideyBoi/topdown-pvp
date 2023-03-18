@@ -12,6 +12,8 @@ public class RemotePlayer : MonoBehaviour
     public bool beingSpectated;
 
     public Animator playerAnimator;
+    public Animator cosmeticsAnimator;
+    public CosmeticsHandler cosmeticsHandler;
     public Vector3 desMoveDir;
 
     private void Awake()
@@ -26,6 +28,11 @@ public class RemotePlayer : MonoBehaviour
         desMoveDir = inputDir;
     }
 
+    public void HandleCosmetics(int skin, int hat)
+    {
+        cosmeticsHandler.SetCosmetics(hat, skin);
+    }
+
     private void FixedUpdate()
     {
         Vector3 localSpaceMoveDir = pivot.InverseTransformVector(new Vector3(desMoveDir.x, 0, desMoveDir.y));
@@ -33,5 +40,9 @@ public class RemotePlayer : MonoBehaviour
         playerAnimator.SetFloat("MoveDirX", localSpaceMoveDir.x);
         playerAnimator.SetFloat("MoveDirY", localSpaceMoveDir.z);
         playerAnimator.SetFloat("MoveDirMag", localSpaceMoveDir.sqrMagnitude);
+
+        cosmeticsAnimator.SetFloat("MoveDirX", localSpaceMoveDir.x);
+        cosmeticsAnimator.SetFloat("MoveDirY", localSpaceMoveDir.z);
+        cosmeticsAnimator.SetFloat("MoveDirMag", localSpaceMoveDir.sqrMagnitude);
     }
 }

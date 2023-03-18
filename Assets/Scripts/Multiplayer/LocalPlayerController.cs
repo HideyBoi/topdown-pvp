@@ -42,6 +42,8 @@ public class LocalPlayerController : MonoBehaviour
     public Transform waterSplooshEmitter;
 
     public Animator playerAnimator;
+    public Animator cosmeticsAnimator;
+    public CosmeticsHandler cosmeticsHandler;
 
     private void Awake()
     {
@@ -52,6 +54,7 @@ public class LocalPlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         hm = GetComponent<HealthManager>();
         inventory = GetComponent<LocalInventoryManager>();
+        cosmeticsHandler.LoadCosmetics();
 
         controls.Player.Move.performed += ctx => Move(ctx.ReadValue<Vector2>(), true);
         controls.Player.Move.canceled += ctx => Move(ctx.ReadValue<Vector2>(), false);
@@ -86,6 +89,10 @@ public class LocalPlayerController : MonoBehaviour
         playerAnimator.SetFloat("MoveDirX", localSpaceMoveDir.x);
         playerAnimator.SetFloat("MoveDirY", localSpaceMoveDir.z);
         playerAnimator.SetFloat("MoveDirMag", localSpaceMoveDir.sqrMagnitude);
+        
+        cosmeticsAnimator.SetFloat("MoveDirX", localSpaceMoveDir.x);
+        cosmeticsAnimator.SetFloat("MoveDirY", localSpaceMoveDir.z);
+        cosmeticsAnimator.SetFloat("MoveDirMag", localSpaceMoveDir.sqrMagnitude);
 
         Message playerPosRot = Message.Create(MessageSendMode.Unreliable, NetworkManager.MessageIds.playerPos);
         playerPosRot.AddUShort(id);
