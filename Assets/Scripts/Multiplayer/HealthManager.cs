@@ -84,16 +84,20 @@ public class HealthManager : MonoBehaviour
         }
     }
 
-    private void FixedUpdate()
+    private void Update()
     {
         if (health <= 0)
         {
             coll.enabled = false;
-        } else
+        }
+        else
         {
             coll.enabled = true;
         }
+    }
 
+    private void FixedUpdate()
+    {
         if (isLocalPlayer)
         {
             if (isSpectating)

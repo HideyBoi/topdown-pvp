@@ -34,4 +34,4 @@ MonoBehaviour:
   reloadTime: 3.128
   shotCount: 17
   spread: 0.35
-  speedModifier: 0.5
+  speedModifier: 0.7
