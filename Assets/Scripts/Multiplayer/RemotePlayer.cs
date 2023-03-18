@@ -23,6 +23,7 @@ public class RemotePlayer : MonoBehaviour
     {
         transform.position = pos;
         pivot.rotation = pivotRot;
+        desMoveDir = inputDir;
     }
 
     private void FixedUpdate()
