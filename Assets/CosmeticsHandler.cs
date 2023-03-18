@@ -23,6 +23,9 @@ public class CosmeticsHandler : MonoBehaviour
 
     public void SetCosmetics(int hatId, int skinId)
     {
+        currSkinId = skinId;
+        currHatId = hatId;
+
         player.material = CosmeticsManager.i.skins[skinId];
 
         hat.sharedMesh = CosmeticsManager.i.hats[hatId].mesh;
