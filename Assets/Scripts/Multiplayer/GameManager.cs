@@ -76,6 +76,7 @@ public class GameManager : MonoBehaviour
                 GameObject remPlayer = Instantiate(remotePlayerPrefab);
                 remPlayer.GetComponent<RemotePlayer>()._id = player.id;
                 remPlayer.GetComponent<RemotePlayer>()._name = player.name;
+                remPlayer.GetComponent<RemotePlayer>().HandleCosmetics(player.skinId, player.hatId);
                 remPlayer.GetComponent<HealthManager>().thisId = player.id;
                 remotePlayers.Add(remPlayer.GetComponent<RemotePlayer>());
                 player.playerObject = remPlayer;
