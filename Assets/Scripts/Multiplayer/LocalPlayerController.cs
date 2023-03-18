@@ -41,6 +41,8 @@ public class LocalPlayerController : MonoBehaviour
     public GameObject waterSploosh;
     public Transform waterSplooshEmitter;
 
+    public Animator playerAnimator;
+
     private void Awake()
     {
         instance = this;
@@ -77,11 +79,18 @@ public class LocalPlayerController : MonoBehaviour
             Physics.Raycast(transform.position, new Vector3(lookDir.x, 0, lookDir.y), out hit, Mathf.Infinity, lm);
 
             cursor.position = cam.WorldToScreenPoint(hit.point);
-        }  
+        }
+
+        Vector3 localSpaceMoveDir = pivot.InverseTransformVector(new Vector3(desMoveDir.x, 0, desMoveDir.y));
+
+        playerAnimator.SetFloat("MoveDirX", localSpaceMoveDir.x);
+        playerAnimator.SetFloat("MoveDirY", localSpaceMoveDir.z);
+        playerAnimator.SetFloat("MoveDirMag", localSpaceMoveDir.sqrMagnitude);
 
         Message playerPosRot = Message.Create(MessageSendMode.Unreliable, NetworkManager.MessageIds.playerPos);
         playerPosRot.AddUShort(id);
         playerPosRot.AddVector3(transform.position);
+        playerPosRot.AddVector3(desMoveDir);
         playerPosRot.AddQuaternion(pivot.rotation);
         nm.Client.Send(playerPosRot);
 

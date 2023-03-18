@@ -183,8 +183,11 @@ public class GameManager : MonoBehaviour
             {
                 if (player != null)
                 {
-                    player.transform.position = msg.GetVector3();
-                    player.transform.rotation = msg.GetQuaternion();
+                    Vector3 pos =  msg.GetVector3();
+                    Vector3 dir =  msg.GetVector3();
+                    Quaternion rot = msg.GetQuaternion();
+
+                    player.UpdatePosition(pos, rot, dir);
                 }   
             }
         }
