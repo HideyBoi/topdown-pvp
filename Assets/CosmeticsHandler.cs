@@ -7,8 +7,8 @@ public class CosmeticsHandler : MonoBehaviour
     public SkinnedMeshRenderer player;
     public SkinnedMeshRenderer hat;
 
-    int currSkinId;
-    int currHatId;
+    public int currSkinId;
+    public int currHatId;
 
     public void LoadCosmetics()
     {

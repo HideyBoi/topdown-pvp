@@ -16,6 +16,7 @@ public class WinningRoom : MonoBehaviour
     public TextMeshPro namePlate;
     public TextMeshProUGUI killCount;
     public TextMeshProUGUI livesCount;
+    public CosmeticsHandler cosmeticsHandler;
 
     private void Awake()
     {
@@ -52,6 +53,9 @@ public class WinningRoom : MonoBehaviour
     {
         UI.SetActive(true);
 
+        int hatId = 0;
+        int skinId = 0;
+
         if (id == NetworkManager.instance.Client.Id)
         {
             foreach (var networkPlayer in NetworkManager.instance.connectedPlayers)
@@ -59,6 +63,8 @@ public class WinningRoom : MonoBehaviour
                 if (networkPlayer.id == id)
                 {
                     namePlate.text = networkPlayer.name;
+                    hatId = networkPlayer.hatId;
+                    skinId = networkPlayer.skinId;
                 }
             }
 
@@ -66,6 +72,9 @@ public class WinningRoom : MonoBehaviour
 
             livesCount.gameObject.SetActive(HealthManager.localHealthManager.lives != -1);
             livesCount.text = HealthManager.localHealthManager.lives.ToString();
+
+            cosmeticsHandler.SetCosmetics(hatId, skinId);
+
         } else
         {
             foreach (var remotePlayer in GameManager.instance.remotePlayers)
@@ -74,6 +83,7 @@ public class WinningRoom : MonoBehaviour
                 killCount.text = remotePlayer.healthManager.killCount.ToString();
                 livesCount.gameObject.SetActive(remotePlayer.healthManager.lives != -1);
                 livesCount.text = remotePlayer.healthManager.lives.ToString();
+                cosmeticsHandler.SetCosmetics(remotePlayer.cosmeticsHandler.currHatId, remotePlayer.cosmeticsHandler.currSkinId);
             }
         }
     }
