@@ -5881,7 +5881,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5a1f6c788de004449e17827b417a7fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  killFeedItem: {fileID: 2183891826911585689, guid: bc7b99e15398a184582b3af8c65ce334,
+  killFeedItem: {fileID: 3162383454682011405, guid: 3afa20672813b7441af394d798ac7d06,
     type: 3}
 --- !u!1 &4864035421199241375
 GameObject:

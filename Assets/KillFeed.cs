@@ -17,8 +17,9 @@ public class KillFeed : MonoBehaviour
 
     public void OnKill(ushort killer, ushort victim, Weapon weapon)
     {
-        GameObject newItem = Instantiate(killFeedItem);
-        newItem.GetComponent<TextMeshProUGUI>().text = $"{GetPlayerName(killer)} killed {GetPlayerName(killer)} using {weapon.gunName} [{GetWeaponRarity(weapon)}]";
+        GameObject newItem = Instantiate(killFeedItem, transform);
+        Debug.Log(newItem.GetComponent<TextMeshProUGUI>());
+        newItem.GetComponent<TextMeshProUGUI>().text = $"<color=#ff322b>{GetPlayerName(killer)}</color> killed <color=#ff322b>{GetPlayerName(victim)}</color> using <color=#26baff>{weapon.gunName} [{GetWeaponRarity(weapon)}]</color>";
     }
 
     string GetPlayerName(ushort id)
