@@ -217,6 +217,8 @@ public class HealthManager : MonoBehaviour
             }
         }
 
+        KillFeed.i.OnKill(killingPlayer, thisId, GameManager.instance.GetWeaponById(gunId));
+
         if (isLocalPlayer)
         {
             if (isDead)
