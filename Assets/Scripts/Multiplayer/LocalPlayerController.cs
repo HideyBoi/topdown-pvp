@@ -4,6 +4,7 @@ using UnityEngine;
 using Cinemachine;
 using Riptide;
 using Riptide.Utils;
+using System;
 
 public class LocalPlayerController : MonoBehaviour
 {
@@ -45,6 +46,26 @@ public class LocalPlayerController : MonoBehaviour
     public Animator cosmeticsAnimator;
     public CosmeticsHandler cosmeticsHandler;
 
+    public static event Action onEnablePlayerInput;
+    public static event Action onDisablePlayerInput;
+
+    public bool controlsEnabled = true;
+
+    public static void EnablePlayerInput()
+    {
+        if (onEnablePlayerInput != null)
+            onEnablePlayerInput();
+    }
+
+    public static void DisablePlayerInput()
+    {
+        if (onDisablePlayerInput != null)
+            onDisablePlayerInput();
+    }
+
+    void Disable() { controls.Disable(); instance.controlsEnabled = false; }
+    void Enable() { controls.Enable(); instance.controlsEnabled = true; }
+
     private void Awake()
     {
         instance = this;
@@ -55,6 +76,9 @@ public class LocalPlayerController : MonoBehaviour
         hm = GetComponent<HealthManager>();
         inventory = GetComponent<LocalInventoryManager>();
         cosmeticsHandler.LoadCosmetics();
+
+        onDisablePlayerInput += Disable;
+        onEnablePlayerInput += Enable;
 
         controls.Player.Move.performed += ctx => Move(ctx.ReadValue<Vector2>(), true);
         controls.Player.Move.canceled += ctx => Move(ctx.ReadValue<Vector2>(), false);
@@ -116,10 +140,10 @@ public class LocalPlayerController : MonoBehaviour
 
                 if (hit.collider.CompareTag("Water"))
                 {
-                    rng = Random.Range(5, 10);
+                    rng = UnityEngine.Random.Range(5, 10);
                 } else
                 {   
-                    rng = Random.Range(0, 5);
+                    rng = UnityEngine.Random.Range(0, 5);
                 }
 
                 Message msg = Message.Create(MessageSendMode.Reliable, NetworkManager.MessageIds.soundEffect);
@@ -175,6 +199,7 @@ public class LocalPlayerController : MonoBehaviour
     private void OnEnable()
     {
         controls.Enable();
+        controlsEnabled = true;
     }
 
     private void OnDisable()

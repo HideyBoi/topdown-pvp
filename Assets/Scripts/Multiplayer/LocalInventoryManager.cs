@@ -69,6 +69,9 @@ public class LocalInventoryManager : MonoBehaviour
         controls = new Controls();
         gm = GetComponent<LocalGunManager>();
 
+        LocalPlayerController.onDisablePlayerInput += controls.Disable;
+        LocalPlayerController.onEnablePlayerInput += controls.Enable;
+
         controls.Player.Scroll.performed += ctx => Scroll(ctx.ReadValue<float>());
         controls.Player._0.performed += _ => Scroll(0);
         controls.Player._1.performed += _ => Scroll(1);

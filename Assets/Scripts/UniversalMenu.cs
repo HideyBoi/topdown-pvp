@@ -25,6 +25,17 @@ public class UniversalMenu : MonoBehaviour
 
     void OpenUniversalMenu()
     {
+        if (LocalPlayerController.instance != null )
+        {
+            if (!LocalPlayerController.instance.controlsEnabled) 
+            {
+                Debug.Log("Disabled");
+                return;
+            }
+        }
+
+        LocalPlayerController.DisablePlayerInput();
+
         switch (SceneManager.GetActiveScene().name) 
         {
             case "MainMenu":
@@ -53,6 +64,11 @@ public class UniversalMenu : MonoBehaviour
                 }
                 break;
         }
+    }
+
+    public void ReEnableControls()
+    {
+        LocalPlayerController.EnablePlayerInput();
     }
 
     public void ExitToDesktop()

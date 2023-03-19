@@ -54,6 +54,10 @@ public class LocalGunManager : MonoBehaviour
         //controls.Player.Aim.performed += _ => Aim(true);
         //controls.Player.Aim.canceled += _ => Aim(false);
 
+
+        LocalPlayerController.onDisablePlayerInput += controls.Disable;
+        LocalPlayerController.onEnablePlayerInput += controls.Enable;
+
         playerController = GetComponent<LocalPlayerController>();
         im = GetComponent<LocalInventoryManager>();
         hm = GetComponent<HealthManager>();
