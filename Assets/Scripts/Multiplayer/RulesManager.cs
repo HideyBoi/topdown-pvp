@@ -100,6 +100,11 @@ public class RulesManager : MonoBehaviour
             maxHealth = PlayerPrefs.GetInt("MAX_HEALTH");
         }
 
+        if (PlayerPrefs.HasKey("AMMO_MULTIPLIER"))
+        {
+            ammoMultiplier = PlayerPrefs.GetFloat("AMMO_MULTIPLIER");
+        }
+
         if (PlayerPrefs.HasKey("STARTING_SYRINGES"))
         {
             startingSyringes = PlayerPrefs.GetInt("STARTING_SYRINGES");

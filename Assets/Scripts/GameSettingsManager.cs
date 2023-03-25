@@ -238,8 +238,8 @@ public class GameSettingsManager : MonoBehaviour
         catch (FormatException)
         {
             failure = true;
-            Debug.Log("STARTING SYRINGES is invalid!");
-            startingSyringesError.SetActive(true);
+            Debug.Log("AMMO MULTIPLIER is invalid!");
+            ammoMultiplierError.SetActive(true);
         }
 
         try
