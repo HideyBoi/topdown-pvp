@@ -25,6 +25,7 @@ public class HealthManager : MonoBehaviour
     public GameObject deathEffect;
 
     public bool remoteDead = false;
+    public bool alreadyCountedKill = false;
 
     [Header("Local Player Specific")]
     [SerializeField] private Animator animator;
@@ -98,6 +99,11 @@ public class HealthManager : MonoBehaviour
         else
         {
             coll.enabled = true;
+        }
+
+        if (health >= maxHealth)
+        {
+            alreadyCountedKill = false;
         }
     }
 
@@ -211,6 +217,7 @@ public class HealthManager : MonoBehaviour
             if (health == maxHealth)
             {
                 remoteDead = false;
+                alreadyCountedKill = false;
                 health = maxHealth;
             }
         }
@@ -218,11 +225,12 @@ public class HealthManager : MonoBehaviour
 
     public void Die(ushort killingPlayer, int gunId)
     {
-
-        Instantiate(deathEffect, transform.position, Quaternion.identity);
-
-        if (health >= 0)
+        if (!alreadyCountedKill)
         {
+            alreadyCountedKill = true;
+
+            Instantiate(deathEffect, transform.position, Quaternion.identity);
+
             if (killingPlayer == NetworkManager.instance.Client.Id)
             {
                 Debug.Log("[Health Manager] Detected that local client has killed a remote client: " + thisId);
