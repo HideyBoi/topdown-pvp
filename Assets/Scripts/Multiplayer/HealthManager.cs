@@ -89,9 +89,6 @@ public class HealthManager : MonoBehaviour
 
     private void Update()
     {
-        if (!isLocalPlayer)
-            Debug.Log("Health: " + health);
-
         if (health <= 0)
         {
             coll.enabled = false;
@@ -246,9 +243,9 @@ public class HealthManager : MonoBehaviour
                     }
                 }
             }
-        }
 
-        KillFeed.i.OnKill(killingPlayer, thisId, GameManager.instance.GetWeaponById(gunId));
+            KillFeed.i.OnKill(killingPlayer, thisId, GameManager.instance.GetWeaponById(gunId));
+        }
 
         if (isLocalPlayer)
         {
