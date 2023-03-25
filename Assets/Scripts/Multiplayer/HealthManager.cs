@@ -24,6 +24,8 @@ public class HealthManager : MonoBehaviour
     public GameObject healEffect;
     public GameObject deathEffect;
 
+    public bool remoteDead = false;
+
     [Header("Local Player Specific")]
     [SerializeField] private Animator animator;
     public Collider coll;
@@ -86,6 +88,9 @@ public class HealthManager : MonoBehaviour
 
     private void Update()
     {
+        if (!isLocalPlayer)
+            Debug.Log("Health: " + health);
+
         if (health <= 0)
         {
             coll.enabled = false;
@@ -194,7 +199,21 @@ public class HealthManager : MonoBehaviour
 
     public void Health(int newHealth)
     {
-        health = newHealth;
+        if (!remoteDead)
+        {
+            health = newHealth;
+            if (health <= 0)
+            {
+                remoteDead = true;
+            }
+        } else
+        {
+            if (health == maxHealth)
+            {
+                remoteDead = false;
+                health = maxHealth;
+            }
+        }
     }
 
     public void Die(ushort killingPlayer, int gunId)
