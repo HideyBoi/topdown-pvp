@@ -434,15 +434,17 @@ public class LocalInventoryManager : MonoBehaviour
                 foundSpot = true;
             }
         }
-        if (!foundSpot)
+        if (!foundSpot && currentIndex != 0)
         {
             Instantiate(groundItem, transform.position, Quaternion.identity).GetComponent<GroundItem>().UpdateItem(inventoryItem[currentIndex]);
 
             inventoryItem[currentIndex] = pickedUpItem;
+
+            foundSpot = true;
         }
         
-
-        groundItem.Pickup(false);
+        if (foundSpot)
+            groundItem.Pickup(false);
 
         PlayerHoldChanged();
     }

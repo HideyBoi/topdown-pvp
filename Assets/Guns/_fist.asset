@@ -24,7 +24,7 @@ MonoBehaviour:
   roughness: 3
   shakeFadeIn: 0.2
   shakeFadeOut: 0.5
-  rarity: 2
+  rarity: 0
   ammoType: 0
   automatic: 0
   damage: 15
