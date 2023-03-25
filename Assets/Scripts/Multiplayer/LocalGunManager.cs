@@ -319,7 +319,7 @@ public class LocalGunManager : MonoBehaviour
                                     Instantiate(bloodEffect, shoot.point, Quaternion.LookRotation(shoot.normal, Vector3.up));
 
                                     HealthManager hm = shoot.collider.GetComponent<HealthManager>();
-                                    Damage(im.inventoryItem[im.currentIndex].weapon.damage, im.inventoryItem[im.currentIndex].weapon.id, hm);
+                                    Damage(damage, im.inventoryItem[im.currentIndex].weapon.id, hm);
                                 }
                             }
                         }
