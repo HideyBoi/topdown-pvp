@@ -548,7 +548,7 @@ public class GameSettingsManager : MonoBehaviour
             PlayerPrefs.SetInt("GIVE_STARTING_LOOT_ON_DROP_WEAPONS", 0);
         }
 
-        if (doWeaponSlowdown)
+        if (doWeaponSlowdownDefault)
         {
             PlayerPrefs.SetInt("DO_WEAPON_SLOWDOWN", 1);
         } else
@@ -556,7 +556,7 @@ public class GameSettingsManager : MonoBehaviour
             PlayerPrefs.SetInt("DO_WEAPON_SLOWDOWN", 0);
         }
 
-        if (doWeaponDropoff)
+        if (doWeaponDropoffDefault)
         {
             PlayerPrefs.SetInt("DO_WEAPON_DROPOFF", 1);
         }
