@@ -22718,6 +22718,8 @@ MonoBehaviour:
   maxPlayersInput: {fileID: 1665406946}
   lobbyType: {fileID: 1587829124}
   cursor: {fileID: 2800000, guid: c08557d374818d54cb09c75260c8b18e, type: 3}
+  cosmeticsRoot: {fileID: 502109436}
+  camRot: {fileID: 2087823739}
 --- !u!114 &2039629025
 MonoBehaviour:
   m_ObjectHideFlags: 0

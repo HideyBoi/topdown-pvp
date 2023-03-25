@@ -27,6 +27,9 @@ public class MainUIManager : MonoBehaviour
 
     public Texture2D cursor;
 
+    public GameObject cosmeticsRoot;
+    public GameObject camRot;
+
     private void Start()
     {
         Cursor.SetCursor(cursor, new Vector2(cursor.width / 2, cursor.height / 2), CursorMode.Auto);
@@ -55,6 +58,7 @@ public class MainUIManager : MonoBehaviour
     public void ConnectedToLobby()
     {
         currentLobby = Instantiate(lobby);
+        CloseCosmetics();
         visRoot.SetActive(false);
     }
 
@@ -78,6 +82,12 @@ public class MainUIManager : MonoBehaviour
                 SteamLobbyManager.Singleton.CreateLobby((ushort)maxPlayers, lobbyType.value);
             }
         } catch { return; }    
+    }
+
+    void CloseCosmetics()
+    {
+        cosmeticsRoot.SetActive(false);
+        camRot.SetActive(true);
     }
 
     public void OpenSettings()
