@@ -31,7 +31,7 @@ public class MainUIManager : MonoBehaviour
     {
 #if DEBUG
         debugVersionInfo.gameObject.SetActive(true);
-        debugVersionInfo.text = $"THIS APPLICATION IS RUNNING IN <i>DEBUG MODE</i>\n{Application.companyName}       {Application.productName}\n<b>Version: {Application.version} running on Unity version {Application.unityVersion}</b>";
+        debugVersionInfo.text = $"THIS GAME IS IN DEVELOPMENT AND IS NOT REPRESENTATIVE OF THE FINISHED PRODUCT.\n\n{Application.productName} - {Application.companyName}\n<b>Version: {Application.version} running on Unity version: {Application.unityVersion}</b>\nMAKE SURE TO READ <b><i>LICENSE AND DISCLAIMER.txt</i></b>!!";
 #endif
 
         if (NetworkManager.instance != null)
