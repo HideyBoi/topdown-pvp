@@ -29,6 +29,8 @@ public class MainUIManager : MonoBehaviour
 
     private void Start()
     {
+        Cursor.SetCursor(cursor, new Vector2(cursor.width / 2, cursor.height / 2), CursorMode.Auto);
+
 #if DEBUG
         debugVersionInfo.gameObject.SetActive(true);
         debugVersionInfo.text = $"THIS GAME IS IN DEVELOPMENT AND IS NOT REPRESENTATIVE OF THE FINISHED PRODUCT.\n\n{Application.productName} - {Application.companyName}\n<b>Version: {Application.version} running on Unity version: {Application.unityVersion}</b>\nMAKE SURE TO READ <b><i>LICENSE AND DISCLAIMER.txt</i></b>!!";
@@ -48,8 +50,6 @@ public class MainUIManager : MonoBehaviour
         instance = this;
 
         NetworkManager.instance.mainMenuUIManager = this;
-
-        Cursor.SetCursor(cursor, new Vector2(cursor.width / 2, cursor.height / 2), CursorMode.Auto);
     }
 
     public void ConnectedToLobby()
@@ -83,5 +83,10 @@ public class MainUIManager : MonoBehaviour
     public void OpenSettings()
     {
         SettingsUIManager.instance.ShowSettings();
+    }
+
+    public void PasteInJoin()
+    {
+        lobbyCodeInput.text = GUIUtility.systemCopyBuffer;
     }
 }

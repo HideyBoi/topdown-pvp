@@ -80,4 +80,9 @@ public class LobbyManager : MonoBehaviour
     {
         NetworkManager.instance.LeaveGame();
     }
+
+    public void CopyLobbyText()
+    {
+        GUIUtility.systemCopyBuffer = SteamLobbyManager.Singleton.lobbyId.ToString();
+    }
 }
