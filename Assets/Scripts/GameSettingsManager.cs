@@ -34,6 +34,12 @@ public class GameSettingsManager : MonoBehaviour
     public Toggle giveStartingLootOnDeath;
     public bool giveStartingLootOnDeathDefault = true;
 
+    public Toggle doWeaponSlowdown;
+    public bool doWeaponSlowdownDefault = false;
+
+    public Toggle doWeaponDropoff;
+    public bool doWeaponDropoffDefault = true;
+
     public TMP_InputField maxHealth;
     public GameObject maxHealthError;
     public int defaulltMaxHealth = 150;
@@ -45,6 +51,10 @@ public class GameSettingsManager : MonoBehaviour
     public TMP_InputField startingMedkits;
     public GameObject startingMedkitsError;
     public int defaultMedkitsCount = 0;
+
+    public TMP_InputField ammoMultiplier;
+    public GameObject ammoMultiplierError;
+    public float defaultAmmoMultiplier = 1;
 
     public TMP_InputField startingLightAmmo;
     public GameObject startingLightAmmoError;
@@ -173,6 +183,23 @@ public class GameSettingsManager : MonoBehaviour
             PlayerPrefs.SetInt("GIVE_STARTING_LOOT_ON_DROP_WEAPONS", 0);
         }
 
+        if (doWeaponSlowdown.isOn)
+        {
+            PlayerPrefs.SetInt("DO_WEAPON_SLOWDOWN", 1);
+        } else
+        {
+            PlayerPrefs.SetInt("DO_WEAPON_SLOWDOWN", 0);
+        }
+
+        if (doWeaponDropoff.isOn)
+        {
+            PlayerPrefs.SetInt("DO_WEAPON_DROPOFF", 1);
+        } else
+        {
+
+            PlayerPrefs.SetInt("DO_WEAPON_DROPOFF", 0);
+        }
+
         try
         {
             if (int.Parse(maxHealth.text) > 0)
@@ -192,6 +219,27 @@ public class GameSettingsManager : MonoBehaviour
             failure = true;
             Debug.Log("MAX HEALTH is invalid!");
             maxHealthError.SetActive(true);
+        }
+
+        try
+        {
+            if (float.Parse(ammoMultiplier.text) >= 1 && float.Parse(ammoMultiplier.text) <= 500)
+            {
+                PlayerPrefs.SetFloat("AMMO_MULTIPLIER", float.Parse(ammoMultiplier.text));
+                ammoMultiplierError.SetActive(false);
+            }
+            else
+            {
+                failure = true;
+                Debug.Log("AMMO MULTIPLIER is invalid!");
+                ammoMultiplierError.SetActive(true);
+            }
+        }
+        catch (FormatException)
+        {
+            failure = true;
+            Debug.Log("STARTING SYRINGES is invalid!");
+            startingSyringesError.SetActive(true);
         }
 
         try
@@ -384,10 +432,39 @@ public class GameSettingsManager : MonoBehaviour
             }
         }
 
+        if (PlayerPrefs.HasKey("DO_WEAPON_SLOWDOWN"))
+        {
+            if (PlayerPrefs.GetInt("DO_WEAPON_SLOWDOWN") == 1)
+            {
+                doWeaponSlowdown.isOn = true;
+            } else
+            {
+
+                doWeaponSlowdown.isOn = false;
+            }
+        }
+
+        if (PlayerPrefs.HasKey("DO_WEAPON_DROPOFF"))
+        {
+            if (PlayerPrefs.GetInt("DO_WEAPON_DROPOFF") == 1)
+            {
+                doWeaponDropoff.isOn = true;
+            }
+            else
+            {
+                doWeaponDropoff.isOn = false;
+            }
+        }
+
         if (PlayerPrefs.HasKey("MAX_HEALTH"))
         {
             maxHealthError.SetActive(false);
             maxHealth.text = PlayerPrefs.GetInt("MAX_HEALTH").ToString();
+        }
+
+        if (PlayerPrefs.HasKey("AMMO_MULTIPLIER"))
+        {
+            ammoMultiplier.text = PlayerPrefs.GetFloat("AMMO_MULTIPLIER").ToString();
         }
 
         if (PlayerPrefs.HasKey("STARTING_SYRINGES"))
@@ -471,7 +548,25 @@ public class GameSettingsManager : MonoBehaviour
             PlayerPrefs.SetInt("GIVE_STARTING_LOOT_ON_DROP_WEAPONS", 0);
         }
 
+        if (doWeaponSlowdown)
+        {
+            PlayerPrefs.SetInt("DO_WEAPON_SLOWDOWN", 1);
+        } else
+        {
+            PlayerPrefs.SetInt("DO_WEAPON_SLOWDOWN", 0);
+        }
+
+        if (doWeaponDropoff)
+        {
+            PlayerPrefs.SetInt("DO_WEAPON_DROPOFF", 1);
+        }
+        else
+        {
+            PlayerPrefs.SetInt("DO_WEAPON_DROPOFF", 0);
+        }
+
         PlayerPrefs.SetInt("MAX_HEALTH", defaulltMaxHealth);
+        PlayerPrefs.SetFloat("AMMO_MULTIPLIER", defaultAmmoMultiplier);
         PlayerPrefs.SetInt("STARTING_SYRINGES", defaultSyringeCount);
         PlayerPrefs.SetInt("STARTING_MEDKITS", defaultMedkitsCount);
         PlayerPrefs.SetInt("STARTING_LIGHTAMMO", defaultStartingLightAmmo);

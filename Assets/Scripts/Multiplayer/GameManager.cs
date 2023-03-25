@@ -337,7 +337,7 @@ public class GameManager : MonoBehaviour
         }
 
         loot.ammoForGun = loot.weapon.ammoType;
-        loot.ammoForGunCount = loot.weapon.maxAmmoCount;
+        loot.ammoForGunCount = Mathf.RoundToInt(loot.weapon.maxAmmoCount * RulesManager.instance.ammoMultiplier);
 
         switch (Random.Range(0, 4))
         {
@@ -355,7 +355,7 @@ public class GameManager : MonoBehaviour
                 break;
         }
 
-        loot.auxAmmoCount = Random.Range(4, 12);
+        loot.auxAmmoCount = Mathf.RoundToInt(Random.Range(4, 12) * RulesManager.instance.ammoMultiplier);
 
         return loot;
     }

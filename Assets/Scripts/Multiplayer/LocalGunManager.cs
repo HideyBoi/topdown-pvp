@@ -296,18 +296,23 @@ public class LocalGunManager : MonoBehaviour
                                 Instantiate(bulletTracer, gunPivot.position + gunPivot.transform.TransformDirection(im.inventoryItem[im.currentIndex].weapon.muzzleLocation), Quaternion.identity).GetComponent<BulletTracer>().SetData(shoot.point);
 
                                 int damage = im.inventoryItem[im.currentIndex].weapon.damage;
-                                float dist = Vector3.Distance(transform.position, shoot.point);
-                                int distanceDiminish = (int)(dist * im.inventoryItem[im.currentIndex].weapon.damageFalloff);
-
-                                if (distanceDiminish > damage)
-                                {
-                                    damage = 0;
-                                } else
-                                {
-                                    damage -= distanceDiminish;
-                                }
                                 
-                                Debug.Log($"{damage} : {distanceDiminish} : {im.inventoryItem[im.currentIndex].weapon.damage} | {dist}");
+                                if (RulesManager.instance.doWeaponDropoff)
+                                {
+                                    float dist = Vector3.Distance(transform.position, shoot.point);
+                                    int distanceDiminish = (int)(dist * im.inventoryItem[im.currentIndex].weapon.damageFalloff);
+
+                                    if (distanceDiminish > damage)
+                                    {
+                                        damage = 0;
+                                    }
+                                    else
+                                    {
+                                        damage -= distanceDiminish;
+                                    }
+
+                                    Debug.Log($"{damage} : {distanceDiminish} : {im.inventoryItem[im.currentIndex].weapon.damage} | {dist}");
+                                }
 
                                 if (shoot.collider.CompareTag("RemotePlayer"))
                                 {

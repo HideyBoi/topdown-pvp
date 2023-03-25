@@ -10,10 +10,14 @@ public class RulesManager : MonoBehaviour
     public static RulesManager instance;
 
     public int lives = 3;
+    public bool infiniteLives = false;
     public bool dropLootOnEveryDeath;
     public bool giveStartingStatsOnDropLoot;
+    public bool doWeaponSlowdown;
+    public bool doWeaponDropoff;
     public Vector2 mapSize;
     public int maxHealth;
+    public float ammoMultiplier;
     public int startingSyringes;
     public int startingMedkits;
     public int startingLightAmmo;
@@ -66,6 +70,28 @@ public class RulesManager : MonoBehaviour
             else
             {
                 giveStartingStatsOnDropLoot = false;
+            }
+        }
+
+        if (PlayerPrefs.HasKey("DO_WEAPON_SLOWDOWN"))
+        {
+            if (PlayerPrefs.GetInt("DO_WEAPON_SLOWDOWN") == 1)
+            {
+                doWeaponSlowdown = true;
+            } else
+            {
+                doWeaponSlowdown = false;
+            }
+        }
+        
+        if (PlayerPrefs.HasKey("DO_WEAPON_DROPOFF"))
+        {
+            if (PlayerPrefs.GetInt("DO_WEAPON_DROPOFF") == 1)
+            {
+                doWeaponDropoff = true;
+            } else
+            {
+                doWeaponDropoff = false;
             }
         }
 
@@ -124,10 +150,14 @@ public class RulesManager : MonoBehaviour
         Message msg = Message.Create(MessageSendMode.Reliable, NetworkManager.MessageIds.rules);
 
         msg.AddInt(lives);
+        msg.AddBool(infiniteLives);
         msg.AddBool(dropLootOnEveryDeath);
         msg.AddBool(giveStartingStatsOnDropLoot);
+        msg.AddBool(doWeaponSlowdown);
+        msg.AddBool(doWeaponDropoff);
         msg.AddVector2(mapSize);
         msg.AddInt(maxHealth);
+        msg.AddFloat(ammoMultiplier);
         msg.AddInt(startingSyringes);
         msg.AddInt(startingMedkits);
         msg.AddInt(startingLightAmmo);
@@ -145,17 +175,29 @@ public class RulesManager : MonoBehaviour
         //Debug.Log("[Rules Manager] Recieved new rules.");
 
         instance.lives = msg.GetInt();
-        PlayerPrefs.SetInt("LIFE_COUNT", instance.lives);
+        if (instance.lives != -1)
+            PlayerPrefs.SetInt("LIFE_COUNT", instance.lives);
+        instance.infiniteLives = msg.GetBool();
+        if (instance.infiniteLives) { PlayerPrefs.SetInt("INFINITE_LIVES", 1); }
+        else { PlayerPrefs.SetInt("INFINITE_LIVES", 0); }
         instance.dropLootOnEveryDeath = msg.GetBool();
         if (instance.dropLootOnEveryDeath) { PlayerPrefs.SetInt("DROP_LOOT_ON_DEATH", 1); }
         else { PlayerPrefs.SetInt("DROP_LOOT_ON_DEATH", 0); }
         instance.giveStartingStatsOnDropLoot = msg.GetBool();
         if (instance.giveStartingStatsOnDropLoot) { PlayerPrefs.SetInt("GIVE_STARTING_LOOT_ON_DROP_WEAPONS", 1); }
         else { PlayerPrefs.SetInt("GIVE_STARTING_LOOT_ON_DROP_WEAPONS", 0); }
+        instance.doWeaponSlowdown = msg.GetBool();
+        if (instance.doWeaponSlowdown) { PlayerPrefs.SetInt("DO_WEAPON_SLOWDOWN", 1); }
+        else { PlayerPrefs.SetInt("DO_WEAPON_SLOWDOWN", 0); }
+        instance.doWeaponDropoff = msg.GetBool();
+        if (instance.doWeaponDropoff) { PlayerPrefs.SetInt("DO_WEAPON_DROPOFF", 1); }
+        else { PlayerPrefs.SetInt("DO_WEAPON_DROPOFF", 0); }
         instance.mapSize = msg.GetVector2();
         PlayerPrefs.SetInt("MAP_SIZE", (int)instance.mapSize.x);
         instance.maxHealth = msg.GetInt();
         PlayerPrefs.SetInt("MAX_HEALTH", instance.maxHealth);
+        instance.ammoMultiplier = msg.GetFloat();
+        PlayerPrefs.SetFloat("AMMO_MULTIPLIER", instance.ammoMultiplier);
         instance.startingSyringes = msg.GetInt();
         PlayerPrefs.SetInt("STARTING_SYRINGES", instance.startingSyringes);
         instance.startingMedkits = msg.GetInt();

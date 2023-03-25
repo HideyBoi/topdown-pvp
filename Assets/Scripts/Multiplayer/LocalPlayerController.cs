@@ -95,7 +95,13 @@ public class LocalPlayerController : MonoBehaviour
         {
             if (inventory.inventoryItem[inventory.currentIndex].weapon)
             {
-                rb.AddForce(new Vector3(desMoveDir.x, 0, desMoveDir.y) * currentMovementSpeed * inventory.inventoryItem[inventory.currentIndex].weapon.speedModifier, ForceMode.VelocityChange);     
+                if (RulesManager.instance.doWeaponSlowdown)
+                {
+                    rb.AddForce(new Vector3(desMoveDir.x, 0, desMoveDir.y) * currentMovementSpeed * inventory.inventoryItem[inventory.currentIndex].weapon.speedModifier, ForceMode.VelocityChange);
+                } else
+                {
+                    rb.AddForce(new Vector3(desMoveDir.x, 0, desMoveDir.y) * currentMovementSpeed, ForceMode.VelocityChange);
+                }
             } else
             {
                 rb.AddForce(new Vector3(desMoveDir.x, 0, desMoveDir.y) * currentMovementSpeed, ForceMode.VelocityChange);
