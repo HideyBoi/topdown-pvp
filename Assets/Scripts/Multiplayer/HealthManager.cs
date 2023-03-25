@@ -221,17 +221,21 @@ public class HealthManager : MonoBehaviour
 
         Instantiate(deathEffect, transform.position, Quaternion.identity);
 
-        if (killingPlayer == NetworkManager.instance.Client.Id)
+        if (health >= 0)
         {
-            Debug.Log("[Health Manager] Detected that local client has killed a remote client: " + thisId);
-            localHealthManager.KilledPlayer(thisId);
-        } else
-        {
-            foreach (var player in GameManager.instance.remotePlayers)
+            if (killingPlayer == NetworkManager.instance.Client.Id)
             {
-                if (player._id == killingPlayer)
+                Debug.Log("[Health Manager] Detected that local client has killed a remote client: " + thisId);
+                localHealthManager.KilledPlayer(thisId);
+            }
+            else
+            {
+                foreach (var player in GameManager.instance.remotePlayers)
                 {
-                    player.healthManager.killCount++;
+                    if (player._id == killingPlayer)
+                    {
+                        player.healthManager.killCount++;
+                    }
                 }
             }
         }
