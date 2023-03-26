@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Pistol Rare
   m_EditorClassIdentifier: 
   gunName: Pistol
-  id: 3
+  id: 4
   gunMesh: {fileID: 1220828769319070387, guid: 4adbbdc07be0c6a46953997a68269c84, type: 3}
   gunMaterial: {fileID: 2100000, guid: ff5507e8191e58546923497720ea104c, type: 2}
   muzzleLocation: {x: 0, y: 0.065, z: 0.225}
@@ -28,8 +28,10 @@ MonoBehaviour:
   ammoType: 0
   automatic: 0
   damage: 16
+  damageFalloff: 0.04
   maxAmmoCount: 16
   timeBetweenShots: 0.1
   reloadTime: 0.8
   shotCount: 0
   spread: 0.02
+  speedModifier: 1

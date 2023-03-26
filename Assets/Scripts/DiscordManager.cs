@@ -33,10 +33,11 @@ public class DiscordManager : MonoBehaviour
     void Start()
     {
         try {
-            discord = new Discord.Discord(applicationID, (System.UInt64)Discord.CreateFlags.NoRequireDiscord);
+            discord = new Discord.Discord(applicationID, (ulong)CreateFlags.NoRequireDiscord);
         } catch
         {
             Destroy(gameObject);
+            Debug.Log("[Discord Manager] Couldn't connect to Discord.");
         }
         
         UpdateStatus();
@@ -48,6 +49,7 @@ public class DiscordManager : MonoBehaviour
         {
             discord.RunCallbacks();
         } catch {
+            Debug.Log("[Discord Manager] Callbacks failed.");
             Destroy(gameObject);
         }
     }
@@ -68,7 +70,7 @@ public class DiscordManager : MonoBehaviour
         try
         {
             string status = "";
-            Discord.Activity activity;
+            Activity activity;
 
 
             if (NetworkManager.instance.gameIsStarted)
@@ -80,7 +82,7 @@ public class DiscordManager : MonoBehaviour
 
                 status = "In a game.";
 
-                activity = new Discord.Activity
+                activity = new Activity
                 {
                     Details = details,
                     State = status,
@@ -108,7 +110,7 @@ public class DiscordManager : MonoBehaviour
 
                 status = "In the lobby.";
 
-                activity = new Discord.Activity
+                activity = new Activity
                 {
                     Details = details,
                     State = status,
@@ -130,7 +132,7 @@ public class DiscordManager : MonoBehaviour
 
                 status = "In the main menu.";
 
-                activity = new Discord.Activity
+                activity = new Activity
                 {
                     Details = details,
                     State = status,
@@ -149,7 +151,8 @@ public class DiscordManager : MonoBehaviour
 
             activityManager.UpdateActivity(activity, (res) =>
             {
-                if (res != Discord.Result.Ok) Debug.LogWarning("Failed connecting to Discord!");
+                if (res != Result.Ok) 
+                    Debug.Log("[Discord Manager] Couldn't update status.");
             });
         } catch
         {
