@@ -112,8 +112,8 @@ Material:
     - _IntersectionFoamScale: 3.03
     - _IntersectionFoamSpeed: -0.6
     - _IntersectrionFoamCutoff: 0
-    - _LightingHardness: 0.01
-    - _LightingSmoothness: 0.54
+    - _LightingHardness: 0
+    - _LightingSmoothness: 0.7
     - _Metallic: 0
     - _NormalsScale: 1
     - _NormalsSpeed: 0.2

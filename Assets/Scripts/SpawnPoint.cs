@@ -6,6 +6,7 @@ public class SpawnPoint : MonoBehaviour
 {
     private void Awake()
     {
-        GameManager.instance.AddSpawn(transform);
+        if (GameManager.instance)
+            GameManager.instance.AddSpawn(transform);
     }
 }

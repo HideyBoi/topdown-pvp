@@ -4175,7 +4175,8 @@ AudioSource:
   m_GameObject: {fileID: 375650365422023705}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -1808110699661480999, guid: ff742ded18cf9174eb263a4a8beecba5,
+    type: 2}
   m_audioClip: {fileID: 8300000, guid: 8682172d8fdd5ac43aca1a1a2fd8da1d, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
@@ -11949,10 +11950,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lives: 3
+  infiniteLives: 0
   dropLootOnEveryDeath: 0
   giveStartingStatsOnDropLoot: 0
+  doWeaponSlowdown: 0
+  doWeaponDropoff: 0
   mapSize: {x: 0, y: 0}
   maxHealth: 0
+  ammoMultiplier: 0
   startingSyringes: 0
   startingMedkits: 0
   startingLightAmmo: 0
@@ -11996,7 +12001,7 @@ Transform:
   - {fileID: 3186215135101902993}
   - {fileID: 2504303771356144818}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &6077828425873381014
 MonoBehaviour:
@@ -14990,7 +14995,8 @@ AudioSource:
   m_GameObject: {fileID: 8910313310823264709}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -1808110699661480999, guid: ff742ded18cf9174eb263a4a8beecba5,
+    type: 2}
   m_audioClip: {fileID: 8300000, guid: 8682172d8fdd5ac43aca1a1a2fd8da1d, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1

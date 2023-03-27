@@ -242,6 +242,8 @@ public class DungeonGenerator : MonoBehaviour
             }
         }
 
+        startPos = Random.Range(0, board.Count);
+
         int currentCell = startPos;
 
         Stack<int> path = new Stack<int>();

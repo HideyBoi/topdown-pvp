@@ -58,9 +58,11 @@ MonoBehaviour:
   - {fileID: 6008897718932969140, guid: 30d5a85a9b4ef8144a5365142cbc21b4, type: 3}
   - {fileID: 6008897718932969140, guid: aba7b0c637519774399a145f0a62a85b, type: 3}
   - {fileID: 6008897718932969140, guid: e8ec83d6aa2d61441b2c36a69a43e204, type: 3}
+  - {fileID: 6008897718932969140, guid: e279396933558484089545b8de90ecbd, type: 3}
   - {fileID: 2041390382182790051, guid: 7cf48dc8410112d44966af1abff65b57, type: 3}
   - {fileID: 8500310014974771289, guid: 989dbe308ce178841bc543eca0699b5d, type: 3}
   - {fileID: 8500310014974771289, guid: 289ec59e4612fd146961a57b13356760, type: 3}
+  - {fileID: 8500310014974771289, guid: ee7920cb6a5c2ae40af3a9ed4a1f05a8, type: 3}
   offset: {x: 46.29, y: 46.29}
   totalRooms: 0
   currentRoomCount: 0
