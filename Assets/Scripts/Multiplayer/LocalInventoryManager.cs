@@ -572,6 +572,9 @@ public class LocalInventoryManager : MonoBehaviour
 
     private void OnDisable()
     {
+        LocalPlayerController.onDisablePlayerInput -= controls.Disable;
+        LocalPlayerController.onEnablePlayerInput -= controls.Enable;
+
         if (controls != null)
             controls.Disable();
     }

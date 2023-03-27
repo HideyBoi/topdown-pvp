@@ -24,7 +24,8 @@ public class Chest : MonoBehaviour
         chestId = transform.position;
 
         gm = GameManager.instance;
-        gm.AddChest(this);
+        if (gm)
+            gm.AddChest(this);
     }
 
     public void Open(bool isFromNetwork)

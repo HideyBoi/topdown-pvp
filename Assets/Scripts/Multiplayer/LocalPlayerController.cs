@@ -210,6 +210,9 @@ public class LocalPlayerController : MonoBehaviour
 
     private void OnDisable()
     {
+        onDisablePlayerInput -= Disable;
+        onEnablePlayerInput -= Enable;
+
         if (controls != null)
             controls.Disable();
     }
