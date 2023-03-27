@@ -2,7 +2,8 @@ https://www.youtube.com/watch?v=gHU5RQWbmWE - Dungeon Generation System
 https://github.com/tom-weiland/RiptideNetworking - Networking: Tom Weiland
 https://github.com/andersonaddo/EZ-Camera-Shake-Unity - EZ Camera Shake
 
-https://www.the3rdsequence.com/texturedb/texture/258/yellow+bananas/
+https://www.the3rdsequence.com/texturedb/texture/258/yellow+bananas/ - banana texture
+https://alexanderameye.github.io/notes/stylized-water-shader/ - water shader
 
 SOUNDS:
 
