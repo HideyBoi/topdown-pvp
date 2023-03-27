@@ -2,6 +2,7 @@ https://www.youtube.com/watch?v=gHU5RQWbmWE - Dungeon Generation System
 https://github.com/tom-weiland/RiptideNetworking - Networking: Tom Weiland
 https://github.com/andersonaddo/EZ-Camera-Shake-Unity - EZ Camera Shake
 
+https://www.the3rdsequence.com/texturedb/texture/258/yellow+bananas/
 
 SOUNDS:
 
@@ -10,6 +11,5 @@ https://freesound.org/people/pcmac/sounds/464529/
 https://freesound.org/people/Marregheriti/sounds/266105/
 https://freesound.org/people/ermfilm/sounds/162535/
 https://freesound.org/people/EminYILDIRIM/sounds/563662/
-https://www.kenney.nl/assets/ui-audio
-https://www.the3rdsequence.com/texturedb/texture/258/yellow+bananas/
 https://freesound.org/people/leosalom/sounds/234288/
+https://www.kenney.nl/assets/ui-audio

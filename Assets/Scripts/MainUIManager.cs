@@ -84,6 +84,11 @@ public class MainUIManager : MonoBehaviour
         } catch { return; }    
     }
 
+    public void OpenURL(string url)
+    {
+        Application.OpenURL(url);
+    }
+
     void CloseCosmetics()
     {
         cosmeticsRoot.SetActive(false);
