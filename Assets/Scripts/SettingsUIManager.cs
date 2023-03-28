@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Audio;
 using TMPro;
+using System.IO;
+using System;
 
 public class SettingsUIManager : MonoBehaviour
 {
@@ -14,6 +16,8 @@ public class SettingsUIManager : MonoBehaviour
     [Header("Screen Res")]
     public TMP_Dropdown resolutionDropdown;
     public Resolution[] resolutions;
+    public TMP_Dropdown monitorDropdown;
+    public GameObject restartPrompt;
     public List<string> options = new List<string>();
     public int currentResIndex = 0;
     public Slider refreshRateSlider;
@@ -25,6 +29,8 @@ public class SettingsUIManager : MonoBehaviour
     public Slider MasterSlider;
     public Slider AmbientSlider;
     public Slider SoundEffectsSlider;
+
+
 
     private void Awake()
     {
@@ -83,6 +89,18 @@ public class SettingsUIManager : MonoBehaviour
         resolutionDropdown.value = currentResIndex;
         resolutionDropdown.RefreshShownValue();
 
+        List<string> monitors = new List<string>();
+
+        for (int i = 0; i < Display.displays.Length; i++)
+        {
+            monitors.Add(i.ToString());
+        }
+
+        monitorDropdown.ClearOptions();
+        monitorDropdown.AddOptions(monitors);
+        monitorDropdown.value = PlayerPrefs.GetInt("UnitySelectMonitor");
+        monitorDropdown.RefreshShownValue();
+
         if (Screen.currentResolution.refreshRateRatio.value > refreshRateSlider.maxValue)
         {
             refreshRateSlider.maxValue = (float)Screen.currentResolution.refreshRateRatio.value;
@@ -114,6 +132,17 @@ public class SettingsUIManager : MonoBehaviour
     public void OnResChange(int value)
     {
         Screen.SetResolution(resolutions[value].width, resolutions[value].height, FullScreenMode.FullScreenWindow, Screen.currentResolution.refreshRateRatio);
+    }
+
+    public void OnMonitorChange()
+    {
+        int value = monitorDropdown.value;
+
+        if (value != PlayerPrefs.GetInt("UnitySelectMonitor"))
+        {
+            PlayerPrefs.SetInt("UnitySelectMonitor", value);
+            restartPrompt.SetActive(true);
+        }
     }
 
     public void OnRefreshRateChange()
@@ -154,5 +183,34 @@ public class SettingsUIManager : MonoBehaviour
     {
         Master.SetFloat("SoundEffectsVol", value);
         PlayerPrefs.SetFloat("DES_SFXSOUND", value);
+    }
+
+    public void RestartGame()
+    {
+#if UNITY_STANDALONE
+        try
+        {
+            /*
+            ProcessStartInfo startInfo = new ProcessStartInfo(Path.Combine(Directory.GetCurrentDirectory(), "Dungeon of Guns.exe"));
+            startInfo.WorkingDirectory = Directory.GetCurrentDirectory();
+            startInfo.UseShellExecute = false;
+
+            Debug.Log(startInfo.WorkingDirectory);
+            Debug.Log(Path.Combine(Directory.GetCurrentDirectory(), "Dungeon of Guns.exe"));
+
+            Process.Start(startInfo);
+            */
+
+            //dont ask why the above didn't work but this did, i couldn't tell ya
+            //(it's because unity didn't move the Process class to il2cpp
+            Application.OpenURL("file://" + Path.Combine(Directory.GetCurrentDirectory(), "Dungeon of Guns.exe"));
+
+            Application.Quit();
+        }
+        catch (Exception e)
+        {
+            Debug.LogError(e);
+        }
+#endif
     }
 }
