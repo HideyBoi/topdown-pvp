@@ -9,7 +9,8 @@ public class SettingsUIManager : MonoBehaviour
 {
     public GameObject visRoot;
     public static SettingsUIManager instance;
-
+    [Header("General")]
+    public Toggle discord;
     [Header("Screen Res")]
     public TMP_Dropdown resolutionDropdown;
     public Resolution[] resolutions;
@@ -51,6 +52,16 @@ public class SettingsUIManager : MonoBehaviour
             }
         }
 
+        if (PlayerPrefs.HasKey("DISCORD_RP"))
+        {
+            if (PlayerPrefs.GetInt("DISCORD_RP") == 1)
+            {
+                discord.isOn = true;
+            } else
+            {
+                discord.isOn = false;
+            }
+        }
         if (PlayerPrefs.HasKey("DES_MASTERSOUND"))
         {
             MasterSlider.value = PlayerPrefs.GetFloat("DES_MASTERSOUND");
@@ -110,6 +121,17 @@ public class SettingsUIManager : MonoBehaviour
         PlayerPrefs.SetInt("DES_FRAMERATE", (int)refreshRateSlider.value);
         Application.targetFrameRate = PlayerPrefs.GetInt("DES_FRAMERATE");
         refreshRateText.text = refreshRateSlider.value.ToString();
+    }
+
+    public void OnDiscordToggle()
+    {
+        if (discord.isOn)
+        {
+            PlayerPrefs.SetInt("DISCORD_RP", 1);
+        } else
+        {
+            PlayerPrefs.SetInt("DISCORD_RP", 0);
+        }
     }
 
     public void OnQualityChange(int value)

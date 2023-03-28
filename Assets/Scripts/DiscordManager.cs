@@ -1,5 +1,8 @@
 using Discord;
+using System.Collections;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class DiscordManager : MonoBehaviour
 {
@@ -20,47 +23,112 @@ public class DiscordManager : MonoBehaviour
 
     private long time;
 
-    
+    bool isDiscordEnabled = true;
+    int fixedFramesTillRecheck = 120;
 
     void Awake()
     {
         if (instance == null)
         {
             instance = this;
+            if (PlayerPrefs.HasKey("DISCORD_RP"))
+            {
+                if (PlayerPrefs.GetInt("DISCORD_RP") == 1)
+                {
+                    isDiscordEnabled=true;
+                } else
+                {
+                    isDiscordEnabled=false;
+                }
+            } else
+            {
+                PlayerPrefs.SetInt("DISCORD_RP", 1);
+            }
+        } else
+        {
+            Destroy(gameObject);
         }
     }
 
     void Start()
     {
-        try {
-            discord = new Discord.Discord(applicationID, (ulong)CreateFlags.NoRequireDiscord);
-        } catch
+        if (isDiscordEnabled)
         {
-            Destroy(gameObject);
-            Debug.Log("[Discord Manager] Couldn't connect to Discord.");
+            try
+            {
+                Debug.Log("[Discord Manager] Enabling Discord.");
+                discord = new Discord.Discord(applicationID, (ulong)CreateFlags.NoRequireDiscord);
+            }
+            catch
+            {
+                Destroy(gameObject);
+                Debug.Log("[Discord Manager] Couldn't connect to Discord.");
+            }
+
+            UpdateStatus();
         }
-        
-        UpdateStatus();
     }
 
-    void Update()
+    void FixedUpdate()
     {
+        fixedFramesTillRecheck--;
+        if (fixedFramesTillRecheck < 0)
+        {
+            fixedFramesTillRecheck = 120;
+
+            if (PlayerPrefs.GetInt("DISCORD_RP") == 1)
+            {
+                if (!isDiscordEnabled)
+                {
+                    try
+                    {
+                        Debug.Log("[Discord Manager] Enabling Discord.");
+                        discord = new Discord.Discord(applicationID, (ulong)CreateFlags.NoRequireDiscord);
+                    }
+                    catch
+                    {
+                        Destroy(gameObject);
+                        Debug.Log("[Discord Manager] Couldn't connect to Discord.");
+                    }
+
+                    UpdateStatus();
+                }
+
+                isDiscordEnabled = true;
+            }
+            else
+            {
+                if (isDiscordEnabled)
+                {
+                    Debug.Log("[Discord Manager] Disabling Discord.");
+                    if (discord != null)
+                    {
+                        discord.Dispose();
+                        discord = null;
+                    }
+                        
+                }
+
+                isDiscordEnabled = false;
+            }
+        }
+
+        if (!isDiscordEnabled)
+            return;
+
         try
         {
+            UpdateStatus();
             discord.RunCallbacks();
         } catch {
             Debug.Log("[Discord Manager] Callbacks failed.");
             Destroy(gameObject);
         }
-    }
 
-    void LateUpdate()
-    {
-        UpdateStatus();
     }
 
     private void OnDestroy()
-    {   
+    {
         if (discord != null)
             discord.Dispose();
     }
