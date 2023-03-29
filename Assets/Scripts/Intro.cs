@@ -20,6 +20,6 @@ public class Intro : MonoBehaviour
 
     private void Awake()
     {
-        tex.text = "Game Version: " + Application.version;
+        tex.text = "Version: " + Application.version;
     }
 }
