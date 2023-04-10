@@ -10,6 +10,7 @@ public class CosmeticsUI : MonoBehaviour
 
     public CosmeticsHandler cosmeticsHandler;
     public TextMeshProUGUI hatTex;
+    public Animator cosmeticsButton;
 
     private void Awake()
     {
@@ -35,6 +36,8 @@ public class CosmeticsUI : MonoBehaviour
 
     public void LoadCosmetics()
     {
+        cosmeticsButton.SetTrigger("Normal");
+
         if (PlayerPrefs.HasKey("DES_HAT"))
         {
             currentHat = PlayerPrefs.GetInt("DES_HAT");

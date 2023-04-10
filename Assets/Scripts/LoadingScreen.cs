@@ -27,8 +27,6 @@ public class LoadingScreen : MonoBehaviour
             return;
         }
 
-        
-
         SceneManager.sceneLoaded += SceneWasLoaded;
     }
 
@@ -65,9 +63,12 @@ public class LoadingScreen : MonoBehaviour
         {
             waitingForGeneration = true;
         }
-        else
+        else if (scene.name == "Intro")
+        {
+        } else
         {
             animator.Play("fadeFromBlack");
+
         }
     }
 }

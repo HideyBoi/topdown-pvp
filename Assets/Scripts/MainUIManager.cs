@@ -17,6 +17,7 @@ public class MainUIManager : MonoBehaviour
 
     public GameObject lobby;
     public GameObject visRoot;
+    public GameObject controlsScreen;
     public GameObject currentLobby;
 
     public string currentUsername = "";
@@ -58,6 +59,7 @@ public class MainUIManager : MonoBehaviour
     public void ConnectedToLobby()
     {
         currentLobby = Instantiate(lobby);
+        controlsScreen.SetActive(false);
         CloseCosmetics();
         visRoot.SetActive(false);
     }

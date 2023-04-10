@@ -10,7 +10,7 @@ public class Intro : MonoBehaviour
 
     public void Done()
     {
-        SceneManager.LoadSceneAsync("MainMenu");
+        LoadingScreen.instance.LoadLevel("MainMenu");
     }
 
     public void Play()

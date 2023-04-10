@@ -59,7 +59,7 @@ public class Healable : MonoBehaviour
         if (type == HealType.Syringe)
         {
             nameTex.text = "Syringe";
-            subTex.text = $"{count}x + 30 HP";
+            subTex.text = $"{count}x +30HP";
         } else
         {
             nameTex.text = "Medkit";

@@ -68,7 +68,7 @@ MonoBehaviour:
   networkSpawned: 0
 --- !u!95 &1991193675
 Animator:
-  serializedVersion: 4
+  serializedVersion: 5
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -85,7 +85,8 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!65 &3218281777586816715
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -94,9 +95,17 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4491493733864199258}
   m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
   m_IsTrigger: 1
+  m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 2
+  serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &2606894308878373979
@@ -112,6 +121,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tooltip: {fileID: 7995070080695033019}
+  timeLeftUntilDisappear: 0
 --- !u!1 &4491493735461268451
 GameObject:
   m_ObjectHideFlags: 0
@@ -315,13 +325,44 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    serializedVersion: 2
+    serializedVersion: 3
     m_TransformParent: {fileID: 4491493733864199257}
     m_Modifications:
+    - target: {fileID: 730489128290230823, guid: 3f7d60a0feb1c0443ad5e7a52dca0f51,
+        type: 3}
+      propertyPath: m_text
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 730489128290230823, guid: 3f7d60a0feb1c0443ad5e7a52dca0f51,
+        type: 3}
+      propertyPath: m_fontSize
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 730489128290230823, guid: 3f7d60a0feb1c0443ad5e7a52dca0f51,
+        type: 3}
+      propertyPath: m_spriteAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: a80b502d5ce03d149aca97ba0a3a053f,
+        type: 2}
+    - target: {fileID: 730489128290230823, guid: 3f7d60a0feb1c0443ad5e7a52dca0f51,
+        type: 3}
+      propertyPath: m_fontSizeBase
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2768950625988400346, guid: 3f7d60a0feb1c0443ad5e7a52dca0f51,
+        type: 3}
+      propertyPath: m_text
+      value: 69 bullets
+      objectReference: {fileID: 0}
     - target: {fileID: 3020292193235796566, guid: 3f7d60a0feb1c0443ad5e7a52dca0f51,
         type: 3}
       propertyPath: m_Name
       value: ToolTip
+      objectReference: {fileID: 0}
+    - target: {fileID: 3210728498837447521, guid: 3f7d60a0feb1c0443ad5e7a52dca0f51,
+        type: 3}
+      propertyPath: m_text
+      value: Assault Rifle
       objectReference: {fileID: 0}
     - target: {fileID: 6298352191225800278, guid: 3f7d60a0feb1c0443ad5e7a52dca0f51,
         type: 3}
@@ -378,8 +419,15 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6328954572900486911, guid: 3f7d60a0feb1c0443ad5e7a52dca0f51,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.1123
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
+    m_RemovedGameObjects: []
     m_AddedGameObjects: []
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3f7d60a0feb1c0443ad5e7a52dca0f51, type: 3}
 --- !u!4 &129817016041069771 stripped
 Transform:
