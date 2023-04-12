@@ -5795,6 +5795,23 @@ MonoBehaviour:
     mesh: {fileID: 3131188959575262684, guid: 8d582f0cfe48119459d3ed8990630c3a, type: 3}
     materials:
     - {fileID: 2100000, guid: 2970cfe00534fde448a3f593d58f741d, type: 2}
+  - name: Lil' Boi
+    mesh: {fileID: -99539684230023124, guid: 8d582f0cfe48119459d3ed8990630c3a, type: 3}
+    materials:
+    - {fileID: 2100000, guid: 16a4b09eedf80de42824384a768a99be, type: 2}
+  - name: Notes
+    mesh: {fileID: -1750131655892096842, guid: 8d582f0cfe48119459d3ed8990630c3a, type: 3}
+    materials:
+    - {fileID: 2100000, guid: a2d51af95d022a448bf4a027c78885e7, type: 2}
+  - name: Easter Egg
+    mesh: {fileID: -739007931780860136, guid: 8d582f0cfe48119459d3ed8990630c3a, type: 3}
+    materials:
+    - {fileID: 2100000, guid: 629f5fd169cace140bf5a8c9f1cbab49, type: 2}
+  - name: Easter Bunny Ears
+    mesh: {fileID: -4571758446879713681, guid: 8d582f0cfe48119459d3ed8990630c3a, type: 3}
+    materials:
+    - {fileID: 2100000, guid: b8a8bffbb76eb9043ac75901fc131dc4, type: 2}
+    - {fileID: 2100000, guid: 785e774a3776b7c4a982c6c3694045e6, type: 2}
   skins:
   - {fileID: 2100000, guid: 46031d073f02df0489f9fbf8637bdfa9, type: 2}
   - {fileID: 2100000, guid: 993a669bf23cc0d47981edad3a4d2feb, type: 2}
