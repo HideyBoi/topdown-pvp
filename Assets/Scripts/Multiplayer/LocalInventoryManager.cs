@@ -10,6 +10,7 @@ public class LocalInventoryManager : MonoBehaviour
 {
     private Controls controls;
     private LocalGunManager gm;
+    private LocalPlayerController playerController;
 
     public int currentIndex;
     public InventoryItem[] inventoryItem = new InventoryItem[3];
@@ -68,6 +69,7 @@ public class LocalInventoryManager : MonoBehaviour
     {
         controls = new Controls();
         gm = GetComponent<LocalGunManager>();
+        playerController = GetComponent<LocalPlayerController>();
 
         LocalPlayerController.onDisablePlayerInput += controls.Disable;
         LocalPlayerController.onEnablePlayerInput += controls.Enable;
@@ -224,6 +226,7 @@ public class LocalInventoryManager : MonoBehaviour
 
         if (wantsToUseMedkit)
         {
+            playerController.healingMove = .25f;
             currentMedkitTime += Time.fixedDeltaTime;
             if (currentMedkitTime > medkitTime)
             {
@@ -241,10 +244,10 @@ public class LocalInventoryManager : MonoBehaviour
 
                 GameManager.instance.PlaySoundEffectByID(transform.position, 11, 0.7f, 30);
             }
-        }
-
-        if (wantsToUseSyringe)
+        } 
+        else if (wantsToUseSyringe)
         {
+            playerController.healingMove = .55f;
             currentSyringeTime += Time.fixedDeltaTime;
             if (currentSyringeTime > syringeTime)
             {
@@ -262,6 +265,9 @@ public class LocalInventoryManager : MonoBehaviour
 
                 GameManager.instance.PlaySoundEffectByID(transform.position, 10, 0.7f, 30);
             }
+        } else
+        {
+            playerController.healingMove = 1;
         }
 
         UpdateWeaponVisual();

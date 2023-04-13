@@ -9,7 +9,7 @@ public class WallCollision : MonoBehaviour
 
     public void BreakHoles()
     {
-        if (Random.Range(0, 100) < 48)
+        if (Random.Range(0, 100) < 40)
         {
             Collider[] colliders = Physics.OverlapSphere(transform.position, 3f);
 

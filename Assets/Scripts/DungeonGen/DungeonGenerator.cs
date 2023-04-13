@@ -181,7 +181,7 @@ public class DungeonGenerator : MonoBehaviour
             }
         } 
 
-        if (size.x * size.y * 0.85f <= generatedRooms.Count)
+        if (size.x * size.y * 0.95f <= generatedRooms.Count)
         {
             foreach (var room in generatedRooms)
             {

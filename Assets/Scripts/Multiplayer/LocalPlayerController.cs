@@ -51,6 +51,8 @@ public class LocalPlayerController : MonoBehaviour
 
     public bool controlsEnabled = true;
 
+    public float healingMove = 1.0f;
+
     public static void EnablePlayerInput()
     {
         if (onEnablePlayerInput != null)
@@ -91,20 +93,22 @@ public class LocalPlayerController : MonoBehaviour
         if (!nm.gameIsStarted)
             return;
 
+        Debug.Log(rb.velocity.magnitude);
+
         if (!hm.isDead)
         {
             if (inventory.inventoryItem[inventory.currentIndex].weapon)
             {
                 if (RulesManager.instance.doWeaponSlowdown)
                 {
-                    rb.AddForce(new Vector3(desMoveDir.x, 0, desMoveDir.y) * currentMovementSpeed * inventory.inventoryItem[inventory.currentIndex].weapon.speedModifier, ForceMode.VelocityChange);
+                    rb.AddForce(new Vector3(desMoveDir.x, 0, desMoveDir.y) * currentMovementSpeed * healingMove * inventory.inventoryItem[inventory.currentIndex].weapon.speedModifier, ForceMode.VelocityChange);
                 } else
                 {
-                    rb.AddForce(new Vector3(desMoveDir.x, 0, desMoveDir.y) * currentMovementSpeed, ForceMode.VelocityChange);
+                    rb.AddForce(new Vector3(desMoveDir.x, 0, desMoveDir.y) * currentMovementSpeed * healingMove, ForceMode.VelocityChange);
                 }
             } else
             {
-                rb.AddForce(new Vector3(desMoveDir.x, 0, desMoveDir.y) * currentMovementSpeed, ForceMode.VelocityChange);
+                rb.AddForce(new Vector3(desMoveDir.x, 0, desMoveDir.y) * currentMovementSpeed * healingMove, ForceMode.VelocityChange);
             }
             
 
