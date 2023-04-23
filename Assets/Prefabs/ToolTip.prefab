@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6298352191225800278}
   - component: {fileID: 4058095044372112934}
   - component: {fileID: 1846100339682833160}
-  m_Layer: 8
+  m_Layer: 10
   m_Name: ToolTip
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -80,7 +80,7 @@ GameObject:
   - component: {fileID: 6328954572900486911}
   - component: {fileID: 5752888464517377489}
   - component: {fileID: 730489128290230823}
-  m_Layer: 8
+  m_Layer: 10
   m_Name: Text (TMP) (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -252,7 +252,7 @@ GameObject:
   - component: {fileID: 7167058848156213062}
   - component: {fileID: 7641071021181498637}
   - component: {fileID: 3210728498837447521}
-  m_Layer: 8
+  m_Layer: 10
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -424,7 +424,7 @@ GameObject:
   - component: {fileID: 6931801863491483587}
   - component: {fileID: 9050990263361619626}
   - component: {fileID: 2768950625988400346}
-  m_Layer: 8
+  m_Layer: 10
   m_Name: Text (TMP) (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
