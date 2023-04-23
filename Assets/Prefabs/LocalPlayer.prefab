@@ -513,7 +513,7 @@ MonoBehaviour:
   m_RequiresOpaqueTextureOption: 2
   m_CameraType: 0
   m_Cameras: []
-  m_RendererIndex: -1
+  m_RendererIndex: 1
   m_VolumeLayerMask:
     serializedVersion: 2
     m_Bits: 1
@@ -924,7 +924,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lookDir: {x: 0, y: 0}
   pivot: {fileID: 171931357186983504}
-  currentMovementSpeed: 1
+  currentMovementSpeed: 1.8
   cam: {fileID: 171931357370713825}
   cursor: {fileID: 171931358881204717}
   lm:
@@ -932,7 +932,7 @@ MonoBehaviour:
     m_Bits: 129
   miniMapCam: {fileID: 171931357097129346}
   id: 0
-  moveTimer: 0.33
+  moveTimer: 0.2
   groundLm:
     serializedVersion: 2
     m_Bits: 1
@@ -943,6 +943,7 @@ MonoBehaviour:
   cosmeticsAnimator: {fileID: 4442899528924978975}
   cosmeticsHandler: {fileID: 664479873112974526}
   controlsEnabled: 1
+  healingMove: 1
 --- !u!114 &1973023435968461026
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1162,7 +1163,7 @@ Rigidbody:
   m_GameObject: {fileID: 171931358746057920}
   serializedVersion: 4
   m_Mass: 1
-  m_Drag: 3
+  m_Drag: 6
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}

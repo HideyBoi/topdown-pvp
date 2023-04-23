@@ -63,6 +63,7 @@ MonoBehaviour:
   - {fileID: 8500310014974771289, guid: 989dbe308ce178841bc543eca0699b5d, type: 3}
   - {fileID: 5958486231054700075, guid: 289ec59e4612fd146961a57b13356760, type: 3}
   - {fileID: 8500310014974771289, guid: ee7920cb6a5c2ae40af3a9ed4a1f05a8, type: 3}
+  - {fileID: 2041390382182790051, guid: 9c984edc2c94cc34498a9faf38f2a5b0, type: 3}
   offset: {x: 46.29, y: 46.29}
   totalRooms: 0
   currentRoomCount: 0

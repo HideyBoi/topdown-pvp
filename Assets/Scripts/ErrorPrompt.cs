@@ -19,6 +19,7 @@ public class ErrorPrompt : MonoBehaviour
 
     public static void ShowError(string errorBodyText)
     {
+        Debug.LogError(errorBodyText);
         instance.errorBody.text = errorBodyText;
         instance.visualRoot.SetActive(true);
     }

@@ -5,6 +5,7 @@ using Cinemachine;
 using Riptide;
 using Riptide.Utils;
 using System;
+using UnityEditor.Rendering.LookDev;
 
 public class LocalPlayerController : MonoBehaviour
 {
@@ -25,6 +26,7 @@ public class LocalPlayerController : MonoBehaviour
     public LayerMask lm;
 
     public Camera miniMapCam;
+    UnityEngine.Rendering.Universal.UniversalAdditionalCameraData AdditionalCameraData;
 
     NetworkManager nm;
 
@@ -86,6 +88,9 @@ public class LocalPlayerController : MonoBehaviour
         controls.Player.Move.canceled += ctx => Move(ctx.ReadValue<Vector2>(), false);
         controls.Player.PointGamepad.performed += ctx => PointGamepad(ctx.ReadValue<Vector2>());
         controls.Player.PointMouse.performed += ctx => PointMouse(ctx.ReadValue<Vector2>());
+        AdditionalCameraData = miniMapCam.transform.GetComponent<UnityEngine.Rendering.Universal.UniversalAdditionalCameraData>();
+
+        AdditionalCameraData.SetRenderer(1);
     }
 
     private void FixedUpdate()
@@ -93,10 +98,9 @@ public class LocalPlayerController : MonoBehaviour
         if (!nm.gameIsStarted)
             return;
 
-        Debug.Log(rb.velocity.magnitude);
-
         if (!hm.isDead)
         {
+            AdditionalCameraData.SetRenderer(1);
             if (inventory.inventoryItem[inventory.currentIndex].weapon)
             {
                 if (RulesManager.instance.doWeaponSlowdown)

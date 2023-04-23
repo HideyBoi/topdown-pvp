@@ -134,7 +134,7 @@ PrefabInstance:
     - target: {fileID: 1188162237879641373, guid: b39ce3b7c55bfb2458e69ef170c66881,
         type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1188162237879641373, guid: b39ce3b7c55bfb2458e69ef170c66881,
         type: 3}
@@ -418,7 +418,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &391168166
 GameObject:
@@ -639,14 +639,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 803849217}
+  - component: {fileID: 803849219}
   - component: {fileID: 803849216}
   - component: {fileID: 803849215}
   - component: {fileID: 803849214}
   - component: {fileID: 803849218}
-  - component: {fileID: 803849219}
   - component: {fileID: 803849220}
   m_Layer: 5
-  m_Name: Canvas
+  m_Name: Intro
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -732,7 +732,7 @@ RectTransform:
   - {fileID: 1909106218}
   - {fileID: 1245161409}
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -773,6 +773,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tex: {fileID: 1245161410}
+  enableBetaDRM: 0
 --- !u!82 &803849220
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1247,7 +1248,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1888764799
 GameObject:
@@ -1705,7 +1706,7 @@ RectTransform:
   m_Children:
   - {fileID: 188519010303830990}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
