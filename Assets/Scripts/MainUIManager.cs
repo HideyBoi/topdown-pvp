@@ -6,6 +6,7 @@ using Riptide.Transports.Steam;
 using Riptide.Utils;
 using Steamworks;
 using TMPro;
+using UnityEngine.Networking;
 
 public class MainUIManager : MonoBehaviour
 {
@@ -31,6 +32,9 @@ public class MainUIManager : MonoBehaviour
     public GameObject cosmeticsRoot;
     public GameObject camRot;
 
+    public GameObject updateNotice;
+    public TextMeshProUGUI updateNoticeText;
+
     private void Start()
     {
         Cursor.SetCursor(cursor, new Vector2(cursor.width / 2, cursor.height / 2), CursorMode.Auto);
@@ -54,6 +58,43 @@ public class MainUIManager : MonoBehaviour
         instance = this;
 
         NetworkManager.instance.mainMenuUIManager = this;
+        StartCoroutine(GetRequest("https://hideyboi.pages.dev/Update/dungeon-of-guns-main"));
+    }
+
+    IEnumerator GetRequest(string uri)
+    {
+        using (UnityWebRequest webRequest = UnityWebRequest.Get(uri))
+        {
+            yield return webRequest.SendWebRequest();
+
+            string[] pages = uri.Split('/');
+            int page = pages.Length - 1;
+
+            switch (webRequest.result)
+            {
+                case UnityWebRequest.Result.ConnectionError:
+                case UnityWebRequest.Result.DataProcessingError:
+                    Debug.LogError("[Update] Error: " + webRequest.error);
+                    ErrorPrompt.ShowError("[Update] Unable to connect to the server to check for updates.");
+                    break;
+                case UnityWebRequest.Result.ProtocolError:
+                    Debug.LogError("[Update] HTTP Error: " + webRequest.error);
+                    break;
+                case UnityWebRequest.Result.Success:
+                    Debug.Log("[Update] Got version information successfully.");
+                    if (webRequest.downloadHandler.text != Application.version)
+                    {
+                        Debug.Log("[Update] Versions do not match, showing prompt.");
+                        updateNotice.SetActive(true);
+                        updateNoticeText.text = $"You are not playing the latest version of this game!\nIn order to play with most other players you will need to download the update from the Itch.io page.\nCurrent Version: {Application.version} Newest Version: {webRequest.downloadHandler.text}";
+                    }
+                    else
+                    {
+                        Debug.Log("[Update] Version is up to date!");
+                    }
+                    break;
+            }
+        }
     }
 
     public void ConnectedToLobby()

@@ -5,7 +5,6 @@ using Cinemachine;
 using Riptide;
 using Riptide.Utils;
 using System;
-using UnityEditor.Rendering.LookDev;
 
 public class LocalPlayerController : MonoBehaviour
 {
