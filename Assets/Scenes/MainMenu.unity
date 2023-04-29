@@ -3991,8 +3991,8 @@ MonoBehaviour:
     by Tom Weiland \nEZ Camera Shake by andersonaddo\nBase Water Shader by alexandermeye\nBanana
     Texture by the3rdSequence\nUI Sounds by Kenney\nPickup sound by nioczkus\nPistol
     Pickup sound by pcmac\nAssualt Rifle Reload sound by ermfilm\nHealing sounds
-    by EminYILDIRIM\nFire Ambient sound by leosalom\nPart of hit sounds by Australopithecusman\n\nSee
-    Credits.txt for full credits."
+    by EminYILDIRIM\nFire Ambient sound by leosalom\nPart of hit sounds by Australopithecusman\nDeath
+    sound by JustInvoke\n\nSee Credits.txt for full credits."
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 3230aa5b45b09bc4bbde7e8a09791d50, type: 2}
   m_sharedMaterial: {fileID: 1903526051497087997, guid: 3230aa5b45b09bc4bbde7e8a09791d50,

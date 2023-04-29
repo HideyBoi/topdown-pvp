@@ -1144,7 +1144,7 @@ MonoBehaviour:
   killPopupParent: {fileID: 72995378406372147}
   soundEffect: {fileID: 7098371210533266199, guid: 03ca22f20a0d6c145ab412dadd2b8800,
     type: 3}
-  killSound: {fileID: 8300000, guid: f8cfdfae679158d4fb9fbcf57636d5dc, type: 3}
+  killSound: {fileID: 8300000, guid: 4f2d7b49836352a4d915c49f30a7e233, type: 3}
 --- !u!135 &171931358746057922
 SphereCollider:
   m_ObjectHideFlags: 0
