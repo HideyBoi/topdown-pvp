@@ -185,6 +185,8 @@ MonoBehaviour:
     type: 3}
   deathEffect: {fileID: 5027107366694167322, guid: afb18c3eccac0464b9f03b17b202dfb5,
     type: 3}
+  remoteDead: 0
+  alreadyCountedKill: 0
   animator: {fileID: 0}
   coll: {fileID: 1625184520517699734}
   isDead: 0
@@ -217,8 +219,19 @@ MonoBehaviour:
   ammo: {fileID: 0}
   hitPopup: {fileID: 2067978172981829255, guid: f35e756a4e43a864da1382771a1dcd32,
     type: 3}
+  hitArrow: {fileID: 0}
   killPopup: {fileID: 0}
   killPopupParent: {fileID: 0}
+  soundEffect: {fileID: 7098371210533266199, guid: 03ca22f20a0d6c145ab412dadd2b8800,
+    type: 3}
+  killSound: {fileID: 8300000, guid: 4f2d7b49836352a4d915c49f30a7e233, type: 3}
+  hurtSounds:
+  - {fileID: 8300000, guid: 1c803a0e816ac1f4e8251d11bb273362, type: 3}
+  - {fileID: 8300000, guid: 059684eb0a0840b4c94ef36bfc9bc616, type: 3}
+  - {fileID: 8300000, guid: 4b0cfb85cb6565b40ae29bf6e9ef5a6d, type: 3}
+  - {fileID: 8300000, guid: d315c8139f3ea7d4e98528b202b27839, type: 3}
+  - {fileID: 8300000, guid: 4ce897f446c8e90498657e0c46fc2d67, type: 3}
+  - {fileID: 8300000, guid: 2f2e2af5c6a3e114abbf124c6382fde7, type: 3}
 --- !u!1 &2348458815098740346
 GameObject:
   m_ObjectHideFlags: 0

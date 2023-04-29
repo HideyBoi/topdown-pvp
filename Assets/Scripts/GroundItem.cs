@@ -83,7 +83,7 @@ public class GroundItem : MonoBehaviour
 
         GameObject sfxOBJ = Instantiate(sfx, transform.position, Quaternion.identity);
         SoundEffect effect = sfxOBJ.GetComponent<SoundEffect>();
-        effect.PlaySound(currentItem.weapon.pickupSound, 35, 1);
+        effect.PlaySound(currentItem.weapon.pickupSound, 20, 0.7f);
         Destroy(GetComponent<BoxCollider>());
 
         if (!isFromNetwork)

@@ -1071,13 +1071,6 @@ MonoBehaviour:
     type: 3}
   soundEffect: {fileID: 7098371210533266199, guid: 03ca22f20a0d6c145ab412dadd2b8800,
     type: 3}
-  hurtSfx:
-  - {fileID: 8300000, guid: 1c803a0e816ac1f4e8251d11bb273362, type: 3}
-  - {fileID: 8300000, guid: 059684eb0a0840b4c94ef36bfc9bc616, type: 3}
-  - {fileID: 8300000, guid: 4b0cfb85cb6565b40ae29bf6e9ef5a6d, type: 3}
-  - {fileID: 8300000, guid: d315c8139f3ea7d4e98528b202b27839, type: 3}
-  - {fileID: 8300000, guid: 4ce897f446c8e90498657e0c46fc2d67, type: 3}
-  - {fileID: 8300000, guid: 2f2e2af5c6a3e114abbf124c6382fde7, type: 3}
 --- !u!114 &6931495126576613436
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1139,12 +1132,21 @@ MonoBehaviour:
   - {fileID: 8573082192986105258, guid: 47b1df7ab81aba945ab9c47ca51bbf5d, type: 3}
   ammo: {fileID: 9176021081397741453, guid: e3eab27d2a283c647a81ea91ad2f5275, type: 3}
   hitPopup: {fileID: 0}
+  hitArrow: {fileID: 5669666333177001610, guid: 4626da64bcc1dd34bb1e58d5d40f69a1,
+    type: 3}
   killPopup: {fileID: 2183891826911585689, guid: bc7b99e15398a184582b3af8c65ce334,
     type: 3}
   killPopupParent: {fileID: 72995378406372147}
   soundEffect: {fileID: 7098371210533266199, guid: 03ca22f20a0d6c145ab412dadd2b8800,
     type: 3}
   killSound: {fileID: 8300000, guid: 4f2d7b49836352a4d915c49f30a7e233, type: 3}
+  hurtSounds:
+  - {fileID: 8300000, guid: 1c803a0e816ac1f4e8251d11bb273362, type: 3}
+  - {fileID: 8300000, guid: 059684eb0a0840b4c94ef36bfc9bc616, type: 3}
+  - {fileID: 8300000, guid: 4b0cfb85cb6565b40ae29bf6e9ef5a6d, type: 3}
+  - {fileID: 8300000, guid: d315c8139f3ea7d4e98528b202b27839, type: 3}
+  - {fileID: 8300000, guid: 4ce897f446c8e90498657e0c46fc2d67, type: 3}
+  - {fileID: 8300000, guid: 2f2e2af5c6a3e114abbf124c6382fde7, type: 3}
 --- !u!135 &171931358746057922
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -1339,6 +1341,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
@@ -2704,6 +2707,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 0
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
@@ -6243,7 +6247,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5034860846413870476}
   m_LocalRotation: {x: -0, y: 0.7071068, z: -0.7071068, w: 0}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 17.06}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -6472,6 +6476,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0

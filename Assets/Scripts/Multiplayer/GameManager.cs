@@ -272,6 +272,17 @@ public class GameManager : MonoBehaviour
 
         Instantiate(soundEffect, position, Quaternion.identity).GetComponent<SoundEffect>().PlaySound(cliptoplay, maxDistance, volume);
     }
+    public void PlaySoundEffectByID(Transform parent, Vector3 position, int audioID, float volume, float maxDistance)
+    {
+        AudioClip cliptoplay = clips[audioID];
+
+        if (audioID > 4 && audioID < 10)
+        {
+            Instantiate(sploosh, position, Quaternion.identity);
+        }
+
+        Instantiate(soundEffect, parent).GetComponent<SoundEffect>().PlaySound(cliptoplay, maxDistance, volume);
+    }
 
     [Header("Loot")]
 
@@ -606,11 +617,11 @@ public class GameManager : MonoBehaviour
         Quaternion rotation = msg.GetQuaternion();
         if (player)
         {
-            Instantiate(instance.soundEffect, pos, Quaternion.identity).GetComponent<SoundEffect>().PlaySound(instance.clips[13], 45, 1);
+            Instantiate(instance.soundEffect, pos, Quaternion.identity).GetComponent<SoundEffect>().PlaySound(instance.clips[13], 30, 0.6f);
             Instantiate(instance.particleObjects[1], pos, rotation);
         } else
         {
-            Instantiate(instance.soundEffect, pos, Quaternion.identity).GetComponent<SoundEffect>().PlaySound(instance.clips[12], 30, 1);
+            Instantiate(instance.soundEffect, pos, Quaternion.identity).GetComponent<SoundEffect>().PlaySound(instance.clips[12], 30, 0.6f);
 
         }
     }
@@ -629,7 +640,7 @@ public class GameManager : MonoBehaviour
             if (player._id == id)
             {
                 if (playSound) 
-                    Instantiate(instance.soundEffect, player.transform).GetComponent<SoundEffect>().PlaySound(instance.possibleWeapons[weaponId].shootSound, 60, 0.7f);
+                    Instantiate(instance.soundEffect, player.transform).GetComponent<SoundEffect>().PlaySound(instance.possibleWeapons[weaponId].shootSound, 40, 0.7f);
 
                 Instantiate(instance.muzzleFlash, flashPos, gunPiv, player.pivot);
 
@@ -647,7 +658,7 @@ public class GameManager : MonoBehaviour
         {
             if (player._id == id)
             {
-                Instantiate(instance.soundEffect, player.transform).GetComponent<SoundEffect>().PlaySound(instance.possibleWeapons[msg.GetInt()].reloadSound, 35, 1);
+                Instantiate(instance.soundEffect, player.transform).GetComponent<SoundEffect>().PlaySound(instance.possibleWeapons[msg.GetInt()].reloadSound, 35, 0.7f);
             }
         }
     }

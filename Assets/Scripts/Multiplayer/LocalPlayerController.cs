@@ -188,11 +188,11 @@ public class LocalPlayerController : MonoBehaviour
                 Message msg = Message.Create(MessageSendMode.Reliable, NetworkManager.MessageIds.soundEffect);
                 msg.AddVector3(transform.position);
                 msg.AddInt(rng);
-                msg.AddFloat(1f);
-                msg.AddFloat(90);
+                msg.AddFloat(0.8f);
+                msg.AddFloat(25);
                 NetworkManager.instance.Client.Send(msg);
 
-                GameManager.instance.PlaySoundEffectByID(waterSplooshEmitter.position, rng, 0.5f, 90);
+                GameManager.instance.PlaySoundEffectByID(transform, waterSplooshEmitter.position, rng, 0.5f, 25);
             }
         }
     }

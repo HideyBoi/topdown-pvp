@@ -60,11 +60,13 @@ public class HealthManager : MonoBehaviour
 
     public GameObject hitPopup;
     DamageNumber currentHitPopup;
+    public GameObject hitArrow;
 
     public GameObject killPopup;
     public Transform killPopupParent;
     public GameObject soundEffect;
     public AudioClip killSound;
+    public AudioClip[] hurtSounds;
 
     private void Awake()
     {
@@ -158,7 +160,16 @@ public class HealthManager : MonoBehaviour
             }
 
             currentHitPopup.AddNumber(damage, transform.position);
+        } else
+        {
+            if (isLocalPlayer)
+            {            
+                GameObject arrow = Instantiate(hitArrow, playingHUD.transform);
+                arrow.GetComponent<HitArrow>().SetRot(GameManager.instance.GetRemotePlayer(attackingPlayer).transform.position);
+            }
         }
+
+        Instantiate(soundEffect, transform.position, Quaternion.identity).GetComponent<SoundEffect>().PlaySound(hurtSounds[Random.Range(0, hurtSounds.Length)], 20, 0.7f);
 
         health -= damage;
         if (health <= 0)
@@ -200,8 +211,6 @@ public class HealthManager : MonoBehaviour
         killText.text = "x " + killCount;
 
         Instantiate(killPopup, killPopupParent).GetComponent<KillPopup>().UpdateName(killed._name);
-        Instantiate(soundEffect, transform).GetComponent<SoundEffect>().PlaySound(killSound, 60, 1f);
-
     }
 
     public void Health(int newHealth)
@@ -231,6 +240,8 @@ public class HealthManager : MonoBehaviour
             alreadyCountedKill = true;
 
             Instantiate(deathEffect, transform.position, Quaternion.identity);
+            Instantiate(soundEffect, transform.position, Quaternion.identity).GetComponent<SoundEffect>().PlaySound(killSound, 30, 0.8f);
+
 
             if (killingPlayer == NetworkManager.instance.Client.Id)
             {

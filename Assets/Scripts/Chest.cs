@@ -32,7 +32,7 @@ public class Chest : MonoBehaviour
     {
         gameObject.tag = "NonInteractable";
         GetComponent<Animator>().Play("Open");
-        Instantiate(sfx, transform.position, Quaternion.identity).GetComponent<SoundEffect>().PlaySound(chestOpenSound, 45, 1);
+        Instantiate(sfx, transform.position, Quaternion.identity).GetComponent<SoundEffect>().PlaySound(chestOpenSound, 25, 0.7f);
         if (!isFromNetwork)
         {
             Message msg = Message.Create(MessageSendMode.Reliable, NetworkManager.MessageIds.openChest);

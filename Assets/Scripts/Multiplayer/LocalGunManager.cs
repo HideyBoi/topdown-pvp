@@ -43,8 +43,6 @@ public class LocalGunManager : MonoBehaviour
     public GameObject bloodEffect;
     public GameObject soundEffect;
 
-    public AudioClip[] hurtSfx;
-
 
     void Awake()
     {
@@ -222,13 +220,13 @@ public class LocalGunManager : MonoBehaviour
                         if (shoot.collider.CompareTag("RemotePlayer"))
                         {
                             Instantiate(bloodEffect, shoot.point, Quaternion.LookRotation(shoot.normal, Vector3.up));
-                            Instantiate(soundEffect, transform.position, Quaternion.identity).GetComponent<SoundEffect>().PlaySound(im.inventoryItem[im.currentIndex].weapon.shootSound, 45, 1);
+                            Instantiate(soundEffect, transform).GetComponent<SoundEffect>().PlaySound(im.inventoryItem[im.currentIndex].weapon.shootSound, 40, 0.6f);
 
                             HealthManager hm = shoot.collider.GetComponent<HealthManager>();
                             Damage(im.inventoryItem[im.currentIndex].weapon.damage, im.inventoryItem[im.currentIndex].weapon.id, hm);
                         } else
                         {
-                            Instantiate(soundEffect, transform.position, Quaternion.identity).GetComponent<SoundEffect>().PlaySound(im.inventoryItem[im.currentIndex].weapon.reloadSound, 30, 1);
+                            Instantiate(soundEffect, transform).GetComponent<SoundEffect>().PlaySound(im.inventoryItem[im.currentIndex].weapon.reloadSound, 40, 0.6f);
                         }
                     }
                 }
@@ -294,12 +292,8 @@ public class LocalGunManager : MonoBehaviour
                                 muzzleFlashMsg.AddVector3(shoot.point);
                                 if (i == 0)
                                 {
-                                    Instantiate(soundEffect, transform.position, Quaternion.identity).GetComponent<SoundEffect>().PlaySound(im.inventoryItem[im.currentIndex].weapon.shootSound, 60, 0.7f);
+                                    Instantiate(soundEffect, transform).GetComponent<SoundEffect>().PlaySound(im.inventoryItem[im.currentIndex].weapon.shootSound, 40, 0.6f);
                                     muzzleFlashMsg.AddBool(true);
-                                    if (shoot.collider.CompareTag("RemotePlayer"))
-                                    {
-                                        Instantiate(soundEffect, transform.position, Quaternion.identity).GetComponent<SoundEffect>().PlaySound(hurtSfx[Random.Range(0, hurtSfx.Length)], 100, 0.8f);
-                                    }
                                 } else
                                 {
                                     muzzleFlashMsg.AddBool(false);
