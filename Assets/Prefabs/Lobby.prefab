@@ -12072,7 +12072,7 @@ MonoBehaviour:
   doWeaponDropoffDefault: 1
   maxHealth: {fileID: 8079333909223856079}
   maxHealthError: {fileID: 4900755054303591534}
-  defaulltMaxHealth: 150
+  defaulltMaxHealth: 200
   startingSyringes: {fileID: 4241404555770599670}
   startingSyringesError: {fileID: 23679137685593963}
   defaultSyringeCount: 0

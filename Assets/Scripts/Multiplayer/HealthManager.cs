@@ -63,6 +63,8 @@ public class HealthManager : MonoBehaviour
 
     public GameObject killPopup;
     public Transform killPopupParent;
+    public GameObject soundEffect;
+    public AudioClip killSound;
 
     private void Awake()
     {
@@ -198,6 +200,8 @@ public class HealthManager : MonoBehaviour
         killText.text = "x " + killCount;
 
         Instantiate(killPopup, killPopupParent).GetComponent<KillPopup>().UpdateName(killed._name);
+        Instantiate(soundEffect, transform).GetComponent<SoundEffect>().PlaySound(killSound, 60, 1f);
+
     }
 
     public void Health(int newHealth)

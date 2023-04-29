@@ -43,6 +43,8 @@ public class LocalGunManager : MonoBehaviour
     public GameObject bloodEffect;
     public GameObject soundEffect;
 
+    public AudioClip[] hurtSfx;
+
 
     void Awake()
     {
@@ -257,7 +259,6 @@ public class LocalGunManager : MonoBehaviour
                     if (im.inventoryItem[im.currentIndex].ammoCount > 0)
                     {
                         im.inventoryItem[im.currentIndex].ammoCount--;
-                        Instantiate(soundEffect, transform.position, Quaternion.identity).GetComponent<SoundEffect>().PlaySound(im.inventoryItem[im.currentIndex].weapon.shootSound, 60, 1);
                         Instantiate(muzzleFlash, gunPivot.position + gunPivot.transform.TransformDirection(im.inventoryItem[im.currentIndex].weapon.muzzleLocation), gunPivot.rotation, gunPivot);
                         shootCooldown = im.inventoryItem[im.currentIndex].weapon.timeBetweenShots;
 
@@ -291,6 +292,18 @@ public class LocalGunManager : MonoBehaviour
                                 muzzleFlashMsg.AddVector3(gunPivot.position + gunPivot.transform.TransformDirection(im.inventoryItem[im.currentIndex].weapon.muzzleLocation));
                                 muzzleFlashMsg.AddQuaternion(gunPivot.rotation);
                                 muzzleFlashMsg.AddVector3(shoot.point);
+                                if (i == 0)
+                                {
+                                    Instantiate(soundEffect, transform.position, Quaternion.identity).GetComponent<SoundEffect>().PlaySound(im.inventoryItem[im.currentIndex].weapon.shootSound, 60, 0.7f);
+                                    muzzleFlashMsg.AddBool(true);
+                                    if (shoot.collider.CompareTag("RemotePlayer"))
+                                    {
+                                        Instantiate(soundEffect, transform.position, Quaternion.identity).GetComponent<SoundEffect>().PlaySound(hurtSfx[Random.Range(0, hurtSfx.Length)], 100, 0.8f);
+                                    }
+                                } else
+                                {
+                                    muzzleFlashMsg.AddBool(false);
+                                }
                                 NetworkManager.instance.Client.Send(muzzleFlashMsg);
 
                                 Instantiate(bulletTracer, gunPivot.position + gunPivot.transform.TransformDirection(im.inventoryItem[im.currentIndex].weapon.muzzleLocation), Quaternion.identity).GetComponent<BulletTracer>().SetData(shoot.point);

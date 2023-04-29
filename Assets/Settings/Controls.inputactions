@@ -15,6 +15,15 @@
                     "initialStateCheck": true
                 },
                 {
+                    "name": "Walk",
+                    "type": "Button",
+                    "id": "66bfa7d1-c97e-4264-a226-0120d88260fe",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "PointGamepad",
                     "type": "Value",
                     "id": "854d6978-5e39-4891-8d80-c52d3a6b494e",
@@ -484,7 +493,7 @@
                 {
                     "name": "",
                     "id": "90ba9637-22cb-442d-a8d0-8d7f0962dead",
-                    "path": "<Keyboard>/shift",
+                    "path": "<Keyboard>/tab",
                     "interactions": "",
                     "processors": "",
                     "groups": "KBM",
@@ -599,6 +608,28 @@
                     "processors": "",
                     "groups": "GAMEPAD",
                     "action": "UniMenu",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "07c92deb-1c57-4161-b237-f17e559a6659",
+                    "path": "<Gamepad>/leftStickPress",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "GAMEPAD",
+                    "action": "Walk",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ea8c5059-9421-4bec-9cf4-b313adfb0914",
+                    "path": "<Keyboard>/leftShift",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "KBM",
+                    "action": "Walk",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

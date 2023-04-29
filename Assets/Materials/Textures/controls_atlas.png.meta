@@ -904,6 +904,48 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: controls_atlas_38
+      rect:
+        serializedVersion: 2
+        x: 414
+        y: 519
+        width: 90
+        height: 62
+      alignment: 6
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 36db39992946ac94e86cf4ad1e90cd8e
+      internalID: 253178911
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: controls_atlas_39
+      rect:
+        serializedVersion: 2
+        x: 472
+        y: 258
+        width: 88
+        height: 89
+      alignment: 6
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 48ac2ebb7b6dbb44b9652adfba667470
+      internalID: 2079582466
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []

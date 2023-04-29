@@ -268,6 +268,18 @@ MonoBehaviour:
     m_Scale: 1
     m_Name: controls_atlas_33
     m_HashCode: 219055807
+  - m_ElementType: 2
+    m_Unicode: 65534
+    m_GlyphIndex: 38
+    m_Scale: 1
+    m_Name: controls_atlas_38
+    m_HashCode: 219055796
+  - m_ElementType: 2
+    m_Unicode: 65534
+    m_GlyphIndex: 39
+    m_Scale: 1
+    m_Name: controls_atlas_39
+    m_HashCode: 219055797
   m_SpriteGlyphTable:
   - m_Index: 0
     m_Metrics:
@@ -278,7 +290,7 @@ MonoBehaviour:
       m_HorizontalAdvance: 96
     m_GlyphRect:
       m_X: 2
-      m_Y: 526
+      m_Y: 527
       m_Width: 96
       m_Height: 48
     m_Scale: 1
@@ -877,6 +889,38 @@ MonoBehaviour:
     m_AtlasIndex: 0
     m_ClassDefinitionType: 0
     sprite: {fileID: 1085213501, guid: 725b1012f25600147b80c4eba795360c, type: 3}
+  - m_Index: 38
+    m_Metrics:
+      m_Width: 90
+      m_Height: 62
+      m_HorizontalBearingX: 0
+      m_HorizontalBearingY: 64
+      m_HorizontalAdvance: 90
+    m_GlyphRect:
+      m_X: 414
+      m_Y: 519
+      m_Width: 90
+      m_Height: 62
+    m_Scale: 1
+    m_AtlasIndex: 0
+    m_ClassDefinitionType: 0
+    sprite: {fileID: 253178911, guid: 725b1012f25600147b80c4eba795360c, type: 3}
+  - m_Index: 39
+    m_Metrics:
+      m_Width: 88
+      m_Height: 89
+      m_HorizontalBearingX: 0
+      m_HorizontalBearingY: 92.2
+      m_HorizontalAdvance: 88
+    m_GlyphRect:
+      m_X: 472
+      m_Y: 258
+      m_Width: 88
+      m_Height: 89
+    m_Scale: 1
+    m_AtlasIndex: 0
+    m_ClassDefinitionType: 0
+    sprite: {fileID: 2079582466, guid: 725b1012f25600147b80c4eba795360c, type: 3}
   spriteInfoList: []
   fallbackSpriteAssets: []
 --- !u!21 &2585941067385780003

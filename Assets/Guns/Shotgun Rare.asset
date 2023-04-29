@@ -30,8 +30,8 @@ MonoBehaviour:
   damage: 9
   damageFalloff: 0.2
   maxAmmoCount: 4
-  timeBetweenShots: 1.5
+  timeBetweenShots: 1.2
   reloadTime: 3.128
   shotCount: 12
-  spread: 0.35
+  spread: 0.29
   speedModifier: 0.7

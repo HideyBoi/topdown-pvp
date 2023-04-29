@@ -1071,6 +1071,13 @@ MonoBehaviour:
     type: 3}
   soundEffect: {fileID: 7098371210533266199, guid: 03ca22f20a0d6c145ab412dadd2b8800,
     type: 3}
+  hurtSfx:
+  - {fileID: 8300000, guid: 1c803a0e816ac1f4e8251d11bb273362, type: 3}
+  - {fileID: 8300000, guid: 059684eb0a0840b4c94ef36bfc9bc616, type: 3}
+  - {fileID: 8300000, guid: 4b0cfb85cb6565b40ae29bf6e9ef5a6d, type: 3}
+  - {fileID: 8300000, guid: d315c8139f3ea7d4e98528b202b27839, type: 3}
+  - {fileID: 8300000, guid: 4ce897f446c8e90498657e0c46fc2d67, type: 3}
+  - {fileID: 8300000, guid: 2f2e2af5c6a3e114abbf124c6382fde7, type: 3}
 --- !u!114 &6931495126576613436
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1135,6 +1142,9 @@ MonoBehaviour:
   killPopup: {fileID: 2183891826911585689, guid: bc7b99e15398a184582b3af8c65ce334,
     type: 3}
   killPopupParent: {fileID: 72995378406372147}
+  soundEffect: {fileID: 7098371210533266199, guid: 03ca22f20a0d6c145ab412dadd2b8800,
+    type: 3}
+  killSound: {fileID: 8300000, guid: f8cfdfae679158d4fb9fbcf57636d5dc, type: 3}
 --- !u!135 &171931358746057922
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -6722,7 +6732,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1449141816711159309}
   - component: {fileID: 6918682703876808270}
-  - component: {fileID: 6434055414319639965}
   - component: {fileID: 2738807563284487100}
   m_Layer: 6
   m_Name: Camera
@@ -6797,14 +6806,6 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
---- !u!81 &6434055414319639965
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5469827504443817643}
-  m_Enabled: 1
 --- !u!114 &2738807563284487100
 MonoBehaviour:
   m_ObjectHideFlags: 0

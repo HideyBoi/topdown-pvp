@@ -13,6 +13,7 @@ public class LocalPlayerController : MonoBehaviour
     public static LocalPlayerController instance;
 
     Vector2 desMoveDir;
+    bool desWalk = false;
     public Vector2 lookDir;
     Rigidbody rb;
     public Transform pivot;
@@ -85,8 +86,11 @@ public class LocalPlayerController : MonoBehaviour
 
         controls.Player.Move.performed += ctx => Move(ctx.ReadValue<Vector2>(), true);
         controls.Player.Move.canceled += ctx => Move(ctx.ReadValue<Vector2>(), false);
+        controls.Player.Walk.performed += _ => Walk(true);
+        controls.Player.Walk.canceled += _ => Walk(false);
         controls.Player.PointGamepad.performed += ctx => PointGamepad(ctx.ReadValue<Vector2>());
         controls.Player.PointMouse.performed += ctx => PointMouse(ctx.ReadValue<Vector2>());
+
         AdditionalCameraData = miniMapCam.transform.GetComponent<UnityEngine.Rendering.Universal.UniversalAdditionalCameraData>();
 
         AdditionalCameraData.SetRenderer(1);
@@ -100,18 +104,40 @@ public class LocalPlayerController : MonoBehaviour
         if (!hm.isDead)
         {
             AdditionalCameraData.SetRenderer(1);
+
             if (inventory.inventoryItem[inventory.currentIndex].weapon)
             {
                 if (RulesManager.instance.doWeaponSlowdown)
                 {
-                    rb.AddForce(new Vector3(desMoveDir.x, 0, desMoveDir.y) * currentMovementSpeed * healingMove * inventory.inventoryItem[inventory.currentIndex].weapon.speedModifier, ForceMode.VelocityChange);
+                    if (desWalk && healingMove == 1)
+                    {
+                        rb.AddForce(new Vector3(desMoveDir.x, 0, desMoveDir.y) * currentMovementSpeed * healingMove * inventory.inventoryItem[inventory.currentIndex].weapon.speedModifier * 0.5f, ForceMode.VelocityChange);
+
+                    }
+                    else
+                    {
+                        rb.AddForce(new Vector3(desMoveDir.x, 0, desMoveDir.y) * currentMovementSpeed * healingMove, ForceMode.VelocityChange);
+                    }
+                } else
+                {
+                    if (desWalk && healingMove == 1)
+                    {
+                        rb.AddForce(new Vector3(desMoveDir.x, 0, desMoveDir.y) * currentMovementSpeed * 0.5f, ForceMode.VelocityChange);
+                    }
+                    else
+                    {
+                        rb.AddForce(new Vector3(desMoveDir.x, 0, desMoveDir.y) * currentMovementSpeed * healingMove, ForceMode.VelocityChange);
+                    }
+                }
+            } else
+            {
+                if (desWalk && healingMove == 1)
+                {
+                    rb.AddForce(new Vector3(desMoveDir.x, 0, desMoveDir.y) * currentMovementSpeed * 0.5f, ForceMode.VelocityChange);
                 } else
                 {
                     rb.AddForce(new Vector3(desMoveDir.x, 0, desMoveDir.y) * currentMovementSpeed * healingMove, ForceMode.VelocityChange);
                 }
-            } else
-            {
-                rb.AddForce(new Vector3(desMoveDir.x, 0, desMoveDir.y) * currentMovementSpeed * healingMove, ForceMode.VelocityChange);
             }
             
 
@@ -147,7 +173,7 @@ public class LocalPlayerController : MonoBehaviour
             RaycastHit hit;
             Physics.Raycast(transform.position, Vector3.down, out hit, 8f, groundLm);
 
-            if (hit.collider != null)
+            if (hit.collider != null && (!desWalk || healingMove != 1))
             {
                 int rng = 0;
 
@@ -166,7 +192,7 @@ public class LocalPlayerController : MonoBehaviour
                 msg.AddFloat(90);
                 NetworkManager.instance.Client.Send(msg);
 
-                GameManager.instance.PlaySoundEffectByID(waterSplooshEmitter.position, rng, 1f, 90);
+                GameManager.instance.PlaySoundEffectByID(waterSplooshEmitter.position, rng, 0.5f, 90);
             }
         }
     }
@@ -184,6 +210,11 @@ public class LocalPlayerController : MonoBehaviour
     {
         desMoveDir = rawdir;
         wantsToMove = moving;
+    }
+
+    void Walk(bool wantsToWalk)
+    {
+        desWalk = wantsToWalk;
     }
 
     void PointMouse(Vector2 mousePos)

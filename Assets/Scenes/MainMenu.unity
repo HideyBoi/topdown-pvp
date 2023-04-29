@@ -3705,7 +3705,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 600, y: 450}
+  m_SizeDelta: {x: 600, y: 509.48}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &316821081
 CanvasRenderer:
@@ -3991,8 +3991,8 @@ MonoBehaviour:
     by Tom Weiland \nEZ Camera Shake by andersonaddo\nBase Water Shader by alexandermeye\nBanana
     Texture by the3rdSequence\nUI Sounds by Kenney\nPickup sound by nioczkus\nPistol
     Pickup sound by pcmac\nAssualt Rifle Reload sound by ermfilm\nHealing sounds
-    by EminYILDIRIM\nFire Ambient sound by leosalom\n\n\nSee Credits.txt for full
-    credits."
+    by EminYILDIRIM\nFire Ambient sound by leosalom\nPart of hit sounds by Australopithecusman\n\nSee
+    Credits.txt for full credits."
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 3230aa5b45b09bc4bbde7e8a09791d50, type: 2}
   m_sharedMaterial: {fileID: 1903526051497087997, guid: 3230aa5b45b09bc4bbde7e8a09791d50,
@@ -14046,6 +14046,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'Move
 
+    Walk
+
     Aim
 
     Switch Guns
@@ -19308,6 +19310,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: '<sprite=24><sprite=30><sprite=31><sprite=32>/<sprite=28>
 
+    <sprite=17>/<sprite=39>
+
     <sprite=14>/<sprite=29>
 
     <sprite=13>
@@ -19323,7 +19327,7 @@ MonoBehaviour:
 
     <sprite=7>/<sprite=25>
 
-    <sprite=17>/<sprite=26>
+    <sprite=38>/<sprite=26>
 
     <sprite=11>/<sprite=33>'
   m_isRightToLeft: 0
@@ -20005,8 +20009,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -254.00003}
-  m_SizeDelta: {x: 0, y: 392}
+  m_AnchoredPosition: {x: 0, y: -283.74}
+  m_SizeDelta: {x: 0, y: 451.48}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1522833258
 MonoBehaviour:

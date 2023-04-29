@@ -29,8 +29,8 @@ MonoBehaviour:
   ammoType: 0
   automatic: 1
   damage: 7
-  damageFalloff: 0.4
-  maxAmmoCount: 15
+  damageFalloff: 0.28
+  maxAmmoCount: 25
   timeBetweenShots: 0.075
   reloadTime: 1.2
   shotCount: 1

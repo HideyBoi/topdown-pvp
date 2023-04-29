@@ -622,12 +622,15 @@ public class GameManager : MonoBehaviour
         Vector3 flashPos = msg.GetVector3();
         Quaternion gunPiv = msg.GetQuaternion();
         Vector3 hitPoint = msg.GetVector3();
+        bool playSound = msg.GetBool();
 
         foreach (var player in instance.remotePlayers)
         {
             if (player._id == id)
             {
-                Instantiate(instance.soundEffect, player.transform).GetComponent<SoundEffect>().PlaySound(instance.possibleWeapons[weaponId].shootSound, 60, 1);
+                if (playSound) 
+                    Instantiate(instance.soundEffect, player.transform).GetComponent<SoundEffect>().PlaySound(instance.possibleWeapons[weaponId].shootSound, 60, 0.7f);
+
                 Instantiate(instance.muzzleFlash, flashPos, gunPiv, player.pivot);
 
                 Instantiate(instance.bulletTracer, flashPos, Quaternion.identity).GetComponent<BulletTracer>().SetData(hitPoint);

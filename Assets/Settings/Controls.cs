@@ -37,6 +37,15 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": true
                 },
                 {
+                    ""name"": ""Walk"",
+                    ""type"": ""Button"",
+                    ""id"": ""66bfa7d1-c97e-4264-a226-0120d88260fe"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
                     ""name"": ""PointGamepad"",
                     ""type"": ""Value"",
                     ""id"": ""854d6978-5e39-4891-8d80-c52d3a6b494e"",
@@ -506,7 +515,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""90ba9637-22cb-442d-a8d0-8d7f0962dead"",
-                    ""path"": ""<Keyboard>/shift"",
+                    ""path"": ""<Keyboard>/tab"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""KBM"",
@@ -623,6 +632,28 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""action"": ""UniMenu"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""07c92deb-1c57-4161-b237-f17e559a6659"",
+                    ""path"": ""<Gamepad>/leftStickPress"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""GAMEPAD"",
+                    ""action"": ""Walk"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ea8c5059-9421-4bec-9cf4-b313adfb0914"",
+                    ""path"": ""<Keyboard>/leftShift"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KBM"",
+                    ""action"": ""Walk"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -660,6 +691,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         // Player
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
         m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
+        m_Player_Walk = m_Player.FindAction("Walk", throwIfNotFound: true);
         m_Player_PointGamepad = m_Player.FindAction("PointGamepad", throwIfNotFound: true);
         m_Player_PointMouse = m_Player.FindAction("PointMouse", throwIfNotFound: true);
         m_Player_Scroll = m_Player.FindAction("Scroll", throwIfNotFound: true);
@@ -737,6 +769,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
     private readonly InputActionMap m_Player;
     private List<IPlayerActions> m_PlayerActionsCallbackInterfaces = new List<IPlayerActions>();
     private readonly InputAction m_Player_Move;
+    private readonly InputAction m_Player_Walk;
     private readonly InputAction m_Player_PointGamepad;
     private readonly InputAction m_Player_PointMouse;
     private readonly InputAction m_Player_Scroll;
@@ -757,6 +790,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         private @Controls m_Wrapper;
         public PlayerActions(@Controls wrapper) { m_Wrapper = wrapper; }
         public InputAction @Move => m_Wrapper.m_Player_Move;
+        public InputAction @Walk => m_Wrapper.m_Player_Walk;
         public InputAction @PointGamepad => m_Wrapper.m_Player_PointGamepad;
         public InputAction @PointMouse => m_Wrapper.m_Player_PointMouse;
         public InputAction @Scroll => m_Wrapper.m_Player_Scroll;
@@ -784,6 +818,9 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @Move.started += instance.OnMove;
             @Move.performed += instance.OnMove;
             @Move.canceled += instance.OnMove;
+            @Walk.started += instance.OnWalk;
+            @Walk.performed += instance.OnWalk;
+            @Walk.canceled += instance.OnWalk;
             @PointGamepad.started += instance.OnPointGamepad;
             @PointGamepad.performed += instance.OnPointGamepad;
             @PointGamepad.canceled += instance.OnPointGamepad;
@@ -836,6 +873,9 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @Move.started -= instance.OnMove;
             @Move.performed -= instance.OnMove;
             @Move.canceled -= instance.OnMove;
+            @Walk.started -= instance.OnWalk;
+            @Walk.performed -= instance.OnWalk;
+            @Walk.canceled -= instance.OnWalk;
             @PointGamepad.started -= instance.OnPointGamepad;
             @PointGamepad.performed -= instance.OnPointGamepad;
             @PointGamepad.canceled -= instance.OnPointGamepad;
@@ -919,6 +959,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
     public interface IPlayerActions
     {
         void OnMove(InputAction.CallbackContext context);
+        void OnWalk(InputAction.CallbackContext context);
         void OnPointGamepad(InputAction.CallbackContext context);
         void OnPointMouse(InputAction.CallbackContext context);
         void OnScroll(InputAction.CallbackContext context);
