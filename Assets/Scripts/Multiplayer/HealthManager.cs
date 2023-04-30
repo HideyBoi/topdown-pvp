@@ -59,20 +59,19 @@ public class HealthManager : MonoBehaviour
     [SerializeField]
     AudioClip[] hitSounds;
 
-    private void OnEnable()
+    private void Awake()
     {
-        if (id == NetworkManager.instance.Client.Id)
-            localHealthManager = this;
+        lives = RulesManager.instance.lives;
+    }
 
+    public void Init()
+    {
+        localHealthManager = this;
+        inv = GetComponent<LocalInventoryManager>();
         maxHealth = RulesManager.instance.maxHealth;
         currentHealth = maxHealth;
-        if (healthBar != null)
-        {
-            healthBar.maxValue = maxHealth;
-            healthBar.value = maxHealth;
-        }
-        
-        lives = RulesManager.instance.lives;
+        healthBar.maxValue = maxHealth;
+        healthBar.value = maxHealth;
     }
 
     private void Update()
@@ -80,8 +79,6 @@ public class HealthManager : MonoBehaviour
         if (!isLocalPlayer)
             return;
 
-        if (!inv)
-            inv = GetComponent<LocalInventoryManager>();
 
         healthBar.value = currentHealth;
         healthFlash.SetInteger("Health", currentHealth);

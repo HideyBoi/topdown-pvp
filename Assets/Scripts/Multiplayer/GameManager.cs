@@ -69,6 +69,7 @@ public class GameManager : MonoBehaviour
         localPlayerObject = Instantiate(playerPrefab);
         localPlayerObject.GetComponent<HealthManager>().isLocalPlayer = true;
         localPlayerObject.GetComponent<HealthManager>().id = networkManager.Client.Id;
+        localPlayerObject.GetComponent<HealthManager>().Init();
 
         foreach (var player in networkManager.connectedPlayers)
         {
@@ -204,7 +205,8 @@ public class GameManager : MonoBehaviour
         ushort id = msg.GetUShort();
         ushort killer = msg.GetUShort();
         int gunId = msg.GetInt();
-        
+
+        Debug.Log("[Game Manager] Player:" + id + " was killed by " + killer + " using " + gunId);
 
         if (killer == NetworkManager.instance.Client.Id)
         {
