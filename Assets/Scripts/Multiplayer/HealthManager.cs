@@ -6,7 +6,6 @@ using Riptide.Utils;
 using UnityEngine.UI;
 using TMPro;
 using Cinemachine;
-using static UnityEditor.Progress;
 
 public class HealthManager : MonoBehaviour
 {
@@ -77,7 +76,7 @@ public class HealthManager : MonoBehaviour
         healthBar.value = maxHealth;
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         if (!isLocalPlayer)
             return;
@@ -91,19 +90,21 @@ public class HealthManager : MonoBehaviour
 
         if (isDead && canRespawn)
         {
-            timeUntilRespawn -= Time.deltaTime;
+            timeUntilRespawn -= Time.fixedDeltaTime;
             if (timeUntilRespawn <= 0)
             {
+                int rng = Random.Range(0, GameManager.instance.spawns.Count);
+                transform.position = GameManager.instance.spawns[rng].position;
+
                 inv.currentIndex = 0;
                 inv.Scroll(0);
-                inv.canSwitch = true;
-                GetComponent<Collider>().enabled = true;
+                inv.canSwitch = true;     
                 deadUI.SetActive(false);
-                normalUI.SetActive(true);             
-                GameManager.instance.Respawn();
-                rb.isKinematic = false;
+                normalUI.SetActive(true);              
                 currentHealth = maxHealth; 
-                isDead = false;                   
+                isDead = false;
+                GetComponent<Collider>().enabled = true;
+                rb.isKinematic = false;
             }
         }
     }
@@ -173,6 +174,9 @@ public class HealthManager : MonoBehaviour
                     Message msg2 = Message.Create(MessageSendMode.Reliable, NetworkManager.MessageIds.playerOutOfGame);
                     msg2.AddUShort(id);
                     NetworkManager.instance.Client.Send(msg2);
+
+                    transform.position = new Vector3(0, 0, 200);
+                    rb.isKinematic = true;
 
                     ushort localId = NetworkManager.instance.Client.Id;
 
