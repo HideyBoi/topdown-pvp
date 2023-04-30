@@ -150,8 +150,6 @@ public class HealthManager : MonoBehaviour
 
             NetworkManager.instance.Client.Send(msg);
 
-            transform.position = new Vector3(0, 0, 200);
-
             ShowLocalKillfeed(fromId, id);
 
             KillFeed.i.OnKill(fromId, id, GameManager.instance.GetWeaponById(gunId));
@@ -165,6 +163,8 @@ public class HealthManager : MonoBehaviour
                     canRespawn = false;
                     respawningStatus.text = "You're out of the game, you've lost your last life!";
                     DropLoot();
+
+                    transform.position = new Vector3(0, 0, 200);
 
                     Message msg2 = Message.Create(MessageSendMode.Reliable, NetworkManager.MessageIds.playerOutOfGame);
                     msg2.AddUShort(id);
@@ -189,6 +189,8 @@ public class HealthManager : MonoBehaviour
                     if (RulesManager.instance.dropLootOnEveryDeath)
                     {
                         DropLoot();
+                        transform.position = new Vector3(0, 0, 200);
+
                     }
                 }
                 else
@@ -198,6 +200,8 @@ public class HealthManager : MonoBehaviour
                     if (RulesManager.instance.dropLootOnEveryDeath)
                     {
                         DropLoot();
+                        transform.position = new Vector3(0, 0, 200);
+
                     }
                 }
 
@@ -207,6 +211,7 @@ public class HealthManager : MonoBehaviour
             {
                 respawningStatus.text = "Respawning, please wait...";
                 canRespawn = true;
+                transform.position = new Vector3(0, 0, 200);
 
                 livesText.text = "Infinite";
             }
