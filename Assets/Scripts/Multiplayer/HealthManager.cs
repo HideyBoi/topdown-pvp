@@ -20,6 +20,7 @@ public class HealthManager : MonoBehaviour
     public int lives = 0;
     bool canRespawn = true;
     LocalInventoryManager inv;
+    Rigidbody rb;
     int maxHealth;
     int currentHealth;
     public bool isDead;
@@ -69,6 +70,7 @@ public class HealthManager : MonoBehaviour
     {
         localHealthManager = this;
         inv = GetComponent<LocalInventoryManager>();
+        rb = GetComponent<Rigidbody>();
         maxHealth = RulesManager.instance.maxHealth;
         currentHealth = maxHealth;
         healthBar.maxValue = maxHealth;
@@ -97,8 +99,9 @@ public class HealthManager : MonoBehaviour
                 inv.canSwitch = true;
                 GetComponent<Collider>().enabled = true;
                 deadUI.SetActive(false);
-                normalUI.SetActive(true);
+                normalUI.SetActive(true);             
                 GameManager.instance.Respawn();
+                rb.isKinematic = false;
                 currentHealth = maxHealth; 
                 isDead = false;                   
             }
@@ -167,8 +170,6 @@ public class HealthManager : MonoBehaviour
                     respawningStatus.text = "You're out of the game, you've lost your last life!";
                     DropLoot();
 
-                    transform.position = new Vector3(0, 0, 200);
-
                     Message msg2 = Message.Create(MessageSendMode.Reliable, NetworkManager.MessageIds.playerOutOfGame);
                     msg2.AddUShort(id);
                     NetworkManager.instance.Client.Send(msg2);
@@ -214,12 +215,12 @@ public class HealthManager : MonoBehaviour
             }
 
             transform.position = new Vector3(0, 0, 200);
+            rb.isKinematic = true;
         }
     }
 
     void DropLoot()
     {
-        Debug.Log(inv);
         if (inv.inventoryItem[1].weapon != null)
         {
             GameObject item1 = Instantiate(item, lootLocs[0].position, Quaternion.identity);

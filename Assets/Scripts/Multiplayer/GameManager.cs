@@ -253,7 +253,9 @@ public class GameManager : MonoBehaviour
 
     public void Respawn()
     {
-        localPlayerObject.transform.position = spawns[Random.Range(0, spawns.Count)].position;
+        int rng = Random.Range(0, spawns.Count);
+        localPlayerObject.transform.position = spawns[rng].position;
+        Debug.Log(spawns[rng].position);
     }
 
     [MessageHandler((ushort)NetworkManager.MessageIds.soundEffect)]
