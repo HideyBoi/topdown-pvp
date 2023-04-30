@@ -62,6 +62,9 @@ public class HealthManager : MonoBehaviour
 
     private void Update()
     {
+        if (!isLocalPlayer)
+            return;
+
         killsText.text = "x " + killCount;
 
         if (isDead && canRespawn)
