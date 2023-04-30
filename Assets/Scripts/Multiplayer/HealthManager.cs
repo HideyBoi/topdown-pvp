@@ -132,95 +132,100 @@ public class HealthManager : MonoBehaviour
             Instantiate(soundEffect, transform).GetComponent<SoundEffect>().PlaySound(hitSounds[Random.Range(0, hitSounds.Length)], 20, 0.7f);
 
         currentHealth -= damage;
-        if (currentHealth <= 0 )
+        if (currentHealth <= 0)
         {
-            if (RulesManager.instance.dropLootOnEveryDeath)
+            Die(gunId, fromId);
+        }
+    }
+
+    void Die(int gunId, ushort fromId)
+    {
+        if (RulesManager.instance.dropLootOnEveryDeath)
+            DropLoot();
+
+        Debug.Log("[Health Manager] local player has died.");
+
+        isDead = true;
+        timeUntilRespawn = respawnTime;
+
+        deadUI.SetActive(true);
+        normalUI.SetActive(false);
+
+        Instantiate(soundEffect, transform.position, Quaternion.identity).GetComponent<SoundEffect>().PlaySound(deathSound, 30, 0.8f);
+        Instantiate(deathEffect, transform.position, Quaternion.identity);
+
+        GetComponent<Collider>().enabled = false;
+
+        Message msg = Message.Create(MessageSendMode.Reliable, NetworkManager.MessageIds.playerDied);
+        msg.AddUShort(id);
+        msg.AddUShort(fromId);
+        msg.AddInt(gunId);
+
+        NetworkManager.instance.Client.Send(msg);
+
+        ShowLocalKillfeed(fromId, id);
+
+        KillFeed.i.OnKill(fromId, id, GameManager.instance.GetWeaponById(gunId));
+
+        if (lives > 0)
+        {
+            lives--;
+
+            if (lives == 0)
+            {
+                canRespawn = false;
+                respawningStatus.text = "You're out of the game, you've lost your last life!";
                 DropLoot();
 
-            Debug.Log("[Health Manager] local player has died.");
+                Message msg2 = Message.Create(MessageSendMode.Reliable, NetworkManager.MessageIds.playerOutOfGame);
+                msg2.AddUShort(id);
+                NetworkManager.instance.Client.Send(msg2);
 
-            isDead = true;
-            timeUntilRespawn = respawnTime;
+                transform.position = new Vector3(0, 0, 200);
+                rb.isKinematic = true;
 
-            deadUI.SetActive(true);
-            normalUI.SetActive(false);
+                ushort localId = NetworkManager.instance.Client.Id;
 
-            Instantiate(soundEffect, transform.position, Quaternion.identity).GetComponent<SoundEffect>().PlaySound(deathSound, 30, 0.8f);
-            Instantiate(deathEffect, transform.position, Quaternion.identity);
-
-            GetComponent<Collider>().enabled = false;
-
-            Message msg = Message.Create(MessageSendMode.Reliable, NetworkManager.MessageIds.playerDied);
-            msg.AddUShort(id);
-            msg.AddUShort(fromId);
-            msg.AddInt(gunId);
-
-            NetworkManager.instance.Client.Send(msg);
-
-            ShowLocalKillfeed(fromId, id);
-
-            KillFeed.i.OnKill(fromId, id, GameManager.instance.GetWeaponById(gunId));
-
-            if (lives > 0)
-            {
-                lives--;
-
-                if (lives == 0)
+                foreach (var item in GameManager.instance.playersInGame)
                 {
-                    canRespawn = false;
-                    respawningStatus.text = "You're out of the game, you've lost your last life!";
-                    DropLoot();
-
-                    Message msg2 = Message.Create(MessageSendMode.Reliable, NetworkManager.MessageIds.playerOutOfGame);
-                    msg2.AddUShort(id);
-                    NetworkManager.instance.Client.Send(msg2);
-
-                    transform.position = new Vector3(0, 0, 200);
-                    rb.isKinematic = true;
-
-                    ushort localId = NetworkManager.instance.Client.Id;
-
-                    foreach (var item in GameManager.instance.playersInGame)
+                    if (item.id == localId)
                     {
-                        if (item.id == localId)
-                        {
-                            GameManager.instance.playersInGame.Remove(item);
-                        }
-                    }
-
-                    KillFeed.i.OnPlayerOutOfGame(id);
-                }
-                else if (lives == 1)
-                {
-                    respawningStatus.text = $"You're on your last life, respawning, please wait...";
-                    canRespawn = true;
-                    if (RulesManager.instance.dropLootOnEveryDeath)
-                    {
-                        DropLoot();
-                    }
-                }
-                else
-                {
-                    respawningStatus.text = $"You have {lives} lives left, respawning, please wait...";
-                    canRespawn = true;
-                    if (RulesManager.instance.dropLootOnEveryDeath)
-                    {
-                        DropLoot();
+                        GameManager.instance.playersInGame.Remove(item);
                     }
                 }
 
-                livesText.text = "x " + lives;
+                KillFeed.i.OnPlayerOutOfGame(id);
             }
-            else if (lives == -1)
+            else if (lives == 1)
             {
-                respawningStatus.text = "Respawning, please wait...";
+                respawningStatus.text = $"You're on your last life, respawning, please wait...";
                 canRespawn = true;
-                livesText.text = "Infinite";
+                if (RulesManager.instance.dropLootOnEveryDeath)
+                {
+                    DropLoot();
+                }
+            }
+            else
+            {
+                respawningStatus.text = $"You have {lives} lives left, respawning, please wait...";
+                canRespawn = true;
+                if (RulesManager.instance.dropLootOnEveryDeath)
+                {
+                    DropLoot();
+                }
             }
 
-            transform.position = new Vector3(0, 0, 200);
-            rb.isKinematic = true;
+            livesText.text = "x " + lives;
         }
+        else if (lives == -1)
+        {
+            respawningStatus.text = "Respawning, please wait...";
+            canRespawn = true;
+            livesText.text = "Infinite";
+        }
+
+        transform.position = new Vector3(0, 0, 200);
+        rb.isKinematic = true;
     }
 
     void DropLoot()
