@@ -908,10 +908,10 @@ TextureImporter:
       name: controls_atlas_38
       rect:
         serializedVersion: 2
-        x: 414
+        x: 417
         y: 519
-        width: 90
-        height: 62
+        width: 96
+        height: 50
       alignment: 6
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}

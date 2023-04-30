@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2330176329534671918}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Chest
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -41,7 +41,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 187414179317441526}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Head_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -72,7 +72,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1827250129455387489}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Thigh.l
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -104,7 +104,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 22909453451485566}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Neck
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -136,7 +136,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3935367744047198464}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -168,7 +168,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 199560524612238015}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Calf.l
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -203,7 +203,7 @@ GameObject:
   - component: {fileID: 8226154721500246746}
   - component: {fileID: 159662853887382550}
   - component: {fileID: 3938347281682608055}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Cosmetics
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -322,6 +322,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 0}
   hat: {fileID: 8226154721500246746}
+  currSkinId: 0
+  currHatId: 0
 --- !u!1 &4813675851471189103
 GameObject:
   m_ObjectHideFlags: 0
@@ -331,7 +333,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2147817604221625296}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Armature
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -363,7 +365,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4668833546417897429}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Hips
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -397,7 +399,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1636658867338414810}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Calf.l_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -428,7 +430,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1398623556947937370}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Calf.r
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -460,7 +462,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1494035138789503294}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Calf.r_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -491,7 +493,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5536237408430318637}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Thigh.r
   m_TagString: Untagged
   m_Icon: {fileID: 0}

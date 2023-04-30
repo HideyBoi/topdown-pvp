@@ -204,7 +204,7 @@ public class GameManager : MonoBehaviour
         {
             if (id == player._id)
             {
-                player.healthManager.health = newHealth;
+                player.healthManager.Health(newHealth);
             }
         }
     }

@@ -215,9 +215,9 @@ public class HealthManager : MonoBehaviour
 
     public void Health(int newHealth)
     {
+        health = newHealth;
         if (!remoteDead)
         {
-            health = newHealth;
             if (health <= 0)
             {
                 remoteDead = true;

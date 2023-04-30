@@ -38,6 +38,7 @@ public class MainUIManager : MonoBehaviour
     private void Start()
     {
         Cursor.SetCursor(cursor, new Vector2(cursor.width / 2, cursor.height / 2), CursorMode.Auto);
+        Cursor.lockState = CursorLockMode.Confined;
 
 #if DEBUG
         debugVersionInfo.gameObject.SetActive(true);
