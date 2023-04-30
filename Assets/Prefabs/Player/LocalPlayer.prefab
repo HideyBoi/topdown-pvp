@@ -1087,8 +1087,33 @@ MonoBehaviour:
   normalUI: {fileID: 171931358909806423}
   id: 0
   isLocalPlayer: 0
+  killCount: 0
+  lives: 0
   isDead: 0
   respawnTime: 4
+  localKillfeed: {fileID: 72995378406372147}
+  localKillfeedItem: {fileID: 2183891826911585689, guid: bc7b99e15398a184582b3af8c65ce334,
+    type: 3}
+  hitPopup: {fileID: 2067978172981829255, guid: f35e756a4e43a864da1382771a1dcd32,
+    type: 3}
+  lootLocs:
+  - {fileID: 6929275403592572728}
+  - {fileID: 8461025809177902368}
+  - {fileID: 7412536800532458768}
+  - {fileID: 6216335205972903052}
+  - {fileID: 870289891893357290}
+  - {fileID: 4669945593017222847}
+  - {fileID: 5612523788853933254}
+  - {fileID: 5561809487403738332}
+  - {fileID: 3824158010158643777}
+  ammo: {fileID: 9176021081397741453, guid: e3eab27d2a283c647a81ea91ad2f5275, type: 3}
+  healing:
+  - {fileID: 391935329170582414, guid: bac15720f8e4922489357fcb3e2fefb6, type: 3}
+  - {fileID: 8573082192986105258, guid: 47b1df7ab81aba945ab9c47ca51bbf5d, type: 3}
+  item: {fileID: 4491493733864199258, guid: 871cb2366c1ec1341a1b94ffda881e89, type: 3}
+  respawningStatus: {fileID: 8502971545725548447}
+  livesText: {fileID: 958722471902896265}
+  killsText: {fileID: 550906800102416340}
 --- !u!135 &171931358746057922
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -1251,12 +1276,10 @@ RectTransform:
   - {fileID: 3852808453547497260}
   - {fileID: 4188144104755908512}
   - {fileID: 2409001575151887530}
-  - {fileID: 2249218063973413058}
   - {fileID: 8639478601934781638}
   - {fileID: 1979496163103874413}
   - {fileID: 2659462566672800583}
   - {fileID: 3842656624152460896}
-  - {fileID: 1067281500139881556}
   m_Father: {fileID: 171931358746057921}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2700,6 +2723,8 @@ RectTransform:
   m_Children:
   - {fileID: 122458566603300998}
   - {fileID: 72995378406372147}
+  - {fileID: 2249218063973413058}
+  - {fileID: 1067281500139881556}
   m_Father: {fileID: 171931358746057921}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2726,7 +2751,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_VertexColorAlwaysGammaSpace: 0
-  m_AdditionalShaderChannelsFlag: 0
+  m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
   m_SortingOrder: 0
@@ -8489,13 +8514,13 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7776294060350204261}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1026180569206291856}
-  m_Father: {fileID: 171931358909806504}
+  m_Father: {fileID: 802832303752496112}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
@@ -9320,13 +9345,13 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8608902135936837237}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7810076366870852286}
-  m_Father: {fileID: 171931358909806504}
+  m_Father: {fileID: 802832303752496112}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
