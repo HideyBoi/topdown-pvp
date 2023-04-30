@@ -216,12 +216,11 @@ public class GameManager : MonoBehaviour
             instance.GetRemotePlayer(killer).healthManager.killCount++;         
         }
 
-        instance.GetRemotePlayer(id).healthManager.lives--;
-        instance.GetRemotePlayer(id).transform.position = new Vector3(0, 0, 200);
-
         Instantiate(instance.soundEffect, instance.GetRemotePlayer(id).transform.position, Quaternion.identity).GetComponent<SoundEffect>().PlaySound(instance.killSound, 30, 0.8f);
         Instantiate(instance.deathEffect, instance.GetRemotePlayer(id).transform.position, Quaternion.identity);
 
+        instance.GetRemotePlayer(id).healthManager.lives--;
+        instance.GetRemotePlayer(id).transform.position = new Vector3(0, 0, 200);
 
         if ((NetworkManager.instance.Client.Id == id) || (NetworkManager.instance.Client.Id == killer))
             HealthManager.localHealthManager.ShowLocalKillfeed(killer, id);

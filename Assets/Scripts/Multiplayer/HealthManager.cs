@@ -94,6 +94,7 @@ public class HealthManager : MonoBehaviour
                 currentHealth = maxHealth;
                 deadUI.SetActive(false);
                 normalUI.SetActive(true);
+                GetComponent<Collider>().enabled = false;
 
                 GameManager.instance.Respawn();
             }
@@ -139,6 +140,8 @@ public class HealthManager : MonoBehaviour
 
             Instantiate(soundEffect, transform.position, Quaternion.identity).GetComponent<SoundEffect>().PlaySound(deathSound, 30, 0.8f);
             Instantiate(deathEffect, transform.position, Quaternion.identity);
+
+            GetComponent<Collider>().enabled = false;
 
             Message msg = Message.Create(MessageSendMode.Reliable, NetworkManager.MessageIds.playerDied);
             msg.AddUShort(id);
@@ -212,6 +215,8 @@ public class HealthManager : MonoBehaviour
 
                 livesText.text = "Infinite";
             }
+
+            transform.position = new Vector3(0, 0, 200);
         }
     }
 
