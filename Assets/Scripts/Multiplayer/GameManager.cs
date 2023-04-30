@@ -224,7 +224,7 @@ public class GameManager : MonoBehaviour
         } else
         {
             instance.GetRemotePlayer(id).healthManager.lives--;
-            instance.GetRemotePlayer(killer).transform.position = new Vector3(0, 0, 200);
+            instance.GetRemotePlayer(id).transform.position = new Vector3(0, 0, 200);
         }
 
         if ((NetworkManager.instance.Client.Id == id) || (NetworkManager.instance.Client.Id == killer))

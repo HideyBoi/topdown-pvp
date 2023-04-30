@@ -120,7 +120,7 @@ public class HealthManager : MonoBehaviour
         {
             if (RulesManager.instance.dropLootOnEveryDeath)
                 DropLoot();
-
+            transform.position = new Vector3(0, 0, 200);
             lives--;
             Debug.Log("[Health Manager] local player has died.");
 
