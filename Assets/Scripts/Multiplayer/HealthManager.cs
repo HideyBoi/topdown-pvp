@@ -146,7 +146,16 @@ public class HealthManager : MonoBehaviour
                     Message msg2 = Message.Create(MessageSendMode.Reliable, NetworkManager.MessageIds.playerOutOfGame);
                     msg2.AddUShort(id);
                     NetworkManager.instance.Client.Send(msg2);
-                    GameManager.PlayerOutOfGame(msg2);
+
+                    ushort localId = NetworkManager.instance.Client.Id;
+
+                    foreach (var item in GameManager.instance.playersInGame)
+                    {
+                        if (item.id == localId)
+                        {
+                            GameManager.instance.playersInGame.Remove(item);
+                        }
+                    }
                 }
                 else if (lives == 1)
                 {

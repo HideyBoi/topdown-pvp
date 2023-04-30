@@ -351,7 +351,7 @@ public class LocalGunManager : MonoBehaviour
 
         NetworkManager.instance.Client.Send(msg);
 
-        GameManager.DamagePlayer(msg);
+        GameManager.DamagePlayerLocal(toDamage, damage);
     }
 
     private void OnEnable()

@@ -190,10 +190,12 @@ public class GameManager : MonoBehaviour
         if (toId == NetworkManager.instance.Client.Id)
         {
             instance.localPlayerObject.GetComponent<HealthManager>().Damage(damage, gunId, fromId);
-        } else
-        {
-            instance.GetRemotePlayer(toId).healthManager.DamageCosmetics(damage);
         }
+    }
+
+    public static void DamagePlayerLocal(ushort id, int damage)
+    {
+        instance.GetRemotePlayer(id).healthManager.DamageCosmetics(damage);
     }
 
     [MessageHandler((ushort)NetworkManager.MessageIds.playerDied)]
@@ -232,7 +234,7 @@ public class GameManager : MonoBehaviour
     }
 
     [MessageHandler((ushort)NetworkManager.MessageIds.playerOutOfGame)]
-    public static void PlayerOutOfGame(Message msg)
+    static void PlayerOutOfGame(Message msg)
     {
         ushort id = msg.GetUShort();
 
