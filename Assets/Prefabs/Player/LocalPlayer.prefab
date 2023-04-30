@@ -1114,6 +1114,8 @@ MonoBehaviour:
   respawningStatus: {fileID: 8502971545725548447}
   livesText: {fileID: 958722471902896265}
   killsText: {fileID: 550906800102416340}
+  healthBar: {fileID: 2404681942706527565}
+  healthFlash: {fileID: 5446089997807071736}
 --- !u!135 &171931358746057922
 SphereCollider:
   m_ObjectHideFlags: 0

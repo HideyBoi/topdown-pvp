@@ -35,6 +35,9 @@ public class RemotePlayer : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (!healthManager)
+            GetComponent<HealthManager>();
+
         Vector3 localSpaceMoveDir = pivot.InverseTransformVector(new Vector3(desMoveDir.x, 0, desMoveDir.y));
 
         playerAnimator.SetFloat("MoveDirX", localSpaceMoveDir.x);

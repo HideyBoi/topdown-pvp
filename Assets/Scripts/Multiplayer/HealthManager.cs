@@ -46,24 +46,33 @@ public class HealthManager : MonoBehaviour
     TextMeshProUGUI livesText;
     [SerializeField]
     TextMeshProUGUI killsText;
+    [SerializeField]
+    Slider healthBar;
+    [SerializeField]
+    Animator healthFlash;
 
-    private void Awake()
+    private void OnEnable()
     {
         if (id == NetworkManager.instance.Client.Id)
             localHealthManager = this;
 
         maxHealth = RulesManager.instance.maxHealth;
         currentHealth = maxHealth;
+        healthBar.maxValue = maxHealth;
+        healthBar.value = maxHealth;
         lives = RulesManager.instance.lives;
-
-        if (isLocalPlayer)
-            inv = GetComponent<LocalInventoryManager>();
     }
 
     private void Update()
     {
         if (!isLocalPlayer)
             return;
+
+        if (!inv)
+            inv = GetComponent<LocalInventoryManager>();
+
+        healthBar.value = currentHealth;
+        healthFlash.SetInteger("Health", currentHealth);
 
         killsText.text = "x " + killCount;
 
@@ -172,6 +181,7 @@ public class HealthManager : MonoBehaviour
 
     void DropLoot()
     {
+        Debug.Log(inv);
         if (inv.inventoryItem[1].weapon != null)
         {
             GameObject item1 = Instantiate(item, lootLocs[0].position, Quaternion.identity);
