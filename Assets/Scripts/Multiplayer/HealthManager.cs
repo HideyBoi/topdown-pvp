@@ -58,8 +58,12 @@ public class HealthManager : MonoBehaviour
 
         maxHealth = RulesManager.instance.maxHealth;
         currentHealth = maxHealth;
-        healthBar.maxValue = maxHealth;
-        healthBar.value = maxHealth;
+        if (healthBar != null)
+        {
+            healthBar.maxValue = maxHealth;
+            healthBar.value = maxHealth;
+        }
+        
         lives = RulesManager.instance.lives;
     }
 
