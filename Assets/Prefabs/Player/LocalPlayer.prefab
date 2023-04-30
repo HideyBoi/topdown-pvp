@@ -1116,6 +1116,18 @@ MonoBehaviour:
   killsText: {fileID: 550906800102416340}
   healthBar: {fileID: 2404681942706527565}
   healthFlash: {fileID: 5446089997807071736}
+  soundEffect: {fileID: 7098371210533266199, guid: 03ca22f20a0d6c145ab412dadd2b8800,
+    type: 3}
+  deathEffect: {fileID: 5027107366694167322, guid: afb18c3eccac0464b9f03b17b202dfb5,
+    type: 3}
+  deathSound: {fileID: 8300000, guid: 4f2d7b49836352a4d915c49f30a7e233, type: 3}
+  hitSounds:
+  - {fileID: 8300000, guid: 1c803a0e816ac1f4e8251d11bb273362, type: 3}
+  - {fileID: 8300000, guid: 059684eb0a0840b4c94ef36bfc9bc616, type: 3}
+  - {fileID: 8300000, guid: 4b0cfb85cb6565b40ae29bf6e9ef5a6d, type: 3}
+  - {fileID: 8300000, guid: d315c8139f3ea7d4e98528b202b27839, type: 3}
+  - {fileID: 8300000, guid: 4ce897f446c8e90498657e0c46fc2d67, type: 3}
+  - {fileID: 8300000, guid: 2f2e2af5c6a3e114abbf124c6382fde7, type: 3}
 --- !u!135 &171931358746057922
 SphereCollider:
   m_ObjectHideFlags: 0

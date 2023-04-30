@@ -122,8 +122,8 @@ public class HealthManager : MonoBehaviour
             return;
 
         Debug.Log($"[Health Manager] Got hit! Damage:{damage} Gun ID:{gunId} From Player ID:{fromId}");
-
-        Instantiate(soundEffect, transform).GetComponent<SoundEffect>().PlaySound(hitSounds[Random.Range(0, hitSounds.Length)], 20, 0.7f);
+        if (gunId != 0)
+            Instantiate(soundEffect, transform).GetComponent<SoundEffect>().PlaySound(hitSounds[Random.Range(0, hitSounds.Length)], 20, 0.7f);
 
         currentHealth -= damage;
         if (currentHealth <= 0 )
