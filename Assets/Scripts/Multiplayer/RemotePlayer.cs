@@ -9,7 +9,6 @@ public class RemotePlayer : MonoBehaviour
     public Transform pivot;
     public RemoteInventoryManager invManager;
     public HealthManager healthManager;
-    public bool beingSpectated;
 
     public Animator playerAnimator;
     public Animator cosmeticsAnimator;

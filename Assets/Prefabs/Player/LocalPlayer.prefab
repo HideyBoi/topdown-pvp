@@ -1085,6 +1085,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   deadUI: {fileID: 5152966082675313379}
   normalUI: {fileID: 171931358909806423}
+  persistantUI: {fileID: 1505622847110955541}
   id: 0
   isLocalPlayer: 0
   killCount: 0

@@ -40,6 +40,7 @@ public class WinningRoom : MonoBehaviour
         winCamOrbit.SetActive(true);
         HealthManager.localHealthManager.normalUI.SetActive(false);
         HealthManager.localHealthManager.deadUI.SetActive(false);
+        HealthManager.localHealthManager.persistantUI.SetActive(false);
         LocalPlayerController.instance.cam.gameObject.SetActive(false);
         gameObject.GetComponent<Animator>().Play("Win");
 

@@ -13,6 +13,7 @@ public class HealthManager : MonoBehaviour
     public static HealthManager localHealthManager;
     public GameObject deadUI;
     public GameObject normalUI;
+    public GameObject persistantUI;
     public ushort id;
     public bool isLocalPlayer;
     public int killCount = 0;
@@ -84,19 +85,22 @@ public class HealthManager : MonoBehaviour
         healthFlash.SetInteger("Health", currentHealth);
 
         killsText.text = "x " + killCount;
+        livesText.text = "x " + lives;
 
         if (isDead && canRespawn)
         {
             timeUntilRespawn -= Time.deltaTime;
             if (timeUntilRespawn <= 0)
             {
-                isDead = false;
-                currentHealth = maxHealth;
+                inv.currentIndex = 0;
+                inv.Scroll(0);
+                inv.canSwitch = true;
+                GetComponent<Collider>().enabled = true;
                 deadUI.SetActive(false);
                 normalUI.SetActive(true);
-                GetComponent<Collider>().enabled = false;
-
                 GameManager.instance.Respawn();
+                currentHealth = maxHealth; 
+                isDead = false;                   
             }
         }
     }
@@ -128,8 +132,7 @@ public class HealthManager : MonoBehaviour
         {
             if (RulesManager.instance.dropLootOnEveryDeath)
                 DropLoot();
-            
-            lives--;
+
             Debug.Log("[Health Manager] local player has died.");
 
             isDead = true;
@@ -189,8 +192,6 @@ public class HealthManager : MonoBehaviour
                     if (RulesManager.instance.dropLootOnEveryDeath)
                     {
                         DropLoot();
-                        transform.position = new Vector3(0, 0, 200);
-
                     }
                 }
                 else
@@ -200,8 +201,6 @@ public class HealthManager : MonoBehaviour
                     if (RulesManager.instance.dropLootOnEveryDeath)
                     {
                         DropLoot();
-                        transform.position = new Vector3(0, 0, 200);
-
                     }
                 }
 
@@ -211,8 +210,6 @@ public class HealthManager : MonoBehaviour
             {
                 respawningStatus.text = "Respawning, please wait...";
                 canRespawn = true;
-                transform.position = new Vector3(0, 0, 200);
-
                 livesText.text = "Infinite";
             }
 
