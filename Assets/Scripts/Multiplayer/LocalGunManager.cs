@@ -350,6 +350,8 @@ public class LocalGunManager : MonoBehaviour
         msg.AddUShort(NetworkManager.instance.Client.Id);
 
         NetworkManager.instance.Client.Send(msg);
+
+        GameManager.DamagePlayer(msg);
     }
 
     private void OnEnable()

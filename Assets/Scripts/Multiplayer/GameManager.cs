@@ -180,7 +180,7 @@ public class GameManager : MonoBehaviour
     }
 
     [MessageHandler((ushort)NetworkManager.MessageIds.damage)]
-    static void DamagePlayer(Message msg)
+    public static void DamagePlayer(Message msg)
     {
         int damage = msg.GetInt();
         int gunId = msg.GetInt();
@@ -190,6 +190,9 @@ public class GameManager : MonoBehaviour
         if (toId == NetworkManager.instance.Client.Id)
         {
             instance.localPlayerObject.GetComponent<HealthManager>().Damage(damage, gunId, fromId);
+        } else
+        {
+            instance.GetRemotePlayer(toId).healthManager.DamageCosmetics(damage);
         }
     }
 

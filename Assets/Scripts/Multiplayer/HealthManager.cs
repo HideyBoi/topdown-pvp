@@ -79,20 +79,21 @@ public class HealthManager : MonoBehaviour
         }
     }
 
+    public void DamageCosmetics(int damage)
+    {
+        if (currentDamageNumber == null)
+        {
+            currentDamageNumber = Instantiate(hitPopup, transform.position, Quaternion.identity).GetComponent<DamageNumber>();
+            currentDamageNumber.AddNumber(damage, transform.position);
+        }
+        else
+        {
+            currentDamageNumber.AddNumber(damage, transform.position);
+        }
+    }
+
     public void Damage(int damage, int gunId, ushort fromId)
     { 
-        if (!isLocalPlayer)
-        {
-            if (currentDamageNumber == null)
-            {
-                currentDamageNumber = Instantiate(hitPopup, transform.position, Quaternion.identity).GetComponent<DamageNumber>();
-                currentDamageNumber.AddNumber(damage, transform.position);
-            } else
-            {
-                currentDamageNumber.AddNumber(damage, transform.position);
-            }
-        }
-
         if (!isLocalPlayer || isDead)
             return;
 
