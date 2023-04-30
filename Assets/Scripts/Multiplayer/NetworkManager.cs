@@ -76,7 +76,9 @@ public class NetworkManager : MonoBehaviour
         playerShot, //contains data about what gun was shot and where
         punch, //lets others know that a punch was performed
         soundEffect, //tells other players to play a sound effect
-        damage
+        damage,
+        playerDied,
+        playerOutOfGame
     }
 
     private void Start()

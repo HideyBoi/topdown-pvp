@@ -26,6 +26,8 @@ public class GameManager : MonoBehaviour
     public GameObject bulletTracer;
 
     public GameObject soundEffect;
+    public AudioClip killSound;
+    public GameObject deathEffect;
 
     bool generationStarted = false;
 
@@ -156,23 +158,6 @@ public class GameManager : MonoBehaviour
         spawns = new List<Transform>();
     }
 
-    //[MessageHandler((ushort)NetworkManager.MessageIds.playerOutOfGame)]
-    static void PlayerOutOfGame(Message msg)
-    {
-        ushort id = msg.GetUShort();
-
-        Debug.Log("[Game Manager] player " + id + " is out of the game.");
-
-        foreach (var item in instance.playersInGame)
-        {
-            if (item.id == id)
-            {
-                instance.playersInGame.Remove(item);
-                return;
-            }
-        }
-    }
-
     [MessageHandler((ushort)NetworkManager.MessageIds.playerPos)]
     static void PlayerMoved(Message msg)
     {
@@ -205,6 +190,59 @@ public class GameManager : MonoBehaviour
         if (toId == NetworkManager.instance.Client.Id)
         {
             instance.localPlayerObject.GetComponent<HealthManager>().Damage(damage, gunId, fromId);
+        }
+    }
+
+    [MessageHandler((ushort)NetworkManager.MessageIds.playerDied)]
+    static void PlayerDied(Message msg)
+    {
+        ushort id = msg.GetUShort();
+        ushort killer = msg.GetUShort();
+        int gunId = msg.GetInt();
+        
+
+        if (killer == NetworkManager.instance.Client.Id)
+        {
+            HealthManager.localHealthManager.killCount++;
+            Instantiate(instance.soundEffect, HealthManager.localHealthManager.transform.position, Quaternion.identity).GetComponent<SoundEffect>().PlaySound(instance.killSound, 30, 0.8f);
+            Instantiate(instance.deathEffect, HealthManager.localHealthManager.transform.position, Quaternion.identity);
+        } else
+        {
+            instance.GetRemotePlayer(killer).healthManager.killCount++;
+            Instantiate(instance.soundEffect, instance.GetRemotePlayer(killer).transform.position, Quaternion.identity).GetComponent<SoundEffect>().PlaySound(instance.killSound, 30, 0.8f);
+            Instantiate(instance.deathEffect, instance.GetRemotePlayer(killer).transform.position, Quaternion.identity);
+        }
+
+        if (id == NetworkManager.instance.Client.Id)
+        {
+            HealthManager.localHealthManager.transform.position = new Vector3(0, 0, 200);
+        } else
+        {
+            instance.GetRemotePlayer(id).healthManager.lives--;
+            instance.GetRemotePlayer(killer).transform.position = new Vector3(0, 0, 200);
+        }
+
+        if ((NetworkManager.instance.Client.Id == id) || (NetworkManager.instance.Client.Id == killer))
+            HealthManager.localHealthManager.ShowLocalKillfeed(killer, id);
+
+        KillFeed.i.OnKill(killer, id, instance.GetWeaponById(gunId));
+    }
+
+    [MessageHandler((ushort)NetworkManager.MessageIds.playerOutOfGame)]
+    public static void PlayerOutOfGame(Message msg)
+    {
+        ushort id = msg.GetUShort();
+
+        Debug.Log("[Game Manager] player " + id + " is out of the game.");
+
+        KillFeed.i.OnPlayerOutOfGame(id);
+
+        foreach (var item in instance.playersInGame)
+        {
+            if (item.id == id)
+            {
+                instance.playersInGame.Remove(item);
+            }
         }
     }
 

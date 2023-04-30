@@ -1256,7 +1256,6 @@ RectTransform:
   - {fileID: 1979496163103874413}
   - {fileID: 2659462566672800583}
   - {fileID: 3842656624152460896}
-  - {fileID: 72995378406372147}
   - {fileID: 1067281500139881556}
   m_Father: {fileID: 171931358746057921}
   m_RootOrder: 0
@@ -2700,6 +2699,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 122458566603300998}
+  - {fileID: 72995378406372147}
   m_Father: {fileID: 171931358746057921}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -5850,7 +5850,7 @@ GameObject:
   - component: {fileID: 1327587861846301088}
   - component: {fileID: 5623441516874248047}
   m_Layer: 6
-  m_Name: KillFeed
+  m_Name: GameUpdates
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7888,7 +7888,7 @@ GameObject:
   - component: {fileID: 72995378406372147}
   - component: {fileID: 3874406398331641195}
   m_Layer: 6
-  m_Name: PlayerKillFeed
+  m_Name: LocalKillFeed
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7901,12 +7901,12 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6981747548357934925}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 171931358909806504}
+  m_Father: {fileID: 802832303752496112}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}

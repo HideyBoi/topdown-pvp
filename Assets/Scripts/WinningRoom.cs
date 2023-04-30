@@ -68,12 +68,10 @@ public class WinningRoom : MonoBehaviour
                 }
             }
 
-            //TODO
+            killCount.text = HealthManager.localHealthManager.killCount.ToString();
 
-            //killCount.text = HealthManager.localHealthManager.killCount.ToString();
-
-            //livesCount.gameObject.SetActive(HealthManager.localHealthManager.lives != -1);
-            //livesCount.text = HealthManager.localHealthManager.lives.ToString();
+            livesCount.gameObject.SetActive(HealthManager.localHealthManager.lives != -1);
+            livesCount.text = HealthManager.localHealthManager.lives.ToString();
 
             cosmeticsHandler.SetCosmetics(hatId, skinId);
 
@@ -82,9 +80,9 @@ public class WinningRoom : MonoBehaviour
             foreach (var remotePlayer in GameManager.instance.remotePlayers)
             {
                 namePlate.text = remotePlayer._name;
-                //killCount.text = remotePlayer.healthManager.killCount.ToString();
-                //livesCount.gameObject.SetActive(remotePlayer.healthManager.lives != -1);
-                //livesCount.text = remotePlayer.healthManager.lives.ToString();
+                killCount.text = remotePlayer.healthManager.killCount.ToString();
+                livesCount.gameObject.SetActive(remotePlayer.healthManager.lives != -1);
+                livesCount.text = remotePlayer.healthManager.lives.ToString();
                 cosmeticsHandler.SetCosmetics(remotePlayer.cosmeticsHandler.currHatId, remotePlayer.cosmeticsHandler.currSkinId);
             }
         }
