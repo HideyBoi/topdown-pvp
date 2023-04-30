@@ -209,23 +209,17 @@ public class GameManager : MonoBehaviour
         if (killer == NetworkManager.instance.Client.Id)
         {
             HealthManager.localHealthManager.killCount++;
-            Instantiate(instance.soundEffect, HealthManager.localHealthManager.transform.position, Quaternion.identity).GetComponent<SoundEffect>().PlaySound(instance.killSound, 30, 0.8f);
-            Instantiate(instance.deathEffect, HealthManager.localHealthManager.transform.position, Quaternion.identity);
         } else
         {
-            instance.GetRemotePlayer(killer).healthManager.killCount++;
-            Instantiate(instance.soundEffect, instance.GetRemotePlayer(killer).transform.position, Quaternion.identity).GetComponent<SoundEffect>().PlaySound(instance.killSound, 30, 0.8f);
-            Instantiate(instance.deathEffect, instance.GetRemotePlayer(killer).transform.position, Quaternion.identity);
+            instance.GetRemotePlayer(killer).healthManager.killCount++;         
         }
 
-        if (id == NetworkManager.instance.Client.Id)
-        {
-            HealthManager.localHealthManager.transform.position = new Vector3(0, 0, 200);
-        } else
-        {
-            instance.GetRemotePlayer(id).healthManager.lives--;
-            instance.GetRemotePlayer(id).transform.position = new Vector3(0, 0, 200);
-        }
+        instance.GetRemotePlayer(id).healthManager.lives--;
+        instance.GetRemotePlayer(id).transform.position = new Vector3(0, 0, 200);
+
+        Instantiate(instance.soundEffect, instance.GetRemotePlayer(id).transform.position, Quaternion.identity).GetComponent<SoundEffect>().PlaySound(instance.killSound, 30, 0.8f);
+        Instantiate(instance.deathEffect, instance.GetRemotePlayer(id).transform.position, Quaternion.identity);
+
 
         if ((NetworkManager.instance.Client.Id == id) || (NetworkManager.instance.Client.Id == killer))
             HealthManager.localHealthManager.ShowLocalKillfeed(killer, id);

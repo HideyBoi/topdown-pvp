@@ -50,6 +50,14 @@ public class HealthManager : MonoBehaviour
     Slider healthBar;
     [SerializeField]
     Animator healthFlash;
+    [SerializeField]
+    GameObject soundEffect;
+    [SerializeField]
+    GameObject deathEffect;
+    [SerializeField]
+    AudioClip deathSound;
+    [SerializeField]
+    AudioClip[] hitSounds;
 
     private void OnEnable()
     {
@@ -115,12 +123,14 @@ public class HealthManager : MonoBehaviour
 
         Debug.Log($"[Health Manager] Got hit! Damage:{damage} Gun ID:{gunId} From Player ID:{fromId}");
 
+        Instantiate(soundEffect, transform).GetComponent<SoundEffect>().PlaySound(hitSounds[Random.Range(0, hitSounds.Length)], 20, 0.7f);
+
         currentHealth -= damage;
         if (currentHealth <= 0 )
         {
             if (RulesManager.instance.dropLootOnEveryDeath)
                 DropLoot();
-            transform.position = new Vector3(0, 0, 200);
+            
             lives--;
             Debug.Log("[Health Manager] local player has died.");
 
@@ -130,12 +140,21 @@ public class HealthManager : MonoBehaviour
             deadUI.SetActive(true);
             normalUI.SetActive(false);
 
+            Instantiate(soundEffect, transform.position, Quaternion.identity).GetComponent<SoundEffect>().PlaySound(deathSound, 30, 0.8f);
+            Instantiate(deathEffect, transform.position, Quaternion.identity);
+
             Message msg = Message.Create(MessageSendMode.Reliable, NetworkManager.MessageIds.playerDied);
             msg.AddUShort(id);
             msg.AddUShort(fromId);
             msg.AddInt(gunId);
 
             NetworkManager.instance.Client.Send(msg);
+
+            transform.position = new Vector3(0, 0, 200);
+
+            ShowLocalKillfeed(fromId, id);
+
+            KillFeed.i.OnKill(fromId, id, GameManager.instance.GetWeaponById(gunId));
 
             if (lives > 0)
             {
@@ -160,6 +179,8 @@ public class HealthManager : MonoBehaviour
                             GameManager.instance.playersInGame.Remove(item);
                         }
                     }
+
+                    KillFeed.i.OnPlayerOutOfGame(id);
                 }
                 else if (lives == 1)
                 {
