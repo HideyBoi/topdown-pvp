@@ -101,51 +101,52 @@ public class LocalPlayerController : MonoBehaviour
         if (!nm.gameIsStarted)
             return;
 
-        if (!hm.isDead)
+        if (hm.isDead)
+            return;
+        
+        AdditionalCameraData.SetRenderer(1);
+
+        if (inventory.inventoryItem[inventory.currentIndex].weapon)
         {
-            AdditionalCameraData.SetRenderer(1);
-
-            if (inventory.inventoryItem[inventory.currentIndex].weapon)
+            if (RulesManager.instance.doWeaponSlowdown)
             {
-                if (RulesManager.instance.doWeaponSlowdown)
+                if (desWalk && healingMove == 1)
                 {
-                    if (desWalk && healingMove == 1)
-                    {
-                        rb.AddForce(new Vector3(desMoveDir.x, 0, desMoveDir.y) * currentMovementSpeed * healingMove * inventory.inventoryItem[inventory.currentIndex].weapon.speedModifier * 0.5f, ForceMode.VelocityChange);
+                    rb.AddForce(new Vector3(desMoveDir.x, 0, desMoveDir.y) * currentMovementSpeed * healingMove * inventory.inventoryItem[inventory.currentIndex].weapon.speedModifier * 0.5f, ForceMode.VelocityChange);
 
-                    }
-                    else
-                    {
-                        rb.AddForce(new Vector3(desMoveDir.x, 0, desMoveDir.y) * currentMovementSpeed * healingMove, ForceMode.VelocityChange);
-                    }
-                } else
+                }
+                else
                 {
-                    if (desWalk && healingMove == 1)
-                    {
-                        rb.AddForce(new Vector3(desMoveDir.x, 0, desMoveDir.y) * currentMovementSpeed * 0.5f, ForceMode.VelocityChange);
-                    }
-                    else
-                    {
-                        rb.AddForce(new Vector3(desMoveDir.x, 0, desMoveDir.y) * currentMovementSpeed * healingMove, ForceMode.VelocityChange);
-                    }
+                    rb.AddForce(new Vector3(desMoveDir.x, 0, desMoveDir.y) * currentMovementSpeed * healingMove, ForceMode.VelocityChange);
                 }
             } else
             {
                 if (desWalk && healingMove == 1)
                 {
                     rb.AddForce(new Vector3(desMoveDir.x, 0, desMoveDir.y) * currentMovementSpeed * 0.5f, ForceMode.VelocityChange);
-                } else
+                }
+                else
                 {
                     rb.AddForce(new Vector3(desMoveDir.x, 0, desMoveDir.y) * currentMovementSpeed * healingMove, ForceMode.VelocityChange);
                 }
             }
+        } else
+        {
+            if (desWalk && healingMove == 1)
+            {
+                rb.AddForce(new Vector3(desMoveDir.x, 0, desMoveDir.y) * currentMovementSpeed * 0.5f, ForceMode.VelocityChange);
+            } else
+            {
+                rb.AddForce(new Vector3(desMoveDir.x, 0, desMoveDir.y) * currentMovementSpeed * healingMove, ForceMode.VelocityChange);
+            }
+        }
             
 
-            RaycastHit hit;
-            Physics.Raycast(transform.position, new Vector3(lookDir.x, 0, lookDir.y), out hit, Mathf.Infinity, lm);
+        RaycastHit hit;
+        Physics.Raycast(transform.position, new Vector3(lookDir.x, 0, lookDir.y), out hit, Mathf.Infinity, lm);
 
-            cursor.position = cam.WorldToScreenPoint(hit.point);
-        }
+        cursor.position = cam.WorldToScreenPoint(hit.point);
+        
 
         Vector3 localSpaceMoveDir = pivot.InverseTransformVector(new Vector3(desMoveDir.x, 0, desMoveDir.y));
 
@@ -170,14 +171,14 @@ public class LocalPlayerController : MonoBehaviour
         {
             currentMoveTimer = moveTimer;
 
-            RaycastHit hit;
-            Physics.Raycast(transform.position, Vector3.down, out hit, 8f, groundLm);
+            RaycastHit groundCheck;
+            Physics.Raycast(transform.position, Vector3.down, out groundCheck, 8f, groundLm);
 
-            if (hit.collider != null && (!desWalk || healingMove != 1))
+            if (groundCheck.collider != null && (!desWalk || healingMove == 1))
             {
-                int rng = 0;
+                int rng;
 
-                if (hit.collider.CompareTag("Water"))
+                if (groundCheck.collider.CompareTag("Water"))
                 {
                     rng = UnityEngine.Random.Range(5, 10);
                 } else

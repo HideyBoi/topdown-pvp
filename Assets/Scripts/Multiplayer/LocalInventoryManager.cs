@@ -233,7 +233,8 @@ public class LocalInventoryManager : MonoBehaviour
                 currentMedkitTime = 0f;
                 wantsToUseMedkit = false;
                 medkitCount--;
-                GetComponent<HealthManager>().Heal(150, false);
+                //TODO
+                //GetComponent<HealthManager>().Heal(150, false);
 
                 Message msg = Message.Create(MessageSendMode.Reliable, NetworkManager.MessageIds.soundEffect);
                 msg.AddVector3(transform.position);
@@ -254,7 +255,8 @@ public class LocalInventoryManager : MonoBehaviour
                 currentSyringeTime = 0;
                 wantsToUseSyringe = false;
                 syringeCount--;
-                GetComponent<HealthManager>().Heal(30, false);
+                //TODO
+                //GetComponent<HealthManager>().Heal(30, false);
 
                 Message msg = Message.Create(MessageSendMode.Reliable, NetworkManager.MessageIds.soundEffect);
                 msg.AddVector3(transform.position);

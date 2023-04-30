@@ -38,8 +38,8 @@ public class WinningRoom : MonoBehaviour
         uiFade.Play("Win");
         yield return new WaitForSeconds(1f);
         winCamOrbit.SetActive(true);
-        HealthManager.localHealthManager.playingHUD.SetActive(false);
-        HealthManager.localHealthManager.deathUI.SetActive(false);
+        HealthManager.localHealthManager.normalUI.SetActive(false);
+        HealthManager.localHealthManager.deadUI.SetActive(false);
         LocalPlayerController.instance.cam.gameObject.SetActive(false);
         gameObject.GetComponent<Animator>().Play("Win");
 
@@ -68,10 +68,12 @@ public class WinningRoom : MonoBehaviour
                 }
             }
 
-            killCount.text = HealthManager.localHealthManager.killCount.ToString();
+            //TODO
 
-            livesCount.gameObject.SetActive(HealthManager.localHealthManager.lives != -1);
-            livesCount.text = HealthManager.localHealthManager.lives.ToString();
+            //killCount.text = HealthManager.localHealthManager.killCount.ToString();
+
+            //livesCount.gameObject.SetActive(HealthManager.localHealthManager.lives != -1);
+            //livesCount.text = HealthManager.localHealthManager.lives.ToString();
 
             cosmeticsHandler.SetCosmetics(hatId, skinId);
 
@@ -80,9 +82,9 @@ public class WinningRoom : MonoBehaviour
             foreach (var remotePlayer in GameManager.instance.remotePlayers)
             {
                 namePlate.text = remotePlayer._name;
-                killCount.text = remotePlayer.healthManager.killCount.ToString();
-                livesCount.gameObject.SetActive(remotePlayer.healthManager.lives != -1);
-                livesCount.text = remotePlayer.healthManager.lives.ToString();
+                //killCount.text = remotePlayer.healthManager.killCount.ToString();
+                //livesCount.gameObject.SetActive(remotePlayer.healthManager.lives != -1);
+                //livesCount.text = remotePlayer.healthManager.lives.ToString();
                 cosmeticsHandler.SetCosmetics(remotePlayer.cosmeticsHandler.currHatId, remotePlayer.cosmeticsHandler.currSkinId);
             }
         }

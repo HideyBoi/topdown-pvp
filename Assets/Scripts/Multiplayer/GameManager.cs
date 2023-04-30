@@ -66,7 +66,7 @@ public class GameManager : MonoBehaviour
 
         localPlayerObject = Instantiate(playerPrefab);
         localPlayerObject.GetComponent<HealthManager>().isLocalPlayer = true;
-        localPlayerObject.GetComponent<HealthManager>().thisId = networkManager.Client.Id;
+        localPlayerObject.GetComponent<HealthManager>().id = networkManager.Client.Id;
 
         foreach (var player in networkManager.connectedPlayers)
         {
@@ -77,7 +77,7 @@ public class GameManager : MonoBehaviour
                 remPlayer.GetComponent<RemotePlayer>()._id = player.id;
                 remPlayer.GetComponent<RemotePlayer>()._name = player.name;
                 remPlayer.GetComponent<RemotePlayer>().HandleCosmetics(player.skinId, player.hatId);
-                remPlayer.GetComponent<HealthManager>().thisId = player.id;
+                remPlayer.GetComponent<HealthManager>().id = player.id;
                 remotePlayers.Add(remPlayer.GetComponent<RemotePlayer>());
                 player.playerObject = remPlayer;
             } else
@@ -156,7 +156,7 @@ public class GameManager : MonoBehaviour
         spawns = new List<Transform>();
     }
 
-    [MessageHandler((ushort)NetworkManager.MessageIds.playerOutOfGame)]
+    //[MessageHandler((ushort)NetworkManager.MessageIds.playerOutOfGame)]
     static void PlayerOutOfGame(Message msg)
     {
         ushort id = msg.GetUShort();
@@ -194,54 +194,17 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    [MessageHandler((ushort)NetworkManager.MessageIds.playerHealth)]
-    static void PlayerHealth(Message msg)
-    {
-        int newHealth = msg.GetInt();
-        ushort id = msg.GetUShort();
-
-        foreach (var player in instance.remotePlayers)
-        {
-            if (id == player._id)
-            {
-                player.healthManager.Health(newHealth);
-            }
-        }
-    }
-
-    [MessageHandler((ushort)NetworkManager.MessageIds.playerDamage)]
+    [MessageHandler((ushort)NetworkManager.MessageIds.damage)]
     static void DamagePlayer(Message msg)
     {
-        ushort id = msg.GetUShort();
         int damage = msg.GetInt();
-        ushort fromId = msg.GetUShort();
         int gunId = msg.GetInt();
+        ushort toId = msg.GetUShort();
+        ushort fromId = msg.GetUShort();
 
-        if (id == NetworkManager.instance.Client.Id)
+        if (toId == NetworkManager.instance.Client.Id)
         {
-            instance.localPlayerObject.GetComponent<HealthManager>().Damage(damage, fromId, gunId, true);
-        }
-
-        foreach (var player in instance.remotePlayers)
-        {
-            if (id == player._id)
-            {
-                player.healthManager.Damage(damage, fromId, gunId, true);
-            }
-        }
-    }
-
-    [MessageHandler((ushort)NetworkManager.MessageIds.playerHeal)]
-    static void HealPlayer(Message msg)
-    {
-        ushort id = msg.GetUShort();
-
-        foreach (var player in instance.remotePlayers)
-        {
-            if (player._id == id)
-            {
-                player.healthManager.Heal(msg.GetInt(), true);
-            }
+            instance.localPlayerObject.GetComponent<HealthManager>().Damage(damage, gunId, fromId);
         }
     }
 

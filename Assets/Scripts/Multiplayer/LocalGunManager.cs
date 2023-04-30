@@ -222,8 +222,8 @@ public class LocalGunManager : MonoBehaviour
                             Instantiate(bloodEffect, shoot.point, Quaternion.LookRotation(shoot.normal, Vector3.up));
                             Instantiate(soundEffect, transform).GetComponent<SoundEffect>().PlaySound(im.inventoryItem[im.currentIndex].weapon.shootSound, 40, 0.6f);
 
-                            HealthManager hm = shoot.collider.GetComponent<HealthManager>();
-                            Damage(im.inventoryItem[im.currentIndex].weapon.damage, im.inventoryItem[im.currentIndex].weapon.id, hm);
+                            RemotePlayer p = shoot.collider.GetComponent<RemotePlayer>();
+                            Damage(im.inventoryItem[im.currentIndex].weapon.damage, im.inventoryItem[im.currentIndex].weapon.id, p._id);
                         } else
                         {
                             Instantiate(soundEffect, transform).GetComponent<SoundEffect>().PlaySound(im.inventoryItem[im.currentIndex].weapon.reloadSound, 40, 0.6f);
@@ -325,8 +325,8 @@ public class LocalGunManager : MonoBehaviour
                                 {
                                     Instantiate(bloodEffect, shoot.point, Quaternion.LookRotation(shoot.normal, Vector3.up));
 
-                                    HealthManager hm = shoot.collider.GetComponent<HealthManager>();
-                                    Damage(damage, im.inventoryItem[im.currentIndex].weapon.id, hm);
+                                    RemotePlayer p = shoot.collider.GetComponent<RemotePlayer>();
+                                    Damage(damage, im.inventoryItem[im.currentIndex].weapon.id, p._id);
                                 }
                             }
                         }
@@ -341,9 +341,15 @@ public class LocalGunManager : MonoBehaviour
         }
     }
 
-    void Damage(int damage, int gunId, HealthManager hm)
+    void Damage(int damage, int gunId, ushort toDamage)
     {
-        hm.Damage(damage, playerController.id, gunId, false);
+        Message msg = Message.Create(MessageSendMode.Reliable, NetworkManager.MessageIds.damage);
+        msg.AddInt(damage);
+        msg.AddInt(gunId);
+        msg.AddUShort(toDamage);
+        msg.AddUShort(NetworkManager.instance.Client.Id);
+
+        NetworkManager.instance.Client.Send(msg);
     }
 
     private void OnEnable()

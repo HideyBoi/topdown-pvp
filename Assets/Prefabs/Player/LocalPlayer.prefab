@@ -1083,70 +1083,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2e12d7fc895eb0458d0ce9289bd630a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 150
-  maxHealth: 150
-  lives: 3
-  livesText: {fileID: 958722471902896265}
-  killCount: 0
-  killText: {fileID: 550906800102416340}
-  thisId: 0
-  healEffect: {fileID: 1363855616742251421, guid: c5cff502f5f9ac644886f5926865fc9c,
-    type: 3}
-  deathEffect: {fileID: 5027107366694167322, guid: 6aa63e7fb0aa0d040b50bc690a1c7fca,
-    type: 3}
-  remoteDead: 0
-  alreadyCountedKill: 0
-  animator: {fileID: 5446089997807071736}
-  coll: {fileID: 171931358746057922}
+  deadUI: {fileID: 5152966082675313379}
+  normalUI: {fileID: 171931358909806423}
+  id: 0
+  isLocalPlayer: 0
   isDead: 0
-  healthBar: {fileID: 2404681942706527565}
-  healthBarText: {fileID: 8919657743411849320}
-  cam: {fileID: 458818465136178912}
-  spectating: {fileID: 0}
-  deathUI: {fileID: 150697137954267158}
-  playingHUD: {fileID: 171931358909806423}
-  killerNameText: {fileID: 207441856533872784}
-  respawningStatus: {fileID: 8502971545725548447}
-  currentlySpectatingText: {fileID: 7855028137269596745}
-  gunNameText: {fileID: 9183751367301164435}
-  killerHealthText: {fileID: 1658659579561156504}
-  rarityIndicator:
-  - {fileID: 3540564763614692404}
-  - {fileID: 7591350056528847343}
-  - {fileID: 2485076274119199110}
-  killerHealth: {fileID: 3793260331835372212}
-  isLocalPlayer: 1
-  lootLocs:
-  - {fileID: 6929275403592572728}
-  - {fileID: 7412536800532458768}
-  - {fileID: 870289891893357290}
-  - {fileID: 8461025809177902368}
-  - {fileID: 6216335205972903052}
-  - {fileID: 4669945593017222847}
-  - {fileID: 5561809487403738332}
-  - {fileID: 5612523788853933254}
-  - {fileID: 3824158010158643777}
-  item: {fileID: 4491493733864199258, guid: 871cb2366c1ec1341a1b94ffda881e89, type: 3}
-  healing:
-  - {fileID: 391935329170582414, guid: bac15720f8e4922489357fcb3e2fefb6, type: 3}
-  - {fileID: 8573082192986105258, guid: 47b1df7ab81aba945ab9c47ca51bbf5d, type: 3}
-  ammo: {fileID: 9176021081397741453, guid: e3eab27d2a283c647a81ea91ad2f5275, type: 3}
-  hitPopup: {fileID: 0}
-  hitArrow: {fileID: 5669666333177001610, guid: 4626da64bcc1dd34bb1e58d5d40f69a1,
-    type: 3}
-  killPopup: {fileID: 2183891826911585689, guid: bc7b99e15398a184582b3af8c65ce334,
-    type: 3}
-  killPopupParent: {fileID: 72995378406372147}
-  soundEffect: {fileID: 7098371210533266199, guid: 03ca22f20a0d6c145ab412dadd2b8800,
-    type: 3}
-  killSound: {fileID: 8300000, guid: 4f2d7b49836352a4d915c49f30a7e233, type: 3}
-  hurtSounds:
-  - {fileID: 8300000, guid: 1c803a0e816ac1f4e8251d11bb273362, type: 3}
-  - {fileID: 8300000, guid: 059684eb0a0840b4c94ef36bfc9bc616, type: 3}
-  - {fileID: 8300000, guid: 4b0cfb85cb6565b40ae29bf6e9ef5a6d, type: 3}
-  - {fileID: 8300000, guid: d315c8139f3ea7d4e98528b202b27839, type: 3}
-  - {fileID: 8300000, guid: 4ce897f446c8e90498657e0c46fc2d67, type: 3}
-  - {fileID: 8300000, guid: 2f2e2af5c6a3e114abbf124c6382fde7, type: 3}
+  respawnTime: 4
 --- !u!135 &171931358746057922
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -1284,7 +1226,7 @@ GameObject:
   - component: {fileID: 171931358909806506}
   - component: {fileID: 171931358909806505}
   m_Layer: 6
-  m_Name: RegularUI
+  m_Name: NormalUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6372,7 +6314,7 @@ GameObject:
   - component: {fileID: 3907870466786564004}
   - component: {fileID: 6567579552848337685}
   m_Layer: 5
-  m_Name: SpectatorUI
+  m_Name: DeadUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

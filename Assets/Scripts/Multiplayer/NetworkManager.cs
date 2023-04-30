@@ -62,7 +62,6 @@ public class NetworkManager : MonoBehaviour
         mapData, //contains room information, ie type of room, which halls are open
         mapDone, //map generation has finished
         playerPos, //player position and rotation updates
-        playerHealth, //player health updates
         openChest, //tells other players that a chest has been opened
         spawnItem, //tells other players that an item has spawned
         pickUpItem, //tells other players that an item has been picked up
@@ -76,10 +75,8 @@ public class NetworkManager : MonoBehaviour
         playerReloadSound, //sound effects that should travel with a player (ie, a reloading sound effect should follow the player)
         playerShot, //contains data about what gun was shot and where
         punch, //lets others know that a punch was performed
-        playerDamage, //tells all players that player x has been damaged
-        playerHeal, //tells other players that the local player has healed
-        playerOutOfGame, //tells other players when a player is no longer in the game
         soundEffect, //tells other players to play a sound effect
+        damage
     }
 
     private void Start()
@@ -128,7 +125,7 @@ public class NetworkManager : MonoBehaviour
         }
 
         //value needs to be 1 more than the highest ID in MessageIds
-        MessageRelayFilter filter = new MessageRelayFilter(28);
+        MessageRelayFilter filter = new MessageRelayFilter(msgIdsToRelay.Count + 1);
 
         foreach (var id in msgIdsToRelay)
         {
@@ -136,9 +133,6 @@ public class NetworkManager : MonoBehaviour
         }
 
         Server.RelayFilter = filter;
-        
-
-        //Server.RelayFilter = new MessageRelayFilter((ushort)MessageIds.mapData, (ushort)MessageIds.mapDone, (ushort)MessageIds.mapHeader, (ushort)MessageIds.openChest, (ushort)MessageIds.particleEffect, (ushort)MessageIds.pickUpAmmo, (ushort)MessageIds.pickUpHeal, (ushort)MessageIds.pickUpItem, (ushort)MessageIds.playerDamage, (ushort)MessageIds.playerGunRot, (ushort)MessageIds.playerHeal, (ushort)MessageIds.playerHoldItem, (ushort)MessageIds.playerInfo, (ushort)MessageIds.playerOutOfGame, (ushort)MessageIds.playerPos, (ushort)MessageIds.playerReady, (ushort)MessageIds.playerReloadSound, (ushort)MessageIds.playerShot, (ushort)MessageIds.readyUp, (ushort)MessageIds.rules, (ushort)MessageIds.soundEffect, (ushort)MessageIds.spawnAmmo, (ushort)MessageIds.spawnHeal, (ushort)MessageIds.spawnItem, (ushort)MessageIds.startGame);
 
         Client.Connected += Connected;
         Client.ConnectionFailed += FailedToConnect;
