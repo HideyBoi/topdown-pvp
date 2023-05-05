@@ -995,6 +995,8 @@ MonoBehaviour:
   - {fileID: 8300000, guid: d315c8139f3ea7d4e98528b202b27839, type: 3}
   - {fileID: 8300000, guid: 4ce897f446c8e90498657e0c46fc2d67, type: 3}
   - {fileID: 8300000, guid: 2f2e2af5c6a3e114abbf124c6382fde7, type: 3}
+  hitArrow: {fileID: 5669666333177001610, guid: 4626da64bcc1dd34bb1e58d5d40f69a1,
+    type: 3}
   cam: {fileID: 458818465136178912}
   currentlySpectatingId: 0
   currentlySpectating: {fileID: 1193890359032612598}

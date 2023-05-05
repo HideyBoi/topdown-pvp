@@ -63,6 +63,8 @@ public class HealthManager : MonoBehaviour
     AudioClip deathSound;
     [SerializeField]
     AudioClip[] hitSounds;
+    [SerializeField]
+    GameObject hitArrow;
 
     [Header("Spectating")]
     Transform spectateTarget;
@@ -215,6 +217,8 @@ public class HealthManager : MonoBehaviour
         Debug.Log($"[Health Manager] Got hit! Damage:{damage} Gun ID:{gunId} From Player ID:{fromId}");
         if (gunId != 0)
             Instantiate(soundEffect, transform).GetComponent<SoundEffect>().PlaySound(hitSounds[Random.Range(0, hitSounds.Length)], 20, 0.7f);
+
+        Instantiate(hitArrow, normalUI.transform).GetComponent<HitArrow>().SetRot(GameManager.instance.GetRemotePlayer(fromId).transform.position);
 
         currentHealth -= damage;
         if (currentHealth <= 0)
