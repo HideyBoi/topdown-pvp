@@ -179,6 +179,24 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SpectateLeft"",
+                    ""type"": ""Button"",
+                    ""id"": ""c0e02aaf-203f-4d8c-b725-09bb84bbf1ed"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SpectateRight"",
+                    ""type"": ""Button"",
+                    ""id"": ""117c7966-3979-4cdf-a6d3-a416b0a713ba"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -654,6 +672,50 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""action"": ""Walk"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""be823fed-daa5-4eeb-8265-1f8ac7acb14e"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KBM"",
+                    ""action"": ""SpectateLeft"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""909cca29-e28b-439b-a2fe-cfd5800a4174"",
+                    ""path"": ""<Gamepad>/leftShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""GAMEPAD"",
+                    ""action"": ""SpectateLeft"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""84e09970-47ca-4239-bf09-0c4ad2896906"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KBM"",
+                    ""action"": ""SpectateRight"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""1b19da32-b9c2-4ffb-a276-a3c3b501af50"",
+                    ""path"": ""<Gamepad>/rightShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""GAMEPAD"",
+                    ""action"": ""SpectateRight"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -707,6 +769,8 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         m_Player_UseMedkit = m_Player.FindAction("UseMedkit", throwIfNotFound: true);
         m_Player_UseSyringe = m_Player.FindAction("UseSyringe", throwIfNotFound: true);
         m_Player_UniMenu = m_Player.FindAction("UniMenu", throwIfNotFound: true);
+        m_Player_SpectateLeft = m_Player.FindAction("SpectateLeft", throwIfNotFound: true);
+        m_Player_SpectateRight = m_Player.FindAction("SpectateRight", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -785,6 +849,8 @@ public partial class @Controls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_UseMedkit;
     private readonly InputAction m_Player_UseSyringe;
     private readonly InputAction m_Player_UniMenu;
+    private readonly InputAction m_Player_SpectateLeft;
+    private readonly InputAction m_Player_SpectateRight;
     public struct PlayerActions
     {
         private @Controls m_Wrapper;
@@ -806,6 +872,8 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         public InputAction @UseMedkit => m_Wrapper.m_Player_UseMedkit;
         public InputAction @UseSyringe => m_Wrapper.m_Player_UseSyringe;
         public InputAction @UniMenu => m_Wrapper.m_Player_UniMenu;
+        public InputAction @SpectateLeft => m_Wrapper.m_Player_SpectateLeft;
+        public InputAction @SpectateRight => m_Wrapper.m_Player_SpectateRight;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -866,6 +934,12 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @UniMenu.started += instance.OnUniMenu;
             @UniMenu.performed += instance.OnUniMenu;
             @UniMenu.canceled += instance.OnUniMenu;
+            @SpectateLeft.started += instance.OnSpectateLeft;
+            @SpectateLeft.performed += instance.OnSpectateLeft;
+            @SpectateLeft.canceled += instance.OnSpectateLeft;
+            @SpectateRight.started += instance.OnSpectateRight;
+            @SpectateRight.performed += instance.OnSpectateRight;
+            @SpectateRight.canceled += instance.OnSpectateRight;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -921,6 +995,12 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @UniMenu.started -= instance.OnUniMenu;
             @UniMenu.performed -= instance.OnUniMenu;
             @UniMenu.canceled -= instance.OnUniMenu;
+            @SpectateLeft.started -= instance.OnSpectateLeft;
+            @SpectateLeft.performed -= instance.OnSpectateLeft;
+            @SpectateLeft.canceled -= instance.OnSpectateLeft;
+            @SpectateRight.started -= instance.OnSpectateRight;
+            @SpectateRight.performed -= instance.OnSpectateRight;
+            @SpectateRight.canceled -= instance.OnSpectateRight;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -975,5 +1055,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         void OnUseMedkit(InputAction.CallbackContext context);
         void OnUseSyringe(InputAction.CallbackContext context);
         void OnUniMenu(InputAction.CallbackContext context);
+        void OnSpectateLeft(InputAction.CallbackContext context);
+        void OnSpectateRight(InputAction.CallbackContext context);
     }
 }

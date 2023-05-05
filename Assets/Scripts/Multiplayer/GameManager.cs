@@ -28,6 +28,7 @@ public class GameManager : MonoBehaviour
     public GameObject soundEffect;
     public AudioClip killSound;
     public GameObject deathEffect;
+    public GameObject healEffect;
 
     bool generationStarted = false;
 
@@ -273,6 +274,11 @@ public class GameManager : MonoBehaviour
             Instantiate(sploosh, position, Quaternion.identity);
         }
 
+        if (audioID == 10 || audioID == 11)
+        {
+            Instantiate(healEffect, position, Quaternion.identity);
+        }
+
         Instantiate(soundEffect, position, Quaternion.identity).GetComponent<SoundEffect>().PlaySound(cliptoplay, maxDistance, volume);
     }
     public void PlaySoundEffectByID(Transform parent, Vector3 position, int audioID, float volume, float maxDistance)
@@ -282,6 +288,11 @@ public class GameManager : MonoBehaviour
         if (audioID > 4 && audioID < 10)
         {
             Instantiate(sploosh, position, Quaternion.identity);
+        }
+
+        if (audioID == 10 || audioID == 11)
+        {
+            Instantiate(healEffect, position, Quaternion.identity);
         }
 
         Instantiate(soundEffect, parent).GetComponent<SoundEffect>().PlaySound(cliptoplay, maxDistance, volume);

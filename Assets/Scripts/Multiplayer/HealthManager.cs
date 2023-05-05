@@ -9,6 +9,8 @@ using Cinemachine;
 
 public class HealthManager : MonoBehaviour
 {
+    private Controls controls;
+
     public static HealthManager localHealthManager;
     public GameObject deadUI;
     public GameObject normalUI;
@@ -50,6 +52,8 @@ public class HealthManager : MonoBehaviour
     [SerializeField]
     Slider healthBar;
     [SerializeField]
+    TextMeshProUGUI healthBarNumber;
+    [SerializeField]
     Animator healthFlash;
     [SerializeField]
     GameObject soundEffect;
@@ -59,6 +63,16 @@ public class HealthManager : MonoBehaviour
     AudioClip deathSound;
     [SerializeField]
     AudioClip[] hitSounds;
+
+    [Header("Spectating")]
+    Transform spectateTarget;
+    [SerializeField]
+    CinemachineVirtualCamera cam;
+    int currentIndex;
+    public ushort currentlySpectatingId;
+    RemotePlayer currentlySpectatingPlayer;
+    [SerializeField]
+    TextMeshProUGUI currentlySpectating;
 
     private void Awake()
     {
@@ -81,12 +95,23 @@ public class HealthManager : MonoBehaviour
         if (!isLocalPlayer)
             return;
 
+        if (controls == null)
+        {
+            controls = new Controls();
+
+            controls.Player.SpectateLeft.performed += _ => SwitchSpectate(-1);
+            controls.Player.SpectateRight.performed += _ => SwitchSpectate(1);
+        }          
 
         healthBar.value = currentHealth;
+        healthBarNumber.text = currentHealth.ToString();
         healthFlash.SetInteger("Health", currentHealth);
 
         killsText.text = "x " + killCount;
         livesText.text = "x " + lives;
+
+        if (isDead)
+            Spectate();
 
         if (isDead && canRespawn)
         {
@@ -105,8 +130,61 @@ public class HealthManager : MonoBehaviour
                 isDead = false;
                 GetComponent<Collider>().enabled = true;
                 rb.isKinematic = false;
+                cam.m_Follow = transform;
             }
         }
+    }
+
+    void Spectate()
+    {
+        if (spectateTarget == null)
+            return;
+
+        cam.m_Follow = spectateTarget;
+        currentlySpectating.text = "Currently Spectating: " + currentlySpectatingPlayer._name;
+    }
+
+    void SwitchSpectate(int dir)
+    {
+        int tempIndex = currentIndex + dir;
+        if (GameManager.instance.playersInGame[tempIndex] == null)
+        {
+            if (dir == 1)
+            {
+                tempIndex = 0;
+            }
+            else
+            {
+                tempIndex = GameManager.instance.playersInGame.Count - 1;
+            }
+        }
+
+        StartSpectating(GameManager.instance.playersInGame[tempIndex].id);
+    }
+
+    void StartSpectating(ushort playerId)
+    {
+        RemotePlayer player = GameManager.instance.GetRemotePlayer(playerId);
+        currentIndex = GetCurrentSpectateIndex(player);
+        currentlySpectatingId = playerId;
+        currentlySpectatingPlayer = player;
+        spectateTarget = player.transform;
+    }
+
+    int GetCurrentSpectateIndex(RemotePlayer player)
+    {
+        int index = 0;
+
+        for (int i = 0; i < GameManager.instance.playersInGame.Count; i++)
+        {
+            if (GameManager.instance.playersInGame[i].id == player._id)
+            {
+                index = i;
+                break;
+            }
+        }
+
+        return index;
     }
 
     public void DamageCosmetics(int damage)
@@ -120,6 +198,13 @@ public class HealthManager : MonoBehaviour
         {
             currentDamageNumber.AddNumber(damage, transform.position);
         }
+    }
+
+    public void Heal(int amount)
+    {
+        currentHealth += amount;
+        if (currentHealth > maxHealth)
+            currentHealth = maxHealth;
     }
 
     public void Damage(int damage, int gunId, ushort fromId)
@@ -144,6 +229,8 @@ public class HealthManager : MonoBehaviour
             DropLoot();
 
         Debug.Log("[Health Manager] local player has died.");
+
+        StartSpectating(fromId);
 
         isDead = true;
         timeUntilRespawn = respawnTime;
@@ -327,5 +414,17 @@ public class HealthManager : MonoBehaviour
         {
             Instantiate(localKillfeedItem, localKillfeed).GetComponent<KillPopup>().UpdateText($"Got killed by <color=red>{GameManager.instance.GetRemotePlayer(killerId)._name}</color>");
         }
+    }
+
+    private void OnEnable()
+    {
+        if (controls != null)
+            controls.Enable();
+    }
+
+    private void OnDisable()
+    {
+        if (controls != null) 
+            controls.Disable();
     }
 }
