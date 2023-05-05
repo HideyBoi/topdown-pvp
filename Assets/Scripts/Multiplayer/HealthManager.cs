@@ -9,364 +9,314 @@ using Cinemachine;
 
 public class HealthManager : MonoBehaviour
 {
+    private Controls controls;
+
     public static HealthManager localHealthManager;
-
-    public int health = 150;
-    public int maxHealth = 150;
-    public int lives = 3;
-    public TextMeshProUGUI livesText;
-
+    public GameObject deadUI;
+    public GameObject normalUI;
+    public GameObject persistantUI;
+    public ushort id;
+    public bool isLocalPlayer;
     public int killCount = 0;
-    public TextMeshProUGUI killText;
-
-    public ushort thisId;
-
-    public GameObject healEffect;
-    public GameObject deathEffect;
-
-    public bool remoteDead = false;
-    public bool alreadyCountedKill = false;
-
-    [Header("Local Player Specific")]
-    [SerializeField] private Animator animator;
-    public Collider coll;
-    float respawnTime = 6f;
+    public int lives = 0;
+    bool canRespawn = true;
+    LocalInventoryManager inv;
+    Rigidbody rb;
+    int maxHealth;
+    int currentHealth;
     public bool isDead;
+    [SerializeField]
+    float respawnTime;
     float timeUntilRespawn;
-    public Slider healthBar;
-    [SerializeField] private TMP_Text healthBarText;
-    [SerializeField] private CinemachineVirtualCamera cam;
-    private LocalInventoryManager inv;
-    public RemotePlayer spectating;
-    bool isSpectating;
+    [SerializeField]
+    Transform localKillfeed;
+    [SerializeField]
+    GameObject localKillfeedItem;
+    DamageNumber currentDamageNumber;
+    [SerializeField]
+    GameObject hitPopup;
+    [SerializeField]
+    Transform[] lootLocs;
+    [SerializeField]
+    GameObject ammo;
+    [SerializeField]
+    GameObject[] healing;
+    [SerializeField]
+    GameObject item;
+    [SerializeField]
+    TextMeshProUGUI respawningStatus;
+    [SerializeField]
+    TextMeshProUGUI livesText;
+    [SerializeField]
+    TextMeshProUGUI killsText;
+    [SerializeField]
+    Slider healthBar;
+    [SerializeField]
+    TextMeshProUGUI healthBarNumber;
+    [SerializeField]
+    Animator healthFlash;
+    [SerializeField]
+    GameObject soundEffect;
+    [SerializeField]
+    GameObject deathEffect;
+    [SerializeField]
+    AudioClip deathSound;
+    [SerializeField]
+    AudioClip[] hitSounds;
+    [SerializeField]
+    GameObject hitArrow;
 
-    public GameObject deathUI;
-    public GameObject playingHUD;
-    public TMP_Text killerNameText;
-    public TMP_Text respawningStatus;
-    public TMP_Text currentlySpectatingText;
-    public TMP_Text gunNameText;
-    public TMP_Text killerHealthText;
-    public GameObject[] rarityIndicator;
-    public Slider killerHealth;
-    bool canRespawn;
-
-    public bool isLocalPlayer = false;
-
-    public Transform[] lootLocs = new Transform[9];
-    public GameObject item;
-    public GameObject[] healing;
-    public GameObject ammo;
-
-    public GameObject hitPopup;
-    DamageNumber currentHitPopup;
-    public GameObject hitArrow;
-
-    public GameObject killPopup;
-    public Transform killPopupParent;
-    public GameObject soundEffect;
-    public AudioClip killSound;
-    public AudioClip[] hurtSounds;
+    [Header("Spectating")]
+    Transform spectateTarget;
+    [SerializeField]
+    CinemachineVirtualCamera cam;
+    int currentIndex;
+    public ushort currentlySpectatingId;
+    RemotePlayer currentlySpectatingPlayer;
+    [SerializeField]
+    TextMeshProUGUI currentlySpectating;
 
     private void Awake()
     {
         lives = RulesManager.instance.lives;
-        if (isLocalPlayer)
-        {
-            localHealthManager = this;
-            inv = GetComponent<LocalInventoryManager>();
-            maxHealth = RulesManager.instance.maxHealth;
-            if (lives != -1)
-            {
-                livesText.text = "x " + lives;
-            } else
-            {
-                livesText.text = "Infinite";
-            }
-
-            killText.text = "x 0";
-
-            health = maxHealth;
-            healthBar.maxValue = maxHealth;
-        }
     }
 
-    private void Update()
+    public void Init()
     {
-        if (health <= 0)
-        {
-            coll.enabled = false;
-        }
-        else
-        {
-            coll.enabled = true;
-        }
-
-        if (health >= maxHealth)
-        {
-            alreadyCountedKill = false;
-        }
+        localHealthManager = this;
+        inv = GetComponent<LocalInventoryManager>();
+        rb = GetComponent<Rigidbody>();
+        maxHealth = RulesManager.instance.maxHealth;
+        currentHealth = maxHealth;
+        healthBar.maxValue = maxHealth;
+        healthBar.value = maxHealth;
     }
 
     private void FixedUpdate()
     {
-        if (isLocalPlayer)
+        if (!isLocalPlayer)
+            return;
+
+        if (controls == null)
         {
-            if (isSpectating)
-            {
-                if (spectating == null)
-                {
-                    int rand = Random.Range(0, GameManager.instance.remotePlayers.Count);
+            controls = new Controls();
 
-                    spectating = GameManager.instance.remotePlayers[rand];
-                }
+            controls.Player.SpectateLeft.performed += _ => SwitchSpectate(-1);
+            controls.Player.SpectateRight.performed += _ => SwitchSpectate(1);
+        }          
 
-                cam.m_Follow = spectating.transform;
-                currentlySpectatingText.text = "Spectating: " + spectating._name;
-            }
+        healthBar.value = currentHealth;
+        healthBarNumber.text = currentHealth.ToString();
+        healthFlash.SetInteger("Health", currentHealth);
 
-            animator.SetInteger("Health", health);
+        killsText.text = "x " + killCount;
+        livesText.text = "x " + lives;
+
+        if (isDead)
+            Spectate();
+
+        if (isDead && canRespawn)
+        {
             timeUntilRespawn -= Time.fixedDeltaTime;
-            if (timeUntilRespawn < 0 && isDead && canRespawn)
+            if (timeUntilRespawn <= 0)
             {
+                int rng = Random.Range(0, GameManager.instance.spawns.Count);
+                transform.position = GameManager.instance.spawns[rng].position;
+
+                inv.currentIndex = 0;
+                inv.Scroll(0);
+                inv.canSwitch = true;     
+                deadUI.SetActive(false);
+                normalUI.SetActive(true);              
+                currentHealth = maxHealth; 
                 isDead = false;
-                canRespawn = false;
-                Respawn();
+                GetComponent<Collider>().enabled = true;
+                rb.isKinematic = false;
+                cam.m_Follow = transform;
             }
-            healthBar.value = health;
-            healthBarText.text = health.ToString();
-
-            Message msg = Message.Create(MessageSendMode.Unreliable, NetworkManager.MessageIds.playerHealth);
-            msg.AddInt(health);
-            msg.AddUShort(thisId);
-            NetworkManager.instance.Client.Send(msg);
         }
     }
 
-    public void Damage(int damage, ushort attackingPlayer, int gunId, bool fromNetwork)
+    void Spectate()
     {
-        if (!fromNetwork)
-        {
-            Message msg = Message.Create(MessageSendMode.Reliable, NetworkManager.MessageIds.playerDamage);
-            msg.AddUShort(thisId);
-            msg.AddInt(damage);
-            msg.AddUShort(attackingPlayer);
-            msg.Add(gunId);
-            NetworkManager.instance.Client.Send(msg);
+        if (spectateTarget == null)
+            return;
 
-            if (currentHitPopup == null)
+        cam.m_Follow = spectateTarget;
+        currentlySpectating.text = "Currently Spectating: " + currentlySpectatingPlayer._name;
+    }
+
+    void SwitchSpectate(int dir)
+    {
+        int tempIndex = currentIndex + dir;
+        if (GameManager.instance.playersInGame[tempIndex] == null)
+        {
+            if (dir == 1)
             {
-                currentHitPopup = Instantiate(hitPopup, transform.position, Quaternion.identity, GameManager.instance.transform).GetComponent<DamageNumber>();
-            }
-
-            currentHitPopup.AddNumber(damage, transform.position);
-        } else
-        {
-            if (isLocalPlayer)
-            {            
-                GameObject arrow = Instantiate(hitArrow, playingHUD.transform);
-                arrow.GetComponent<HitArrow>().SetRot(GameManager.instance.GetRemotePlayer(attackingPlayer).transform.position);
-            }
-        }
-
-        Instantiate(soundEffect, transform.position, Quaternion.identity).GetComponent<SoundEffect>().PlaySound(hurtSounds[Random.Range(0, hurtSounds.Length)], 20, 0.7f);
-
-        health -= damage;
-        if (health <= 0)
-        {
-            health = 0;
-            coll.enabled = false;
-            Die(attackingPlayer, gunId);
-        } else
-        {
-            coll.enabled = true;
-        }
-    }
-
-    public void Heal(int heal, bool fromNetwork)
-    {
-        health += heal;
-        if (health > maxHealth)
-        {
-            health = maxHealth;
-        }
-
-        Instantiate(healEffect, transform.position, Quaternion.identity);
-
-        if (!fromNetwork)
-        {
-            Message msg = Message.Create(MessageSendMode.Reliable, NetworkManager.MessageIds.playerHeal);
-            msg.AddUShort(thisId);
-            msg.AddInt(heal);
-            NetworkManager.instance.Client.Send(msg);
-        }
-    }
-
-    public void KilledPlayer(ushort id)
-    {
-        RemotePlayer killed = GameManager.instance.GetRemotePlayer(id);
-
-        killCount++;
-
-        killText.text = "x " + killCount;
-
-        Instantiate(killPopup, killPopupParent).GetComponent<KillPopup>().UpdateName(killed._name);
-    }
-
-    public void Health(int newHealth)
-    {
-        health = newHealth;
-        if (!remoteDead)
-        {
-            if (health <= 0)
-            {
-                remoteDead = true;
-            }
-        } else
-        {
-            if (health == maxHealth)
-            {
-                remoteDead = false;
-                alreadyCountedKill = false;
-                health = maxHealth;
-            }
-        }
-    }
-
-    public void Die(ushort killingPlayer, int gunId)
-    {
-        if (!alreadyCountedKill)
-        {
-            alreadyCountedKill = true;
-
-            Instantiate(deathEffect, transform.position, Quaternion.identity);
-            Instantiate(soundEffect, transform.position, Quaternion.identity).GetComponent<SoundEffect>().PlaySound(killSound, 30, 0.8f);
-
-
-            if (killingPlayer == NetworkManager.instance.Client.Id)
-            {
-                Debug.Log("[Health Manager] Detected that local client has killed a remote client: " + thisId);
-                localHealthManager.KilledPlayer(thisId);
+                tempIndex = 0;
             }
             else
             {
-                foreach (var player in GameManager.instance.remotePlayers)
-                {
-                    if (player._id == killingPlayer)
-                    {
-                        player.healthManager.killCount++;
-                    }
-                }
-            }
-
-            KillFeed.i.OnKill(killingPlayer, thisId, GameManager.instance.GetWeaponById(gunId));
-        }
-
-        if (isLocalPlayer)
-        {
-            if (isDead)
-                return;
-
-
-            if (lives > 0)
-            {
-                lives--;
-
-                if (lives == 0)
-                {
-                    canRespawn = false;
-                    respawningStatus.text = "You're out of the game, you've lost your last life!";
-                    DropLoot();
-                    OutOfGame();
-                } else if (lives == 1)
-                {
-                    respawningStatus.text = $"You're on your last life, respawning, please wait...";
-                    canRespawn = true;
-                    if (RulesManager.instance.dropLootOnEveryDeath)
-                    {
-                        DropLoot();
-                    }
-                } else
-                {
-                    respawningStatus.text = $"You have {lives} lives left, respawning, please wait...";
-                    canRespawn = true;
-                    if (RulesManager.instance.dropLootOnEveryDeath)
-                    {
-                        DropLoot();
-                    }
-                }
-
-                livesText.text = "x " + lives;
-            } else if (lives == -1)
-            {
-                respawningStatus.text = "Respawning, please wait...";
-                canRespawn = true;
-                
-                livesText.text = "Infinite";
-            }
-
-            timeUntilRespawn = respawnTime;
-            isDead = true;
-            isSpectating = true;
-
-            deathUI.SetActive(true);
-            playingHUD.SetActive(false);
-
-            RemotePlayer rm = GameManager.instance.GetRemotePlayer(killingPlayer);
-            spectating = rm;
-            rm.beingSpectated = true;
-            killerHealth.value = rm.healthManager.health;
-            killerHealth.maxValue = RulesManager.instance.maxHealth;
-            killerHealthText.text = rm.healthManager.health.ToString();
-
-            killerNameText.text = rm._name;
-            gunNameText.text = GameManager.instance.GetWeaponById(gunId).gunName;
-
-            rarityIndicator[0].SetActive(false);
-            rarityIndicator[1].SetActive(false);
-            rarityIndicator[2].SetActive(false);
-
-            switch (GameManager.instance.GetWeaponById(gunId).rarity)
-            {
-                case Weapon.Rarity.generic:
-                    rarityIndicator[0].SetActive(true);
-                    break;
-                case Weapon.Rarity.rare:
-                    rarityIndicator[1].SetActive(true);
-                    break;
-                case Weapon.Rarity.legendary:
-                    rarityIndicator[2].SetActive(true);
-                    break;
-            }
-        } else
-        {
-            lives--;
-            if (GetComponent<RemotePlayer>().beingSpectated)
-            {
-                GetComponent<RemotePlayer>().beingSpectated = false;
-                GameManager.instance.localPlayerObject.GetComponent<HealthManager>().spectating = GameManager.instance.GetRemotePlayer(killingPlayer);
-                GameManager.instance.GetRemotePlayer(killingPlayer).beingSpectated = true;
+                tempIndex = GameManager.instance.playersInGame.Count - 1;
             }
         }
 
-
-        transform.position = new Vector3(-30, 0, 30);
+        StartSpectating(GameManager.instance.playersInGame[tempIndex].id);
     }
 
-    void Respawn()
+    public void StartSpectating(ushort playerId)
     {
-        inv.currentIndex = 0;
-        inv.Scroll(0);
-        inv.canSwitch = true;
-        coll.enabled = true;
-        deathUI.SetActive(false);
-        playingHUD.SetActive(true);
-        GameManager.instance.Respawn();
-        health = maxHealth;
-        isSpectating = false;
-        spectating.beingSpectated = false;
-        cam.m_Follow = transform;
-        isDead = false;
+        RemotePlayer player = GameManager.instance.GetRemotePlayer(playerId);
+        currentIndex = GetCurrentSpectateIndex(player);
+        currentlySpectatingId = playerId;
+        currentlySpectatingPlayer = player;
+        spectateTarget = player.transform;
+    }
+
+    int GetCurrentSpectateIndex(RemotePlayer player)
+    {
+        int index = 0;
+
+        for (int i = 0; i < GameManager.instance.playersInGame.Count; i++)
+        {
+            if (GameManager.instance.playersInGame[i].id == player._id)
+            {
+                index = i;
+                break;
+            }
+        }
+
+        return index;
+    }
+
+    public void DamageCosmetics(int damage)
+    {
+        if (currentDamageNumber == null)
+        {
+            currentDamageNumber = Instantiate(hitPopup, transform.position, Quaternion.identity).GetComponent<DamageNumber>();
+            currentDamageNumber.AddNumber(damage, transform.position);
+        }
+        else
+        {
+            currentDamageNumber.AddNumber(damage, transform.position);
+        }
+    }
+
+    public void Heal(int amount)
+    {
+        currentHealth += amount;
+        if (currentHealth > maxHealth)
+            currentHealth = maxHealth;
+    }
+
+    public void Damage(int damage, int gunId, ushort fromId)
+    { 
+        if (!isLocalPlayer || isDead)
+            return;
+
+        Debug.Log($"[Health Manager] Got hit! Damage:{damage} Gun ID:{gunId} From Player ID:{fromId}");
+        if (gunId != 0)
+            Instantiate(soundEffect, transform).GetComponent<SoundEffect>().PlaySound(hitSounds[Random.Range(0, hitSounds.Length)], 20, 0.7f);
+
+        Instantiate(hitArrow, normalUI.transform).GetComponent<HitArrow>().SetRot(GameManager.instance.GetRemotePlayer(fromId).transform.position);
+
+        currentHealth -= damage;
+        if (currentHealth <= 0)
+        {
+            Die(gunId, fromId);
+        }
+    }
+
+    void Die(int gunId, ushort fromId)
+    {
+        if (RulesManager.instance.dropLootOnEveryDeath)
+            DropLoot();
+
+        Debug.Log("[Health Manager] local player has died.");
+
+        StartSpectating(fromId);
+
+        isDead = true;
+        timeUntilRespawn = respawnTime;
+
+        deadUI.SetActive(true);
+        normalUI.SetActive(false);
+
+        Instantiate(soundEffect, transform.position, Quaternion.identity).GetComponent<SoundEffect>().PlaySound(deathSound, 30, 0.8f);
+        Instantiate(deathEffect, transform.position, Quaternion.identity);
+
+        GetComponent<Collider>().enabled = false;
+
+        Message msg = Message.Create(MessageSendMode.Reliable, NetworkManager.MessageIds.playerDied);
+        msg.AddUShort(id);
+        msg.AddUShort(fromId);
+        msg.AddInt(gunId);
+
+        NetworkManager.instance.Client.Send(msg);
+
+        ShowLocalKillfeed(fromId, id);
+
+        KillFeed.i.OnKill(fromId, id, GameManager.instance.GetWeaponById(gunId));
+
+        if (lives > 0)
+        {
+            lives--;
+
+            if (lives == 0)
+            {
+                canRespawn = false;
+                respawningStatus.text = "You're out of the game, you've lost your last life!";
+                DropLoot();
+
+                Message msg2 = Message.Create(MessageSendMode.Reliable, NetworkManager.MessageIds.playerOutOfGame);
+                msg2.AddUShort(id);
+                NetworkManager.instance.Client.Send(msg2);
+
+                transform.position = new Vector3(0, 0, 200);
+                rb.isKinematic = true;
+
+                ushort localId = NetworkManager.instance.Client.Id;
+
+                foreach (var item in GameManager.instance.playersInGame)
+                {
+                    if (item.id == localId)
+                    {
+                        GameManager.instance.playersInGame.Remove(item);
+                    }
+                }
+
+                KillFeed.i.OnPlayerOutOfGame(id);
+            }
+            else if (lives == 1)
+            {
+                respawningStatus.text = $"You're on your last life, respawning, please wait...";
+                canRespawn = true;
+                if (RulesManager.instance.dropLootOnEveryDeath)
+                {
+                    DropLoot();
+                }
+            }
+            else
+            {
+                respawningStatus.text = $"You have {lives} lives left, respawning, please wait...";
+                canRespawn = true;
+                if (RulesManager.instance.dropLootOnEveryDeath)
+                {
+                    DropLoot();
+                }
+            }
+
+            livesText.text = "x " + lives;
+        }
+        else if (lives == -1)
+        {
+            respawningStatus.text = "Respawning, please wait...";
+            canRespawn = true;
+            livesText.text = "Infinite";
+        }
+
+        transform.position = new Vector3(0, 0, 200);
+        rb.isKinematic = true;
     }
 
     void DropLoot()
@@ -375,19 +325,19 @@ public class HealthManager : MonoBehaviour
         {
             GameObject item1 = Instantiate(item, lootLocs[0].position, Quaternion.identity);
             item1.GetComponent<GroundItem>().UpdateItem(inv.inventoryItem[1]);
-        }      
+        }
 
         if (inv.inventoryItem[2].weapon != null)
         {
             GameObject item2 = Instantiate(item, lootLocs[1].position, Quaternion.identity);
             item2.GetComponent<GroundItem>().UpdateItem(inv.inventoryItem[2]);
-        }      
+        }
 
         if (inv.inventoryItem[3].weapon != null)
         {
             GameObject item3 = Instantiate(item, lootLocs[2].position, Quaternion.identity);
             item3.GetComponent<GroundItem>().UpdateItem(inv.inventoryItem[3]);
-        }      
+        }
 
         if (inv.lightAmmoCount > 0)
         {
@@ -404,14 +354,14 @@ public class HealthManager : MonoBehaviour
             mediumAmmo.GetComponent<Ammo>().type = LocalInventoryManager.AmmoType.Medium;
             mediumAmmo.GetComponent<Ammo>().count = inv.mediumAmmoCount;
         }
-        
+
         if (inv.heavyAmmoCount > 0)
         {
             GameObject heavyAmmo = Instantiate(ammo, lootLocs[5].position, Quaternion.identity);
             heavyAmmo.GetComponent<Ammo>().networkSpawned = false;
             heavyAmmo.GetComponent<Ammo>().type = LocalInventoryManager.AmmoType.Heavy;
             heavyAmmo.GetComponent<Ammo>().count = inv.heavyAmmoCount;
-        }   
+        }
 
         if (inv.shellsAmmoCount > 0)
         {
@@ -443,7 +393,8 @@ public class HealthManager : MonoBehaviour
             inv.mediumAmmoCount = RulesManager.instance.startingMediumAmmo;
             inv.heavyAmmoCount = RulesManager.instance.startingHeavyAmmo;
             inv.shellsAmmoCount = RulesManager.instance.startingShellsAmmo;
-        } else
+        }
+        else
         {
             inv.medkitCount = 0;
             inv.syringeCount = 0;
@@ -458,19 +409,26 @@ public class HealthManager : MonoBehaviour
         inv.inventoryItem[3].weapon = null;
     }
 
-    void OutOfGame()
+    public void ShowLocalKillfeed(ushort killerId, ushort victimId)
     {
-        Message msg = Message.Create(MessageSendMode.Reliable, NetworkManager.MessageIds.playerOutOfGame);
-        msg.AddUShort(thisId);
-        NetworkManager.instance.Client.Send(msg);
-
-        foreach (var player in GameManager.instance.playersInGame)
+        if (victimId != id)
         {
-            if (player.id == thisId)
-            {
-                GameManager.instance.playersInGame.Remove(player);
-                return;
-            }
+            Instantiate(localKillfeedItem, localKillfeed).GetComponent<KillPopup>().UpdateText("<color=red>Killed</color> " + GameManager.instance.GetRemotePlayer(victimId)._name);
+        } else
+        {
+            Instantiate(localKillfeedItem, localKillfeed).GetComponent<KillPopup>().UpdateText($"Got killed by <color=red>{GameManager.instance.GetRemotePlayer(killerId)._name}</color>");
         }
+    }
+
+    private void OnEnable()
+    {
+        if (controls != null)
+            controls.Enable();
+    }
+
+    private void OnDisable()
+    {
+        if (controls != null) 
+            controls.Disable();
     }
 }

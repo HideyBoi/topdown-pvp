@@ -135,7 +135,7 @@ PlayerSettings:
   vulkanEnableLateAcquireNextImage: 0
   vulkanEnableCommandBufferRecycling: 1
   loadStoreDebugModeEnabled: 0
-  bundleVersion: 1.0.0-PT2
+  bundleVersion: 1.0.0-HealthRewrite
   preloadedAssets:
   - {fileID: 0}
   - {fileID: 0}

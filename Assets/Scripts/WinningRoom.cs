@@ -38,8 +38,9 @@ public class WinningRoom : MonoBehaviour
         uiFade.Play("Win");
         yield return new WaitForSeconds(1f);
         winCamOrbit.SetActive(true);
-        HealthManager.localHealthManager.playingHUD.SetActive(false);
-        HealthManager.localHealthManager.deathUI.SetActive(false);
+        HealthManager.localHealthManager.normalUI.SetActive(false);
+        HealthManager.localHealthManager.deadUI.SetActive(false);
+        HealthManager.localHealthManager.persistantUI.SetActive(false);
         LocalPlayerController.instance.cam.gameObject.SetActive(false);
         gameObject.GetComponent<Animator>().Play("Win");
 

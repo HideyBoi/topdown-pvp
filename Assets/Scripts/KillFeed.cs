@@ -21,6 +21,12 @@ public class KillFeed : MonoBehaviour
         newItem.GetComponent<TextMeshProUGUI>().text = $"<color=#ff322b>{GetPlayerName(killer)}</color> killed <color=#ff322b>{GetPlayerName(victim)}</color> using <color=#26baff>{weapon.gunName} [{GetWeaponRarity(weapon)}]</color>";
     }
 
+    public void OnPlayerOutOfGame(ushort player)
+    {
+        GameObject newItem = Instantiate(killFeedItem, transform);
+        newItem.GetComponent<TextMeshProUGUI>().text = $"<color=#8f7064>{GetPlayerName(player)} is out of the game.</color>";
+    }
+
     string GetPlayerName(ushort id)
     {
         foreach (NetworkManager.MultiplayerPlayer player in NetworkManager.instance.connectedPlayers)

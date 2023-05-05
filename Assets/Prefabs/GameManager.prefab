@@ -65,6 +65,11 @@ MonoBehaviour:
     type: 3}
   soundEffect: {fileID: 7098371210533266199, guid: 03ca22f20a0d6c145ab412dadd2b8800,
     type: 3}
+  killSound: {fileID: 8300000, guid: 4f2d7b49836352a4d915c49f30a7e233, type: 3}
+  deathEffect: {fileID: 5027107366694167322, guid: afb18c3eccac0464b9f03b17b202dfb5,
+    type: 3}
+  healEffect: {fileID: 1363855616742251421, guid: c5cff502f5f9ac644886f5926865fc9c,
+    type: 3}
   spawns: []
   playersInGame: []
   clips:
@@ -84,6 +89,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 2341f0522c29dff48aa878e1d842971e, type: 3}
   sploosh: {fileID: 5463529501548234624, guid: 5a0ebb9ff531c124a832ce887b1bb7c7, type: 3}
   timeTillEndscreen: 0
+  endedGame: 0
   possibleWeapons:
   - {fileID: 11400000, guid: bc7e01c2bcf3ddf49b0a2623f6c7e607, type: 2}
   - {fileID: 11400000, guid: 9cfb42c50d7fac142a3722a23ca9074e, type: 2}

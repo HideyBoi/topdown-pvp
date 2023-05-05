@@ -26,6 +26,9 @@ public class GameManager : MonoBehaviour
     public GameObject bulletTracer;
 
     public GameObject soundEffect;
+    public AudioClip killSound;
+    public GameObject deathEffect;
+    public GameObject healEffect;
 
     bool generationStarted = false;
 
@@ -66,7 +69,8 @@ public class GameManager : MonoBehaviour
 
         localPlayerObject = Instantiate(playerPrefab);
         localPlayerObject.GetComponent<HealthManager>().isLocalPlayer = true;
-        localPlayerObject.GetComponent<HealthManager>().thisId = networkManager.Client.Id;
+        localPlayerObject.GetComponent<HealthManager>().id = networkManager.Client.Id;
+        localPlayerObject.GetComponent<HealthManager>().Init();
 
         foreach (var player in networkManager.connectedPlayers)
         {
@@ -77,7 +81,7 @@ public class GameManager : MonoBehaviour
                 remPlayer.GetComponent<RemotePlayer>()._id = player.id;
                 remPlayer.GetComponent<RemotePlayer>()._name = player.name;
                 remPlayer.GetComponent<RemotePlayer>().HandleCosmetics(player.skinId, player.hatId);
-                remPlayer.GetComponent<HealthManager>().thisId = player.id;
+                remPlayer.GetComponent<HealthManager>().id = player.id;
                 remotePlayers.Add(remPlayer.GetComponent<RemotePlayer>());
                 player.playerObject = remPlayer;
             } else
@@ -156,23 +160,6 @@ public class GameManager : MonoBehaviour
         spawns = new List<Transform>();
     }
 
-    [MessageHandler((ushort)NetworkManager.MessageIds.playerOutOfGame)]
-    static void PlayerOutOfGame(Message msg)
-    {
-        ushort id = msg.GetUShort();
-
-        Debug.Log("[Game Manager] player " + id + " is out of the game.");
-
-        foreach (var item in instance.playersInGame)
-        {
-            if (item.id == id)
-            {
-                instance.playersInGame.Remove(item);
-                return;
-            }
-        }
-    }
-
     [MessageHandler((ushort)NetworkManager.MessageIds.playerPos)]
     static void PlayerMoved(Message msg)
     {
@@ -194,53 +181,75 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    [MessageHandler((ushort)NetworkManager.MessageIds.playerHealth)]
-    static void PlayerHealth(Message msg)
+    [MessageHandler((ushort)NetworkManager.MessageIds.damage)]
+    public static void DamagePlayer(Message msg)
     {
-        int newHealth = msg.GetInt();
-        ushort id = msg.GetUShort();
+        int damage = msg.GetInt();
+        int gunId = msg.GetInt();
+        ushort toId = msg.GetUShort();
+        ushort fromId = msg.GetUShort();
 
-        foreach (var player in instance.remotePlayers)
+        if (toId == NetworkManager.instance.Client.Id)
         {
-            if (id == player._id)
-            {
-                player.healthManager.Health(newHealth);
-            }
+            instance.localPlayerObject.GetComponent<HealthManager>().Damage(damage, gunId, fromId);
         }
     }
 
-    [MessageHandler((ushort)NetworkManager.MessageIds.playerDamage)]
-    static void DamagePlayer(Message msg)
+    public static void DamagePlayerLocal(ushort id, int damage)
+    {
+        instance.GetRemotePlayer(id).healthManager.DamageCosmetics(damage);
+    }
+
+    [MessageHandler((ushort)NetworkManager.MessageIds.playerDied)]
+    static void PlayerDied(Message msg)
     {
         ushort id = msg.GetUShort();
-        int damage = msg.GetInt();
-        ushort fromId = msg.GetUShort();
+        ushort killer = msg.GetUShort();
         int gunId = msg.GetInt();
 
-        if (id == NetworkManager.instance.Client.Id)
+        Debug.Log("[Game Manager] Player:" + id + " was killed by " + killer + " using " + gunId);
+
+        HealthManager localHm = instance.localPlayerObject.GetComponent<HealthManager>();
+
+        if (id == localHm.currentlySpectatingId && localHm.isDead)
         {
-            instance.localPlayerObject.GetComponent<HealthManager>().Damage(damage, fromId, gunId, true);
+            localHm.StartSpectating(killer);
         }
 
-        foreach (var player in instance.remotePlayers)
+        if (killer == NetworkManager.instance.Client.Id)
         {
-            if (id == player._id)
-            {
-                player.healthManager.Damage(damage, fromId, gunId, true);
-            }
+            HealthManager.localHealthManager.killCount++;
+        } else
+        {
+            instance.GetRemotePlayer(killer).healthManager.killCount++;         
         }
+
+        Instantiate(instance.soundEffect, instance.GetRemotePlayer(id).transform.position, Quaternion.identity).GetComponent<SoundEffect>().PlaySound(instance.killSound, 30, 0.8f);
+        Instantiate(instance.deathEffect, instance.GetRemotePlayer(id).transform.position, Quaternion.identity);
+
+        instance.GetRemotePlayer(id).healthManager.lives--;
+        instance.GetRemotePlayer(id).transform.position = new Vector3(0, 0, 200);
+
+        if ((NetworkManager.instance.Client.Id == id) || (NetworkManager.instance.Client.Id == killer))
+            HealthManager.localHealthManager.ShowLocalKillfeed(killer, id);
+
+        KillFeed.i.OnKill(killer, id, instance.GetWeaponById(gunId));
     }
 
-    [MessageHandler((ushort)NetworkManager.MessageIds.playerHeal)]
-    static void HealPlayer(Message msg)
+    [MessageHandler((ushort)NetworkManager.MessageIds.playerOutOfGame)]
+    static void PlayerOutOfGame(Message msg)
     {
         ushort id = msg.GetUShort();
 
-        foreach (var player in instance.remotePlayers)
+        Debug.Log("[Game Manager] player " + id + " is out of the game.");
+
+        KillFeed.i.OnPlayerOutOfGame(id);
+
+        foreach (var item in instance.playersInGame)
         {
-            if (player._id == id)
+            if (item.id == id)
             {
-                player.healthManager.Heal(msg.GetInt(), true);
+                instance.playersInGame.Remove(item);
             }
         }
     }
@@ -252,7 +261,9 @@ public class GameManager : MonoBehaviour
 
     public void Respawn()
     {
-        localPlayerObject.transform.position = spawns[Random.Range(0, spawns.Count)].position;
+        int rng = Random.Range(0, spawns.Count);
+        localPlayerObject.transform.position = spawns[rng].position;
+        Debug.Log(spawns[rng].position);
     }
 
     [MessageHandler((ushort)NetworkManager.MessageIds.soundEffect)]
@@ -270,6 +281,11 @@ public class GameManager : MonoBehaviour
             Instantiate(sploosh, position, Quaternion.identity);
         }
 
+        if (audioID == 10 || audioID == 11)
+        {
+            Instantiate(healEffect, position, Quaternion.identity);
+        }
+
         Instantiate(soundEffect, position, Quaternion.identity).GetComponent<SoundEffect>().PlaySound(cliptoplay, maxDistance, volume);
     }
     public void PlaySoundEffectByID(Transform parent, Vector3 position, int audioID, float volume, float maxDistance)
@@ -279,6 +295,11 @@ public class GameManager : MonoBehaviour
         if (audioID > 4 && audioID < 10)
         {
             Instantiate(sploosh, position, Quaternion.identity);
+        }
+
+        if (audioID == 10 || audioID == 11)
+        {
+            Instantiate(healEffect, position, Quaternion.identity);
         }
 
         Instantiate(soundEffect, parent).GetComponent<SoundEffect>().PlaySound(cliptoplay, maxDistance, volume);

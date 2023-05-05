@@ -13,8 +13,8 @@ public class KillPopup : MonoBehaviour
         Destroy(gameObject);
     }
 
-    public void UpdateName(string name)
+    public void UpdateText(string tex)
     {
-        text.text = name;
+        text.text = tex;
     }
 }

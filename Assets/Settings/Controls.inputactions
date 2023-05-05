@@ -157,6 +157,24 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "SpectateLeft",
+                    "type": "Button",
+                    "id": "c0e02aaf-203f-4d8c-b725-09bb84bbf1ed",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "SpectateRight",
+                    "type": "Button",
+                    "id": "117c7966-3979-4cdf-a6d3-a416b0a713ba",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -630,6 +648,50 @@
                     "processors": "",
                     "groups": "KBM",
                     "action": "Walk",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "be823fed-daa5-4eeb-8265-1f8ac7acb14e",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "KBM",
+                    "action": "SpectateLeft",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "909cca29-e28b-439b-a2fe-cfd5800a4174",
+                    "path": "<Gamepad>/leftShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "GAMEPAD",
+                    "action": "SpectateLeft",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "84e09970-47ca-4239-bf09-0c4ad2896906",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "KBM",
+                    "action": "SpectateRight",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "1b19da32-b9c2-4ffb-a276-a3c3b501af50",
+                    "path": "<Gamepad>/rightShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "GAMEPAD",
+                    "action": "SpectateRight",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
