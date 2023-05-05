@@ -209,6 +209,13 @@ public class GameManager : MonoBehaviour
 
         Debug.Log("[Game Manager] Player:" + id + " was killed by " + killer + " using " + gunId);
 
+        HealthManager localHm = instance.localPlayerObject.GetComponent<HealthManager>();
+
+        if (id == localHm.currentlySpectatingId && localHm.isDead)
+        {
+            localHm.StartSpectating(killer);
+        }
+
         if (killer == NetworkManager.instance.Client.Id)
         {
             HealthManager.localHealthManager.killCount++;

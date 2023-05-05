@@ -162,7 +162,7 @@ public class HealthManager : MonoBehaviour
         StartSpectating(GameManager.instance.playersInGame[tempIndex].id);
     }
 
-    void StartSpectating(ushort playerId)
+    public void StartSpectating(ushort playerId)
     {
         RemotePlayer player = GameManager.instance.GetRemotePlayer(playerId);
         currentIndex = GetCurrentSpectateIndex(player);
