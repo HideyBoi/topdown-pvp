@@ -41,7 +41,7 @@ public class DeathmatchRoom : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (!doDeathmatch || GameManager.instance.endedGame)
+        if (!doDeathmatch || GameManager.instance.endedGame || timeToStartDeathmatch == 0)
             return;
 
         DateTime currentTimestamp = DateTime.UtcNow;
