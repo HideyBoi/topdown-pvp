@@ -12,6 +12,7 @@ TagManager:
   - Heal
   - Ammo
   - Water
+  - DeathmatchSpawn
   layers:
   - Default
   - TransparentFX

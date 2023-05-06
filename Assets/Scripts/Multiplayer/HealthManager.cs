@@ -19,7 +19,7 @@ public class HealthManager : MonoBehaviour
     public bool isLocalPlayer;
     public int killCount = 0;
     public int lives = 0;
-    bool canRespawn = true;
+    public bool canRespawn = true;
     LocalInventoryManager inv;
     Rigidbody rb;
     int maxHealth;

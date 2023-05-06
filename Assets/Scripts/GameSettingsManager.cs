@@ -184,7 +184,7 @@ public class GameSettingsManager : MonoBehaviour
         {
             if (float.Parse(deathmatchTime.text) >= 60)
             {
-                PlayerPrefs.SetFloat("DEATHMATCH TIME", float.Parse(deathmatchTime.text));
+                PlayerPrefs.SetFloat("DEATHMATCH_TIME", float.Parse(deathmatchTime.text));
                 deathmathTimeError.SetActive(false);
             }
             else
@@ -449,7 +449,7 @@ public class GameSettingsManager : MonoBehaviour
         deathmathTimeError.SetActive(false);
         deathmatchTime.text = PlayerPrefs.GetFloat("DEATHMATCH_TIME").ToString();
 
-        if (PlayerPrefs.GetInt("DEATHMATH") == 1)
+        if (PlayerPrefs.GetInt("DEATHMATCH") == 1)
         {
             deathmatch.isOn = true;
         } else

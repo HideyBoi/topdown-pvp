@@ -250,6 +250,7 @@ public class GameManager : MonoBehaviour
             if (item.id == id)
             {
                 instance.playersInGame.Remove(item);
+                break;
             }
         }
     }

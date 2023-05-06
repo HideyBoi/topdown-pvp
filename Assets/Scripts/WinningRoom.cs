@@ -8,7 +8,6 @@ public class WinningRoom : MonoBehaviour
     public static WinningRoom instance;
 
     public GameObject winCamOrbit;
-
     [Space]
     [Header("UI")]
     public GameObject UI;
@@ -42,6 +41,7 @@ public class WinningRoom : MonoBehaviour
         HealthManager.localHealthManager.deadUI.SetActive(false);
         HealthManager.localHealthManager.persistantUI.SetActive(false);
         LocalPlayerController.instance.cam.gameObject.SetActive(false);
+        DeathmatchRoom.HideUI();
         gameObject.GetComponent<Animator>().Play("Win");
 
         SetWinUI(id);
