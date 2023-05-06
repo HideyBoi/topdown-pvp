@@ -135,8 +135,26 @@ public class HealthManager : MonoBehaviour
 
     public void LocalRespawn()
     {
-        int rng = Random.Range(0, GameManager.instance.spawns.Count);
-        transform.position = GameManager.instance.spawns[rng].position;
+        float biggestDistance = 0;
+        Vector3 biggestDistanceLocation = Vector3.zero;
+
+        foreach (var point in GameManager.instance.spawns)
+        {
+            foreach (var player in GameManager.instance.remotePlayers)
+            {
+                if (player.transform.position.z < 30)
+                {
+                    float dist = Vector3.Distance(player.transform.position, point.position);
+                    if (dist > biggestDistance)
+                    {
+                        biggestDistance = dist;
+                        biggestDistanceLocation = point.position;
+                    }
+                }
+            }
+        }
+
+        transform.position = biggestDistanceLocation;
 
         inv.currentIndex = 0;
         inv.Scroll(0);
