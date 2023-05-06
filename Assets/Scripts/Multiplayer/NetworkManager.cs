@@ -76,9 +76,10 @@ public class NetworkManager : MonoBehaviour
         playerShot, //contains data about what gun was shot and where
         punch, //lets others know that a punch was performed
         soundEffect, //tells other players to play a sound effect
-        damage,
-        playerDied,
-        playerOutOfGame
+        damage, //tells another player that the local client has damaged them
+        playerDied, //tells other players that the local client has run out of health and died.
+        playerOutOfGame, //tells other players that the local client has run out of lives and is no longer in the game.
+        deathmatchData, //contains data about when a deathmatch should start.
     }
 
     private void Start()

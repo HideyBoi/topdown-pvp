@@ -110,7 +110,14 @@ public class HealthManager : MonoBehaviour
         healthFlash.SetInteger("Health", currentHealth);
 
         killsText.text = "x " + killCount;
-        livesText.text = "x " + lives;
+        if (lives != -1)
+        {
+            livesText.text = "x " + lives;
+        } else
+        {
+            livesText.text = "infinite";
+        }
+        
 
         if (isDead)
             Spectate();
@@ -120,21 +127,26 @@ public class HealthManager : MonoBehaviour
             timeUntilRespawn -= Time.fixedDeltaTime;
             if (timeUntilRespawn <= 0)
             {
-                int rng = Random.Range(0, GameManager.instance.spawns.Count);
-                transform.position = GameManager.instance.spawns[rng].position;
-
-                inv.currentIndex = 0;
-                inv.Scroll(0);
-                inv.canSwitch = true;     
-                deadUI.SetActive(false);
-                normalUI.SetActive(true);              
-                currentHealth = maxHealth; 
-                isDead = false;
-                GetComponent<Collider>().enabled = true;
-                rb.isKinematic = false;
-                cam.m_Follow = transform;
+                LocalRespawn();
             }
         }
+    }
+
+    public void LocalRespawn()
+    {
+        int rng = Random.Range(0, GameManager.instance.spawns.Count);
+        transform.position = GameManager.instance.spawns[rng].position;
+
+        inv.currentIndex = 0;
+        inv.Scroll(0);
+        inv.canSwitch = true;
+        deadUI.SetActive(false);
+        normalUI.SetActive(true);
+        currentHealth = maxHealth;
+        isDead = false;
+        GetComponent<Collider>().enabled = true;
+        rb.isKinematic = false;
+        cam.m_Follow = transform;
     }
 
     void Spectate()

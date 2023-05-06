@@ -28,6 +28,13 @@ public class GameSettingsManager : MonoBehaviour
     public int defaultLivesCount = 3;
     public bool defaultInfiniteLives = false;
 
+    public Toggle deathmatch;
+    public bool defaultDeathmatch;
+
+    public TMP_InputField deathmatchTime;
+    public GameObject deathmathTimeError;
+    public float defaultDeathmatchTime;
+
     public Toggle dropLootOnDeath;
     public bool dropLootOnDeathDefault = true;
 
@@ -163,6 +170,35 @@ public class GameSettingsManager : MonoBehaviour
         else
         {
             PlayerPrefs.SetInt("INFINITE_LIVES", 0);
+        }
+
+        if (deathmatch.isOn)
+        {
+            PlayerPrefs.SetInt("DEATHMATCH", 1);
+        } else
+        {
+            PlayerPrefs.SetInt("DEATHMATCH", 0);
+        }
+
+        try
+        {
+            if (float.Parse(deathmatchTime.text) >= 60)
+            {
+                PlayerPrefs.SetFloat("DEATHMATCH TIME", float.Parse(deathmatchTime.text));
+                deathmathTimeError.SetActive(false);
+            }
+            else
+            {
+                failure = true;
+                Debug.Log("DEATHMATCH TIME is invalid!");
+                deathmathTimeError.SetActive(true);
+            }
+        }
+        catch (FormatException)
+        {
+            failure = true;
+            Debug.Log("DEATHMATCH TIME is invalid");
+            deathmathTimeError.SetActive(true);
         }
 
         if (dropLootOnDeath.isOn)
@@ -410,6 +446,17 @@ public class GameSettingsManager : MonoBehaviour
             }
         }
 
+        deathmathTimeError.SetActive(false);
+        deathmatchTime.text = PlayerPrefs.GetFloat("DEATHMATCH_TIME").ToString();
+
+        if (PlayerPrefs.GetInt("DEATHMATH") == 1)
+        {
+            deathmatch.isOn = true;
+        } else
+        {
+            deathmatch.isOn = false;
+        }
+
         if (PlayerPrefs.HasKey("DROP_LOOT_ON_DEATH"))
         {
             if (PlayerPrefs.GetInt("DROP_LOOT_ON_DEATH") == 1)
@@ -520,6 +567,11 @@ public class GameSettingsManager : MonoBehaviour
         PlayerPrefs.SetInt("MAP_SIZE", defaultMapSize);
 
         PlayerPrefs.SetInt("LIFE_COUNT", defaultLivesCount);
+
+        PlayerPrefs.SetFloat("DEATHMATCH_TIME", defaultDeathmatchTime);
+        PlayerPrefs.SetInt("DEATHMATCH", 1);
+        if (!defaultDeathmatch)
+            PlayerPrefs.SetInt("DEATHMATCH", 0);
 
         if (defaultInfiniteLives)
         {

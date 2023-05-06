@@ -60,6 +60,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
@@ -284,6 +285,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 0
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
@@ -1067,7 +1069,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1801791471}
-  m_LocalRotation: {x: 0.5879964, y: 0.000000041752852, z: -0.000000030351877, w: 0.8088635}
+  m_LocalRotation: {x: 0.5879964, y: -0.000000041752834, z: 0.00000003035187, w: 0.8088635}
   m_LocalPosition: {x: 0, y: 3.1500006, z: -10.600006}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -2230,7 +2232,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5919375884262749798}
-  m_LocalRotation: {x: 0.5879964, y: 0.000000041752852, z: -0.000000030351877, w: 0.8088635}
+  m_LocalRotation: {x: 0.5879964, y: -0.000000041752834, z: 0.00000003035187, w: 0.8088635}
   m_LocalPosition: {x: 0, y: 3.1500006, z: -10.600006}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -3260,7 +3262,7 @@ Transform:
   - {fileID: 248077693}
   - {fileID: 763888389}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &9065432747182552232
 MonoBehaviour:

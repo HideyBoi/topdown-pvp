@@ -11,6 +11,8 @@ public class RulesManager : MonoBehaviour
 
     public int lives = 3;
     public bool infiniteLives = false;
+    public bool doDeathmatch = true;
+    public float timeTillDeathmatch;
     public bool dropLootOnEveryDeath;
     public bool giveStartingStatsOnDropLoot;
     public bool doWeaponSlowdown;
@@ -48,6 +50,16 @@ public class RulesManager : MonoBehaviour
                 lives = -1;
             }
         }
+
+        if (PlayerPrefs.GetInt("DEATHMATCH") == 1)
+        {
+            doDeathmatch = true;
+        } else
+        {
+            doDeathmatch = false;
+        }
+        
+        timeTillDeathmatch = PlayerPrefs.GetFloat("DEATHMATCH_TIME");
 
         if (PlayerPrefs.HasKey("DROP_LOOT_ON_DEATH"))
         {
@@ -156,6 +168,8 @@ public class RulesManager : MonoBehaviour
 
         msg.AddInt(lives);
         msg.AddBool(infiniteLives);
+        msg.AddBool(doDeathmatch);
+        msg.AddFloat(timeTillDeathmatch);
         msg.AddBool(dropLootOnEveryDeath);
         msg.AddBool(giveStartingStatsOnDropLoot);
         msg.AddBool(doWeaponSlowdown);
@@ -185,6 +199,10 @@ public class RulesManager : MonoBehaviour
         instance.infiniteLives = msg.GetBool();
         if (instance.infiniteLives) { PlayerPrefs.SetInt("INFINITE_LIVES", 1); }
         else { PlayerPrefs.SetInt("INFINITE_LIVES", 0); }
+        instance.doDeathmatch = msg.GetBool(); 
+        if (instance.doDeathmatch) { PlayerPrefs.SetInt("DEATHMATCH", 1); }
+        else { PlayerPrefs.SetInt("DEATHMATCH", 0); }
+        instance.timeTillDeathmatch = msg.GetFloat();
         instance.dropLootOnEveryDeath = msg.GetBool();
         if (instance.dropLootOnEveryDeath) { PlayerPrefs.SetInt("DROP_LOOT_ON_DEATH", 1); }
         else { PlayerPrefs.SetInt("DROP_LOOT_ON_DEATH", 0); }
