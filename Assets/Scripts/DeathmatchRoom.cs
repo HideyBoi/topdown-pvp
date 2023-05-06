@@ -199,6 +199,7 @@ public class DeathmatchRoom : MonoBehaviour
         {
             
             player.isDead = true;
+            player.goingIntoDeathmatch = true;
             player.GetComponent<Collider>().enabled = false;
             player.GetComponent<Rigidbody>().isKinematic = true;
             player.canRespawn = false;         
@@ -218,6 +219,7 @@ public class DeathmatchRoom : MonoBehaviour
         if (isInDeathmatch)
         {
             player.isDead = false;
+            player.goingIntoDeathmatch = false;
             player.canRespawn = true;
             player.GetComponent<Collider>().enabled = true;
             player.GetComponent<Rigidbody>().isKinematic = false;
