@@ -75,6 +75,7 @@ public class HealthManager : MonoBehaviour
     RemotePlayer currentlySpectatingPlayer;
     [SerializeField]
     TextMeshProUGUI currentlySpectating;
+    public bool goingIntoDeathmatch;
 
     private void Awake()
     {
@@ -119,10 +120,10 @@ public class HealthManager : MonoBehaviour
         }
         
 
-        if (isDead)
+        if (isDead && !goingIntoDeathmatch)
             Spectate();
 
-        if (isDead && canRespawn)
+        if (isDead && canRespawn && !goingIntoDeathmatch)
         {
             timeUntilRespawn -= Time.fixedDeltaTime;
             if (timeUntilRespawn <= 0)

@@ -106,7 +106,11 @@ public class GameManager : MonoBehaviour
         {
             generationStarted = true;
             if (networkManager.Server.IsRunning)
+            {
                 generator.StartGenerating();
+                DeathmatchRoom.instance.PrepareDeathmatch();
+            }
+                
         }
 
         if (playersInGame.Count == 1 && NetworkManager.instance.connectedPlayers.Count > 1 && !endedGame)

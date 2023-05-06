@@ -22,7 +22,7 @@ public class DeathmatchRoom : MonoBehaviour
     [SerializeField] TextMeshProUGUI countdown;
     [SerializeField] Animator animator;
     [SerializeField] AudioSource wind;
-    Vector3 deathmatchSpawn;
+    public Vector3 deathmatchSpawn;
 
     private void Awake()
     {
@@ -31,11 +31,6 @@ public class DeathmatchRoom : MonoBehaviour
 
         if (doDeathmatch)
             timeRemaining.gameObject.SetActive(true);
-
-        if (NetworkManager.instance.Server.IsRunning && doDeathmatch)
-        {
-            PrepareDeathmatch();
-        }
     }
 
     public void TickDown()
@@ -82,29 +77,23 @@ public class DeathmatchRoom : MonoBehaviour
     [Serializable]
     public class DeathmatchSpawn : IMessageSerializable
     {
-        public float x;
-        public float y;
-        public float z;
+        public Vector3 pos;
         public ushort pId;
 
         public void Serialize(Message msg)
         {
-            msg.AddFloat(x);
-            msg.AddFloat(y);
-            msg.AddFloat(z);
+            msg.AddVector3(pos);
             msg.AddUShort(pId);
         }
 
         public void Deserialize(Message msg)
         {
-            x = msg.GetFloat();
-            y = msg.GetFloat();
-            z = msg.GetFloat();
+            pos = msg.GetVector3();
             pId = msg.GetUShort();
         }
     }
 
-    void PrepareDeathmatch()
+    public void PrepareDeathmatch()
     {
         int chosenRoom = Random.Range(0, rooms.Length);
         PrepareRoom(chosenRoom);
@@ -143,9 +132,7 @@ public class DeathmatchRoom : MonoBehaviour
         {
             DeathmatchSpawn spawn = new DeathmatchSpawn();
 
-            spawn.x = possibleSpawns[currentSpawnIndex].x;
-            spawn.y = possibleSpawns[currentSpawnIndex].y;
-            spawn.y = possibleSpawns[currentSpawnIndex].z;
+            spawn.pos = possibleSpawns[currentSpawnIndex];
             spawn.pId = playerIDs[currentPlayerIndex];
 
             dSpawns.Add(spawn);
@@ -165,8 +152,8 @@ public class DeathmatchRoom : MonoBehaviour
         {
             if (spawn.pId == localid)
             {
-                instance.deathmatchSpawn = new Vector3(spawn.x, spawn.y, spawn.z);
-                Debug.Log("Deathmatch Room] Got spawn location " + instance.deathmatchSpawn);
+                instance.deathmatchSpawn = spawn.pos;
+                Debug.Log("[Deathmatch Room] Got spawn location " + instance.deathmatchSpawn);
                 break;
             }
         }
@@ -191,8 +178,8 @@ public class DeathmatchRoom : MonoBehaviour
         {
             if (spawn.pId == localid)
             {
-                instance.deathmatchSpawn = new Vector3(spawn.x, spawn.y, spawn.z);
-                Debug.Log("Deathmatch Room] Got spawn location " + instance.deathmatchSpawn);
+                instance.deathmatchSpawn = spawn.pos;
+                Debug.Log("[Deathmatch Room] Got spawn location " + instance.deathmatchSpawn);
                 break;
             }
         }
@@ -222,7 +209,7 @@ public class DeathmatchRoom : MonoBehaviour
         if (isInDeathmatch)
         {
             player.Heal(RulesManager.instance.maxHealth);
-            player.transform.position = new Vector3(0, 0.5f, 200);
+            player.transform.position = deathmatchSpawn;
             player.lives = 1;
         }        
 
@@ -234,7 +221,6 @@ public class DeathmatchRoom : MonoBehaviour
             player.canRespawn = true;
             player.GetComponent<Collider>().enabled = true;
             player.GetComponent<Rigidbody>().isKinematic = false;
-            player.transform.position = deathmatchSpawn;
         }
     }
 
