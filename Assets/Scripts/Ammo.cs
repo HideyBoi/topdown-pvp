@@ -119,6 +119,16 @@ public class Ammo : MonoBehaviour
         GetComponent<Animator>().Play("Destroy");
     }
 
+    public void Remove()
+    {
+        Message msg = Message.Create(MessageSendMode.Reliable, NetworkManager.MessageIds.pickUpAmmo);
+        msg.AddInt(id);
+
+        NetworkManager.instance.Client.Send(msg);
+
+        GetComponent<Animator>().Play("Destroy");
+    }
+
     public void DestroyThis()
     {
         Destroy(gameObject);

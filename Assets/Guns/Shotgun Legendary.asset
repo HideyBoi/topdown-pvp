@@ -33,5 +33,5 @@ MonoBehaviour:
   timeBetweenShots: 1.2
   reloadTime: 3.128
   shotCount: 17
-  spread: 0.29
+  spread: 0.32
   speedModifier: 0.7

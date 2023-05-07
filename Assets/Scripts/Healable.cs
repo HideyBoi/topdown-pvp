@@ -91,6 +91,17 @@ public class Healable : MonoBehaviour
         Debug.Log($"[Item] Healing item({type}) with ID:{id} was picked up locally.");
         GetComponent<Animator>().Play("Destroy");
     }
+
+    public void Remove()
+    {
+        Message msg = Message.Create(MessageSendMode.Reliable, NetworkManager.MessageIds.pickUpHeal);
+        msg.AddInt(id);
+
+        NetworkManager.instance.Client.Send(msg);
+
+        GetComponent<Animator>().Play("Destroy");
+    }
+
     public void DestroyThis()
     {
         Destroy(gameObject);

@@ -313,6 +313,7 @@ public class HealthManager : MonoBehaviour
                     if (item.id == localId)
                     {
                         GameManager.instance.playersInGame.Remove(item);
+                        break;
                     }
                 }
 
