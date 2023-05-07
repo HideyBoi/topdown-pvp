@@ -46,22 +46,22 @@ public class Chest : MonoBehaviour
                 if (item != null)
                 {
                     item.tag = "NonInteractable";
-                    item.GetComponent<Animator>().Play("Destroy");
+                    item.GetComponent<GroundItem>().Remove();
                 }
                 if (gunAmmo != null)
                 {
                     gunAmmo.tag = "NonInteractable";
-                    gunAmmo.GetComponent<Animator>().Play("Destroy");
+                    gunAmmo.GetComponent<Ammo>().Remove();
                 }
                 if (auxAmmo != null)
                 {
                     auxAmmo.tag = "NonInteractable";
-                    auxAmmo.GetComponent<Animator>().Play("Destroy");
+                    gunAmmo.GetComponent<Ammo>().Remove();
                 }
                 if (heal != null)
                 {
                     heal.tag = "NonInteractable";
-                    heal.GetComponent<Animator>().Play("Destroy");
+                    heal.GetComponent<Healable>().Remove();
                 }
 
                 beenOpened = false;
@@ -75,7 +75,7 @@ public class Chest : MonoBehaviour
     {
         gameObject.tag = "NonInteractable";
         beenOpened = true;
-        timeTillRefil = 10.0f;
+        timeTillRefil = 90.0f;
         GetComponent<Animator>().Play("Open");
         Instantiate(sfx, transform.position, Quaternion.identity).GetComponent<SoundEffect>().PlaySound(chestOpenSound, 25, 0.7f);
         if (!isFromNetwork)
