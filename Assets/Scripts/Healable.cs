@@ -99,6 +99,7 @@ public class Healable : MonoBehaviour
 
         NetworkManager.instance.Client.Send(msg);
 
+        Destroy(GetComponent<BoxCollider>());
         GetComponent<Animator>().Play("Destroy");
     }
 

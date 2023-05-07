@@ -45,22 +45,18 @@ public class Chest : MonoBehaviour
             {
                 if (item != null)
                 {
-                    item.tag = "NonInteractable";
                     item.GetComponent<GroundItem>().Remove();
                 }
                 if (gunAmmo != null)
                 {
-                    gunAmmo.tag = "NonInteractable";
                     gunAmmo.GetComponent<Ammo>().Remove();
                 }
                 if (auxAmmo != null)
                 {
-                    auxAmmo.tag = "NonInteractable";
-                    gunAmmo.GetComponent<Ammo>().Remove();
+                    auxAmmo.GetComponent<Ammo>().Remove();
                 }
                 if (heal != null)
                 {
-                    heal.tag = "NonInteractable";
                     heal.GetComponent<Healable>().Remove();
                 }
 

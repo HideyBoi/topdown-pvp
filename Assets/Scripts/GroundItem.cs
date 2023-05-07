@@ -103,6 +103,7 @@ public class GroundItem : MonoBehaviour
 
         NetworkManager.instance.Client.Send(msg);
 
+        Destroy(GetComponent<BoxCollider>());
         GetComponent<Animator>().Play("Destroy");
     }
 
