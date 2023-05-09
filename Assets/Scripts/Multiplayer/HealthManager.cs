@@ -168,6 +168,20 @@ public class HealthManager : MonoBehaviour
         cam.m_Follow = transform;
     }
 
+    public void DeathmatchRespawn()
+    {
+        Debug.Log("[Health Manager] Respawning player to place in deathmatch.");
+
+        inv.currentIndex = 0;
+        inv.Scroll(0);
+        inv.canSwitch = true;
+        deadUI.SetActive(false);
+        normalUI.SetActive(true);
+        currentHealth = maxHealth;
+        isDead = false;
+        cam.m_Follow = transform;
+    }
+
     void Spectate()
     {
         if (spectateTarget == null)

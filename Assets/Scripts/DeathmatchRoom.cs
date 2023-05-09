@@ -193,7 +193,7 @@ public class DeathmatchRoom : MonoBehaviour
         timeRemaining.gameObject.SetActive(false);
 
         HealthManager player = HealthManager.localHealthManager;
-        bool isInDeathmatch = !player.isDead;
+        bool isInDeathmatch = player.canRespawn;
 
         if (isInDeathmatch)
         {
@@ -209,18 +209,16 @@ public class DeathmatchRoom : MonoBehaviour
 
         if (isInDeathmatch)
         {
-            player.Heal(RulesManager.instance.maxHealth);
             player.transform.position = deathmatchSpawn;
             player.lives = 1;
-        }        
+            player.DeathmatchRespawn();
+        }
 
         yield return new WaitForSecondsRealtime(15.2f - 0.5f);
 
         if (isInDeathmatch)
         {
-            player.isDead = false;
             player.goingIntoDeathmatch = false;
-            player.canRespawn = true;
             player.GetComponent<Collider>().enabled = true;
             player.GetComponent<Rigidbody>().isKinematic = false;
         }
