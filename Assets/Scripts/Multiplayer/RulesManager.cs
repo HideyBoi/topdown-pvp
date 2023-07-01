@@ -203,6 +203,7 @@ public class RulesManager : MonoBehaviour
         if (instance.doDeathmatch) { PlayerPrefs.SetInt("DEATHMATCH", 1); }
         else { PlayerPrefs.SetInt("DEATHMATCH", 0); }
         instance.timeTillDeathmatch = msg.GetFloat();
+        PlayerPrefs.SetFloat("DEATHMATCH_TIME", instance.timeTillDeathmatch);
         instance.dropLootOnEveryDeath = msg.GetBool();
         if (instance.dropLootOnEveryDeath) { PlayerPrefs.SetInt("DROP_LOOT_ON_DEATH", 1); }
         else { PlayerPrefs.SetInt("DROP_LOOT_ON_DEATH", 0); }
